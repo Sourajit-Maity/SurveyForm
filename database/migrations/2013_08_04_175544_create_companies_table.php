@@ -17,6 +17,7 @@ class CreateCompaniesTable extends Migration
             $table->id();
             $table->string('company_name');
             $table->string('res_company_name')->nullable();
+            $table->string('gst_no')->nullable();
             $table->string('tax_id')->nullable();
             $table->string('registration_number')->nullable();
             $table->string('email')->unique();

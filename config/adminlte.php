@@ -265,7 +265,7 @@ return [
         ],
         [
             'text' => 'Forms',
-            'url'  => 'products',
+            'url'  => 'form',
             'icon' => 'fas fa-fw fa-lock',
         ],
         [
