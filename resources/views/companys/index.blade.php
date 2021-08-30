@@ -34,6 +34,7 @@
                             <th>No</th>
                             <th>Company Logo</th>
                             <th>Company Name</th>
+                            <th>GST No.</th>
                             <th>Email</th>
                             <th>Phone</th>
                             <th width="280px">Action</th>
@@ -47,6 +48,7 @@
                                     <td>{{ ++$i }}</td>
                                     <td><img src="{{url('assets/logos')}}/{{$company->logo}}" width="100" class="img-circle img-left"></td>
                                     <td>{{ $company->company_name }}</td>
+                                    <td>{{ $company->gst_no }}</td>
                                     <td>{{ $company->email }}</td>
                                     <td>{{ $company->phone }}</td>
                                     <td>

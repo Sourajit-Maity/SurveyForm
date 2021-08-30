@@ -88,6 +88,19 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="gst_no" class="col-md-4 col-form-label text-md-right">{{ __('GST Number') }}</label><span style="color:red"> *</span>
+
+                            <div class="col-md-6">
+                                <input id="gst_no" type="text" class="form-control @error('gst_no') is-invalid @enderror" name="gst_no" value="{{ $company->gst_no }}" required autocomplete="gst_no">
+
+                                @error('gst_no')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label><span style="color:red"> *</span>
 
                             <div class="col-md-6">

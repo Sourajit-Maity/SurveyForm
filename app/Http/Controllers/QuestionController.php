@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 use App\Models\Question;
-
+use App\Models\Form;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class QuestionController extends Controller
 {
@@ -22,9 +27,9 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $question
+        $questions
          = Question::latest()->paginate(5);
-        return view('question.index',compact('question'))
+        return view('question.index',compact('questions'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -35,7 +40,8 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        return view('question.create');
+        $forms = DB::table('forms')->get();
+        return view('question.create',compact('forms'));
     }
 
     /**
@@ -46,12 +52,19 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate([
-            'name' => 'required',
-            'detail' => 'required',
-        ]);
+        $request->validate([
+            'moreFields.*.form_id' => 'required',
+            'moreFields.*.question_type' => 'required',
+            'moreFields.*.question' => 'required',
+            'moreFields.*.options' => 'required',
+            'moreFields.*.question_id' => 'required',
+
+            
+        ]); 
     
-        Question::create($request->all());
+        foreach ($request->moreFields as $key => $value) {
+            Question::create($value);
+        }
     
         return redirect()->route('question.index')
                         ->with('success','question created successfully.');

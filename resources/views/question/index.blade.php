@@ -9,11 +9,11 @@
             <div class="row">
                 <div class="col-lg-12 margin-tb">
                     <div class="pull-left">
-                        <h2>Company</h2>
+                        <h2>Question</h2>
                     </div>
             <div class="pull-right">
-                @can('company-create')
-                <a class="btn btn-success" href="{{ route('companys.create') }}"> Create New Company</a>
+                @can('question-create')
+                <a class="btn btn-success" href="{{ route('question.create') }}"> Create New question</a>
                 @endcan
             </div>
         </div>
@@ -27,39 +27,41 @@
            
         
                
-        <table id="myTable" class="table table-bordered table-striped {{ count($companys) > 0 ? 'datatable' : '' }} pointer">
+        <table id="myTable" class="table table-bordered table-striped {{ count($questions) > 0 ? 'datatable' : '' }} pointer">
                     <thead>
                         <tr>
                             <!-- <th style="text-align:center;"><input type="checkbox" id="select-all" /></th> -->
                             <th>No</th>
-                            <th>Company Logo</th>
-                            <th>Company Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
+                            <th> Form Name</th>
+                            <th> Question Type</th>
+                            <th> Question</th>
+                            <th>Option</th>
+                            <th>Question Created on</th>
                             <th width="280px">Action</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        @if (count($companys) > 0)
-                            @foreach ($companys as $company)
+                        @if (count($questions) > 0)
+                            @foreach ($questions as $question)
                                 <tr data-entry-id="h">
                                     <td>{{ ++$i }}</td>
-                                    <td><img src="{{url('assets/logos')}}/{{$company->logo}}" width="100" class="img-circle img-left"></td>
-                                    <td>{{ $company->company_name }}</td>
-                                    <td>{{ $company->email }}</td>
-                                    <td>{{ $company->phone }}</td>
+                                    <td>{{ $question->form_name }}</td>
+                                    <td>{{ $question->question_type }}</td>
+                                    <td>{{ $question->question }}</td>
+                                    <td>{{ $question->options }}</td>
+                                    <td>{!! \Carbon\Carbon::parse($question->created_at)->format('d M Y') !!}</td>
                                     <td>
-                                        <form action="{{ route('companys.destroy',$company->id) }}" method="POST">
-                                            <a class="btn btn-info" href="{{ route('companys.show',$company->id) }}">Show</a>
-                                            @can('company-edit')
-                                            <a class="btn btn-primary" href="{{ route('companys.edit',$company->id) }}">Edit</a>
+                                        <form action="{{ route('question.destroy',$question->id) }}" method="POST">
+                                            <a class="btn btn-info" href="{{ route('question.show',$question->id) }}">Show</a>
+                                            @can('question-edit')
+                                            <a class="btn btn-primary" href="{{ route('question.edit',$question->id) }}">Edit</a>
                                             @endcan
 
 
                                             @csrf
                                             @method('DELETE')
-                                            @can('company-delete')
+                                            @can('question-delete')
                                             <button type="submit" class="btn btn-danger">Delete</button>
                                             @endcan
                                         </form>
