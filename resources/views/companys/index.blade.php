@@ -26,7 +26,7 @@
             <div class="table-responsive">
            
         
-               
+               <br>
         <table id="myTable" class="table table-bordered table-striped {{ count($companys) > 0 ? 'datatable' : '' }} pointer">
                     <thead>
                         <tr>

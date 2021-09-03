@@ -49,7 +49,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="res_company_name" class="col-md-4 col-form-label text-md-right">{{ __('Res Company Name') }}</label><span style="color:red"> *</span>
+                            <label for="res_company_name" class="col-md-4 col-form-label text-md-right">{{ __('Company short Name') }}</label><span style="color:red"> *</span>
 
                             <div class="col-md-6">
                                 <input id="res_company_name" value="{{ $company->res_company_name }}" type="text" class="form-control @error('res_company_name') is-invalid @enderror" name="res_company_name" value="{{ old('res_company_name') }}" required autocomplete="res_company_name">
@@ -62,7 +62,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="tax_id" class="col-md-4 col-form-label text-md-right">{{ __('Tax Id') }}</label><span style="color:red"> *</span>
+                            <label for="tax_id" class="col-md-4 col-form-label text-md-right">{{ __('Website Name') }}</label><span style="color:red"> *</span>
 
                             <div class="col-md-6">
                                 <input id="tax_id" type="text" value="{{ $company->tax_id }}" class="form-control @error('tax_id') is-invalid @enderror" name="tax_id" value="{{ old('tax_id') }}" required autocomplete="tax_id">
@@ -74,24 +74,13 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="registration_number" class="col-md-4 col-form-label text-md-right">{{ __('Registration Number') }}</label><span style="color:red"> *</span>
-
-                            <div class="col-md-6">
-                                <input id="registration_number" value="{{ $company->registration_number }}" type="text" class="form-control @error('registration_number') is-invalid @enderror" name="registration_number" value="{{ old('registration_number') }}" required autocomplete="registration_number">
-
-                                @error('registration_number')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+                        
                         <div class="form-group row">
                             <label for="gst_no" class="col-md-4 col-form-label text-md-right">{{ __('GST Number') }}</label><span style="color:red"> *</span>
 
                             <div class="col-md-6">
                                 <input id="gst_no" type="text" class="form-control @error('gst_no') is-invalid @enderror" name="gst_no" value="{{ $company->gst_no }}" required autocomplete="gst_no">
+                                <input id="registration_number" value="{{ $company->registration_number }}" type="hidden" class="form-control @error('registration_number') is-invalid @enderror" name="registration_number" value="{{ old('registration_number') }}" required autocomplete="registration_number">
 
                                 @error('gst_no')
                                     <span class="invalid-feedback" role="alert">

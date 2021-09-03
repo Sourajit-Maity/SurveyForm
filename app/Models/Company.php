@@ -12,7 +12,7 @@ class Company extends Model
     protected $fillable = [
         'company_name', 'res_company_name', 'tax_id',
         'registration_number', 'email', 'phone',
-        'address', 'logo', 
+        'address', 'logo', 'gst_no'
     ];
 
     public function user()
