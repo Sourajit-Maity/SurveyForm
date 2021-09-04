@@ -10,6 +10,7 @@ use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
     
 class UserController extends Controller
 {
@@ -22,11 +23,35 @@ class UserController extends Controller
     {
 // $data = User::with('user')->orderBy('id','DESC')->paginate(5);
 
+
+    $currentuserid = Auth::user()->id;
+
+    $emp_comp_id = User::where('users.id',$currentuserid)->value('company_id');
+
+    $comp_id = Company::where('companies.id',$emp_comp_id)->value('id');
+
+  
+    //Log::debug("ids".print_r($comp_id,true));
+    if(Auth::user()->company_id== Null) {
+
         $data = User::select('users.name','users.email','users.id','users.email','companies.company_name')->
         join('companies', 'users.company_id', '=', 'companies.id')
         ->orderBy('id','DESC')->paginate(5);
         return view('users.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
+    }
+    else{
+      
+
+        $data = User::select('users.name','users.email','users.id','users.email','companies.company_name')->
+        join('companies', 'users.company_id', '=', 'companies.id')
+        ->where('users.company_id',$comp_id)
+        ->orderBy('id','DESC')->paginate(5);
+        return view('users.index',compact('data'))
+            ->with('i', ($request->input('page', 1) - 1) * 5);
+
+    }
+       
     }
     
     /**
