@@ -1,6 +1,8 @@
 @extends('layouts.adminlayapp')
 
 @section('content')
+@section('plugins.Datatables', true)
+
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
@@ -55,5 +57,6 @@
 
 
 {!! $data->render() !!}
-
+<!-- @include('layouts.footerimport') -->
+@include('layouts.datatable')
 @stop

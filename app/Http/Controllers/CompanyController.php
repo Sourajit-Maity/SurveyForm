@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Company;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
@@ -32,7 +33,8 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return view('companys.create');
+        $spoc = User::pluck('name','id')->all();
+        return view('companys.create',compact('spoc'));
     }
 
     /**
@@ -84,9 +86,14 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Company $company)
+    public function edit($id)
     {
-        return view('companys.edit',compact('company'));
+        $company = Company::find($id);
+        $userspoc= Company::select('users.name as user_name','companies.spoc_id as spoc_code_id')->
+        join('users', 'companies.spoc_id', '=', 'users.id')
+        ->where('companies.id',$id)->get();
+        $spoc = User::pluck('name','id')->all();
+        return view('companys.edit',compact('company','spoc','userspoc'));
     }
 
     /**

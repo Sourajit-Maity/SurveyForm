@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubCompaniesTable extends Migration
+class CreateCompaniesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,17 @@ class CreateSubCompaniesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sub_companies', function (Blueprint $table) {
+        Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('company_name');
             $table->string('res_company_name')->nullable();
+            $table->string('gst_no')->nullable();
             $table->string('tax_id')->nullable();
-            $table->string('registration_number')->nullable();
-            $table->text('detail')->nullable();
-            $table->string('logo');
+            $table->foreignId('spoc_id')->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->string('email')->unique();
             $table->string('phone')->nullable()->unique();
             $table->longtext('address')->nullable();
-            $table->foreignId('company_id')->constrained('companies')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('logo');
             $table->timestamps();
         });
     }
@@ -36,6 +35,6 @@ class CreateSubCompaniesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sub_companies');
+        Schema::dropIfExists('companies');
     }
 }

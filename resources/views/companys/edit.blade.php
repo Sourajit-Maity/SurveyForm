@@ -129,6 +129,36 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="spoc_id" class="col-md-4 col-form-label text-md-right">{{ __('SPOC') }}</label><span style="color:red"> *</span>
+
+                          
+                            <div class="col-md-6">
+                             
+                                <select  name="spoc_id" id="spoc_id" class="form-control @error('spoc_id') is-invalid @enderror"  required autocomplete="spoc_id">
+                                 @if($company->spoc_id != null) 
+                                 @foreach($userspoc as $user)
+                                        <option value="{{$user->spoc_code_id}}">{{$user->user_name}}</option>
+                                    @endforeach
+                                    @else  
+                                    <option value=""disable selected>Select SPOC</option>
+                                        
+                                @endif
+                                
+                                    @foreach ($spoc as $key => $value)
+                               
+                               <option value="{{ $key }}">{{ $value }}</option>
+                                @endforeach  
+                                                                             
+                                                     
+                             </select>
+                                @error('spoc_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>  
+                        </div>
+                        <div class="form-group row">
                             <label for="logo" class="col-md-4 col-form-label text-md-right">{{ __('Logo') }}</label><span style="color:red"> *</span>
 
                             <div class="col-md-6">
