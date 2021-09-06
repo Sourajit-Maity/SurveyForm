@@ -17,6 +17,7 @@ class CreateFormsTable extends Migration
             $table->id();
             $table->string('form_name');
             $table->foreignId('emp_id')->nullable()->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('form_forwarded_by_id')->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

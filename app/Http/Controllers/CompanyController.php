@@ -33,8 +33,8 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        $spoc = User::pluck('name','id')->all();
-        return view('companys.create',compact('spoc'));
+        
+        return view('companys.create');
     }
 
     /**
@@ -86,14 +86,10 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Company $company)
     {
-        $company = Company::find($id);
-        $userspoc= Company::select('users.name as user_name','companies.spoc_id as spoc_code_id')->
-        join('users', 'companies.spoc_id', '=', 'users.id')
-        ->where('companies.id',$id)->get();
-        $spoc = User::pluck('name','id')->all();
-        return view('companys.edit',compact('company','spoc','userspoc'));
+    
+        return view('companys.edit',compact('company'));
     }
 
     /**

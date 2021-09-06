@@ -71,12 +71,22 @@
                                     {!! Form::select('roles[]', $roles,[], array('class' => 'form-control')) !!}
                                 </div>
                             </div>
+                           
+                        
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <strong>SPOC:</strong>
+                                    <input  type="checkbox" name="spoc" value="1">
+
+                                    <!-- {!! Form::checkbox('spoc', false, array('placeholder' => 'Spoc','class' => 'form-control')) !!} -->
+                                </div>
+                            </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
                         {!! Form::close() !!}
-
+                    </div>
                 </div>
             </div>
         </div>

@@ -19,7 +19,6 @@ class CreateCompaniesTable extends Migration
             $table->string('res_company_name')->nullable();
             $table->string('gst_no')->nullable();
             $table->string('tax_id')->nullable();
-            $table->foreignId('spoc_id')->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->string('email')->unique();
             $table->string('phone')->nullable()->unique();
             $table->longtext('address')->nullable();

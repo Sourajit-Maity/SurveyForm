@@ -137,14 +137,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="spoc_id" class="col-md-4 col-form-label text-md-right">{{ __('SPOC') }}</label>
-
-                            <div class="col-md-6">
-                                {{ Form::select('spoc_id', $spoc, null, array('class'=>'form-control', 'placeholder'=>'Please select ...')) }}
-
-                            </div>   
-                        </div>
+                       
                         <div class="form-group row">
                             <label for="logo" class="col-md-4 col-form-label text-md-right">{{ __('Logo') }}</label><span style="color:red"> *</span>
 

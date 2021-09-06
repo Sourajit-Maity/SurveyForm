@@ -56,7 +56,7 @@
 </table>
 
 
-{!! $data->render() !!}
+<!-- {!! $data->render() !!} -->
 <!-- @include('layouts.footerimport') -->
 @include('layouts.datatable')
 @stop

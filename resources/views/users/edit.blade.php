@@ -69,6 +69,17 @@
                                 {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control')) !!}
                             </div>
                         </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <strong>SPOC:</strong>
+                                    <input 
+                                        type="checkbox" name="spoc" value=1 
+                                        {{ old('spoc') == 1 ? 'checked' : '' }}
+                                        >
+                                   
+                                    <!-- {!! Form::checkbox('spoc',$user->spoc, false, array('placeholder' => 'Spoc','class' => 'form-control')) !!} -->
+                                </div>
+                        </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
