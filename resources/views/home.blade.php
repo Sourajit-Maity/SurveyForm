@@ -104,9 +104,12 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>{{$role}}</h3>
+              @if (isset($companyuser->company_name))
+                <h3>{{$companyuser}}</h3>
+              @else <h3></h3>
+              @endif
 
-                <p>All Designation</p>
+                <p> Designation</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
@@ -119,14 +122,19 @@
             <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>{{ Auth::user()->name }}</h3>
+              @if (isset($companydetails->company_name))
+              <h3>{{ $companydetails->company_name }}</h3>
 
-                <p>My Profile</p>
+              <p>{{ $companydetails->company_details }}</p>
+              @else <h3>Ira Pvt Ltd</h3>
+              <p>Ira Details</p>
+              @endif
+               
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{ route('companys.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
 

@@ -48,7 +48,13 @@ class HomeController extends Controller
         $role =  Role::count();
      
         $currentuserid = Auth::user()->name;
+        $currentusercompid = Auth::user()->company_id;
+       // $currentuserroleid = Auth::roles()->name;
+        //dd($currentuserroleid);
+        $companyuser= Company::where('id',$currentusercompid)->value('company_name');
+        $companydetails = Company::where('id',$currentusercompid)->first();
+       // dd($companydetails);
         
-        return view('home',compact('newemployee','user','form','company','question','role'));
+        return view('home',compact('newemployee','user','form','company','question','role','companyuser','companydetails'));
     }
 }

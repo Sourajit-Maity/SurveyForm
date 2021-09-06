@@ -129,7 +129,20 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="spoc_id" class="col-md-4 col-form-label text-md-right">{{ __('SPOC') }}</label><span style="color:red"> *</span>
+                            <label for="company_details" class="col-md-4 col-form-label text-md-right">{{ __('Company Details') }}</label><span style="color:red"> *</span>
+
+                            <div class="col-md-6">
+                            <textarea class="ckeditor form-control" style="height:150px" name="company_details" value="{{ $company->company_details }}"></textarea>
+
+                                @error('company_details')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="spoc_id" class="col-md-4 col-form-label text-md-right">{{ __('SPOC') }}</label>
 
                           
                             <div class="col-md-6">
@@ -189,3 +202,11 @@
 </div>
 
     @stop
+    @section('js')
+    <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+        $('.ckeditor').ckeditor();
+        });
+    </script>
+@stop
