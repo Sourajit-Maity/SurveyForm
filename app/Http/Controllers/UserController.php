@@ -85,7 +85,16 @@ class UserController extends Controller
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
     
-        $user = User::create($input);
+        // $user = User::create($input);
+        // $user->assignRole($request->input('roles'));
+
+        $user = new User($input);
+        if ($request->hasFile('user_image')) {
+            $fileName = time().'.'.$request->user_image->extension();  
+            $request->user_image->move(public_path('/assets/images/'), $fileName);
+            $user->user_image= $fileName;
+          }
+        $user->save();
         $user->assignRole($request->input('roles'));
     
         return redirect()->route('users.index')
@@ -145,6 +154,15 @@ class UserController extends Controller
         }
     
         $user = User::find($id);
+
+        // if ($request->hasFile('user_image')) {
+        //     $fileName = time().'.'.$request->user_image->extension();  
+        //     $request->user_image->move(public_path('/assets/images/'), $fileName);
+        //     $user->user_image= $fileName;           
+        //   }
+      
+         // $company->update($request->all());
+
         $user->update($input);
         DB::table('model_has_roles')->where('model_id',$id)->delete();
     

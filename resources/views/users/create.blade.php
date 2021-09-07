@@ -32,7 +32,7 @@
 
                 <div class="card-body">
 
-                        {!! Form::open(array('route' => 'users.store','method'=>'POST')) !!}
+                        {!! Form::open(array('route' => 'users.store','method'=>'POST', 'files' => true)) !!}
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
@@ -81,10 +81,24 @@
                                     <!-- {!! Form::checkbox('spoc', false, array('placeholder' => 'Spoc','class' => 'form-control')) !!} -->
                                 </div>
                             </div>
+                            <div class="form-group row">
+                            <label for="user_image" class="col-md-4 col-form-label text-md-right">{{ __('User Profile Picture') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="user_image" type="file" class="form-control @error('user_image') is-invalid @enderror" name="user_image" value="{{ old('user_image') }}"  autocomplete="user_image">
+
+                                @error('user_image')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
+                       
                         {!! Form::close() !!}
                     </div>
                 </div>

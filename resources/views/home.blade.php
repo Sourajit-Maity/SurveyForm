@@ -125,7 +125,7 @@
               @if (isset($companydetails->company_name))
               <h3>{{ $companydetails->company_name }}</h3>
 
-              <p>{{ $companydetails->company_details }}</p>
+              <p>{{ Str::limit($companydetails->company_details, 50) }}</p>
               @else <h3>Ira Pvt Ltd</h3>
               <p>Ira Details</p>
               @endif
