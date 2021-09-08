@@ -25,8 +25,11 @@
 <table class="table table-bordered">
  <tr>
    <th>No</th>
+   <th>Profile Picture</th>
    <th>Name</th>
    <th>Company Name</th>
+   <th>Company SPOC</th>
+   <th>Reporting To Name</th>
    <th>Email</th>
    <th>Roles</th>
    <th width="280px">Action</th>
@@ -34,8 +37,23 @@
  @foreach ($data as $key => $user)
   <tr>
     <td>{{ ++$i }}</td>
-    <td>{{ $user->name }}</td>
-    <td>{{ $user->company_name }}</td>
+    @if (isset($user->user_image))
+      <td><img src="{{url('assets/images')}}/{{$user->user_image}}" width="100" class="img-circle img-left"></td>
+    @else 
+    <td><img src="assets/images/dummy.png" width="100" class="img-circle img-left"></td>
+    @endif
+      <td>{{ $user->name }}</td>
+      <td>{{ $user->company_name }}</td>
+      @if($user->spoc =='1') 
+      <td>Company SPOC</td>
+    @else 
+              <td></td>
+    @endif
+    @if (isset($user->reporting_to_name))
+      <td>{{ $user->reporting_to_name }}</td>
+    @else 
+              <td></td>
+    @endif
     <td>{{ $user->email }}</td>
     <td>
       @if(!empty($user->getRoleNames()))

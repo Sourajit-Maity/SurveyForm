@@ -24,7 +24,8 @@ class User extends Authenticatable
         'company_id',
         'password',
         'user_image',
-        'spoc'
+        'spoc',
+        'reporting_to_name'
     ];
 
     /**

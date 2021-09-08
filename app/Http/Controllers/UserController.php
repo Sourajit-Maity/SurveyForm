@@ -34,7 +34,7 @@ class UserController extends Controller
     //Log::debug("ids".print_r($comp_id,true));
     if(Auth::user()->company_id== Null) {
 
-        $data = User::select('users.name','users.email','users.id','users.email','companies.company_name')->
+        $data = User::select('users.name','spoc','user_image','reporting_to_name','users.email','users.id','users.email','companies.company_name')->
         join('companies', 'users.company_id', '=', 'companies.id')
         ->orderBy('id','DESC')->paginate(5);
         return view('users.index',compact('data'))
@@ -43,7 +43,7 @@ class UserController extends Controller
     else{
       
 
-        $data = User::select('users.name','users.email','users.id','users.email','companies.company_name')->
+        $data = User::select('users.name','spoc','user_image','reporting_to_name','users.email','users.id','users.email','companies.company_name')->
         join('companies', 'users.company_id', '=', 'companies.id')
         ->where('users.company_id',$comp_id)
         ->orderBy('id','DESC')->paginate(5);
@@ -63,7 +63,8 @@ class UserController extends Controller
     {
         $roles = Role::pluck('name','name')->all();
         $company = Company::pluck('company_name','id')->all();
-        return view('users.create',compact('roles','company'));
+        $reporting = User::pluck('name','name')->all();
+        return view('users.create',compact('roles','company','reporting'));
     }
     
     /**
@@ -126,8 +127,9 @@ class UserController extends Controller
         $company = Company::pluck('company_name','id')->all();
         $userRole = $user->roles->pluck('name','name')->all();
         $usercompany = $user->company->pluck('company_name','id')->all();
+        $reporting = User::pluck('name','name')->all();
     
-        return view('users.edit',compact('user','roles','userRole','usercompany','company'));
+        return view('users.edit',compact('user','roles','userRole','usercompany','company','reporting'));
     }
     
     /**
