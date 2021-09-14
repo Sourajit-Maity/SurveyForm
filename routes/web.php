@@ -28,7 +28,9 @@ Route::get('/', function () {
 Auth::routes();
   
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-  
+Route::get('/view-question-forms/{id}', [FormController::class, 'viewquestionform'])->name('view-question-forms');
+Route::get('/get_question/{id}', [FormController::class, 'getquestion'])->name('get_question');
+
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);

@@ -76,9 +76,19 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Question $question)
+    public function show(Request $request,$id)
     {
-        return view('question.show',compact('question'));
+        Log::debug("all".print_r($request->all(),true));
+        Log::debug("id".print_r($id,true));
+        $form_id = Question::where('id',$id)->value('form_id');
+
+        //$allquestion = Question::where('form_id',$form_id)->get();
+        $allquestion = Question::where('form_id','=',$form_id)->where('question_type','=','master')->get();
+        $questions = Question::get(); 
+        $formid = Question::where('id', $id)->value('form_id');
+        //$formid = $id;
+        Log::debug("formid".print_r($formid,true));
+        return view('question.show',compact('allquestion','questions','formid'));
     }
 
     /**

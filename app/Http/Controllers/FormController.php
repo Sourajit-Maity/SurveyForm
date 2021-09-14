@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 use App\Models\Form;
-
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
+use App\Models\Question;
+use Illuminate\Support\Facades\DB;
+
 
 class FormController extends Controller
 {
@@ -110,5 +115,22 @@ class FormController extends Controller
     
         return redirect()->route('form.index')
                         ->with('success','form deleted successfully');
+    }
+
+    public function viewquestionform(Request $request,$id) 
+    {
+        $questions = Question::get();
+        $formid = $id;
+
+        //Log::debug("qq".print_r($questions,true));
+        return view ('question.show',compact('questions','formid'));
+    }
+    public function getquestion($id)
+    {
+        //$form_id = Question::where('id',$id)->value('form_id');
+        //Log::debug("id".print_r($id,true));
+        $allquestion = Question::where('form_id',$id)->get();
+        //Log::debug("allquestion".print_r($allquestion,true));
+        return json_encode($allquestion);
     }
 }

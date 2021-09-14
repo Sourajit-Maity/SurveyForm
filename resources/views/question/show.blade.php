@@ -115,7 +115,6 @@ body {
                 <h2>Question</h2>
             </div>
             <div class="form-group col-md-6">
-                <!-- <a class="btn btn-success" href="{{ route('add-jobshift') }}"><i class="fas fa-plus-square"></i></a> -->
             </div>
             
         </div>
@@ -128,14 +127,14 @@ body {
 		        <div class="ml-auto mr-sm-5"> 
 		        	<button id="Submit" class="btn btn-success" style="display:none;">Submit</button>
 		        	<button id="Next" class="btn btn-success" style="display:none;">Next</button> 
-					<a id="Close" class="btn btn-success" href="/view-forms" style="display:none;">Close</a>
+					<a id="Close" class="btn btn-success" href="/question" style="display:none;">Close</a>
 		        </div>
 		    </div>
 		</div>
         </div>
     </div>
-    @include('footerimport')
-    @include('datatable')
+	@include('layouts.footerimport')
+    @include('layouts.datatable')
     <script type="text/javascript">
 		var ResultId = "RES" + Date.now();
 		var QuestionID_array = [];
