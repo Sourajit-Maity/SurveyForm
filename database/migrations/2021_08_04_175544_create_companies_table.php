@@ -23,7 +23,7 @@ class CreateCompaniesTable extends Migration
             $table->string('phone')->nullable()->unique();
             $table->longtext('address')->nullable();
             $table->longtext('company_details')->nullable();
-            $table->string('logo');
+            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }

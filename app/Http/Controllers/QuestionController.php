@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller
 {
@@ -78,7 +78,9 @@ class QuestionController extends Controller
      */
     public function show(Request $request,$id)
     {
-       
+        $company_id = Auth::user()->company_id;
+        
+        Log::debug("allid".print_r($company_id,true));
         $form_id = Question::where('id',$id)->value('form_id');
 
         //$allquestion = Question::where('form_id',$form_id)->get();
@@ -87,7 +89,7 @@ class QuestionController extends Controller
         $formid = Question::where('id', $id)->value('form_id');
         //$formid = $id;
      
-        return view('question.show',compact('allquestion','questions','formid'));
+        return view('question.show',compact('allquestion','questions','formid','company_id'));
     }
 
     /**

@@ -46,7 +46,10 @@
                             @foreach ($companys as $company)
                                 <tr data-entry-id="h">
                                     <td>{{ ++$i }}</td>
+                                    @if (isset($company->logo))
                                     <td><img src="{{url('assets/logos')}}/{{$company->logo}}" width="100" class="img-circle img-left"></td>
+                                    @else <td></td>
+                                    @endif
                                     <td>{{ $company->company_name }}</td>
                                     <td>{{ $company->gst_no }}</td>
                                     <td>{{ $company->email }}</td>
