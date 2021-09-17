@@ -2,112 +2,124 @@
 
 @section('content')
 <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+	@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
 
-body {
-    background-color: #eee;
-}
+	body {
+		background-color: #eee;
+	}
 
-.container {
-    background-color: #fff;
-    color: #000;
-    border-radius: 10px;
-    padding: 20px;
-    font-family: 'Montserrat', sans-serif;
-    max-width: 700px;
-}
+	.container {
+		background-color: #fff;
+		color: #000;
+		border-radius: 10px;
+		padding: 20px;
+		font-family: 'Montserrat', sans-serif;
+		max-width: 700px;
+	}
 
-.container>p {
-    font-size: 32px;
-}
+	.container>p {
+		font-size: 32px;
+	}
 
-.question {
-    width: 75%;
-}
+	.question {
+		width: 75%;
+	}
 
-.options {
-    position: relative;
-    padding-left: 40px;
-}
+	.options {
+		position: relative;
+		padding-left: 40px;
+	}
 
-#options label {
-    display: block;
-    margin-bottom: 15px;
-    font-size: 14px;
-    cursor: pointer;
-}
+	#options label {
+		display: block;
+		margin-bottom: 15px;
+		font-size: 14px;
+		cursor: pointer;
+	}
 
-.options input {
-    opacity: 0;
-}
+	.options input {
+		opacity: 0;
+	}
 
-.checkmark {
-    position: absolute;
-    top: -1px;
-    left: 0;
-    height: 25px;
-    width: 25px;
-    background-color: #eee;
-    border: 1px solid #ddd;
-    border-radius: 50%;
-}
+	.checkmark {
+		position: absolute;
+		top: -1px;
+		left: 0;
+		height: 25px;
+		width: 25px;
+		background-color: #eee;
+		border: 1px solid #ddd;
+		border-radius: 50%;
+	}
 
-.options input:checked~.checkmark:after {
-    display: block;
-}
+	.options input:checked~.checkmark:after {
+		display: block;
+	}
 
-.options .checkmark:after {
-    content: "";
-    width: 10px;
-    height: 10px;
-    display: block;
-    background: white;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    border-radius: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    transition: 300ms ease-in-out 0s;
-}
+	.options .checkmark:after {
+		content: "";
+		width: 10px;
+		height: 10px;
+		display: block;
+		background: white;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		border-radius: 50%;
+		transform: translate(-50%, -50%) scale(0);
+		transition: 300ms ease-in-out 0s;
+	}
 
-.options input[type="radio"]:checked~.checkmark {
-    background: #21bf73;
-    transition: 300ms ease-in-out 0s;
-}
+	.options input[type="radio"]:checked~.checkmark {
+		background: #21bf73;
+		transition: 300ms ease-in-out 0s;
+	}
 
-.options input[type="radio"]:checked~.checkmark:after {
-    transform: translate(-50%, -50%) scale(1);
-}
+	.options input[type="radio"]:checked~.checkmark:after {
+		transform: translate(-50%, -50%) scale(1);
+	}
 
-.btn-primary {
-    background-color: #555;
-    color: #ddd;
-    border: 1px solid #ddd;
-}
+	.btn-primary {
+		background-color: #555;
+		color: #ddd;
+		border: 1px solid #ddd;
+	}
 
-.btn-primary:hover {
-    background-color: #21bf73;
-    border: 1px solid #21bf73;
-}
+	.btn-primary:hover {
+		background-color: #21bf73;
+		border: 1px solid #21bf73;
+	}
 
-.btn-success {
-    padding: 5px 25px;
-    background-color: #21bf73;
-}
+	.btn-success {
+		padding: 5px 25px;
+		background-color: #21bf73;
+	}
 
-@media(max-width:576px) {
-    .question {
-        width: 100%;
-        word-spacing: 2px;
+	@media(max-width:576px) {
+		.question {
+			width: 100%;
+			word-spacing: 2px;
+		}
+	}
+
+	.m-top-bottom{
+        margin: 10px 0px;
     }
-}
-    </style>
+
+	#start-question{
+		display: block;
+	}
+	#question-test{
+		display: none;
+	}
+
+</style>
     <div class="panel panel-default">
         <div class="panel-body">
         <div class="row">
@@ -118,24 +130,82 @@ body {
             </div>
             
         </div>
-        <div class="container mt-sm-5 my-1">
-    		<div id="question-data"></div>
-		    <div class="d-flex align-items-center pt-3">
-		        <div id="prev" class="ml-sm-5"> 
-		        	<button id="Previous" class="btn btn-primary" style="display:none;">Previous</button> 
-		        </div>
-		        <div class="ml-auto mr-sm-5"> 
-		        	<button id="Submit" class="btn btn-success" style="display:none;">Submit</button>
-		        	<button id="Next" class="btn btn-success" style="display:none;">Next</button> 
-					<a id="Close" class="btn btn-success" href="/question" style="display:none;">Close</a>
-		        </div>
-		    </div>
+        <div class="container mt-sm-5 my-1 card">
+			<section id="start-question">
+				<div class="card-header"> Fill basic info </div>
+				<div class="card-body start-qt">
+					<form id="form1">
+						<div class="row m-top-bottom">
+							<div class="col-md-6 col-sm-12 col-xs-12">
+								<strong>Company Serial No.:</strong>
+								<input type="text" name="company_id" value="11" class="form-control" readonly/>
+							</div>
+							<div class="col-md-6 col-sm-12 col-xs-12">
+								<strong>Material code:</strong>
+								<input type="text" name="meterial_code" value="" class="form-control" required/>
+							</div>
+						</div>
+						<div class="row m-top-bottom">
+							<div class="col-md-6 col-sm-12 col-xs-12">
+								<strong>Product Name:</strong>
+								<input type="text" name="product_name" value="" class="form-control" required/>
+							</div>
+							<div class="col-md-6 col-sm-12 col-xs-12">
+								<strong>Package:</strong>
+								<input type="text" name="package" value="" class="form-control" required/>
+							</div>
+						</div>
+						<div class="row m-top-bottom">
+							<div class="col-md-6 col-sm-12 col-xs-12">
+								<strong>Market:</strong>
+								<input type="text" name="market" value="" class="form-control" required/>
+							</div>
+							<div class="col-md-6 col-sm-12 col-xs-12">
+								<strong>Location:</strong>
+								<input type="text" name="location" value="" class="form-control" required/>
+							</div>
+						</div>
+						<div class="row m-top-bottom">
+							<div class="col-md-6 col-sm-12 col-xs-12">
+								<strong>Percentage:</strong>
+								<input type=number max="100" accuracy="2" min="0" step=0.01 name="percentage" value="" class="form-control" required/>
+							</div>
+							<div class="col-md-6 col-sm-12 col-xs-12">	
+							</div>
+						</div>
+
+						<div class="d-flex align-items-center pt-3">
+							<div class="ml-auto mr-sm-5"> 
+								<button id="start-qt" class="btn btn-success">Start</button> 
+							</div>
+						</div>	
+					</form>
+					
+				</div>
+			</section>
+
+			<section id="question-test">
+				<div id="question-data"></div>
+				<div class="d-flex align-items-center pt-3">
+					<div id="prev" class="ml-sm-5"> 
+						<button id="Previous" class="btn btn-primary" style="display:none;">Previous</button> 
+					</div>
+					<div class="ml-auto mr-sm-5"> 
+						<button id="Submit" class="btn btn-success" style="display:none;">Submit</button>
+						<button id="Next" class="btn btn-success" style="display:none;">Next</button> 
+						<a id="Close" class="btn btn-success" href="/question" style="display:none;">Close</a>
+					</div>
+				</div>
+			</section>
 		</div>
         </div>
     </div>
-	@include('layouts.footerimport')
+	<!-- @include('layouts.footerimport') -->
     @include('layouts.datatable')
-    <script type="text/javascript">
+	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script> -->
+	<script type="text/javascript">
 		var ResultId = "RES" + Date.now();
 		var QuestionID_array = [];
 		var result_array = [];
@@ -146,8 +216,54 @@ body {
 
 		var formid = "{{$formid}}";
 
+		// $("#form1").validate({
+		// 	rules: {
+		// 		company_id: "required",
+		// 		meterial_code: "required",
+		// 		product_name: "required",
+		// 		package: "required",
+		// 		market: "required",
+		// 		location: "required",
+		// 		percentage: "required",
+		// 	},
+		// });
+		
+		$('#start-qt').click(function(event){
+			//$('#start-question').css("display","none");
+			//$('#question-test').css("display","block");
+			$("#form1").validate();
+			// 	rules: {
+			// 		company_id: "required",
+			// 		meterial_code: "required",
+			// 		product_name: "required",
+			// 		package: "required",
+			// 		market: "required",
+			// 		location: "required",
+			// 		percentage: "required",
+			// 	},
+			// );
+			//("#form1").valid();
+			console.log("helo");
+
+			// if (!$("#form1").valid()) {
+			// 	c
+			// 	return;
+			// } else {
+			// 	//event.preventDefault();
+			// 	console.log("valid");
+			// 	return;
+			// }
+
+			// if($('input[name="meterial_code"]').val() != ""){
+			// 	console.log("true");
+			// }else{
+			// 	console.log("Required field missing.");
+			// }
+			
+		});
+
 		$(document).ready(function(){
-			$(".footer").css("display", "none");
+			//$(".footer").css("display", "none");
 
 			$.ajax({
 				type: 'GET',
