@@ -115,11 +115,31 @@
 	#start-question{
 		display: block;
 	}
-	#question-test{
+	#question-test, #result-view{
 		display: none;
 	}
 
+
+	.sidebar-dark-primary {
+		background-color: rgb(7, 71, 166);
+    	color: rgb(255, 255, 255);
+	}
+
+	.nav-sidebar .nav-item>.nav-link {
+		color: #FFF;
+	}
+
+	/* .elevation-4[style] {
+		box-shadow: 0px !important;
+	} */
+
 </style>
+<script>
+	$(document).ready(function(){
+		$("aside .sidebar-dark-primary").removeClass("elevation-4");
+	});
+</script>
+
     <div class="panel panel-default">
         <div class="panel-body">
         <div class="row">
@@ -132,13 +152,13 @@
         </div>
         <div class="container mt-sm-5 my-1 card">
 			<section id="start-question">
-				<div class="card-header"> Fill basic info </div>
-				<div class="card-body start-qt">
+				<div id="header-hero" class="card-header"> Fill basic info </div>
+				<div class="card-body">
 					<form id="form1">
 						<div class="row m-top-bottom">
 							<div class="col-md-6 col-sm-12 col-xs-12">
 								<strong>Company Serial No.:</strong>
-								<input type="text" name="company_id" value="11" class="form-control" readonly/>
+								<input type="text" name="company_id" value="{{$company_id}}" class="form-control" readonly/>
 							</div>
 							<div class="col-md-6 col-sm-12 col-xs-12">
 								<strong>Material code:</strong>
@@ -193,10 +213,24 @@
 					<div class="ml-auto mr-sm-5"> 
 						<button id="Submit" class="btn btn-success" style="display:none;">Submit</button>
 						<button id="Next" class="btn btn-success" style="display:none;">Next</button> 
-						<a id="Close" class="btn btn-success" href="/question" style="display:none;">Close</a>
+						<!-- <a id="Close" class="btn btn-success" href="/question" style="display:none;">Close</a> -->
 					</div>
 				</div>
 			</section>
+
+			<section id="result-view">
+				<!-- <div id="header-hero" class="card-header"> Fill basic info </div> -->
+				<div class="card-body">
+					<div id="qt_content"></div>
+
+					<div class="d-flex align-items-center pt-3">
+						<div class="ml-auto mr-sm-5"> 
+							<a id="Close" class="btn btn-success" href="/question" style="display:none;">Close</a>
+						</div>
+					</div>
+				</div>
+			</section>
+
 		</div>
         </div>
     </div>
@@ -216,50 +250,35 @@
 
 		var formid = "{{$formid}}";
 
-		// $("#form1").validate({
-		// 	rules: {
-		// 		company_id: "required",
-		// 		meterial_code: "required",
-		// 		product_name: "required",
-		// 		package: "required",
-		// 		market: "required",
-		// 		location: "required",
-		// 		percentage: "required",
-		// 	},
-		// });
-		
-		$('#start-qt').click(function(event){
-			//$('#start-question').css("display","none");
-			//$('#question-test').css("display","block");
-			$("#form1").validate();
-			// 	rules: {
-			// 		company_id: "required",
-			// 		meterial_code: "required",
-			// 		product_name: "required",
-			// 		package: "required",
-			// 		market: "required",
-			// 		location: "required",
-			// 		percentage: "required",
-			// 	},
-			// );
-			//("#form1").valid();
-			console.log("helo");
+		$("#start-qt").on("click", function(e){
+			if($("#form1")[0].checkValidity()) {
+				e.preventDefault();
+				//alert('validated');
+				$('#start-question').css("display","none");
+				$('#question-test').css("display","block");
 
-			// if (!$("#form1").valid()) {
-			// 	c
-			// 	return;
-			// } else {
-			// 	//event.preventDefault();
-			// 	console.log("valid");
-			// 	return;
-			// }
+				// var company_id = $("input[name='company_id']").val();
+				// var meterial_code = $("input[name='meterial_code']").val();
+				// var product_name = $("input[name='product_name']").val();
+				// var package = $("input[name='package']").val();
+				// var market = $("input[name='market']").val();
+				// var location = $("input[name='location']").val();
+				// var percentage = $("input[name='percentage']").val();
+				// var st_form = {
+				// 	"company_id" : company_id,
+				// 	"meterial_code" : meterial_code,
+				// 	"product_name" : product_name,
+				// 	"package" : package,
+				// 	"market" : market,
+				// 	"location" : location,
+				// 	"percentage" : percentage
+				// };
 
-			// if($('input[name="meterial_code"]').val() != ""){
-			// 	console.log("true");
-			// }else{
-			// 	console.log("Required field missing.");
-			// }
-			
+				// console.log(st_form);
+
+			} else {
+				$("#form1")[0].reportValidity();
+			}
 		});
 
 		$(document).ready(function(){
@@ -514,6 +533,8 @@
 			$("#Submit").css("display", "none");
 			$("#Close").css("display", "block");
 
+			$("#question-test").css("display", "none");
+
 			var previous_question_id = QuestionID_array[index_pos];
 			console.log(previous_question_id);
 			
@@ -539,23 +560,106 @@
 				console.log(result_array);
 
 
-				var result_header = "<h3 style='text-align:center;'>User Response</h3><hr/>";
-				$(result_header).insertBefore("#question-data");
+				//var result_header = "<h3 style='text-align:center;'>User Response</h3><hr/>";
+				//$(result_header).insertBefore("#question-data");
+
+				$("#header-hero").html("User Response");
+				
+				$('#form1 input').each(
+					function(index){  
+						var input = $(this);
+						input.attr("readonly",true);
+					}
+				);
+
+				$('#start-question').css("display","block");
+				$('#start-qt').css("display","none");
+
+				// for(var i = 0; i < result_array.length; i++){
+				// 	var q_text = result_array[i].question;
+				// 	var q_answer = result_array[i].answer;
+
+				// 	var result = "<div class='question ml-sm-5 pl-sm-5 pt-2'><div class='py-2 h5'><b>"+q_text+"</b></div>";
+				// 	result += "<div class='ml-md-3 ml-sm-3 pl-md-3 pt-sm-0 pt-3'>Answer: "+q_answer+"</div></div></br>";
+
+				// 	if(i == 0){
+				// 		$("#question-data").html(result); 
+				// 	} else {
+				// 		$("#question-data").append(result); 
+				// 	}		
+				// }
 
 				for(var i = 0; i < result_array.length; i++){
+					var q_id = result_array[i].id;
 					var q_text = result_array[i].question;
 					var q_answer = result_array[i].answer;
+					console.log(i);
+					console.log(q_text);
 
-					var result = "<div class='question ml-sm-5 pl-sm-5 pt-2'><div class='py-2 h5'><b>"+q_text+"</b></div>";
-					result += "<div class='ml-md-3 ml-sm-3 pl-md-3 pt-sm-0 pt-3'>Answer: "+q_answer+"</div></div></br>";
+					var result = "<div class=''><div class='py-2 h5'><b>"+q_text+"</b></div>";
+
+					for(var x = 0; x < questions.length; x++){
+						if(questions[x].question_id == q_id){
+							var raw_option = questions[x].options;
+
+							result += "<div class='ml-md-3 ml-sm-3 pl-md-3 pt-sm-0 pt-3' id='options'>";
+
+							var tarray = raw_option.split("|");
+							var option_text, option_value;
+							for(var y = 0; y < tarray.length; y++){
+								var varray = tarray[y].split(":");
+								option_text = varray[0];
+								option_value = varray[1];
+
+								if(option_text == q_answer) {
+									result += "<label class='options'>"+option_text+" <input type='radio' checked disabled><span class='checkmark'></span> </label>";
+								} else {
+									result += "<label class='options'>"+option_text+" <input type='radio'disabled><span class='checkmark'></span> </label>";
+								}
+							}
+							result += "</div> </div></br>";
+
+						}
+					}
+
+					//result += "<div class='ml-md-3 ml-sm-3 pl-md-3 pt-sm-0 pt-3'>Answer: "+q_answer+"</div></div></br>";
 
 					if(i == 0){
-						$("#question-data").html(result); 
-					}else {
-						$("#question-data").append(result); 
-					}
-						
+						$("#result-view .card-body #qt_content").html(result); 
+					} else {
+						$("#result-view .card-body #qt_content").append(result); 
+					}	
 				}
+
+				$('#result-view').css("display","block");
+
+				var company_id = $("input[name='company_id']").val();
+				var meterial_code = $("input[name='meterial_code']").val();
+				var product_name = $("input[name='product_name']").val();
+				var package = $("input[name='package']").val();
+				var market = $("input[name='market']").val();
+				var location = $("input[name='location']").val();
+				var percentage = $("input[name='percentage']").val();
+				var st_form = {
+					"company_id" : company_id,
+					"meterial_code" : meterial_code,
+					"product_name" : product_name,
+					"package" : package,
+					"market" : market,
+					"location" : location,
+					"percentage" : percentage
+				};
+				//console.log(st_form);
+
+				var final_data = {
+					"start_form" : st_form,
+					"question_result" : result_array
+				};
+
+				console.log(final_data);
+
+
+
 				
 				// var final_result ={
 				// 	"_token": "{{ csrf_token() }}",
@@ -568,7 +672,7 @@
 					},
 					type: 'POST',
 					url: '/submit-answer',
-					data: JSON.stringify(result_array),
+					data: JSON.stringify(final_data),
 					contentType: 'application/json; charset=utf-8',
 					dataType: 'application/json',
 					cache: false,
