@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Question;
 use App\Models\Form;
+use App\Models\Company;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -79,8 +80,11 @@ class QuestionController extends Controller
     public function show(Request $request,$id)
     {
         $company_id = Auth::user()->company_id;
+        $user_name = Auth::user()->name;
+        $user_email = Auth::user()->email;
+        $company_name = Company::where('id',$company_id)->value('company_name');
         
-        Log::debug("allid".print_r($company_id,true));
+        //Log::debug("allid".print_r($company_id,true));
         $form_id = Question::where('id',$id)->value('form_id');
 
         //$allquestion = Question::where('form_id',$form_id)->get();
@@ -89,7 +93,7 @@ class QuestionController extends Controller
         $formid = Question::where('id', $id)->value('form_id');
         //$formid = $id;
      
-        return view('question.show',compact('allquestion','questions','formid','company_id'));
+        return view('question.show',compact('allquestion','questions','formid','company_name','company_id','user_name','user_email'));
     }
 
     /**
@@ -100,6 +104,7 @@ class QuestionController extends Controller
      */
     public function edit(Question $question)
     {
+        Log::debug("question".print_r($question,true));
         return view('question.edit',compact('question'));
     }
 
