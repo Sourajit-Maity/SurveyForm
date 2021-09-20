@@ -25,6 +25,7 @@ class CreateMaterialResultsTable extends Migration
             $table->string('location');
             $table->decimal('percentage');
             $table->string('result_id');
+            $table->string('company_logo')->nullable();
             $table->foreignId('form_id')->nullable()->references('id')->on('forms')->onDelete('cascade');
             $table->foreignId('user_id')->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
