@@ -162,36 +162,48 @@
 								<input type="text" name="company_id" value="{{$company_id}}" class="form-control" readonly/>
 							</div>
 							<div class="col-md-6 col-sm-12 col-xs-12">
-								<strong>Material code:</strong>
-								<input type="text" name="meterial_code" value="" class="form-control" required/>
+								<strong>Company Name:</strong>
+								<input type="text" name="company_name" value="{{$company_name}}" class="form-control" readonly/>
 							</div>
 						</div>
 						<div class="row m-top-bottom">
+							<div class="col-md-6 col-sm-12 col-xs-12">
+								<strong>User Name:</strong>
+								<input type="text" name="user_name" value="{{$user_name}}" class="form-control" readonly/>
+							</div>
+							<div class="col-md-6 col-sm-12 col-xs-12">
+								<strong>User Email:</strong>
+								<input type="text" name="user_email" value="{{$user_email}}" class="form-control" readonly/>
+							</div>
+						</div>
+						<div class="row m-top-bottom">
+							<div class="col-md-6 col-sm-12 col-xs-12">
+								<strong>Material code:</strong>
+								<input type="text" name="meterial_code" value="" class="form-control" required/>
+							</div>
 							<div class="col-md-6 col-sm-12 col-xs-12">
 								<strong>Product Name:</strong>
 								<input type="text" name="product_name" value="" class="form-control" required/>
 							</div>
+						</div>
+						<div class="row m-top-bottom">
 							<div class="col-md-6 col-sm-12 col-xs-12">
 								<strong>Package:</strong>
 								<input type="text" name="package" value="" class="form-control" required/>
 							</div>
-						</div>
-						<div class="row m-top-bottom">
 							<div class="col-md-6 col-sm-12 col-xs-12">
 								<strong>Market:</strong>
 								<input type="text" name="market" value="" class="form-control" required/>
 							</div>
+						</div>
+						<div class="row m-top-bottom">
 							<div class="col-md-6 col-sm-12 col-xs-12">
 								<strong>Location:</strong>
 								<input type="text" name="location" value="" class="form-control" required/>
 							</div>
-						</div>
-						<div class="row m-top-bottom">
 							<div class="col-md-6 col-sm-12 col-xs-12">
 								<strong>Percentage:</strong>
 								<input type=number max="100" accuracy="2" min="0" step=0.01 name="percentage" value="" class="form-control" required/>
-							</div>
-							<div class="col-md-6 col-sm-12 col-xs-12">	
 							</div>
 						</div>
 
