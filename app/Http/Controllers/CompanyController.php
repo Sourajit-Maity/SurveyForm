@@ -111,14 +111,15 @@ class CompanyController extends Controller
             'address' => 'required',
            
         ]);
-    
-          if ($request->hasFile('logo')) {
+        $input = $request->all();
+
+        if ($request->hasFile('logo')) {
             $fileName = time().'.'.$request->logo->extension();  
             $request->logo->move(public_path('/assets/logos/'), $fileName);
-            $company->logo= $fileName;           
+            $company->logo= $fileName;
           }
       
-          $company->update($request->all());
+          $company->update($input);
       
     
         return redirect()->route('companys.index')

@@ -29,9 +29,9 @@ class QuestionController extends Controller
     public function index()
     {
         $questions
-         = Question::latest()->paginate(5);
+         = Question::where('question_type', 'master')->latest()->paginate(5);
         return view('question.index',compact('questions'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+            ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     }
 
     /**
