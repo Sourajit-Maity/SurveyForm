@@ -15,15 +15,19 @@ class CreateMaterialResultsTable extends Migration
     {
         Schema::create('material_results', function (Blueprint $table) {
             $table->id();
-            $table->integer('company_id')->nullable();
+            $table->integer('company_id');
+            $table->string('user_name');
+            $table->string('user_email');
+            $table->string('company_name');
             $table->string('product_name');
             $table->string('package');
             $table->string('market');
             $table->string('location');
             $table->decimal('percentage');
             $table->string('result_id');
+            $table->string('company_logo')->nullable();
             $table->foreignId('form_id')->nullable()->references('id')->on('forms')->onDelete('cascade');
-            $table->integer('user_id')->nullable()->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

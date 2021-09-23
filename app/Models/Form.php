@@ -12,4 +12,9 @@ class Form extends Model
     protected $fillable = [
         'emp_id', 'form_name',
     ];
+
+    public function user()
+    {
+         return $this->hasOne(Question::class);
+    }
 }
