@@ -106,7 +106,8 @@ class QuestionController extends Controller
     public function edit(Question $question)
     {
         Log::debug("question".print_r($question,true));
-        return view('question.edit',compact('question'));
+        $forms = DB::table('forms')->get();
+        return view('question.edit',compact('question','forms'));
     }
 
     /**

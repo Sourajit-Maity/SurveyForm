@@ -1,159 +1,341 @@
-@extends('layouts.adminlayapp')
-
+@extends('adminlte::page')
 @section('content')
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2>Edit Company</h2>
-            </div>
-            <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('companys.index') }}"> Back</a>
-            </div>
-        </div>
-    </div>
 
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>Whoops!</strong> There were some problems with your input.<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-        <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Edit Company') }}</div>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<style>
+    /* th,td{
+    min-width:200px !important;
+    } */
 
-                <div class="card-body">
-                <form action="{{ route('companys.update',$company->id) }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
+    /* td:nth-child(0){
+       min-width:200px !important;
+    } */
+    #dynamicAddRemove{
+        display:none;
+    }
 
-                        <div class="form-group row">
-                            <label for="company_name" class="col-md-4 col-form-label text-md-right">{{ __('Company Name') }}</label><span style="color:red"> *</span>
+</style>
+<script type="text/javascript">
 
-                            <div class="col-md-6">
-                                <input id="company_name" value="{{ $company->company_name }}" type="text" class="form-control @error('company_name') is-invalid @enderror" name="company_name" value="{{ old('company_name') }}" required autocomplete="company_name">
+    function form_parse(){
+        console.log("inside form_parse");
+        var form_id = $("#form_id option:selected").val();
+        console.log(form_id);
 
-                                @error('company_name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="res_company_name" class="col-md-4 col-form-label text-md-right">{{ __('Res Company Name') }}</label><span style="color:red"> *</span>
+        var rowCount = $('#dynamicAddRemove tr').length;
+        console.log("rowCount: "+rowCount);
+        for(var j = 0; j < rowCount-1; j++){
+            $("input[name='moreFields["+j+"][form_id]']").val(form_id);
+            console.log($("input[name='moreFields["+j+"][form_id]']").val());
+        }
+        
+    }
 
-                            <div class="col-md-6">
-                                <input id="res_company_name" value="{{ $company->res_company_name }}" type="text" class="form-control @error('res_company_name') is-invalid @enderror" name="res_company_name" value="{{ old('res_company_name') }}" required autocomplete="res_company_name">
+    
+</script>
 
-                                @error('res_company_name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="tax_id" class="col-md-4 col-form-label text-md-right">{{ __('Tax Id') }}</label><span style="color:red"> *</span>
-
-                            <div class="col-md-6">
-                                <input id="tax_id" type="text" value="{{ $company->tax_id }}" class="form-control @error('tax_id') is-invalid @enderror" name="tax_id" value="{{ old('tax_id') }}" required autocomplete="tax_id">
-
-                                @error('tax_id')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="registration_number" class="col-md-4 col-form-label text-md-right">{{ __('Registration Number') }}</label><span style="color:red"> *</span>
-
-                            <div class="col-md-6">
-                                <input id="registration_number" value="{{ $company->registration_number }}" type="text" class="form-control @error('registration_number') is-invalid @enderror" name="registration_number" value="{{ old('registration_number') }}" required autocomplete="registration_number">
-
-                                @error('registration_number')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label><span style="color:red"> *</span>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" value="{{ $company->email }}" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Phone Number') }}</label><span style="color:red"> *</span>
-
-                            <div class="col-md-6">
-                                <input id="phone" type="text" value="{{ $company->phone }}" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone">
-
-                                @error('phone')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label><span style="color:red"> *</span>
-
-                            <div class="col-md-6">
-                            <input id="address" type="text" value="{{ $company->address }}" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" required autocomplete="address">
-
-                                @error('address')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="logo" class="col-md-4 col-form-label text-md-right">{{ __('Logo') }}</label><span style="color:red"> *</span>
-
-                            <div class="col-md-6">
-                                <input id="logo" type="file" value="{{ $company->logo }}" class="form-control @error('logo') is-invalid @enderror" name="logo" value="{{ old('logo') }}"  autocomplete="logo">
-                                <img src="{{url('assets/logos')}}/{{$company->logo}}" width="100" class="img-circle img-left">
-                                @error('logo')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                       
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Submit') }}
-                                </button>
-                                <input type="button" onclick="history.go(-1);" value="Back" class="btn btn-primary">
-                            </div>
-                        </div>
-                    </form>
+<div class="container">
+    <div class="card mt-3">
+        <div class="card-header"></div>
+        <div class="card-body">
+            
+            <form action="{{ route('question.store') }}" method="POST" enctype="multipart/form-data">
+            <!-- <form> -->
+                @csrf
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                    </ul>
                 </div>
-            </div>
+                @endif
+                @if (Session::has('success'))
+                <div class="alert alert-success text-center">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                    <p>{{ Session::get('success') }}</p>
+                </div>
+                @endif
+                <div class="row">
+                    <div class="col-md-6">
+                        <select name="form_id" id="form_id" class="field-style field-split25 align-left  form-control" style="width:200px;" onchange="form_parse()">
+                                <option value="777" disable selected>Select Form </option>
+                            <!-- @foreach($forms as $data)
+                                <option value="{{$data->id}}">{{$data->form_name}}</option>
+                            @endforeach  -->
+                                
+                        </select> 
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-right">
+                            <button type="button" name="add" id="add-btn" class="btn btn-success" style="display:block;margin-left:auto
+                            ;">Add More</button>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+
+                <table class="table table-bordered table-responsive" id="dynamicAddRemove" style="margin-top:20px;">   
+                    <tr>
+                        <th>Question ID</th>
+                        <th>Question</th>
+                        <th colspan=3>Options</th>
+                        <th>Action</th>
+                    </tr>
+
+                    <tr class="qid1"> 
+                        <td rowspan=2>
+                            <input type="text" name="moreFields[0][question_id]" value="" class="form-control" readonly/>
+                            <input type="hidden" name="moreFields[0][form_id]" value="" class="form-control" />
+                            <input type="hidden" name="moreFields[0][question_type]" value="master" class="form-control" />
+                        </td>  
+                        <td rowspan=2>
+                            <textarea name="moreFields[0][question]" placeholder="Enter question" class="form-control" rows="3" cols="40"/></textarea>
+                        </td>  
+                        <td>
+                            <input type="hidden" name="moreFields[0][options]" value="" class="form-control" />
+                            <p>Option</p>
+                        </td>  
+                        <td>Child ID</td>        
+                        <td>
+                            <button type="button" name="opt_add" id="optadd_0" class="btn btn-success" style="display:block;" onclick="addoption(this)">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                        <td rowspan=2></td>
+                    </tr>  
+                    <tr class="qid1">
+                        <td><input type="text" name="option[0]" value="" class="form-control"/></td>
+                        <td><input type="text" name="child_id[0]" value="" class="form-control"/></td>
+                        <td></td>
+                    </tr>
+                    
+                   
+                </table> 
+                <button type="submit" class="btn btn-success" onclick="parse_option()">Save</button>
+            </form>
         </div>
     </div>
 </div>
 
-    @stop
+<script type="text/javascript">
+    var optcount = [];
+    var ct = 0;
+
+    $("#add-btn").click(function(){
+        ++ct;
+        console.log(ct);
+        var form_id = $("#form_id option:selected").val();
+
+        // var result = '<tr><td><input type="text" name="moreFields['+i+'][question_id]" value="'+Date.now()+'" class="form-control" readonly/>';
+        // result += '<input type="hidden" name="moreFields['+i+'][form_id]" value="'+form_id+'" class="form-control" />';
+        // result += '<input type="hidden" name="moreFields['+i+'][question_type]" value="" class="form-control" /></td>';
+        // result += '<td><input type="text" name="moreFields['+i+'][question]" placeholder="Enter question" class="form-control" /></td>';
+        // result += '<td><select class="opt form-control" name="options['+i+']" multiple="multiple" id="opt'+i+'" onchange="parse_option(this)"></select>';
+        // result += '<input type="hidden" name="moreFields['+i+'][options]" value="" class="form-control" /></td>';
+        // result += '<td><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr>';
+
+        var QusId = Date.now();
+        console.log("Question ID: "+QusId);
+
+        optcount.push({
+            "qid" : QusId,
+            "optcount" : 0
+        });
+
+        var result = '<tr class="tr_'+QusId+'"><td rowspan=2><input type="text" name="moreFields['+ct+'][question_id]" value="'+QusId+'" class="form-control" readonly/>';
+        result += '<input type="hidden" name="moreFields['+ct+'][form_id]" value="'+form_id+'" class="form-control" />';
+        result += '<input type="hidden" name="moreFields['+ct+'][question_type]" value="child" class="form-control" /></td>';
+        result += '<td rowspan=2><textarea name="moreFields['+ct+'][question]" placeholder="Enter question" class="form-control" rows="3" cols="40"/></textarea></td>';
+        result += '<td><input type="hidden" name="moreFields['+ct+'][options]" value="" class="form-control" /><p>Option</p></td>';
+        result += '<td>Child ID</td>';
+        result += '<td><button type="button" name="opt_add" id="optadd_'+ct+'" class="btn btn-success optadd_'+QusId+'" style="display:block;" onclick="addoption(this)">';
+        result += '<i class="fa fa-plus" aria-hidden="true"></i></button></td>';
+        result += '<td rowspan=2><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr>';
+
+        result += '<tr class="tr_'+QusId+'"><td><input type="text" name="option['+QusId+'][0]" value="" class="form-control"/></td>';
+        result += '<td><input type="text" name="child_id['+QusId+'][0]" value="" class="form-control"/></td>';
+        result += '<td></td></tr>';
+
+        $("#dynamicAddRemove").append(result);
+    });
+
+    $(document).on('click', '.remove-tr', function(){  
+        var class1 = $(this).parents('tr').attr('class');
+        var class_array = class1.split("_");
+        var qid2 = class_array[1];
+        console.log(optcount);
+        for(var x = 0; x < optcount.length; x++){
+            if(optcount[x].qid == qid2){
+                //delete optcount[x];
+                optcount.splice(x,1);
+            }
+            break;
+        }
+        console.log(optcount);
+
+        $('.'+class1).remove();
+        //$(this).parents('tr').remove();
+    });  
+
+    $(document).ready(function(){
+        var qid1 = Date.now();
+        optcount.push({
+            "qid" : qid1,
+            "optcount" : 0
+        });
+
+        $("input[name='moreFields[0][question_id]']").val(qid1);
+        $(".qid1").attr("class","tr_"+qid1);
+        $("#optadd_0").addClass("optadd_"+qid1);
+        console.log($(".tr_"+qid1).length);
+
+        $(".tr_"+qid1+":last td:eq(0) input").attr("name","option["+qid1+"][0]");
+        $(".tr_"+qid1+":last td:eq(1) input").attr("name","child_id["+qid1+"][0]");
+
+
+        $("#form_id").change(function(){
+            console.log($("#form_id").val());
+            if($("#form_id").val() != 777){
+                $("#dynamicAddRemove").css("display","block");
+            } else {
+                $("#dynamicAddRemove").css("display","none");
+            }
+        });
+    });
+    
+    function addoption(addbtn){
+        var qid = $(addbtn).attr('class');
+        console.log(qid);
+        var class_array = qid.split(" ");
+        console.log(class_array.length);
+
+        var opt_class;
+        for(var i = 0; i < class_array.length; i++){
+            var check = class_array[i].includes("optadd_");
+            if(check){
+                opt_class = class_array[i];
+            }
+        }
+        var opt_class1 = opt_class.split("_");
+        var QuestionID = opt_class1[1];
+        console.log(QuestionID);
+
+        var tc = 0;
+        var pos = 0;
+        console.log("optcount length: "+optcount.length);
+        for(var x = 0; x < optcount.length; x++){
+            if(optcount[x].qid == QuestionID){
+                tc = 1;
+                pos = x;
+                console.log("Pos: "+x);
+            }
+            //break;
+        }
+
+        if(tc == 0){
+            var tpos = optcount.push({
+                "qid" : QuestionID,
+                "optcount" : 0
+            });
+
+            pos = tpos - 1;
+        }
+        optcount[pos].optcount++;
+        var count = optcount[pos].optcount;
+
+        console.log(optcount);
+
+        var result = '<tr class="tr_'+QuestionID+'"><td><input type="text" name="option['+QuestionID+']['+count+']" value="" class="form-control"/></td>';
+        result += '<td><input type="text" name="child_id['+QuestionID+']['+count+']" value="" class="form-control"/></td>';
+        result += '<td><button type="button" name="opt_remove" id="optremove_0" class="btn btn-danger remove-opt-tr" style="display:block;">';
+        result += '<i class="fa fa-times" aria-hidden="true"></i></button></td></tr>';
+
+        var rowspan = $('.tr_'+QuestionID+':first td:eq(0)').attr('rowspan');
+        console.log("rowspan: "+rowspan);
+        rowspan++;
+        $('.tr_'+QuestionID+':first td:eq(0), .tr_'+QuestionID+':first td:eq(1), .tr_'+QuestionID+':first td:eq(5)').attr('rowspan',rowspan);
+        $('.tr_'+QuestionID).last().after(result);
+    }
+
+    $(document).on('click', '.remove-opt-tr', function(){  
+        var class1 = $(this).parents('tr').attr('class');
+        var class_array = class1.split("_");
+        var qid2 = class_array[1];
+        console.log(qid2);
+        var count;
+        for(var x = 0; x < optcount.length; x++){
+            if(optcount[x].qid == qid2){
+                //console.log(optcount[x].optcount);
+                optcount[x].optcount--;
+                count = optcount[x].optcount;
+                //console.log(optcount[x].optcount);
+            }
+            break;
+        }
+
+        var rowspan = $('.tr_'+qid2+':first td:eq(0)').attr('rowspan');
+        console.log("rowspan: "+rowspan);
+        rowspan--;
+        $('.tr_'+qid2+':first td:eq(0), .tr_'+qid2+':first td:eq(1), .tr_'+qid2+':first td:eq(5)').attr('rowspan',rowspan);
+
+        $(this).parents('tr').remove();
+        console.log(optcount);
+
+        var option_count = $("."+class1).length;
+        console.log("option count: "+option_count);
+        
+        for(var y = 2; y < option_count; y++){
+            var t = y - 1;
+            $("."+class1+":eq("+y+") td:eq(0) input").attr("name", "option["+qid2+"]["+t+"]");
+            $("."+class1+":eq("+y+") td:eq(1) input").attr("name", "child_id["+qid2+"]["+t+"]");
+        }
+        
+    });
+
+    function parse_option(){
+
+        console.log("inside parse_option");
+
+        // var selectform = $('#form_id');
+        // if($("#form_id").val() == 777){
+        //     //$("#form_id").attr("oninvalid","this.setCustomValidity('Please select a form first')");
+        //     selectform[0].setCustomValidity('Please select a form first');
+        // } else {
+        //     //$("#form_id").attr("oninvalid","this.setCustomValidity('')");
+        //     selectform[0].setCustomValidity('');
+        // }
+        
+        for(var x = 0; x < optcount.length; x++){
+            var Qid3 = optcount[x].qid;
+            var Ocount = optcount[x].optcount;
+            var final_opt;
+
+            for(var y = 0; y <= Ocount; y++){
+                //console.log("Question id: "+Qid3+" count: "+y);
+                var toption = $("input[name='option["+Qid3+"]["+y+"]']").val();
+                var tchild_id = $("input[name='child_id["+Qid3+"]["+y+"]']").val();
+                if(tchild_id == ""){
+                    tchild_id = "0";
+                }
+
+                if(y == 0){
+                    final_opt = toption + ":" + tchild_id;
+                } else {
+                    final_opt += "|"+toption + ":" + tchild_id;
+                }
+            }
+            $(".tr_"+Qid3+":first td:eq(2) input").val(final_opt);
+            console.log(final_opt);
+
+        }
+    }
+</script>
+
+@endsection

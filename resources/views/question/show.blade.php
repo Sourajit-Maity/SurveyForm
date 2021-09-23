@@ -134,6 +134,12 @@
 		box-shadow: 0px !important;
 	} */
 
+	.profile img {
+		width: 68px;
+		height: 68px;
+		border-radius: 50%
+	}
+
 </style>
 <script>
 	$(document).ready(function(){
@@ -153,8 +159,14 @@
         </div>
         <div class="container mt-sm-5 my-1 card">
 			<section id="start-question">
-				<div id="header-hero" class="card-header"> Fill basic info </div>
+				<div id="header-hero" class="card-header"> 
+					<div class="profile"> 
+						<img src="https://pbs.twimg.com/profile_images/502400607508910081/d6fnv5-2.jpeg"> 
+					</div>
+				Fill basic info </div>
 				<div class="card-body">
+					
+
 					<form id="form1">
 						<div class="row m-top-bottom">
 							<div class="col-md-6 col-sm-12 col-xs-12">
