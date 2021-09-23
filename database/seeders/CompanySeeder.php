@@ -23,6 +23,7 @@ class CompanySeeder extends Seeder
             'address' => 'Hyderabad', 
             'gst_no' => '123456',
             'company_details' => 'ira details',
+            'company_logo' => 'logo.png',
         ]);
     }
 }
