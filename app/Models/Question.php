@@ -10,4 +10,10 @@ class Question extends Model
     use HasFactory;
     protected $table = "questions";
     protected $fillable = ["question_id", "question_type","question","options","form_id","company_id",];
+
+
+    public function form()
+    {
+         return $this->belongsTo(Form::class,);
+    }
 }

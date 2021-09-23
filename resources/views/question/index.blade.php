@@ -35,7 +35,7 @@
                             <th> Form Name</th>
                             <th> Question Type</th>
                             <th> Question</th>
-                            <th>Option</th>
+                            <!-- <th>Option</th> -->
                             <th>Question Created on</th>
                             <th width="280px">Action</th>
                         </tr>
@@ -46,10 +46,10 @@
                             @foreach ($questions as $question)
                                 <tr data-entry-id="h">
                                     <td>{{ ++$i }}</td>
-                                    <td>{{ $question->form_name }}</td>
+                                    <td>{{ $question->form->form_name }}</td>
                                     <td>{{ $question->question_type }}</td>
                                     <td>{{ $question->question }}</td>
-                                    <td>{{ $question->options }}</td>
+                                    <!-- <td>{{ $question->options }}</td> -->
                                     <td>{!! \Carbon\Carbon::parse($question->created_at)->format('d M Y') !!}</td>
                                     <td>
                                         <form action="{{ route('question.destroy',$question->id) }}" method="POST">
