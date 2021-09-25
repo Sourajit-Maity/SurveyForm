@@ -113,11 +113,11 @@ class CompanyController extends Controller
         ]);
         $input = $request->all();
 
-        if ($request->hasFile('logo')) {
-            $fileName = time().'.'.$request->logo->extension();  
-            $request->logo->move(public_path('/assets/logos/'), $fileName);
-            $company->logo= $fileName;
-          }
+        // if ($request->hasFile('logo')) {
+        //     $fileName = time().'.'.$request->logo->extension();  
+        //     $request->logo->move(public_path('/assets/logos/'), $fileName);
+        //     $company->logo= $fileName;
+        //   }
       
           $company->update($input);
       

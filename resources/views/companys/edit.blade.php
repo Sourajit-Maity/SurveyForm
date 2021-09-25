@@ -142,7 +142,7 @@
                             </div>
                         </div>
                        
-                        <div class="form-group row">
+                        <!-- <div class="form-group row">
                             <label for="logo" class="col-md-4 col-form-label text-md-right">{{ __('Logo') }}</label><span style="color:red"> *</span>
 
                             <div class="col-md-6">
@@ -154,7 +154,7 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
+                        </div> -->
                        
 
                         <div class="form-group row mb-0">

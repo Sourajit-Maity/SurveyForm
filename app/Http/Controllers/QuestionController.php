@@ -104,12 +104,13 @@ class QuestionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Question $question)
-    {   
-        // $question_json = json_encode($question);
-        Log::debug("question".print_r($question,true));
-        $forms = DB::table('forms')->get();
+    {
         
-        return view('question.edit',compact('question','forms'));
+        $forms = DB::table('forms')->get();
+        $allquestion = Question::where('form_id', $question->form_id)->get();
+        $childquestion = Question::where('form_id', $question->form_id)->where('question_type', 'child')->get();
+        Log::debug("childquestion".print_r($childquestion,true));
+        return view('question.edit',compact('question','forms','allquestion','childquestion'));
     }
 
     /**
