@@ -105,8 +105,12 @@ class QuestionController extends Controller
      */
     public function edit(Question $question)
     {
-        Log::debug("question".print_r($question,true));
-        return view('question.edit',compact('question'));
+        
+        $forms = DB::table('forms')->get();
+        $allquestion = Question::where('form_id', $question->form_id)->get();
+        $childquestion = Question::where('form_id', $question->form_id)->where('question_type', 'child')->get();
+        Log::debug("childquestion".print_r($childquestion,true));
+        return view('question.edit',compact('question','forms','allquestion','childquestion'));
     }
 
     /**
