@@ -1,159 +1,406 @@
-@extends('layouts.adminlayapp')
-
+@extends('adminlte::page')
 @section('content')
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2>Edit Company</h2>
-            </div>
-            <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('companys.index') }}"> Back</a>
-            </div>
-        </div>
-    </div>
 
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>Whoops!</strong> There were some problems with your input.<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-        <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Edit Company') }}</div>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<style>
+    /* th,td{
+        min-width:500px !important;
+    } */
 
-                <div class="card-body">
-                <form action="{{ route('companys.update',$company->id) }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
+    th:nth-child(1) {
+        min-width:150px !important;
+    }
+    th:nth-child(2) {
+        min-width:250px !important;
+    }
+    /* td:nth-child(3){
+        min-width:200px !important;
+    }
+    td:nth-child(4){
+        min-width:200px !important;
+    }
+    tr td:nth-child(5) {
+        min-width:80px !important;
+        max-width:100px !important;
+    } */
 
-                        <div class="form-group row">
-                            <label for="company_name" class="col-md-4 col-form-label text-md-right">{{ __('Company Name') }}</label><span style="color:red"> *</span>
+    /* #dynamicAddRemove{
+        display:none;
+    } */
 
-                            <div class="col-md-6">
-                                <input id="company_name" value="{{ $company->company_name }}" type="text" class="form-control @error('company_name') is-invalid @enderror" name="company_name" value="{{ old('company_name') }}" required autocomplete="company_name">
 
-                                @error('company_name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="res_company_name" class="col-md-4 col-form-label text-md-right">{{ __('Res Company Name') }}</label><span style="color:red"> *</span>
 
-                            <div class="col-md-6">
-                                <input id="res_company_name" value="{{ $company->res_company_name }}" type="text" class="form-control @error('res_company_name') is-invalid @enderror" name="res_company_name" value="{{ old('res_company_name') }}" required autocomplete="res_company_name">
+</style>
+<script type="text/javascript">
 
-                                @error('res_company_name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="tax_id" class="col-md-4 col-form-label text-md-right">{{ __('Tax Id') }}</label><span style="color:red"> *</span>
+    function form_parse(){
+        console.log("inside form_parse");
+        var form_id = $("#form_id option:selected").val();
+        console.log(form_id);
 
-                            <div class="col-md-6">
-                                <input id="tax_id" type="text" value="{{ $company->tax_id }}" class="form-control @error('tax_id') is-invalid @enderror" name="tax_id" value="{{ old('tax_id') }}" required autocomplete="tax_id">
+        var rowCount = $('#dynamicAddRemove tr').length;
+        console.log("rowCount: "+rowCount);
+        for(var j = 0; j < rowCount-1; j++){
+            $("input[name='moreFields["+j+"][form_id]']").val(form_id);
+            console.log($("input[name='moreFields["+j+"][form_id]']").val());
+        }
+        
+    }
 
-                                @error('tax_id')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="registration_number" class="col-md-4 col-form-label text-md-right">{{ __('Registration Number') }}</label><span style="color:red"> *</span>
+    
+</script>
 
-                            <div class="col-md-6">
-                                <input id="registration_number" value="{{ $company->registration_number }}" type="text" class="form-control @error('registration_number') is-invalid @enderror" name="registration_number" value="{{ old('registration_number') }}" required autocomplete="registration_number">
-
-                                @error('registration_number')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label><span style="color:red"> *</span>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" value="{{ $company->email }}" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Phone Number') }}</label><span style="color:red"> *</span>
-
-                            <div class="col-md-6">
-                                <input id="phone" type="text" value="{{ $company->phone }}" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone">
-
-                                @error('phone')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label><span style="color:red"> *</span>
-
-                            <div class="col-md-6">
-                            <input id="address" type="text" value="{{ $company->address }}" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" required autocomplete="address">
-
-                                @error('address')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="logo" class="col-md-4 col-form-label text-md-right">{{ __('Logo') }}</label><span style="color:red"> *</span>
-
-                            <div class="col-md-6">
-                                <input id="logo" type="file" value="{{ $company->logo }}" class="form-control @error('logo') is-invalid @enderror" name="logo" value="{{ old('logo') }}"  autocomplete="logo">
-                                <img src="{{url('assets/logos')}}/{{$company->logo}}" width="100" class="img-circle img-left">
-                                @error('logo')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                       
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Submit') }}
-                                </button>
-                                <input type="button" onclick="history.go(-1);" value="Back" class="btn btn-primary">
-                            </div>
-                        </div>
-                    </form>
+<div class="container">
+    <div class="card mt-3">
+        <div class="card-header"></div>
+        <div class="card-body">
+            
+            <form action="{{ route('question.store') }}" method="POST" enctype="multipart/form-data">
+            <!-- <form> -->
+                @csrf
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                    </ul>
                 </div>
-            </div>
+                @endif
+                @if (Session::has('success'))
+                <div class="alert alert-success text-center">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                    <p>{{ Session::get('success') }}</p>
+                </div>
+                @endif
+                <div class="row">
+                    <div class="col-md-6">
+                        <select name="form_id" id="form_id" class="field-style field-split25 align-left  form-control" style="width:200px;" onchange="form_parse()">
+                                <option value="{{$forms[0]->id}}" disable selected>{{$forms[0]->form_name}} </option>
+                            <!-- @foreach($forms as $data)
+                                <option value="{{$data->id}}">{{$data->form_name}}</option>
+                            @endforeach  -->
+                                
+                        </select> 
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-right">
+                            <button type="button" name="add" id="add-btn" class="btn btn-success" style="display:block;margin-left:auto
+                            ;">Add More</button>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                
+                <table class="table table-bordered table-responsive" id="dynamicAddRemove" style="margin-top:20px;">   
+                    <thead>
+                        <tr>
+                            <th>Question ID</th>
+                            <th>Question</th>
+                            <th colspan=6>Options</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>       
+                    <tbody></tbody>
+                </table> 
+                <button type="submit" class="btn btn-success" onclick="parse_option()">Save</button>
+            </form>
         </div>
     </div>
 </div>
 
-    @stop
+<script type="text/javascript">
+    var questiondata = [
+        {
+            question_type: "master",
+            question_id: "1632154994581",
+            question: "Are you looking to save on your monthly loan payments?",
+            options: "Yes!:1632155049013|No, I like paying more.:0",
+            form_id: 1
+        },
+        {
+            question_type: "child",
+            question_id: "1632155049013",
+            question: "What are you looking for specifically?",
+            options: "Better rates :1632155073352|loan consolidation:1632155073352",
+            form_id: 1
+        },
+        {
+            question_type: "child",
+            question_id: "1632155073352",
+            question: "What is your loan amount?",
+            options: "Less than 1,00,000 Ruppes:0|Greater than 1,00,000:0",
+            form_id: 1
+        }
+    ];
+
+
+
+    var optcount = [];
+    var ct = 0;
+
+    function ckbox(obj) {
+        var tr_class = $(obj).parents('tr').attr('class');
+        $('#dynamicAddRemove .'+tr_class+' input[type=checkbox]').not(obj).prop('checked', false);
+        
+    }
+
+    $(document).ready(function(){
+        //var questiondata = @json($question ?? '');
+        var form_id = $("#form_id option:selected").val();
+
+        for(var i = 0; i < questiondata.length; i++){
+            var QusId = questiondata[i].question_id;
+            var Qus_type = questiondata[i].question_type;
+            var Qus = questiondata[i].question;
+
+            var rowspan = 1;
+            
+            var opt_result = "";
+            var raw_option = questiondata[i].options;
+            var tarray = raw_option.split("|");
+            var option_text, option_value;
+            for(var j = 0; j < tarray.length; j++){
+                var varray = tarray[j].split(":");
+                
+                option_text = varray[0];
+                option_value = varray[1];
+
+                opt_result += '<tr class="tr_'+QusId+'"><td><input type="text" name="option['+QusId+']['+j+']" value="'+option_text+'" class="form-control"/></td>';
+                opt_result += '<td><input type="text" name="child_id['+QusId+']['+j+']" value="'+option_value+'" class="form-control"/></td>';
+                opt_result += '<td><input type="checkbox" name="last_node['+QusId+']['+j+']" onclick="ckbox(this);"/></td>';
+                opt_result += '<td><input type="number" name="number['+QusId+']['+j+']" value="" class="form-control" style="display:none;"/></td>';
+                opt_result += '<td><input type="text" name="message['+QusId+']['+j+']" value="" class="form-control" style="display:none;"/></td>';
+
+                if(j == 0){
+                    opt_result += '<td></td></tr>';
+                } else {
+                    opt_result += '<td><button type="button" name="opt_remove" id="optremove_'+j+'" class="btn btn-danger remove-opt-tr" style="display:block;">'
+                    opt_result += '<i class="fa fa-times" aria-hidden="true"></i></button></td></tr>';
+                }
+                rowspan++;
+            }
+
+            var result = '<tr class="tr_'+QusId+'"><td rowspan='+rowspan+'><input type="text" name="moreFields['+ct+'][question_id]" value="'+QusId+'" class="form-control" readonly/>';
+            result += '<input type="hidden" name="moreFields['+ct+'][form_id]" value="'+form_id+'" class="form-control" />';
+            result += '<input type="hidden" name="moreFields['+ct+'][question_type]" value="'+Qus_type+'" class="form-control" /></td>';
+            result += '<td rowspan='+rowspan+'><textarea name="moreFields['+ct+'][question]" class="form-control" rows="3" cols="40"/>'+Qus+'</textarea></td>';
+            result += '<td><input type="hidden" name="moreFields['+ct+'][options]" value="" class="form-control" /><p>Option</p></td>';
+            result += '<td>Child ID</td>';
+            result += '<td>Last Node</td>';
+            result += '<td>Number</td>';
+            result += '<td>Message</td>';
+            result += '<td><button type="button" name="opt_add" id="optadd_'+ct+'" class="btn btn-success optadd_'+QusId+'" style="display:block;" onclick="addoption(this)">';
+            result += '<i class="fa fa-plus" aria-hidden="true"></i></button></td>';
+
+            if(i == 0){
+                result += '<td rowspan='+rowspan+'></td></tr>';
+            } else {
+                result += '<td rowspan='+rowspan+'><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr>';
+            }
+
+            result += opt_result;
+
+            $("#dynamicAddRemove tbody").append(result);
+            
+            var otc = rowspan - 2;
+            optcount.push({
+                "qid" : QusId,
+                "optcount" : otc
+            });
+
+            ct++;
+        }
+
+        // console.log(questiondata);
+        // var qts = @json($question ?? '');
+        // var form = @json($forms ?? '');
+        // console.log(qts);
+        // console.log(form);
+
+    });
+
+    $("#add-btn").click(function(){
+        ++ct;
+        console.log(ct);
+        var form_id = $("#form_id option:selected").val();
+
+        var QusId = Date.now();
+        console.log("Question ID: "+QusId);
+
+        optcount.push({
+            "qid" : QusId,
+            "optcount" : 0
+        });
+
+        var result = '<tr class="tr_'+QusId+'"><td rowspan=2><input type="text" name="moreFields['+ct+'][question_id]" value="'+QusId+'" class="form-control" readonly/>';
+        result += '<input type="hidden" name="moreFields['+ct+'][form_id]" value="'+form_id+'" class="form-control" />';
+        result += '<input type="hidden" name="moreFields['+ct+'][question_type]" value="child" class="form-control" /></td>';
+        result += '<td rowspan=2><textarea name="moreFields['+ct+'][question]" placeholder="Enter question" class="form-control" rows="3" cols="40"/></textarea></td>';
+        result += '<td><input type="hidden" name="moreFields['+ct+'][options]" value="" class="form-control" /><p>Option</p></td>';
+        result += '<td>Child ID</td>';
+        result += '<td><button type="button" name="opt_add" id="optadd_'+ct+'" class="btn btn-success optadd_'+QusId+'" style="display:block;" onclick="addoption(this)">';
+        result += '<i class="fa fa-plus" aria-hidden="true"></i></button></td>';
+        result += '<td rowspan=2><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr>';
+
+        result += '<tr class="tr_'+QusId+'"><td><input type="text" name="option['+QusId+'][0]" value="" class="form-control"/></td>';
+        result += '<td><input type="text" name="child_id['+QusId+'][0]" value="" class="form-control"/></td>';
+        result += '<td></td></tr>';
+
+        $("#dynamicAddRemove tbody").append(result);
+    });
+
+    $(document).on('click', '.remove-tr', function(){  
+        var class1 = $(this).parents('tr').attr('class');
+        var class_array = class1.split("_");
+        var qid2 = class_array[1];
+        console.log(optcount);
+        for(var x = 0; x < optcount.length; x++){
+            if(optcount[x].qid == qid2){
+                //delete optcount[x];
+                optcount.splice(x,1);
+            }
+            break;
+        }
+        console.log(optcount);
+
+        $('.'+class1).remove();
+        //$(this).parents('tr').remove();
+    });  
+
+    
+    
+    function addoption(addbtn){
+        var qid = $(addbtn).attr('class');
+        console.log(qid);
+        var class_array = qid.split(" ");
+        console.log(class_array.length);
+
+        var opt_class;
+        for(var i = 0; i < class_array.length; i++){
+            var check = class_array[i].includes("optadd_");
+            if(check){
+                opt_class = class_array[i];
+            }
+        }
+        var opt_class1 = opt_class.split("_");
+        var QuestionID = opt_class1[1];
+        console.log(QuestionID);
+
+        var tc = 0;
+        var pos = 0;
+        console.log("optcount length: "+optcount.length);
+        for(var x = 0; x < optcount.length; x++){
+            if(optcount[x].qid == QuestionID){
+                tc = 1;
+                pos = x;
+                console.log("Pos: "+x);
+            }
+            //break;
+        }
+
+        if(tc == 0){
+            var tpos = optcount.push({
+                "qid" : QuestionID,
+                "optcount" : 0
+            });
+
+            pos = tpos - 1;
+        }
+        optcount[pos].optcount++;
+        var count = optcount[pos].optcount;
+
+        console.log(optcount);
+
+        var result = '<tr class="tr_'+QuestionID+'"><td><input type="text" name="option['+QuestionID+']['+count+']" value="" class="form-control"/></td>';
+        result += '<td><input type="text" name="child_id['+QuestionID+']['+count+']" value="" class="form-control"/></td>';
+        result += '<td><button type="button" name="opt_remove" id="optremove_0" class="btn btn-danger remove-opt-tr" style="display:block;">';
+        result += '<i class="fa fa-times" aria-hidden="true"></i></button></td></tr>';
+
+        var rowspan = $('.tr_'+QuestionID+':first td:eq(0)').attr('rowspan');
+        console.log("rowspan: "+rowspan);
+        rowspan++;
+        $('.tr_'+QuestionID+':first td:eq(0), .tr_'+QuestionID+':first td:eq(1), .tr_'+QuestionID+':first td:eq(5)').attr('rowspan',rowspan);
+        $('.tr_'+QuestionID).last().after(result);
+    }
+
+    $(document).on('click', '.remove-opt-tr', function(){  
+        var class1 = $(this).parents('tr').attr('class');
+        var class_array = class1.split("_");
+        var qid2 = class_array[1];
+        console.log(qid2);
+        var count;
+        for(var x = 0; x < optcount.length; x++){
+            if(optcount[x].qid == qid2){
+                //console.log(optcount[x].optcount);
+                optcount[x].optcount--;
+                count = optcount[x].optcount;
+                //console.log(optcount[x].optcount);
+            }
+            break;
+        }
+
+        var rowspan = $('.tr_'+qid2+':first td:eq(0)').attr('rowspan');
+        console.log("rowspan: "+rowspan);
+        rowspan--;
+        $('.tr_'+qid2+':first td:eq(0), .tr_'+qid2+':first td:eq(1), .tr_'+qid2+':first td:eq(5)').attr('rowspan',rowspan);
+
+        $(this).parents('tr').remove();
+        console.log(optcount);
+
+        var option_count = $("."+class1).length;
+        console.log("option count: "+option_count);
+        
+        for(var y = 2; y < option_count; y++){
+            var t = y - 1;
+            $("."+class1+":eq("+y+") td:eq(0) input").attr("name", "option["+qid2+"]["+t+"]");
+            $("."+class1+":eq("+y+") td:eq(1) input").attr("name", "child_id["+qid2+"]["+t+"]");
+        }
+        
+    });
+
+    function parse_option(){
+
+        console.log("inside parse_option");
+
+        // var selectform = $('#form_id');
+        // if($("#form_id").val() == 777){
+        //     //$("#form_id").attr("oninvalid","this.setCustomValidity('Please select a form first')");
+        //     selectform[0].setCustomValidity('Please select a form first');
+        // } else {
+        //     //$("#form_id").attr("oninvalid","this.setCustomValidity('')");
+        //     selectform[0].setCustomValidity('');
+        // }
+        
+        for(var x = 0; x < optcount.length; x++){
+            var Qid3 = optcount[x].qid;
+            var Ocount = optcount[x].optcount;
+            var final_opt;
+
+            for(var y = 0; y <= Ocount; y++){
+                //console.log("Question id: "+Qid3+" count: "+y);
+                var toption = $("input[name='option["+Qid3+"]["+y+"]']").val();
+                var tchild_id = $("input[name='child_id["+Qid3+"]["+y+"]']").val();
+                if(tchild_id == ""){
+                    tchild_id = "0";
+                }
+
+                if(y == 0){
+                    final_opt = toption + ":" + tchild_id;
+                } else {
+                    final_opt += "|"+toption + ":" + tchild_id;
+                }
+            }
+            $(".tr_"+Qid3+":first td:eq(2) input").val(final_opt);
+            console.log(final_opt);
+
+        }
+    }
+</script>
+
+@endsection

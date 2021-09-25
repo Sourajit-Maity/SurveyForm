@@ -122,12 +122,14 @@ class QuestionController extends Controller
      */
     public function update(Request $request, Question $question)
     {
-         request()->validate([
-            'name' => 'required',
-            'detail' => 'required',
-        ]);
+        //  request()->validate([
+        //     'name' => 'required',
+        //     'detail' => 'required',
+        // ]);
+
+        Log::debug("question".print_r($request->all(),true));
     
-        $question->update($request->all());
+        // $question->update($request->all());
     
         return redirect()->route('question.index')
                         ->with('success','question updated successfully');
