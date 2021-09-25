@@ -104,9 +104,11 @@ class QuestionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Question $question)
-    {
+    {   
+        // $question_json = json_encode($question);
         Log::debug("question".print_r($question,true));
         $forms = DB::table('forms')->get();
+        
         return view('question.edit',compact('question','forms'));
     }
 
@@ -119,12 +121,14 @@ class QuestionController extends Controller
      */
     public function update(Request $request, Question $question)
     {
-         request()->validate([
-            'name' => 'required',
-            'detail' => 'required',
-        ]);
+        //  request()->validate([
+        //     'name' => 'required',
+        //     'detail' => 'required',
+        // ]);
+
+        Log::debug("question".print_r($request->all(),true));
     
-        $question->update($request->all());
+        // $question->update($request->all());
     
         return redirect()->route('question.index')
                         ->with('success','question updated successfully');

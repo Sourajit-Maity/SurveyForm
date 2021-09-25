@@ -9,15 +9,31 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <style>
     /* th,td{
-    min-width:200px !important;
+        min-width:500px !important;
     } */
 
-    /* td:nth-child(0){
-       min-width:200px !important;
-    } */
-    #dynamicAddRemove{
-        display:none;
+    th:nth-child(1) {
+        min-width:150px !important;
     }
+    th:nth-child(2) {
+        min-width:250px !important;
+    }
+    /* td:nth-child(3){
+        min-width:200px !important;
+    }
+    td:nth-child(4){
+        min-width:200px !important;
+    }
+    tr td:nth-child(5) {
+        min-width:80px !important;
+        max-width:100px !important;
+    } */
+
+    /* #dynamicAddRemove{
+        display:none;
+    } */
+
+
 
 </style>
 <script type="text/javascript">
@@ -65,7 +81,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <select name="form_id" id="form_id" class="field-style field-split25 align-left  form-control" style="width:200px;" onchange="form_parse()">
-                                <option value="777" disable selected>Select Form </option>
+                                <option value="{{$forms[0]->id}}" disable selected>{{$forms[0]->form_name}} </option>
                             <!-- @foreach($forms as $data)
                                 <option value="{{$data->id}}">{{$data->form_name}}</option>
                             @endforeach  -->
@@ -80,43 +96,17 @@
                     </div>
                 </div>
                 <br/>
-
+                
                 <table class="table table-bordered table-responsive" id="dynamicAddRemove" style="margin-top:20px;">   
-                    <tr>
-                        <th>Question ID</th>
-                        <th>Question</th>
-                        <th colspan=3>Options</th>
-                        <th>Action</th>
-                    </tr>
-
-                    <tr class="qid1"> 
-                        <td rowspan=2>
-                            <input type="text" name="moreFields[0][question_id]" value="" class="form-control" readonly/>
-                            <input type="hidden" name="moreFields[0][form_id]" value="" class="form-control" />
-                            <input type="hidden" name="moreFields[0][question_type]" value="master" class="form-control" />
-                        </td>  
-                        <td rowspan=2>
-                            <textarea name="moreFields[0][question]" placeholder="Enter question" class="form-control" rows="3" cols="40"/></textarea>
-                        </td>  
-                        <td>
-                            <input type="hidden" name="moreFields[0][options]" value="" class="form-control" />
-                            <p>Option</p>
-                        </td>  
-                        <td>Child ID</td>        
-                        <td>
-                            <button type="button" name="opt_add" id="optadd_0" class="btn btn-success" style="display:block;" onclick="addoption(this)">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                            </button>
-                        </td>
-                        <td rowspan=2></td>
-                    </tr>  
-                    <tr class="qid1">
-                        <td><input type="text" name="option[0]" value="" class="form-control"/></td>
-                        <td><input type="text" name="child_id[0]" value="" class="form-control"/></td>
-                        <td></td>
-                    </tr>
-                    
-                   
+                    <thead>
+                        <tr>
+                            <th>Question ID</th>
+                            <th>Question</th>
+                            <th colspan=6>Options</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>       
+                    <tbody></tbody>
                 </table> 
                 <button type="submit" class="btn btn-success" onclick="parse_option()">Save</button>
             </form>
@@ -125,21 +115,120 @@
 </div>
 
 <script type="text/javascript">
+    var questiondata = [
+        {
+            question_type: "master",
+            question_id: "1632154994581",
+            question: "Are you looking to save on your monthly loan payments?",
+            options: "Yes!:1632155049013|No, I like paying more.:0",
+            form_id: 1
+        },
+        {
+            question_type: "child",
+            question_id: "1632155049013",
+            question: "What are you looking for specifically?",
+            options: "Better rates :1632155073352|loan consolidation:1632155073352",
+            form_id: 1
+        },
+        {
+            question_type: "child",
+            question_id: "1632155073352",
+            question: "What is your loan amount?",
+            options: "Less than 1,00,000 Ruppes:0|Greater than 1,00,000:0",
+            form_id: 1
+        }
+    ];
+
+
+
     var optcount = [];
     var ct = 0;
+
+    function ckbox(obj) {
+        var tr_class = $(obj).parents('tr').attr('class');
+        $('#dynamicAddRemove .'+tr_class+' input[type=checkbox]').not(obj).prop('checked', false);
+        
+    }
+
+    $(document).ready(function(){
+        //var questiondata = @json($question ?? '');
+        var form_id = $("#form_id option:selected").val();
+
+        for(var i = 0; i < questiondata.length; i++){
+            var QusId = questiondata[i].question_id;
+            var Qus_type = questiondata[i].question_type;
+            var Qus = questiondata[i].question;
+
+            var rowspan = 1;
+            
+            var opt_result = "";
+            var raw_option = questiondata[i].options;
+            var tarray = raw_option.split("|");
+            var option_text, option_value;
+            for(var j = 0; j < tarray.length; j++){
+                var varray = tarray[j].split(":");
+                
+                option_text = varray[0];
+                option_value = varray[1];
+
+                opt_result += '<tr class="tr_'+QusId+'"><td><input type="text" name="option['+QusId+']['+j+']" value="'+option_text+'" class="form-control"/></td>';
+                opt_result += '<td><input type="text" name="child_id['+QusId+']['+j+']" value="'+option_value+'" class="form-control"/></td>';
+                opt_result += '<td><input type="checkbox" name="last_node['+QusId+']['+j+']" onclick="ckbox(this);"/></td>';
+                opt_result += '<td><input type="number" name="number['+QusId+']['+j+']" value="" class="form-control" style="display:none;"/></td>';
+                opt_result += '<td><input type="text" name="message['+QusId+']['+j+']" value="" class="form-control" style="display:none;"/></td>';
+
+                if(j == 0){
+                    opt_result += '<td></td></tr>';
+                } else {
+                    opt_result += '<td><button type="button" name="opt_remove" id="optremove_'+j+'" class="btn btn-danger remove-opt-tr" style="display:block;">'
+                    opt_result += '<i class="fa fa-times" aria-hidden="true"></i></button></td></tr>';
+                }
+                rowspan++;
+            }
+
+            var result = '<tr class="tr_'+QusId+'"><td rowspan='+rowspan+'><input type="text" name="moreFields['+ct+'][question_id]" value="'+QusId+'" class="form-control" readonly/>';
+            result += '<input type="hidden" name="moreFields['+ct+'][form_id]" value="'+form_id+'" class="form-control" />';
+            result += '<input type="hidden" name="moreFields['+ct+'][question_type]" value="'+Qus_type+'" class="form-control" /></td>';
+            result += '<td rowspan='+rowspan+'><textarea name="moreFields['+ct+'][question]" class="form-control" rows="3" cols="40"/>'+Qus+'</textarea></td>';
+            result += '<td><input type="hidden" name="moreFields['+ct+'][options]" value="" class="form-control" /><p>Option</p></td>';
+            result += '<td>Child ID</td>';
+            result += '<td>Last Node</td>';
+            result += '<td>Number</td>';
+            result += '<td>Message</td>';
+            result += '<td><button type="button" name="opt_add" id="optadd_'+ct+'" class="btn btn-success optadd_'+QusId+'" style="display:block;" onclick="addoption(this)">';
+            result += '<i class="fa fa-plus" aria-hidden="true"></i></button></td>';
+
+            if(i == 0){
+                result += '<td rowspan='+rowspan+'></td></tr>';
+            } else {
+                result += '<td rowspan='+rowspan+'><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr>';
+            }
+
+            result += opt_result;
+
+            $("#dynamicAddRemove tbody").append(result);
+            
+            var otc = rowspan - 2;
+            optcount.push({
+                "qid" : QusId,
+                "optcount" : otc
+            });
+
+            ct++;
+        }
+
+        // console.log(questiondata);
+        // var qts = @json($question ?? '');
+        // var form = @json($forms ?? '');
+        // console.log(qts);
+        // console.log(form);
+
+    });
 
     $("#add-btn").click(function(){
         ++ct;
         console.log(ct);
         var form_id = $("#form_id option:selected").val();
-
-        // var result = '<tr><td><input type="text" name="moreFields['+i+'][question_id]" value="'+Date.now()+'" class="form-control" readonly/>';
-        // result += '<input type="hidden" name="moreFields['+i+'][form_id]" value="'+form_id+'" class="form-control" />';
-        // result += '<input type="hidden" name="moreFields['+i+'][question_type]" value="" class="form-control" /></td>';
-        // result += '<td><input type="text" name="moreFields['+i+'][question]" placeholder="Enter question" class="form-control" /></td>';
-        // result += '<td><select class="opt form-control" name="options['+i+']" multiple="multiple" id="opt'+i+'" onchange="parse_option(this)"></select>';
-        // result += '<input type="hidden" name="moreFields['+i+'][options]" value="" class="form-control" /></td>';
-        // result += '<td><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr>';
 
         var QusId = Date.now();
         console.log("Question ID: "+QusId);
@@ -163,7 +252,7 @@
         result += '<td><input type="text" name="child_id['+QusId+'][0]" value="" class="form-control"/></td>';
         result += '<td></td></tr>';
 
-        $("#dynamicAddRemove").append(result);
+        $("#dynamicAddRemove tbody").append(result);
     });
 
     $(document).on('click', '.remove-tr', function(){  
@@ -184,31 +273,7 @@
         //$(this).parents('tr').remove();
     });  
 
-    $(document).ready(function(){
-        var qid1 = Date.now();
-        optcount.push({
-            "qid" : qid1,
-            "optcount" : 0
-        });
-
-        $("input[name='moreFields[0][question_id]']").val(qid1);
-        $(".qid1").attr("class","tr_"+qid1);
-        $("#optadd_0").addClass("optadd_"+qid1);
-        console.log($(".tr_"+qid1).length);
-
-        $(".tr_"+qid1+":last td:eq(0) input").attr("name","option["+qid1+"][0]");
-        $(".tr_"+qid1+":last td:eq(1) input").attr("name","child_id["+qid1+"][0]");
-
-
-        $("#form_id").change(function(){
-            console.log($("#form_id").val());
-            if($("#form_id").val() != 777){
-                $("#dynamicAddRemove").css("display","block");
-            } else {
-                $("#dynamicAddRemove").css("display","none");
-            }
-        });
-    });
+    
     
     function addoption(addbtn){
         var qid = $(addbtn).attr('class');
