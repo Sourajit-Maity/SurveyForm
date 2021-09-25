@@ -8,16 +8,16 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <style>
-    /* th,td{
-        min-width:500px !important;
-    } */
+    th,td{
+        min-width:200px !important;
+    }
 
-    th:nth-child(1) {
+    /* th:nth-child(1) {
         min-width:150px !important;
     }
     th:nth-child(2) {
         min-width:250px !important;
-    }
+    } */
     /* td:nth-child(3){
         min-width:200px !important;
     }
@@ -115,29 +115,29 @@
 </div>
 
 <script type="text/javascript">
-    var questiondata = [
-        {
-            question_type: "master",
-            question_id: "1632154994581",
-            question: "Are you looking to save on your monthly loan payments?",
-            options: "Yes!:1632155049013|No, I like paying more.:0",
-            form_id: 1
-        },
-        {
-            question_type: "child",
-            question_id: "1632155049013",
-            question: "What are you looking for specifically?",
-            options: "Better rates :1632155073352|loan consolidation:1632155073352",
-            form_id: 1
-        },
-        {
-            question_type: "child",
-            question_id: "1632155073352",
-            question: "What is your loan amount?",
-            options: "Less than 1,00,000 Ruppes:0|Greater than 1,00,000:0",
-            form_id: 1
-        }
-    ];
+    // var questiondata = [
+    //     {
+    //         question_type: "master",
+    //         question_id: "1632154994581",
+    //         question: "Are you looking to save on your monthly loan payments?",
+    //         options: "Yes!:1632155049013|No, I like paying more.:0",
+    //         form_id: 1
+    //     },
+    //     {
+    //         question_type: "child",
+    //         question_id: "1632155049013",
+    //         question: "What are you looking for specifically?",
+    //         options: "Better rates :1632155073352|loan consolidation:1632155073352",
+    //         form_id: 1
+    //     },
+    //     {
+    //         question_type: "child",
+    //         question_id: "1632155073352",
+    //         question: "What is your loan amount?",
+    //         options: "Less than 1,00,000 Ruppes:0|Greater than 1,00,000:0",
+    //         form_id: 1
+    //     }
+    // ];
 
 
 
@@ -147,11 +147,11 @@
     function ckbox(obj) {
         var tr_class = $(obj).parents('tr').attr('class');
         $('#dynamicAddRemove .'+tr_class+' input[type=checkbox]').not(obj).prop('checked', false);
-        
+
     }
 
     $(document).ready(function(){
-        //var questiondata = @json($question ?? '');
+        var questiondata = @json($allquestion ?? '');
         var form_id = $("#form_id option:selected").val();
 
         for(var i = 0; i < questiondata.length; i++){
