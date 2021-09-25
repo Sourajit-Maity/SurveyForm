@@ -161,7 +161,11 @@
 			<section id="start-question">
 				<div id="header-hero" class="card-header"> 
 					<div class="profile"> 
-						<img src="https://pbs.twimg.com/profile_images/502400607508910081/d6fnv5-2.jpeg"> 
+					@if (isset($company_logo))
+						<img src="{{url('assets/logos')}}/{{$company_logo}}"> 
+					@else <span></span>
+					
+                    @endif
 					</div>
 				Fill basic info </div>
 				<div class="card-body">
