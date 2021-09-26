@@ -110,7 +110,7 @@ class QuestionController extends Controller
         $allquestion = Question::where('form_id', $question->form_id)->get();
         $childquestion = Question::where('form_id', $question->form_id)->where('question_type', 'child')->get();
         Log::debug("childquestion".print_r($childquestion,true));
-        return view('question.edit',compact('question','forms','allquestion','childquestion'));
+        return view('question.edit',compact('question','forms','allquestion','childquestion')); 
     }
 
     /**
