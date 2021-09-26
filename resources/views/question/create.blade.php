@@ -74,8 +74,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="text-right">
-                            <button type="button" name="add" id="add-btn" class="btn btn-success" style="display:block;margin-left:auto
-                            ;">Add More</button>
+                            <button type="button" name="add" id="add-btn" class="btn btn-success" style="display:block;margin-left:auto;">Add More</button>
                         </div>
                     </div>
                 </div>
@@ -102,7 +101,10 @@
                             <input type="hidden" name="moreFields[0][options]" value="" class="form-control" />
                             <p>Option</p>
                         </td>  
-                        <td>Child ID</td>        
+                        <td>Child ID</td>     
+                        <td>Last Node</td>;
+                        <td>Number</td>;
+                        <td>Message</td>;   
                         <td>
                             <button type="button" name="opt_add" id="optadd_0" class="btn btn-success" style="display:block;" onclick="addoption(this)">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
@@ -113,6 +115,9 @@
                     <tr class="qid1">
                         <td><input type="text" name="option[0]" value="" class="form-control"/></td>
                         <td><input type="text" name="child_id[0]" value="" class="form-control"/></td>
+                        <td><input type="checkbox" name="last_node[0]" onclick="ckbox(this);"/></td>';
+                        <td></td>;
+                        <td></td>;
                         <td></td>
                     </tr>
                     
@@ -127,6 +132,42 @@
 <script type="text/javascript">
     var optcount = [];
     var ct = 0;
+
+    function ckbox(obj) {
+        var tr_class = $(obj).parents('tr').attr('class');
+        $('#dynamicAddRemove .'+tr_class+' input[type=checkbox]').not(obj).prop('checked', false);
+
+        var obj_name = $(obj).attr('name');
+        console.log(obj_name);
+
+        var obj_questionid = obj_name.substring(
+            obj_name.indexOf("[") + 1, 
+            obj_name.indexOf("]")
+        );
+        console.log(obj_questionid);
+
+        var obj_num = obj_name.substring(
+            obj_name.split("[", 2).join("[").length + 1, 
+            obj_name.lastIndexOf("]")
+        );
+        console.log(obj_num);
+
+        var num_string = '<input type="number" name="number['+obj_questionid+']['+obj_num+']" value="" class="form-control"/>';
+        var message_string = '<input type="text" name="message['+obj_questionid+']['+obj_num+']" value="" class="form-control"/>';
+
+        $(obj).parents('td').closest('td').next().html(num_string);
+        $(obj).parents('td').closest('td').next().next().html(message_string);
+
+        $('#dynamicAddRemove .'+tr_class+' input[type=checkbox]').not(obj).parents('td').closest('td').next().html('');
+        $('#dynamicAddRemove .'+tr_class+' input[type=checkbox]').not(obj).parents('td').closest('td').next().next().html('');
+
+        // var obj_stat = $('#dynamicAddRemove .'+tr_class+' input[type=checkbox]').prop('checked');
+        // if(obj_stat == false){
+        //     $('#dynamicAddRemove .'+tr_class+' input[type=checkbox]').parents('td').closest('td').next().html('');
+        //     $('#dynamicAddRemove .'+tr_class+' input[type=checkbox]').parents('td').closest('td').next().next().html('');
+        // }
+
+    }
 
     $("#add-btn").click(function(){
         ++ct;
@@ -155,12 +196,18 @@
         result += '<td rowspan=2><textarea name="moreFields['+ct+'][question]" placeholder="Enter question" class="form-control" rows="3" cols="40"/></textarea></td>';
         result += '<td><input type="hidden" name="moreFields['+ct+'][options]" value="" class="form-control" /><p>Option</p></td>';
         result += '<td>Child ID</td>';
+        result += '<td>Last Node</td>';
+        result += '<td>Number</td>';
+        result += '<td>Message</td>';
         result += '<td><button type="button" name="opt_add" id="optadd_'+ct+'" class="btn btn-success optadd_'+QusId+'" style="display:block;" onclick="addoption(this)">';
         result += '<i class="fa fa-plus" aria-hidden="true"></i></button></td>';
         result += '<td rowspan=2><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr>';
 
         result += '<tr class="tr_'+QusId+'"><td><input type="text" name="option['+QusId+'][0]" value="" class="form-control"/></td>';
         result += '<td><input type="text" name="child_id['+QusId+'][0]" value="" class="form-control"/></td>';
+        result += '<td><input type="checkbox" name="last_node['+QusId+'][0]" onclick="ckbox(this);"/></td>';
+        result += '<td></td>';
+        result += '<td></td>';
         result += '<td></td></tr>';
 
         $("#dynamicAddRemove").append(result);
@@ -198,6 +245,7 @@
 
         $(".tr_"+qid1+":last td:eq(0) input").attr("name","option["+qid1+"][0]");
         $(".tr_"+qid1+":last td:eq(1) input").attr("name","child_id["+qid1+"][0]");
+        $(".tr_"+qid1+":last td:eq(2) input").attr("name","last_node["+qid1+"][0]");
 
 
         $("#form_id").change(function(){
@@ -254,13 +302,16 @@
 
         var result = '<tr class="tr_'+QuestionID+'"><td><input type="text" name="option['+QuestionID+']['+count+']" value="" class="form-control"/></td>';
         result += '<td><input type="text" name="child_id['+QuestionID+']['+count+']" value="" class="form-control"/></td>';
+        result += '<td><input type="checkbox" name="last_node['+QuestionID+']['+count+']" onclick="ckbox(this);"/></td>';
+        result += '<td></td>';
+        result += '<td></td>';
         result += '<td><button type="button" name="opt_remove" id="optremove_0" class="btn btn-danger remove-opt-tr" style="display:block;">';
         result += '<i class="fa fa-times" aria-hidden="true"></i></button></td></tr>';
 
         var rowspan = $('.tr_'+QuestionID+':first td:eq(0)').attr('rowspan');
         console.log("rowspan: "+rowspan);
         rowspan++;
-        $('.tr_'+QuestionID+':first td:eq(0), .tr_'+QuestionID+':first td:eq(1), .tr_'+QuestionID+':first td:eq(5)').attr('rowspan',rowspan);
+        $('.tr_'+QuestionID+':first td:eq(0), .tr_'+QuestionID+':first td:eq(1), .tr_'+QuestionID+':first td:eq(8)').attr('rowspan',rowspan);
         $('.tr_'+QuestionID).last().after(result);
     }
 
@@ -283,7 +334,7 @@
         var rowspan = $('.tr_'+qid2+':first td:eq(0)').attr('rowspan');
         console.log("rowspan: "+rowspan);
         rowspan--;
-        $('.tr_'+qid2+':first td:eq(0), .tr_'+qid2+':first td:eq(1), .tr_'+qid2+':first td:eq(5)').attr('rowspan',rowspan);
+        $('.tr_'+qid2+':first td:eq(0), .tr_'+qid2+':first td:eq(1), .tr_'+qid2+':first td:eq(8)').attr('rowspan',rowspan);
 
         $(this).parents('tr').remove();
         console.log(optcount);
@@ -295,6 +346,7 @@
             var t = y - 1;
             $("."+class1+":eq("+y+") td:eq(0) input").attr("name", "option["+qid2+"]["+t+"]");
             $("."+class1+":eq("+y+") td:eq(1) input").attr("name", "child_id["+qid2+"]["+t+"]");
+            $("."+class1+":eq("+y+") td:eq(2) input").attr("name", "last_node["+qid2+"]["+t+"]");
         }
         
     });
@@ -321,15 +373,28 @@
                 //console.log("Question id: "+Qid3+" count: "+y);
                 var toption = $("input[name='option["+Qid3+"]["+y+"]']").val();
                 var tchild_id = $("input[name='child_id["+Qid3+"]["+y+"]']").val();
+                var tlast_node = $("input[name='last_node["+Qid3+"]["+y+"]']").prop("checked");
+
                 if(tchild_id == ""){
                     tchild_id = "0";
                 }
 
-                if(y == 0){
-                    final_opt = toption + ":" + tchild_id;
+                if(tlast_node == false){
+                    if(y == 0){
+                        final_opt = toption + ":" + tchild_id;
+                    } else {
+                        final_opt += "|"+toption + ":" + tchild_id;
+                    }
                 } else {
-                    final_opt += "|"+toption + ":" + tchild_id;
-                }
+                    var tnumber = $("input[name='number["+Qid3+"]["+y+"]").val();
+                    var tmessage = $("input[name='message["+Qid3+"]["+y+"]']").val();
+
+                    if(y == 0){
+                        final_opt = toption + ":" + tchild_id + ":" + tnumber + ":" + tmessage;
+                    } else {
+                        final_opt += "|"+toption + ":" + tchild_id + ":" + tnumber + ":" + tmessage;
+                    }
+                }   
             }
             $(".tr_"+Qid3+":first td:eq(2) input").val(final_opt);
             console.log(final_opt);

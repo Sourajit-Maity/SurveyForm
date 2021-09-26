@@ -354,6 +354,9 @@
 
 			var tarray = raw_option.split("|");
 			var option_text, option_value;
+			var option_lastnode = false;
+            var option_number = "";
+            var option_message = "";
 			for(var i = 0; i < tarray.length; i++){
 				var varray = tarray[i].split(":");
 				
@@ -361,6 +364,15 @@
 				option_value = varray[1];
 
 				result += "<label class='options'>"+option_text+" <input type='radio' name='"+question_id+"' value='"+option_value+":"+option_text+"'><span class='checkmark'></span> </label>";
+
+				if(varray.length == 4){
+                    option_lastnode = true;
+                    option_number = varray[2];
+                    option_message = varray[3];
+
+					result += "<div class='alert alert-primary' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;'>"+option_message+"</div>";
+				}
+
 			}
 			result += "</div> </div>";
 			$("#question-data").html(result);
