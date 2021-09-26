@@ -60,7 +60,7 @@
         <div class="card-header"></div>
         <div class="card-body">
             
-            <form action="{{ route('question.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('question.destroy',$question->id) }}" method="GET" enctype="multipart/form-data">
             <!-- <form> -->
                 @csrf
                 @if ($errors->any())

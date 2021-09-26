@@ -142,9 +142,18 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
-        $question->delete();
+        //$question->delete();
+        $allquestion = Question::where('form_id', $question->form_id)->delete();
     
         return redirect()->route('question.index')
                         ->with('success','question deleted successfully');
+    }
+
+    public function deleteQuestion(Request $request,$id)
+    {
+
+        Question::where('form_id', $question->form_id)->delete();
+        
+        return Redirect::back();
     }
 }

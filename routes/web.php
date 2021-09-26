@@ -42,4 +42,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('form', FormController::class);
     Route::resource('companys', CompanyController::class);
     Route::resource('results', ResultController::class);
+    Route::get('/deletequestion/{id}', [QuestionController::class, 'deleteQuestion'])->name('deletequestion');
+
 });
