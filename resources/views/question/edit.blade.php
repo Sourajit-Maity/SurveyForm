@@ -8,7 +8,11 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <style>
-    th,td{
+    /* th,td{
+        min-width:200px !important;
+    } */
+
+    tbody tr td{
         min-width:200px !important;
     }
 
@@ -60,7 +64,11 @@
         <div class="card-header"></div>
         <div class="card-body">
             
+<<<<<<< HEAD
             <form action="{{ route('question.destroy',$question->id) }}" method="GET" enctype="multipart/form-data">
+=======
+            <form action="{{ route('question.update','$question->id') }}" method="POST" enctype="multipart/form-data">
+>>>>>>> f1f78e9ef99d495d3e21cd7fd7d4e7e2b5b13c49
             <!-- <form> -->
                 @csrf
                 @if ($errors->any())
@@ -80,13 +88,8 @@
                 @endif
                 <div class="row">
                     <div class="col-md-6">
-                        <select name="form_id" id="form_id" class="field-style field-split25 align-left  form-control" style="width:200px;" onchange="form_parse()">
-                                <option value="{{$forms[0]->id}}" disable selected>{{$forms[0]->form_name}} </option>
-                            <!-- @foreach($forms as $data)
-                                <option value="{{$data->id}}">{{$data->form_name}}</option>
-                            @endforeach  -->
-                                
-                        </select> 
+                        <strong>Form name:</strong>
+                        <input type="text" name="tform_id" value="{{$forms[0]->id}}" class="form-control" readonly style="width:100px;"/>
                     </div>
                     <div class="col-md-6">
                         <div class="text-right">
@@ -144,15 +147,55 @@
     var optcount = [];
     var ct = 0;
 
+
     function ckbox(obj) {
         var tr_class = $(obj).parents('tr').attr('class');
         $('#dynamicAddRemove .'+tr_class+' input[type=checkbox]').not(obj).prop('checked', false);
+
+        var obj_name = $(obj).attr('name');
+        console.log(obj_name);
+
+        var obj_questionid = obj_name.substring(
+            obj_name.indexOf("[") + 1, 
+            obj_name.indexOf("]")
+        );
+        console.log(obj_questionid);
+
+        var obj_num = obj_name.substring(
+            obj_name.split("[", 2).join("[").length + 1, 
+            obj_name.lastIndexOf("]")
+        );
+        console.log(obj_num);
+
+        var num_string = '<input type="number" name="number['+obj_questionid+']['+obj_num+']" value="" class="form-control"/>';
+        var message_string = '<input type="text" name="message['+obj_questionid+']['+obj_num+']" value="" class="form-control"/>';
+
+        $(obj).parents('td').closest('td').next().html(num_string);
+        $(obj).parents('td').closest('td').next().next().html(message_string);
+
+        $('#dynamicAddRemove .'+tr_class+' input[type=checkbox]').not(obj).parents('td').closest('td').next().html('');
+        $('#dynamicAddRemove .'+tr_class+' input[type=checkbox]').not(obj).parents('td').closest('td').next().next().html('');
+
+        // var obj_stat = $('#dynamicAddRemove .'+tr_class+' input[type=checkbox]').prop('checked');
+        // if(obj_stat == false){
+        //     $('#dynamicAddRemove .'+tr_class+' input[type=checkbox]').parents('td').closest('td').next().html('');
+        //     $('#dynamicAddRemove .'+tr_class+' input[type=checkbox]').parents('td').closest('td').next().next().html('');
+        // }
 
     }
 
     $(document).ready(function(){
         var questiondata = @json($allquestion ?? '');
         var form_id = $("#form_id option:selected").val();
+
+        var tform_id = questiondata[0].form_id;
+        var forms = @json($forms ?? '');
+        for(var x = 0; x < forms.length; x++){
+            if(tform_id == forms[x].id){
+                var form_name = forms[x].form_name;
+                $("input[name='tform_id']").val(form_name);
+            }
+        }
 
         for(var i = 0; i < questiondata.length; i++){
             var QusId = questiondata[i].question_id;
@@ -165,6 +208,9 @@
             var raw_option = questiondata[i].options;
             var tarray = raw_option.split("|");
             var option_text, option_value;
+            var option_lastnode = false;
+            var option_number = "";
+            var option_message = "";
             for(var j = 0; j < tarray.length; j++){
                 var varray = tarray[j].split(":");
                 
@@ -173,9 +219,21 @@
 
                 opt_result += '<tr class="tr_'+QusId+'"><td><input type="text" name="option['+QusId+']['+j+']" value="'+option_text+'" class="form-control"/></td>';
                 opt_result += '<td><input type="text" name="child_id['+QusId+']['+j+']" value="'+option_value+'" class="form-control"/></td>';
-                opt_result += '<td><input type="checkbox" name="last_node['+QusId+']['+j+']" onclick="ckbox(this);"/></td>';
-                opt_result += '<td><input type="number" name="number['+QusId+']['+j+']" value="" class="form-control" style="display:none;"/></td>';
-                opt_result += '<td><input type="text" name="message['+QusId+']['+j+']" value="" class="form-control" style="display:none;"/></td>';
+                
+                if(varray.length == 4){
+                    option_lastnode = true;
+                    option_number = varray[2];
+                    option_message = varray[3];
+
+                    opt_result += '<td><input type="checkbox" name="last_node['+QusId+']['+j+']" onclick="ckbox(this);" checked/></td>';
+                    opt_result += '<td><input type="number" name="number['+QusId+']['+j+']" value="'+option_number+'" class="form-control"/></td>';
+                    opt_result += '<td><input type="text" name="message['+QusId+']['+j+']" value="'+option_message+'" class="form-control"/></td>';
+                } else{
+                    opt_result += '<td><input type="checkbox" name="last_node['+QusId+']['+j+']" onclick="ckbox(this);"/></td>';
+                    opt_result += '<td></td>';
+                    opt_result += '<td></td>';
+                }
+                
 
                 if(j == 0){
                     opt_result += '<td></td></tr>';
@@ -244,12 +302,18 @@
         result += '<td rowspan=2><textarea name="moreFields['+ct+'][question]" placeholder="Enter question" class="form-control" rows="3" cols="40"/></textarea></td>';
         result += '<td><input type="hidden" name="moreFields['+ct+'][options]" value="" class="form-control" /><p>Option</p></td>';
         result += '<td>Child ID</td>';
+        result += '<td>Last Node</td>';
+        result += '<td>Number</td>';
+        result += '<td>Message</td>';
         result += '<td><button type="button" name="opt_add" id="optadd_'+ct+'" class="btn btn-success optadd_'+QusId+'" style="display:block;" onclick="addoption(this)">';
         result += '<i class="fa fa-plus" aria-hidden="true"></i></button></td>';
         result += '<td rowspan=2><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr>';
 
         result += '<tr class="tr_'+QusId+'"><td><input type="text" name="option['+QusId+'][0]" value="" class="form-control"/></td>';
         result += '<td><input type="text" name="child_id['+QusId+'][0]" value="" class="form-control"/></td>';
+        result += '<td><input type="checkbox" name="last_node['+QusId+'][0]" onclick="ckbox(this);"/></td>';
+        result += '<td></td>';
+        result += '<td></td>';
         result += '<td></td></tr>';
 
         $("#dynamicAddRemove tbody").append(result);
@@ -319,13 +383,16 @@
 
         var result = '<tr class="tr_'+QuestionID+'"><td><input type="text" name="option['+QuestionID+']['+count+']" value="" class="form-control"/></td>';
         result += '<td><input type="text" name="child_id['+QuestionID+']['+count+']" value="" class="form-control"/></td>';
+        result += '<td><input type="checkbox" name="last_node['+QuestionID+']['+count+']" onclick="ckbox(this);"/></td>';
+        result += '<td></td>';
+        result += '<td></td>';
         result += '<td><button type="button" name="opt_remove" id="optremove_0" class="btn btn-danger remove-opt-tr" style="display:block;">';
         result += '<i class="fa fa-times" aria-hidden="true"></i></button></td></tr>';
-
+        
         var rowspan = $('.tr_'+QuestionID+':first td:eq(0)').attr('rowspan');
         console.log("rowspan: "+rowspan);
         rowspan++;
-        $('.tr_'+QuestionID+':first td:eq(0), .tr_'+QuestionID+':first td:eq(1), .tr_'+QuestionID+':first td:eq(5)').attr('rowspan',rowspan);
+        $('.tr_'+QuestionID+':first td:eq(0), .tr_'+QuestionID+':first td:eq(1), .tr_'+QuestionID+':first td:eq(8)').attr('rowspan',rowspan);
         $('.tr_'+QuestionID).last().after(result);
     }
 
@@ -348,7 +415,7 @@
         var rowspan = $('.tr_'+qid2+':first td:eq(0)').attr('rowspan');
         console.log("rowspan: "+rowspan);
         rowspan--;
-        $('.tr_'+qid2+':first td:eq(0), .tr_'+qid2+':first td:eq(1), .tr_'+qid2+':first td:eq(5)').attr('rowspan',rowspan);
+        $('.tr_'+qid2+':first td:eq(0), .tr_'+qid2+':first td:eq(1), .tr_'+qid2+':first td:eq(8)').attr('rowspan',rowspan);
 
         $(this).parents('tr').remove();
         console.log(optcount);
@@ -386,15 +453,28 @@
                 //console.log("Question id: "+Qid3+" count: "+y);
                 var toption = $("input[name='option["+Qid3+"]["+y+"]']").val();
                 var tchild_id = $("input[name='child_id["+Qid3+"]["+y+"]']").val();
+                var tlast_node = $("input[name='last_node["+Qid3+"]["+y+"]']").prop("checked");
+
                 if(tchild_id == ""){
                     tchild_id = "0";
                 }
 
-                if(y == 0){
-                    final_opt = toption + ":" + tchild_id;
+                if(tlast_node == false){
+                    if(y == 0){
+                        final_opt = toption + ":" + tchild_id;
+                    } else {
+                        final_opt += "|"+toption + ":" + tchild_id;
+                    }
                 } else {
-                    final_opt += "|"+toption + ":" + tchild_id;
-                }
+                    var tnumber = $("input[name='number["+Qid3+"]["+y+"]").val();
+                    var tmessage = $("input[name='message["+Qid3+"]["+y+"]']").val();
+
+                    if(y == 0){
+                        final_opt = toption + ":" + tchild_id + ":" + tnumber + ":" + tmessage;
+                    } else {
+                        final_opt += "|"+toption + ":" + tchild_id + ":" + tnumber + ":" + tmessage;
+                    }
+                }   
             }
             $(".tr_"+Qid3+":first td:eq(2) input").val(final_opt);
             console.log(final_opt);

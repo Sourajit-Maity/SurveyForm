@@ -122,14 +122,26 @@ class QuestionController extends Controller
      */
     public function update(Request $request, Question $question)
     {
-        //  request()->validate([
-        //     'name' => 'required',
-        //     'detail' => 'required',
-        // ]);
+        //$question->delete();
+        $allquestion = Question::where('form_id', $question->form_id)->delete();
+        // $request->validate([
+        //     'moreFields.*.form_id' => 'required',
+        //     'moreFields.*.question_type' => 'required',
+        //     'moreFields.*.question' => 'required',
+        //     'moreFields.*.options' => 'required',
+        //     'moreFields.*.question_id' => 'required',
+
+            
+        // ]); 
+    
+        // foreach ($request->moreFields as $key => $value) {
+        //     Question::create($value);
+        // }
+    
 
         Log::debug("question".print_r($request->all(),true));
     
-        // $question->update($request->all());
+        
     
         return redirect()->route('question.index')
                         ->with('success','question updated successfully');
