@@ -64,11 +64,7 @@
         <div class="card-header"></div>
         <div class="card-body">
             
-<<<<<<< HEAD
-            <form action="{{ route('question.destroy',$question->id) }}" method="GET" enctype="multipart/form-data">
-=======
-            <form action="{{ route('question.update','$question->id') }}" method="POST" enctype="multipart/form-data">
->>>>>>> f1f78e9ef99d495d3e21cd7fd7d4e7e2b5b13c49
+            <form action="{{ route('question.update',$question->id) }}" method="PUT" enctype="multipart/form-data">
             <!-- <form> -->
                 @csrf
                 @if ($errors->any())

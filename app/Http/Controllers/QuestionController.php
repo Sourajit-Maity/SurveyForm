@@ -109,7 +109,7 @@ class QuestionController extends Controller
         $forms = DB::table('forms')->get();
         $allquestion = Question::where('form_id', $question->form_id)->get();
         $childquestion = Question::where('form_id', $question->form_id)->where('question_type', 'child')->get();
-        Log::debug("childquestion".print_r($childquestion,true));
+       // Log::debug("childquestion".print_r($childquestion,true));
         return view('question.edit',compact('question','forms','allquestion','childquestion')); 
     }
 
@@ -122,8 +122,11 @@ class QuestionController extends Controller
      */
     public function update(Request $request, Question $question)
     {
-        //$question->delete();
-        $allquestion = Question::where('form_id', $question->form_id)->delete();
+        // $question->delete();
+        Log::debug("question".print_r($request->all(),true));
+    
+
+        //$allquestion = Question::where('id', $question->id)->delete();
         // $request->validate([
         //     'moreFields.*.form_id' => 'required',
         //     'moreFields.*.question_type' => 'required',
@@ -135,15 +138,13 @@ class QuestionController extends Controller
         // ]); 
     
         // foreach ($request->moreFields as $key => $value) {
-        //     Question::create($value);
+        //     Question::update($value);
+            $question->update($value);
         // }
     
 
-        Log::debug("question".print_r($request->all(),true));
-    
         
-    
-        return redirect()->route('question.index')
+               return redirect()->route('question.index')
                         ->with('success','question updated successfully');
     }
     /**
