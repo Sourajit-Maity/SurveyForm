@@ -21,6 +21,7 @@ class CreateQuestionsTable extends Migration
             $table->longText('options');
             $table->integer('form_id')->nullable();
             $table->integer('company_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

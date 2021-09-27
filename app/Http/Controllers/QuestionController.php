@@ -79,20 +79,20 @@ class QuestionController extends Controller
         $form_id = Question::where('id',$id)->value('form_id');
         // dd($form_id);
         $allquestion = Question::where('form_id', $form_id)->delete();
-        dd($allquestion);
-        // $request->validate([
-        //     'moreFields.*.form_id' => 'required',
-        //     'moreFields.*.question_type' => 'required',
-        //     'moreFields.*.question' => 'required',
-        //     'moreFields.*.options' => 'required',
-        //     'moreFields.*.question_id' => 'required',
+        //dd($allquestion);
+        $request->validate([
+            'moreFields.*.form_id' => 'required',
+            'moreFields.*.question_type' => 'required',
+            'moreFields.*.question' => 'required',
+            'moreFields.*.options' => 'required',
+            'moreFields.*.question_id' => 'required',
 
             
-        // ]); 
+        ]); 
     
-        // foreach ($request->moreFields as $key => $value) {
-        //     Question::create($value);
-        // }
+        foreach ($request->moreFields as $key => $value) {
+            Question::create($value);
+        }
    
         //dd($allquestion);
         Log::debug("question".print_r($request->all(),true));
