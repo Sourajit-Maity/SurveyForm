@@ -42,4 +42,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('form', FormController::class);
     Route::resource('companys', CompanyController::class);
     Route::resource('results', ResultController::class);
+
+    Route::post('/store2/{id}', [QuestionController::class, 'store2'])->name('store2');
+
 });

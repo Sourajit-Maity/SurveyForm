@@ -29,7 +29,7 @@ class QuestionController extends Controller
     public function index()
     {
         $questions
-         = Question::where('question_type', 'master')->latest()->paginate(5);
+         = Question::where('deleted_at', NULL)->latest()->paginate(5);
         return view('question.index',compact('questions'))
             ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     }
@@ -53,6 +53,32 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
+        // $request->validate([
+        //     'moreFields.*.form_id' => 'required',
+        //     'moreFields.*.question_type' => 'required',
+        //     'moreFields.*.question' => 'required',
+        //     'moreFields.*.options' => 'required',
+        //     'moreFields.*.question_id' => 'required',
+
+            
+        // ]); 
+    
+        // foreach ($request->moreFields as $key => $value) {
+        //     Question::create($value);
+        // }
+        $allquestion = Question::where('form_id', $question->form_id)->delete();
+
+        Log::debug("question".print_r($request->all(),true));
+    
+        return redirect()->route('question.index')
+                        ->with('success','question created successfully.');
+    }
+
+    public function store2(Request $request,$id)
+    {   
+        $form_id = Question::where('id',$id)->value('form_id');
+        
+        $allquestion = Question::where('form_id', $form_id)->delete();
         $request->validate([
             'moreFields.*.form_id' => 'required',
             'moreFields.*.question_type' => 'required',
@@ -66,6 +92,9 @@ class QuestionController extends Controller
         foreach ($request->moreFields as $key => $value) {
             Question::create($value);
         }
+   
+        //dd($allquestion);
+        Log::debug("question".print_r($request->all(),true));
     
         return redirect()->route('question.index')
                         ->with('success','question created successfully.');
@@ -109,7 +138,7 @@ class QuestionController extends Controller
         $forms = DB::table('forms')->get();
         $allquestion = Question::where('form_id', $question->form_id)->get();
         $childquestion = Question::where('form_id', $question->form_id)->where('question_type', 'child')->get();
-        Log::debug("childquestion".print_r($childquestion,true));
+        //Log::debug("childquestion".print_r($childquestion,true));
         return view('question.edit',compact('question','forms','allquestion','childquestion')); 
     }
 
@@ -122,8 +151,8 @@ class QuestionController extends Controller
      */
     public function update(Request $request, Question $question)
     {
-        //$question->delete();
-        $allquestion = Question::where('form_id', $question->form_id)->delete();
+        // $question->delete();
+        // $allquestion = Question::where('form_id', $question->form_id)->delete();
         // $request->validate([
         //     'moreFields.*.form_id' => 'required',
         //     'moreFields.*.question_type' => 'required',
