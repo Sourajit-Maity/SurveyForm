@@ -64,7 +64,7 @@
         <div class="card-header"></div>
         <div class="card-body">
             
-            <form action="{{ route('question.update','$question->id') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('question.update',$question->id) }}" method="PUT" enctype="multipart/form-data">
             <!-- <form> -->
                 @csrf
                 @if ($errors->any())

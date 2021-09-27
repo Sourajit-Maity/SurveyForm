@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Form;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use App\Models\Question;
+use App\Models\Form;
+use App\Models\Company;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 
 class FormController extends Controller
@@ -119,11 +121,27 @@ class FormController extends Controller
 
     public function viewquestionform(Request $request,$id) 
     {
-        $questions = Question::get();
-        $formid = $id;
+       
+        //$formid = $id;
+        $q_id = Question::where('form_id', $id)->value('id');
+
+        $company_id = Auth::user()->company_id;
+        $user_name = Auth::user()->name;
+        $user_email = Auth::user()->email;
+        $company_name = Company::where('id',$company_id)->value('company_name');
+        $company_logo = Company::where('id',$company_id)->value('logo');
+        
+        //Log::debug("allid".print_r($company_id,true));
+        //$form_id = Question::where('id',$id)->value('form_id');
+
+        //$allquestion = Question::where('form_id',$form_id)->get();
+        $allquestion = Question::where('form_id','=',$id)->where('question_type','=','master')->get();
+        $questions = Question::get(); 
+        $formid = Question::where('id', $q_id)->value('form_id');
+        //$formid = $id;
 
         //Log::debug("qq".print_r($questions,true));
-        return view ('question.show',compact('questions','formid'));
+        return view ('question.show',compact('questions','formid','allquestion','company_logo','formid','company_name','company_id','user_name','user_email'));
     }
     public function getquestion($id)
     {

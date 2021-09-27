@@ -42,4 +42,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('form', FormController::class);
     Route::resource('companys', CompanyController::class);
     Route::resource('results', ResultController::class);
+    Route::get('/get-my-info', [UserController::class, 'getMyInfo'])->name('get-my-info');
+    Route::post('/submit-my-info', [UserController::class, 'updateMyInfo'])->name('submit-my-info');
+    Route::post('update-password', [UserController::class,'updatePassword'])->name('update-password');
+
+
 });
