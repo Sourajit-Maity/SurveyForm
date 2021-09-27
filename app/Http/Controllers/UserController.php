@@ -11,6 +11,9 @@ use DB;
 use Hash;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use App\Rules\MatchOldPassword;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
     
 class UserController extends Controller
 {
@@ -166,6 +169,8 @@ class UserController extends Controller
          // $company->update($request->all());
 
         $user->update($input);
+
+
         DB::table('model_has_roles')->where('model_id',$id)->delete();
     
         $user->assignRole($request->input('roles'));
@@ -186,4 +191,84 @@ class UserController extends Controller
         return redirect()->route('users.index')
                         ->with('success','User deleted successfully');
     }
+
+    public function getMyInfo()
+
+    {
+        $currentuserid = Auth::user()->id;
+
+        $company= Company::pluck("company_name","id");
+        // $empcompany= Company::select('companies.company_name as company','users.company_id as org_id')->
+        // join('companies', 'users.company_id', '=', 'companies.id')
+        // ->where('users.id',$currentuserid)->get(); 
+
+        //$users= DB::table('users')->get();
+
+        $users = User::findOrFail($currentuserid);
+ 
+        return view('myinfo.myinfo', compact('users','company') );
+    }
+ 
+ 
+    public function updateMyInfo(Request $request)
+    {
+        $this->validate($request, [
+
+            'name'  => 'required|string|max:120',
+            'company_id'  => 'required',
+            'email'  => 'required',
+            
+        ]);
+        $currentuserid = Auth::user()->id;
+
+
+        DB::beginTransaction();
+
+                    try {
+
+ 
+        $user= User::findOrFail($currentuserid);
+        $user->name= $request->get('name');
+        $user->email= $request->get('email');
+        $user->company_id= $request->get('company_id');
+        if ($request->hasFile('user_image')) {
+            $this->validate(request(), [
+                'user_image' => 'mimes:jpeg,jpg,png',
+            ], [
+                'user_image.mimes' => 'Image must be jpeg,jpg or png type.',
+            ]);
+
+        $fileName = time().'.'.$request->user_image->extension();  
+
+        $request->user_image->move(public_path('assets/images'), $fileName);
+        $user->user_image= $fileName;
+      }
+        
+
+        $user->update();
+        DB::commit();
+              
+    } 
+    catch (\Exception $e) {
+        DB::rollback();
+        
+    }
+        return Redirect::back()->with('success','Successfully Updated!');
+    }
+
+
+    public function updatePassword(Request $request)
+    {
+        
+        $request->validate([
+            'current_password' => ['required', new MatchOldPassword],
+            'new_password' => ['required'],
+            'new_confirm_password' => ['same:new_password'],
+        ]);
+   
+        User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
+   
+        return Redirect::back()->with('success','Successfully Updated!');
+    }
+
 }

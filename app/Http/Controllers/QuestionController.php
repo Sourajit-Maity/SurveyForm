@@ -29,7 +29,7 @@ class QuestionController extends Controller
     public function index()
     {
         $questions
-         = Question::where('deleted_at', NULL)->latest()->paginate(5);
+         = Question::latest()->paginate(5);
         return view('question.index',compact('questions'))
             ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     }
@@ -164,15 +164,16 @@ class QuestionController extends Controller
         // ]); 
     
         // foreach ($request->moreFields as $key => $value) {
-        //     Question::create($value);
+        //     Question::update($value);
+            //$question->update($value);
+
         // }
+
+        $question->update($request->all());
     
 
-        Log::debug("question".print_r($request->all(),true));
-    
         
-    
-        return redirect()->route('question.index')
+               return redirect()->route('question.index')
                         ->with('success','question updated successfully');
     }
     /**
@@ -183,9 +184,18 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
-        $question->delete();
+        //$question->delete();
+        $allquestion = Question::where('form_id', $question->form_id)->delete();
     
         return redirect()->route('question.index')
                         ->with('success','question deleted successfully');
+    }
+
+    public function deleteQuestion(Request $request,$id)
+    {
+
+        Question::where('form_id', $question->form_id)->delete();
+        
+        return Redirect::back();
     }
 }

@@ -273,6 +273,12 @@ return [
             'url'  => 'question',
             'icon' => 'fas fa-fw fa-lock',
         ],
+        [
+            'text' => 'My Info',
+            'url'  => 'get-my-info',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        
         // [
         //     'text'    => 'multilevel',
         //     'icon'    => 'fas fa-fw fa-share',

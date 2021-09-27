@@ -48,9 +48,9 @@
                                     
                                     <td>
                                         <form action="{{ route('form.destroy',$forms->id) }}" method="POST">
-                                        <!-- <a href="{{ route('view-question-forms',[$forms->id]) }}" class="btn btn-xs btn-success">
-                                    <i class="far fa-eye"></i></a> -->
-                                            <a class="btn btn-info" href="{{ route('form.show',$forms->id) }}">Show</a>
+                                        <a class="btn btn-success" href="{{ route('view-question-forms',[$forms->id]) }}" class="btn btn-xs btn-success">
+                                    Show</a>
+                                            <!-- <a class="btn btn-info" href="{{ route('form.show',$forms->id) }}">Show</a> -->
                                             @can('form-edit')
                                             <a class="btn btn-primary" href="{{ route('form.edit',$forms->id) }}">Edit</a>
                                             @endcan
