@@ -89,10 +89,10 @@
                         <input type="text" name="tform_id" value="" class="form-control" readonly style="width:100px;"/>
                     </div>
                     <div class="col-md-6">
-                        <div class="text-right">
+                        <!-- <div class="text-right">
                             <button type="button" name="add" id="add-btn" class="btn btn-success" style="display:block;margin-left:auto
                             ;">Add More</button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <br/>
