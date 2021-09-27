@@ -54,7 +54,7 @@
                                     <td>{!! \Carbon\Carbon::parse($question->created_at)->format('d M Y') !!}</td>
                                     <td>
                                         <form action="{{ route('question.destroy',$question->id) }}" method="POST">
-                                            <a class="btn btn-info" href="{{ route('question.show',$question->id) }}">Show</a>
+                                            <!-- <a class="btn btn-info" href="{{ route('question.show',$question->id) }}">Show</a> -->
                                             @can('question-edit')
                                             <a class="btn btn-primary" href="{{ route('question.edit',$question->id) }}">Edit</a>
                                             @endcan

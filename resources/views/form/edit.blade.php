@@ -28,7 +28,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Edit Company') }}</div>
+                <div class="card-header">{{ __('Edit Form') }}</div>
 
                 <div class="card-body">
                 <form action="{{ route('form.update',$form->id) }}" method="POST" enctype="multipart/form-data">

@@ -29,7 +29,7 @@ class QuestionController extends Controller
     public function index()
     {
         $questions
-         = Question::where('question_type', 'master')->latest()->paginate(5);
+         = Question::latest()->paginate(5);
         return view('question.index',compact('questions'))
             ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     }
@@ -110,7 +110,7 @@ class QuestionController extends Controller
         $allquestion = Question::where('form_id', $question->form_id)->get();
         $childquestion = Question::where('form_id', $question->form_id)->where('question_type', 'child')->get();
        // Log::debug("childquestion".print_r($childquestion,true));
-        return view('question.edit',compact('question','forms','allquestion','childquestion')); 
+        return view('question.edit2',compact('question','forms','allquestion','childquestion')); 
     }
 
     /**
@@ -139,8 +139,11 @@ class QuestionController extends Controller
     
         // foreach ($request->moreFields as $key => $value) {
         //     Question::update($value);
-            $question->update($value);
+            //$question->update($value);
+
         // }
+
+        $question->update($request->all());
     
 
         
