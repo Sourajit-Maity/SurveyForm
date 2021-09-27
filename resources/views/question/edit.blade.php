@@ -44,7 +44,8 @@
 
     function form_parse(){
         console.log("inside form_parse");
-        var form_id = $("#form_id option:selected").val();
+        //var form_id = $("#form_id option:selected").val();
+        var form_id = $("input[name='tform_id']").val();
         console.log(form_id);
 
         var rowCount = $('#dynamicAddRemove tr').length;
@@ -64,7 +65,7 @@
         <div class="card-header"></div>
         <div class="card-body">
             
-            <form action="{{ route('question.update',$question->id) }}" method="PUT" enctype="multipart/form-data">
+            <form action="{{ route('store2',$question->id) }}" method="POST" enctype="multipart/form-data">
             <!-- <form> -->
                 @csrf
                 @if ($errors->any())
@@ -85,7 +86,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <strong>Form name:</strong>
-                        <input type="text" name="tform_id" value="{{$forms[0]->id}}" class="form-control" readonly style="width:100px;"/>
+                        <input type="text" name="tform_id" value="" class="form-control" readonly style="width:100px;"/>
                     </div>
                     <div class="col-md-6">
                         <div class="text-right">
@@ -269,6 +270,13 @@
             });
 
             ct++;
+        }
+
+        var rowCount1 = $('#dynamicAddRemove tbody tr').length;
+        console.log("rowCount: "+rowCount1);
+        for(var j = 0; j < rowCount1-1; j++){
+            $("input[name='moreFields["+j+"][form_id]']").val(tform_id);
+            console.log($("input[name='moreFields["+j+"][form_id]']").val());
         }
 
         // console.log(questiondata);

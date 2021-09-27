@@ -84,7 +84,7 @@
                     <tr>
                         <th>Question ID</th>
                         <th>Question</th>
-                        <th colspan=3>Options</th>
+                        <th colspan=6>Options</th>
                         <th>Action</th>
                     </tr>
 

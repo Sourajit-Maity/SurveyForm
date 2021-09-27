@@ -66,6 +66,36 @@ class QuestionController extends Controller
         foreach ($request->moreFields as $key => $value) {
             Question::create($value);
         }
+        
+
+        Log::debug("question".print_r($request->all(),true));
+    
+        return redirect()->route('question.index')
+                        ->with('success','question created successfully.');
+    }
+
+    public function store2(Request $request,$id)
+    {   
+        $form_id = Question::where('id',$id)->value('form_id');
+        // dd($form_id);
+        $allquestion = Question::where('form_id', $form_id)->delete();
+        dd($allquestion);
+        // $request->validate([
+        //     'moreFields.*.form_id' => 'required',
+        //     'moreFields.*.question_type' => 'required',
+        //     'moreFields.*.question' => 'required',
+        //     'moreFields.*.options' => 'required',
+        //     'moreFields.*.question_id' => 'required',
+
+            
+        // ]); 
+    
+        // foreach ($request->moreFields as $key => $value) {
+        //     Question::create($value);
+        // }
+   
+        //dd($allquestion);
+        Log::debug("question".print_r($request->all(),true));
     
         return redirect()->route('question.index')
                         ->with('success','question created successfully.');
@@ -109,8 +139,8 @@ class QuestionController extends Controller
         $forms = DB::table('forms')->get();
         $allquestion = Question::where('form_id', $question->form_id)->get();
         $childquestion = Question::where('form_id', $question->form_id)->where('question_type', 'child')->get();
-       // Log::debug("childquestion".print_r($childquestion,true));
-        return view('question.edit2',compact('question','forms','allquestion','childquestion')); 
+        //Log::debug("childquestion".print_r($childquestion,true));
+        return view('question.edit',compact('question','forms','allquestion','childquestion')); 
     }
 
     /**
@@ -123,10 +153,7 @@ class QuestionController extends Controller
     public function update(Request $request, Question $question)
     {
         // $question->delete();
-        Log::debug("question".print_r($request->all(),true));
-    
-
-        //$allquestion = Question::where('id', $question->id)->delete();
+        // $allquestion = Question::where('form_id', $question->form_id)->delete();
         // $request->validate([
         //     'moreFields.*.form_id' => 'required',
         //     'moreFields.*.question_type' => 'required',
