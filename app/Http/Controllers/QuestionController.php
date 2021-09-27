@@ -53,32 +53,6 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'moreFields.*.form_id' => 'required',
-        //     'moreFields.*.question_type' => 'required',
-        //     'moreFields.*.question' => 'required',
-        //     'moreFields.*.options' => 'required',
-        //     'moreFields.*.question_id' => 'required',
-
-            
-        // ]); 
-    
-        // foreach ($request->moreFields as $key => $value) {
-        //     Question::create($value);
-        // }
-        $allquestion = Question::where('form_id', $question->form_id)->delete();
-
-        Log::debug("question".print_r($request->all(),true));
-    
-        return redirect()->route('question.index')
-                        ->with('success','question created successfully.');
-    }
-
-    public function store2(Request $request,$id)
-    {   
-        $form_id = Question::where('id',$id)->value('form_id');
-        
-        $allquestion = Question::where('form_id', $form_id)->delete();
         $request->validate([
             'moreFields.*.form_id' => 'required',
             'moreFields.*.question_type' => 'required',
@@ -92,6 +66,33 @@ class QuestionController extends Controller
         foreach ($request->moreFields as $key => $value) {
             Question::create($value);
         }
+        
+
+        Log::debug("question".print_r($request->all(),true));
+    
+        return redirect()->route('question.index')
+                        ->with('success','question created successfully.');
+    }
+
+    public function store2(Request $request,$id)
+    {   
+        $form_id = Question::where('id',$id)->value('form_id');
+        // dd($form_id);
+        $allquestion = Question::where('form_id', $form_id)->delete();
+        dd($allquestion);
+        // $request->validate([
+        //     'moreFields.*.form_id' => 'required',
+        //     'moreFields.*.question_type' => 'required',
+        //     'moreFields.*.question' => 'required',
+        //     'moreFields.*.options' => 'required',
+        //     'moreFields.*.question_id' => 'required',
+
+            
+        // ]); 
+    
+        // foreach ($request->moreFields as $key => $value) {
+        //     Question::create($value);
+        // }
    
         //dd($allquestion);
         Log::debug("question".print_r($request->all(),true));
