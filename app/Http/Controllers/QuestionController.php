@@ -29,7 +29,7 @@ class QuestionController extends Controller
     public function index()
     {
         $questions
-         = Question::latest()->paginate(5);
+         = Question::where('question_type','=','master')->latest()->get();
         return view('question.index',compact('questions'))
             ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     }
@@ -77,25 +77,41 @@ class QuestionController extends Controller
     public function store2(Request $request,$id)
     {   
         $form_id = Question::where('id',$id)->value('form_id');
+        $newformid = Form::where('id',$form_id)->value('id');
         // dd($form_id);
+        
+        //Log::debug("question".print_r($newformid,true));
         $allquestion = Question::where('form_id', $form_id)->delete();
-        dd($allquestion);
-        // $request->validate([
-        //     'moreFields.*.form_id' => 'required',
-        //     'moreFields.*.question_type' => 'required',
-        //     'moreFields.*.question' => 'required',
-        //     'moreFields.*.options' => 'required',
-        //     'moreFields.*.question_id' => 'required',
+        //dd($allquestion);
+        $request->validate([
+            'moreFields.*.form_id' => 'required',
+            'moreFields.*.question_type' => 'required',
+            'moreFields.*.question' => 'required',
+            'moreFields.*.options' => 'required',
+            'moreFields.*.question_id' => 'required',
 
             
-        // ]); 
-    
-        // foreach ($request->moreFields as $key => $value) {
-        //     Question::create($value);
-        // }
+        ]); 
+        
+        //dd($newformid);
+        
+        foreach ($request->moreFields as  $value) {
+
+           // $newqus = new Question();
+            $newqus = Question::create([
+            'form_id' => $newformid,
+            'question_type' => $value['question_type'],
+            'question' => $value['question'],
+            'options' => $value['options'],
+            'question_id' => $value['question_id'],
+
+            ]);
+               //$newqus->save();
+            //Question::create($value);
+        }
    
         //dd($allquestion);
-        Log::debug("question".print_r($request->all(),true));
+        //Log::debug("question".print_r($request->all(),true));
     
         return redirect()->route('question.index')
                         ->with('success','question created successfully.');

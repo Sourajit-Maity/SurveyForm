@@ -90,8 +90,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="text-right">
-                            <button type="button" name="add" id="add-btn" class="btn btn-success" style="display:block;margin-left:auto
-                            ;">Add More</button>
+                            <button type="button" name="add" id="add-btn" class="btn btn-success" style="display:block;margin-left:auto;">Add More</button>
                         </div>
                     </div>
                 </div>

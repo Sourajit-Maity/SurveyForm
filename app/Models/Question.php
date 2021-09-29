@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
-    use HasFactory;
+    use HasFactory; 
     
     protected $table = "questions";
-    protected $fillable = ["question_id", "question_type","question","options","form_id","company_id"];
+    protected $fillable = ["question_id", "question_type","question","options","form_id","company_id",'deleted_at'];
 
 
     public function form()
