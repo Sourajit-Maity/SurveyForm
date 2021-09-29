@@ -41,7 +41,7 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        $forms = DB::table('forms')->get();
+        $forms = Form::where('active','0')->get();
         return view('question.create',compact('forms'));
     }
 
@@ -62,10 +62,28 @@ class QuestionController extends Controller
 
             
         ]); 
+
+            $form_id  = $request->get('form_id');
+            //dd($form_id);
+            $form= Form::findOrFail($form_id);
+            
+            $form->active= 1;
+            $form->update();
+
+        foreach ($request->moreFields as  $value) {
+
+          
+             $newqus = Question::create([
+             'form_id' => $value['form_id'],
+             'question_type' => $value['question_type'],
+             'question' => $value['question'],
+             'options' => $value['options'],
+             'question_id' => $value['question_id'],
+ 
+             ]);
+               
+         }
     
-        foreach ($request->moreFields as $key => $value) {
-            Question::create($value);
-        }
         
 
         Log::debug("question".print_r($request->all(),true));
