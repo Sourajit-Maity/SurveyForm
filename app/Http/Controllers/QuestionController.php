@@ -77,7 +77,10 @@ class QuestionController extends Controller
     public function store2(Request $request,$id)
     {   
         $form_id = Question::where('id',$id)->value('form_id');
+        $newformid = Form::where('id',$form_id)->value('id');
         // dd($form_id);
+        
+        //Log::debug("question".print_r($newformid,true));
         $allquestion = Question::where('form_id', $form_id)->delete();
         //dd($allquestion);
         $request->validate([
@@ -89,13 +92,26 @@ class QuestionController extends Controller
 
             
         ]); 
-    
-        foreach ($request->moreFields as $key => $value) {
-            Question::create($value);
+        
+        //dd($newformid);
+        
+        foreach ($request->moreFields as  $value) {
+
+           // $newqus = new Question();
+            $newqus = Question::create([
+            'form_id' => $newformid,
+            'question_type' => $value['question_type'],
+            'question' => $value['question'],
+            'options' => $value['options'],
+            'question_id' => $value['question_id'],
+
+            ]);
+               //$newqus->save();
+            //Question::create($value);
         }
    
         //dd($allquestion);
-        Log::debug("question".print_r($request->all(),true));
+        //Log::debug("question".print_r($request->all(),true));
     
         return redirect()->route('question.index')
                         ->with('success','question created successfully.');
