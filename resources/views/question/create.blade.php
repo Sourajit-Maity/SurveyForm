@@ -67,7 +67,9 @@
                         <select name="form_id" id="form_id" class="field-style field-split25 align-left  form-control" style="width:200px;" onchange="form_parse()">
                                 <option value="777" disable selected>Select Form </option>
                             @foreach($forms as $data)
-                                <option value="{{$data->id}}">{{$data->form_name}}</option>
+                                      
+                                    <option value="{{$data->id}}">{{$data->form_name}}</option>
+                                
                             @endforeach 
                                 
                         </select> 

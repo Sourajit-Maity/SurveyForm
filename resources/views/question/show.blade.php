@@ -362,15 +362,19 @@
 				
 				option_text = varray[0];
 				option_value = varray[1];
+				var message_alert_stat = 0;
+				if(varray.length == 4){
+					message_alert_stat = 1;
+				}
 
-				result += "<label class='options'>"+option_text+" <input type='radio' name='"+question_id+"' value='"+option_value+":"+option_text+"'><span class='checkmark'></span> </label>";
+				result += "<label class='options'>"+option_text+" <input type='radio' name='"+question_id+"' value='"+option_value+":"+option_text+":"+message_alert_stat+"'><span class='checkmark'></span> </label>";
 
 				if(varray.length == 4){
                     option_lastnode = true;
                     option_number = varray[2];
                     option_message = varray[3];
 
-					result += "<div class='alert alert-primary' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;'>"+option_message+"</div>";
+					result += "<div id='"+question_id+"_lt' class='alert alert-primary' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:none;'>"+option_message+"</div>";
 				}
 
 			}
@@ -386,6 +390,15 @@
 				var qt_raw = $('input[name="'+qt_id+'"]:checked').val();
 				var qt_raw_arr = qt_raw.split(":");
 				var qt_cid = qt_raw_arr[0];
+				var message_stat = qt_raw_arr[2];
+				console.log("message_stat: "+message_stat);
+
+				if(message_stat == 1){
+					console.log('#'+qt_id+'_lt');
+					$('#'+qt_id+'_lt').css('display', 'block');
+				} else {
+					$('#'+qt_id+'_lt').css('display', 'none');
+				}
 
 				if (qt_cid == "0"){
 					$("#Submit").css("display", "block");
@@ -484,8 +497,19 @@
 							
 							option_text = varray[0];
 							option_value = varray[1];
+							var message_alert_stat = 0;
+							if(varray.length == 4){
+								message_alert_stat = 1;
+							}
+							result += "<label class='options'>"+option_text+" <input type='radio' name='"+question_id+"' value='"+option_value+":"+option_text+":"+message_alert_stat+"'><span class='checkmark'></span> </label>";
 
-							result += "<label class='options'>"+option_text+" <input type='radio' name='"+question_id+"' value='"+option_value+":"+option_text+"'><span class='checkmark'></span> </label>";
+							if(varray.length == 4){
+								option_lastnode = true;
+								option_number = varray[2];
+								option_message = varray[3];
+
+								result += "<div id='"+question_id+"_lt' class='alert alert-primary' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:none;'>"+option_message+"</div>";
+							}
 						}
 
 
@@ -537,8 +561,19 @@
 						
 						option_text = varray[0];
 						option_value = varray[1];
+						var message_alert_stat = 0;
+						if(varray.length == 4){
+							message_alert_stat = 1;
+						}
+						result += "<label class='options'>"+option_text+" <input type='radio' name='"+question_id+"' value='"+option_value+":"+option_text+":"+message_alert_stat+"'><span class='checkmark'></span> </label>";
 
-						result += "<label class='options'>"+option_text+" <input type='radio' name='"+question_id+"' value='"+option_value+":"+option_text+"'><span class='checkmark'></span> </label>";
+						if(varray.length == 4){
+							option_lastnode = true;
+							option_number = varray[2];
+							option_message = varray[3];
+
+							result += "<div id='"+question_id+"_lt' class='alert alert-primary' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:none;'>"+option_message+"</div>";
+						}
 					}
 
 
@@ -651,9 +686,21 @@
 								var varray = tarray[y].split(":");
 								option_text = varray[0];
 								option_value = varray[1];
+								var message_alert_stat = 0;
+								if(varray.length == 4){
+									message_alert_stat = 1;
+								}
 
 								if(option_text == q_answer) {
 									result += "<label class='options'>"+option_text+" <input type='radio' checked disabled><span class='checkmark'></span> </label>";
+
+									if(varray.length == 4){
+										option_lastnode = true;
+										option_number = varray[2];
+										option_message = varray[3];
+
+										result += "<div class='alert alert-primary' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:block;'>"+option_message+"</div>";
+									}
 								} else {
 									result += "<label class='options'>"+option_text+" <input type='radio'disabled><span class='checkmark'></span> </label>";
 								}
