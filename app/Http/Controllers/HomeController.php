@@ -31,7 +31,7 @@ class HomeController extends Controller
     public function index()
     {
         $newemployee = DB::table('users')->select(
-            'name','company_id',
+            'name','company_id','user_image',
             //'emp_img',
             
              'companies.company_name','users.created_at',

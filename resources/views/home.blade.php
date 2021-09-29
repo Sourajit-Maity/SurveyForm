@@ -160,9 +160,11 @@
                       @foreach($newemployee as $newemployees)
                       <li>
                         
-                        
-                        <img src="assets/images/dummy.png" alt="User Image">
-                        
+                        @if (isset($newemployees->user_image))
+                        <img src="{{url('assets/images')}}/{{$newemployees->user_image}}" style="width:100px;height:100px;object-fit:cover;" class="img-circle img-left">
+                        @else
+                          <img src="assets/images/dummy.png" alt="User Image">
+                        @endif
                         <a class="users-list-name" href="#">{{$newemployees->name}}</a>
                         <span class="users-list-date">{{$newemployees->company_name}}</span>
                         <span class="users-list-date">{!! \Carbon\Carbon::parse($newemployees->created_at)->format('d M Y') !!}</span>
