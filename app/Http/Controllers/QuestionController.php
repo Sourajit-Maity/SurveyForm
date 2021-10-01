@@ -140,7 +140,7 @@ class QuestionController extends Controller
         //Log::debug("question".print_r($request->all(),true));
     
         return redirect()->route('question.index')
-                        ->with('success','question created successfully.');
+                        ->with('success','question updated successfully.');
     }
 
     /**
