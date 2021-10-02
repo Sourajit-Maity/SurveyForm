@@ -17,6 +17,8 @@ class Question extends Model
 
     public function form()
     {
+        
          return $this->belongsTo(Form::class,);
     }
 }
+
