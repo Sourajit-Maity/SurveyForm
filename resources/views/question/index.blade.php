@@ -63,7 +63,7 @@
                                             @csrf
                                             @method('DELETE')
                                             @can('question-delete')
-                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                            <!-- <button type="submit" class="btn btn-danger">Delete</button> -->
                                             @endcan
                                         </form>
                                     </td>

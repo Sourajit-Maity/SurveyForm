@@ -29,7 +29,7 @@ class QuestionController extends Controller
     public function index()
     {
         $questions
-         = Question::where('question_type','=','master')->latest()->get();
+         = Question::where('question_type','=','master')->where('deleted_at',NULL)->latest()->get();
         return view('question.index',compact('questions'))
             ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     }
@@ -115,7 +115,7 @@ class QuestionController extends Controller
         
         foreach ($request->moreFields as  $value) {
 
-           // $newqus = new Question();
+           $newqus = new Question();
             $newqus = Question::create([
             'form_id' => $newformid,
             'question_type' => $value['question_type'],
@@ -124,6 +124,14 @@ class QuestionController extends Controller
             'question_id' => $value['question_id'],
 
             ]);
+
+            // Question::find($form_id)->update([
+            //     'form_id' => $newformid,
+            //     'question_type' => $value['question_type'],
+            //     'question' => $value['question'],
+            //     'options' => $value['options'],
+            //     'question_id' => $value['question_id'],
+            //     ]);
                //$newqus->save();
             //Question::create($value);
         }
@@ -132,7 +140,7 @@ class QuestionController extends Controller
         //Log::debug("question".print_r($request->all(),true));
     
         return redirect()->route('question.index')
-                        ->with('success','question created successfully.');
+                        ->with('success','question updated successfully.');
     }
 
     /**
