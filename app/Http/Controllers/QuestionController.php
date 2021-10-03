@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Question;
 use App\Models\Form;
 use App\Models\Company;
+use App\Models\Option;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -77,16 +78,39 @@ class QuestionController extends Controller
              'form_id' => $value['form_id'],
              'question_type' => $value['question_type'],
              'question' => $value['question'],
-             'options' => $value['options'],
+             //'options' => $value['options'],
              'question_id' => $value['question_id'],
  
              ]);
-               
-         }
-    
-        
 
-        Log::debug("question".print_r($request->all(),true));
+            $str1 = explode("|",$value['options']);
+            foreach ($str1 as $value2) {
+            
+                $str2 = explode(":",$value2);
+                $count = count($str2);
+                    
+                $option = $str2[0];
+                $child_id = $str2[1];
+                $number = '';
+                $message = '';
+                    
+                if ($count == 4) {
+                    $number = $str2[2];
+                    $message = $str2[3];
+                }
+                
+                $newqus = Option::create([
+                    'question_id' => $value['question_id'],
+                    'option' => $option,
+                    'child_id' => $child_id,
+                    'number' => $number,
+                    'message' => $message,
+        
+                    ]);
+            }
+               
+        }
+        //Log::debug("question".print_r($request->all(),true));
     
         return redirect()->route('question.index')
                         ->with('success','question created successfully.');
@@ -98,8 +122,15 @@ class QuestionController extends Controller
         $newformid = Form::where('id',$form_id)->value('id');
         // dd($form_id);
         
+        
         //Log::debug("question".print_r($newformid,true));
+        $ques_id = Question::where('form_id', $form_id)->get();
+        //dd($ques_id);
+        foreach ($ques_id as $value) {
+            $alloption = Option::where('question_id', $value->question_id)->delete();
+        }
         $allquestion = Question::where('form_id', $form_id)->delete();
+        
         //dd($allquestion);
         $request->validate([
             'moreFields.*.form_id' => 'required',
@@ -120,20 +151,36 @@ class QuestionController extends Controller
             'form_id' => $newformid,
             'question_type' => $value['question_type'],
             'question' => $value['question'],
-            'options' => $value['options'],
+            //'options' => $value['options'],
             'question_id' => $value['question_id'],
 
             ]);
 
-            // Question::find($form_id)->update([
-            //     'form_id' => $newformid,
-            //     'question_type' => $value['question_type'],
-            //     'question' => $value['question'],
-            //     'options' => $value['options'],
-            //     'question_id' => $value['question_id'],
-            //     ]);
-               //$newqus->save();
-            //Question::create($value);
+            $str1 = explode("|",$value['options']);
+            foreach ($str1 as $value2) {
+            
+                $str2 = explode(":",$value2);
+                $count = count($str2);
+                    
+                $option = $str2[0];
+                $child_id = $str2[1];
+                $number = '';
+                $message = '';
+                    
+                if ($count == 4) {
+                    $number = $str2[2];
+                    $message = $str2[3];
+                }
+                
+                $newqus = Option::create([
+                    'question_id' => $value['question_id'],
+                    'option' => $option,
+                    'child_id' => $child_id,
+                    'number' => $number,
+                    'message' => $message,
+        
+                    ]);
+            }
         }
    
         //dd($allquestion);
@@ -177,12 +224,48 @@ class QuestionController extends Controller
      */
     public function edit(Question $question)
     {
-        
         $forms = DB::table('forms')->get();
         $allquestion = Question::where('form_id', $question->form_id)->get();
-        $childquestion = Question::where('form_id', $question->form_id)->where('question_type', 'child')->get();
-        //Log::debug("childquestion".print_r($childquestion,true));
-        return view('question.edit',compact('question','forms','allquestion','childquestion')); 
+
+        for ($y = 0; $y < count($allquestion); $y++) {
+            $questionid = Option::select('option', 'child_id', 'number', 'message')
+            ->where('question_id', $allquestion[$y]->question_id)
+            ->where('option', '!=', 'undefined')
+            ->where('child_id', '!=', 'undefined')
+            ->where('number', '!=', 'undefined')
+            ->where('message', '!=', 'undefined')->get();
+            Log::debug("childquestion".print_r($questionid,true));
+            //
+            $question_option = '';
+            for ($x = 0; $x < count($questionid); $x++) {
+                $option = $questionid[$x]['option'];
+                $child_id = $questionid[$x]['child_id'];
+                $number = $questionid[$x]['number'];
+                $message = $questionid[$x]['message'];
+
+                if($x == 0){
+                    if(($number != '') || ($message != '')){
+                        $question_option = $option . ":" . $child_id . ":" . $number . ":" . $message;
+                    } else {
+                        $question_option = $option . ":" . $child_id;
+                    }
+                } else {
+                    if(($number != '') || ($message != '')){
+                        $question_option .= "|" . $option . ":" . $child_id . ":" . $number . ":" . $message;
+                    } else {
+                        $question_option .= "|" . $option . ":" . $child_id;
+                    }
+                } 
+            }
+            $allquestion[$y]['options'] = $question_option;         
+        }
+
+        //echo $result;
+        
+        //$alloption = Option::where();
+        //$childquestion = Question::where('form_id', $question->form_id)->where('question_type', 'child')->get();
+        //Log::debug("childquestion".print_r($allquestion,true));
+        return view('question.edit',compact('question','forms','allquestion')); 
     }
 
     /**

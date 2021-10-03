@@ -12,13 +12,17 @@ class Question extends Model
     use SoftDeletes; 
     
     protected $table = "questions";
-    protected $fillable = ["question_id", "question_type","question","options","form_id","company_id",'deleted_at'];
+    protected $fillable = ["question_id", "question_type","question","form_id","company_id",'deleted_at'];
 
 
     public function form()
     {
         
          return $this->belongsTo(Form::class,);
+    }
+    public function option()
+    {
+         return $this->hasMany(Option::class,'question_id');
     }
 }
 
