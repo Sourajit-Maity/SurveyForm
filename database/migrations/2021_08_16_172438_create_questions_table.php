@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+
 class CreateQuestionsTable extends Migration
 {
     /**
@@ -18,7 +19,7 @@ class CreateQuestionsTable extends Migration
             $table->string('question_id');
             $table->string('question_type');
             $table->longText('question');
-            $table->longText('options');
+            //$table->longText('options');
             $table->integer('form_id')->nullable();
             $table->integer('company_id')->nullable();
             $table->softDeletes();

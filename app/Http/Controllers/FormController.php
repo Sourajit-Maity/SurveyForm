@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Question;
 use App\Models\Form;
 use App\Models\Company;
+use App\Models\Option;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -148,6 +149,42 @@ class FormController extends Controller
         //$form_id = Question::where('id',$id)->value('form_id');
         //Log::debug("id".print_r($id,true));
         $allquestion = Question::where('form_id',$id)->get();
+
+        Log::debug("childquestion".print_r($allquestion,true));
+
+        for ($y = 0; $y < count($allquestion); $y++) {
+            $questionid = Option::select('option', 'child_id', 'number', 'message')
+            ->where('question_id', $allquestion[$y]->question_id)
+            ->where('option', '!=', 'undefined')
+            ->where('child_id', '!=', 'undefined')
+            ->where('number', '!=', 'undefined')
+            ->where('message', '!=', 'undefined')->get();
+            Log::debug("childquestion".print_r($questionid,true));
+
+            $question_option = '';
+            for ($x = 0; $x < count($questionid); $x++) {
+                $option = $questionid[$x]['option'];
+                $child_id = $questionid[$x]['child_id'];
+                $number = $questionid[$x]['number'];
+                $message = $questionid[$x]['message'];
+
+                if($x == 0){
+                    if(($number != '') || ($message != '')){
+                        $question_option = $option . ":" . $child_id . ":" . $number . ":" . $message;
+                    } else {
+                        $question_option = $option . ":" . $child_id;
+                    }
+                } else {
+                    if(($number != '') || ($message != '')){
+                        $question_option .= "|" . $option . ":" . $child_id . ":" . $number . ":" . $message;
+                    } else {
+                        $question_option .= "|" . $option . ":" . $child_id;
+                    }
+                } 
+            }
+            $allquestion[$y]['options'] = $question_option;         
+        }
+
         //Log::debug("allquestion".print_r($allquestion,true));
         return json_encode($allquestion);
     }

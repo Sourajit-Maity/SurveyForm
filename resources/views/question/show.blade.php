@@ -326,7 +326,7 @@
 					set_master_question();
 				},
 				error: function(xhr, resp, text) {
-					alert("Sorry! Unable to update details.");
+					alert("Sorry! Unable to get details.");
 				}  
 			});
 		});
