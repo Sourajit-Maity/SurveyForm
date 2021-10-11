@@ -54,6 +54,7 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
+    try{
         $request->validate([
             'moreFields.*.form_id' => 'required',
             'moreFields.*.question_type' => 'required',
@@ -63,7 +64,7 @@ class QuestionController extends Controller
 
             
         ]); 
-
+        DB::beginTransaction();
             $form_id  = $request->get('form_id');
             //dd($form_id);
             $form= Form::findOrFail($form_id);
@@ -111,27 +112,30 @@ class QuestionController extends Controller
                
         }
         //Log::debug("question".print_r($request->all(),true));
-    
-        return redirect()->route('question.index')
+        DB::commit();
+           return redirect()->route('question.index')
                         ->with('success','question created successfully.');
+        }
+        catch(\Exception $e) {
+            return Response()->Json(["status"=>false,"message"=> 'Something went wrong. Please try again.']);
+                    }
     }
 
     public function store2(Request $request,$id)
-    {   
+    { 
+        
+    try{  
         $form_id = Question::where('id',$id)->value('form_id');
         $newformid = Form::where('id',$form_id)->value('id');
-        // dd($form_id);
-        
-        
-        //Log::debug("question".print_r($newformid,true));
+
         $ques_id = Question::where('form_id', $form_id)->get();
-        //dd($ques_id);
+    DB::beginTransaction();
         foreach ($ques_id as $value) {
             $alloption = Option::where('question_id', $value->question_id)->delete();
         }
         $allquestion = Question::where('form_id', $form_id)->delete();
         
-        //dd($allquestion);
+ 
         $request->validate([
             'moreFields.*.form_id' => 'required',
             'moreFields.*.question_type' => 'required',
@@ -141,9 +145,7 @@ class QuestionController extends Controller
 
             
         ]); 
-        
-        //dd($newformid);
-        
+
         foreach ($request->moreFields as  $value) {
 
            $newqus = new Question();
@@ -182,12 +184,15 @@ class QuestionController extends Controller
                     ]);
             }
         }
-   
-        //dd($allquestion);
+        
         //Log::debug("question".print_r($request->all(),true));
-    
-        return redirect()->route('question.index')
+        DB::commit();
+            return redirect()->route('question.index')
                         ->with('success','question updated successfully.');
+        }
+        catch(\Exception $e) {
+            return Response()->Json(["status"=>false,"message"=> 'Something went wrong. Please try again.']);
+                 }
     }
 
     /**
