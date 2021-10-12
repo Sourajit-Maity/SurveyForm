@@ -46,7 +46,7 @@
                             @foreach ($questions as $question)
                                 <tr data-entry-id="h">
                                     <td>{{ ++$i }}</td>
-                                    <td>{{ $question->form->form_name }}</td>
+                                    <td>{{ $question->form_id }}</td>
                                     
                                     <td>{{ $question->question_type }}</td>
                                     <td>{{ $question->question }}</td>
