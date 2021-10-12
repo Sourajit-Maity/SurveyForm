@@ -30,7 +30,7 @@ class QuestionController extends Controller
     public function index()
     {
         $questions
-         = Question::where('question_type','=','master')->where('deleted_at',NULL) ->with(['form'])->latest()->get();
+         = Question::where('question_type','=','master')->where('deleted_at',NULL) ->whereNotNull('form_id')->with(['form'])->latest()->get();
         return view('question.index',compact('questions'))
             ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     }
