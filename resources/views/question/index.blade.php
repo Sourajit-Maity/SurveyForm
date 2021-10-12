@@ -46,8 +46,13 @@
                             @foreach ($questions as $question)
                                 <tr data-entry-id="h">
                                     <td>{{ ++$i }}</td>
-                                    <td>{{ $question->form->
-                                    form_name }}</td>
+                                    @if (isset($question->form->form_name))
+                                        <td>{{ $question->form->form_name }}</td>
+                                    @else 
+                                         <td></td>
+                                    @endif
+                                    
+                                    
                                     <td>{{ $question->question_type }}</td>
                                     <td>{{ $question->question }}</td>
                                     <!-- <td>{{ $question->options }}</td> -->

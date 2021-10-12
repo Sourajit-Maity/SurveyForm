@@ -35,7 +35,7 @@ class UserController extends Controller
 
   
     //Log::debug("ids".print_r($comp_id,true));
-    if(Auth::user()->company_id== Null) {
+    if(Auth::user()->company_id == 1) {
 
         $data = User::select('users.name','spoc','user_image','reporting_to_name','users.email','users.id','users.email','companies.company_name')->
         join('companies', 'users.company_id', '=', 'companies.id')
@@ -44,6 +44,7 @@ class UserController extends Controller
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
     else{
+        
       
 
         $data = User::select('users.name','spoc','user_image','reporting_to_name','users.email','users.id','users.email','companies.company_name')->

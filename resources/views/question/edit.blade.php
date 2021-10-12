@@ -66,7 +66,7 @@
         <div class="card-body">
             
             <form action="{{ route('store2',$question->id) }}" method="POST" enctype="multipart/form-data">
-            <!-- <form> -->
+
                 @csrf
                 @if ($errors->any())
                 <div class="alert alert-danger">
