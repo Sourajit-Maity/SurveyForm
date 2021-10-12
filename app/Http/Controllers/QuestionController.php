@@ -31,7 +31,7 @@ class QuestionController extends Controller
     {
         $questions
          = Question::where('question_type','=','master')->where('deleted_at',NULL)->latest()->get();
-        return view('question.index',compact('questions'))
+        return view('question.index',compact('form'))
             ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     }
 
