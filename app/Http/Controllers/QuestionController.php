@@ -329,4 +329,17 @@ class QuestionController extends Controller
         
         return Redirect::back();
     }
+
+
+    public function updateQuestion(Request $request)
+    {
+
+        $question_data = $request->json()->all();
+        $newqusid = $request->new_question['id'];
+
+        Log::debug("JSON data".print_r($request->all(),true));
+
+    }
+
+    
 }
