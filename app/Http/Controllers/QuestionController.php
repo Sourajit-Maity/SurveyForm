@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 
 class QuestionController extends Controller
 {
@@ -335,8 +336,11 @@ class QuestionController extends Controller
     {
 
         $question_data = $request->json()->all();
-        $newqusid = $request->new_question['id'];
+       
 
+        $newqusid = $request->input('new_question');
+        $updatequsid = $request->input('update_question.question_id');
+        Log::debug("test".print_r($newqusid,true));
         Log::debug("JSON data".print_r($request->all(),true));
 
     }

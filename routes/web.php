@@ -42,12 +42,21 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('form', FormController::class);
     Route::resource('companys', CompanyController::class);
     Route::resource('results', ResultController::class);
+    Route::resource('assignment', AssignCompanyController::class);
 
     Route::post('/store2/{id}', [QuestionController::class, 'store2'])->name('store2');
     Route::post('/update-question', [QuestionController::class, 'updateQuestion'])->name('update-question');
     Route::get('/get-my-info', [UserController::class, 'getMyInfo'])->name('get-my-info');
     Route::post('/submit-my-info', [UserController::class, 'updateMyInfo'])->name('submit-my-info');
     Route::post('update-password', [UserController::class,'updatePassword'])->name('update-password');
+
+    Route::get('/add-announcements', [AssignCompanyController::class, 'addannouncement'])->name('add-announcements');
+    Route::get('/view-announcements', [AssignCompanyController::class, 'viewannouncement'])->name('view-announcements');
+    Route::get('/getannouncementuser/{lid}/{did}', [AssignCompanyController::class, 'getannouncementuser']);
+    Route::get('/getannouncementrole/{id}', [AssignCompanyController::class, 'getannouncementrole']);
+    Route::get('/getlocationid/{id}', [AssignCompanyController::class, 'getlocationid']);
+
+
 
 
 });
