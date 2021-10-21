@@ -274,6 +274,11 @@ return [
             'icon' => 'fas fa-fw fa-lock',
         ],
         [
+            'text' => 'Assign Form',
+            'url'  => 'assign',
+            'icon' => 'fas fa-fw fa-lock',
+        ],
+        [
             'text' => 'My Info',
             'url'  => 'get-my-info',
             'icon' => 'fas fa-fw fa-user',

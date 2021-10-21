@@ -104,17 +104,20 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-              @if (isset($companyuser->company_name))
-                <h3>{{$companyuser}}</h3>
-              @else <h3></h3>
-              @endif
+              @auth
+                     @foreach($assignformArr as $assignform)
+                        <div style="padding:5px;border-bottom:1px solid #bbb;">
+                        <p>{{ $assignform }}</p>
+                        </div>
+                     @endforeach
+                   @endauth             
 
-                <p> Designation</p>
+                <p> Assign Forms</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
               </div>
-              <a href="{{ route('roles.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> 
+              <a href="{{ route('assign.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> 
             </div>
           </div>
           <!-- ./col -->
@@ -180,7 +183,7 @@
               </div>
               <!-- /.col -->
             </div> 
-            
+           
           
 </section>
 
