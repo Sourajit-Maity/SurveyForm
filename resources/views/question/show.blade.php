@@ -13,6 +13,7 @@
 
 	body {
 		background-color: #eee;
+		font-family: 'Montserrat', sans-serif;
 	}
 
 	.container {
@@ -113,22 +114,22 @@
         margin: 10px 0px;
     }
 
-	#start-question{
+	.start-question{
 		display: block;
 	}
-	#question-test, #result-view{
+	.question-test, #result-view{
 		display: none;
 	}
 
 
-	.sidebar-dark-primary {
+	/* .sidebar-dark-primary {
 		background-color: rgb(7, 71, 166);
     	color: rgb(255, 255, 255);
 	}
 
 	.nav-sidebar .nav-item>.nav-link {
 		color: #FFF;
-	}
+	} */
 
 	/* .elevation-4[style] {
 		box-shadow: 0px !important;
@@ -149,118 +150,189 @@
 
     <div class="panel panel-default">
         <div class="panel-body">
-        <div class="row">
-    <div class="form-group col-md-6">
-                <h2>Question</h2>
-            </div>
-            <div class="form-group col-md-6">
-            </div>
+        	<div class="row">
+    			<div class="form-group col-md-6">
+                	<h2>Question</h2>
+            	</div>
+            	<div class="form-group col-md-6"></div>
             
-        </div>
-        <div class="container mt-sm-5 my-1 card">
-			<section id="start-question">
-				<div id="header-hero" class="card-header"> 
-					<div class="profile"> 
-					@if (isset($company_logo))
-						<img src="{{url('assets/logos')}}/{{$company_logo}}"> 
-					@else <span></span>
-					
-                    @endif
+        	</div>
+
+			<div class="row">
+				<div class="col-md-9">
+					<div class="container card" style="max-width:90% !important;">
+						<section class="start-question">
+							<div id="header-hero" class="card-header"> 
+								<!-- <div class="profile"> 
+								@if (isset($company_logo))
+									<img class="profile-user-img img-fluid img-circle" src="{{url('assets/logos')}}/{{$company_logo}}"> 
+								@else 
+									<span></span>
+								@endif
+								</div> -->
+							Fill product info </div>
+							<div class="card-body">
+								
+
+								<form id="form1">
+									<!-- <div class="row m-top-bottom">
+										<div class="col-md-6 col-sm-12 col-xs-12">
+											<strong>Company Serial No.:</strong>
+											<input type="text" name="company_id" value="{{$company_id}}" class="form-control" readonly/>
+										</div>
+										<div class="col-md-6 col-sm-12 col-xs-12">
+											<strong>Company Name:</strong>
+											<input type="text" name="company_name" value="{{$company_name}}" class="form-control" readonly/>
+										</div>
+									</div>
+									<div class="row m-top-bottom">
+										<div class="col-md-6 col-sm-12 col-xs-12">
+											<strong>User Name:</strong>
+											<input type="text" name="user_name" value="{{$user_name}}" class="form-control" readonly/>
+										</div>
+										<div class="col-md-6 col-sm-12 col-xs-12">
+											<strong>User Email:</strong>
+											<input type="text" name="user_email" value="{{$user_email}}" class="form-control" readonly/>
+										</div>
+									</div> -->
+									<div class="row m-top-bottom">
+										<div class="col-md-6 col-sm-12 col-xs-12">
+											<strong>Material code:</strong>
+											<input type="text" name="meterial_code" value="" class="form-control" required/>
+										</div>
+										<div class="col-md-6 col-sm-12 col-xs-12">
+											<strong>Product Name:</strong>
+											<input type="text" name="product_name" value="" class="form-control" required/>
+										</div>
+									</div>
+									<div class="row m-top-bottom">
+										<div class="col-md-6 col-sm-12 col-xs-12">
+											<strong>Package:</strong>
+											<input type="text" name="package" value="" class="form-control" required/>
+										</div>
+										<div class="col-md-6 col-sm-12 col-xs-12">
+											<strong>Market:</strong>
+											<input type="text" name="market" value="" class="form-control" required/>
+										</div>
+									</div>
+									<div class="row m-top-bottom">
+										<div class="col-md-6 col-sm-12 col-xs-12">
+											<strong>Location:</strong>
+											<input type="text" name="location" value="" class="form-control" required/>
+										</div>
+										<div class="col-md-6 col-sm-12 col-xs-12">
+											<strong>Percentage:</strong>
+											<input type=number max="100" accuracy="2" min="0" step=0.01 name="percentage" value="" class="form-control" required/>
+										</div>
+									</div>
+
+									<div class="d-flex align-items-center pt-3">
+										<div class="ml-auto mr-sm-5"> 
+											<button id="start-qt" class="btn btn-success">Start</button> 
+										</div>
+									</div>	
+								</form>
+								
+							</div>
+						</section>
+
+						<section class="question-test">
+							<div id="question-data"></div>
+							<div class="d-flex align-items-center pt-3">
+								<div id="prev" class="ml-sm-5"> 
+									<button id="Previous" class="btn btn-primary" style="display:none;">Previous</button> 
+								</div>
+								<div class="ml-auto mr-sm-5"> 
+									<button id="Submit" class="btn btn-success" style="display:none;">Submit</button>
+									<button id="Next" class="btn btn-success" style="display:none;">Next</button> 
+									<!-- <a id="Close" class="btn btn-success" href="/question" style="display:none;">Close</a> -->
+								</div>
+							</div>
+						</section>
+
+						<section id="result-view">
+							<!-- <div id="header-hero" class="card-header"> Fill basic info </div> -->
+							<div class="card-body">
+								<div id="qt_content"></div>
+
+								<div class="d-flex align-items-center pt-3">
+									<div class="ml-auto mr-sm-5"> 
+										<a id="Close" class="btn btn-success" href="/question" style="display:none;">Close</a>
+									</div>
+								</div>
+							</div>
+						</section>
+
 					</div>
-				Fill basic info </div>
-				<div class="card-body">
+				</div>
+
+				<div class="col-md-3">
+					<section class="start-question">
+						<div class="card card-primary card-outline" style="width:100%;font-size: 14px;">
+							<div class="card-body box-profile">
+								<div class="text-center">
+									@if (isset($company_logo))
+										<img class="profile-user-img img-fluid" src="{{url('assets/logos')}}/{{$company_logo}}" alt="User profile picture"> 
+									@else 
+										<span></span>
+									@endif
+								</div>
+
+								<h3 class="profile-username text-center">{{$company_name}}</h3>
+
+								<ul class="list-group list-group-unbordered mb-3" style="margin-top: 50px;">
+									<li class="list-group-item">
+										<b>Company SL No.</b> <a class="float-right">{{$company_id}}</a>
+									</li>
+									<li class="list-group-item">
+										<b>User Name</b> <a class="float-right">{{$user_name}}</a>
+									</li>
+									<li class="list-group-item" style="border-bottom-width: 0px;">
+										<b>User Email</b> <a class="float-right">{{$user_email}}</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</section>
 					
 
-					<form id="form1">
-						<div class="row m-top-bottom">
-							<div class="col-md-6 col-sm-12 col-xs-12">
-								<strong>Company Serial No.:</strong>
-								<input type="text" name="company_id" value="{{$company_id}}" class="form-control" readonly/>
-							</div>
-							<div class="col-md-6 col-sm-12 col-xs-12">
-								<strong>Company Name:</strong>
-								<input type="text" name="company_name" value="{{$company_name}}" class="form-control" readonly/>
-							</div>
-						</div>
-						<div class="row m-top-bottom">
-							<div class="col-md-6 col-sm-12 col-xs-12">
-								<strong>User Name:</strong>
-								<input type="text" name="user_name" value="{{$user_name}}" class="form-control" readonly/>
-							</div>
-							<div class="col-md-6 col-sm-12 col-xs-12">
-								<strong>User Email:</strong>
-								<input type="text" name="user_email" value="{{$user_email}}" class="form-control" readonly/>
-							</div>
-						</div>
-						<div class="row m-top-bottom">
-							<div class="col-md-6 col-sm-12 col-xs-12">
-								<strong>Material code:</strong>
-								<input type="text" name="meterial_code" value="" class="form-control" required/>
-							</div>
-							<div class="col-md-6 col-sm-12 col-xs-12">
-								<strong>Product Name:</strong>
-								<input type="text" name="product_name" value="" class="form-control" required/>
-							</div>
-						</div>
-						<div class="row m-top-bottom">
-							<div class="col-md-6 col-sm-12 col-xs-12">
-								<strong>Package:</strong>
-								<input type="text" name="package" value="" class="form-control" required/>
-							</div>
-							<div class="col-md-6 col-sm-12 col-xs-12">
-								<strong>Market:</strong>
-								<input type="text" name="market" value="" class="form-control" required/>
-							</div>
-						</div>
-						<div class="row m-top-bottom">
-							<div class="col-md-6 col-sm-12 col-xs-12">
-								<strong>Location:</strong>
-								<input type="text" name="location" value="" class="form-control" required/>
-							</div>
-							<div class="col-md-6 col-sm-12 col-xs-12">
-								<strong>Percentage:</strong>
-								<input type=number max="100" accuracy="2" min="0" step=0.01 name="percentage" value="" class="form-control" required/>
-							</div>
-						</div>
 
-						<div class="d-flex align-items-center pt-3">
-							<div class="ml-auto mr-sm-5"> 
-								<button id="start-qt" class="btn btn-success">Start</button> 
+
+					<section class="question-test">
+						<div class="card card-primary">
+							<div class="card-header">
+								<h3 class="card-title">Product Details</h3>
 							</div>
-						</div>	
-					</form>
+							
+							<div class="card-body">
+								<ul class="list-group list-group-unbordered mb-3">
+									<li class="list-group-item" style="border-top-width: 0px;">
+										<b>Material code</b> <a class="float-right mc-card"></a>
+									</li>
+									<li class="list-group-item">
+										<b>Product Name</b> <a class="float-right pn-card"></a>
+									</li>
+									<li class="list-group-item">
+										<b>Package</b> <a class="float-right pa-card"></a>
+									</li>
+									<li class="list-group-item">
+										<b>Market</b> <a class="float-right ma-card"></a>
+									</li>
+									<li class="list-group-item">
+										<b>Location</b> <a class="float-right lo-card"></a>
+									</li>
+									<li class="list-group-item" style="border-bottom-width: 0px;">
+										<b>Percentage</b> <a class="float-right pe-card"></a>
+									</li>
+								</ul>
+							</div>
+							
+						</div>
+					</section>
 					
 				</div>
-			</section>
-
-			<section id="question-test">
-				<div id="question-data"></div>
-				<div class="d-flex align-items-center pt-3">
-					<div id="prev" class="ml-sm-5"> 
-						<button id="Previous" class="btn btn-primary" style="display:none;">Previous</button> 
-					</div>
-					<div class="ml-auto mr-sm-5"> 
-						<button id="Submit" class="btn btn-success" style="display:none;">Submit</button>
-						<button id="Next" class="btn btn-success" style="display:none;">Next</button> 
-						<!-- <a id="Close" class="btn btn-success" href="/question" style="display:none;">Close</a> -->
-					</div>
-				</div>
-			</section>
-
-			<section id="result-view">
-				<!-- <div id="header-hero" class="card-header"> Fill basic info </div> -->
-				<div class="card-body">
-					<div id="qt_content"></div>
-
-					<div class="d-flex align-items-center pt-3">
-						<div class="ml-auto mr-sm-5"> 
-							<a id="Close" class="btn btn-success" href="/question" style="display:none;">Close</a>
-						</div>
-					</div>
-				</div>
-			</section>
-
-		</div>
+			</div>
+        
         </div>
     </div>
 	<!-- @include('layouts.footerimport') -->
@@ -283,16 +355,26 @@
 			if($("#form1")[0].checkValidity()) {
 				e.preventDefault();
 				//alert('validated');
-				$('#start-question').css("display","none");
-				$('#question-test').css("display","block");
+				$('.start-question').css("display","none");
+				$('.question-test').css("display","block");
 
-				// var company_id = $("input[name='company_id']").val();
-				// var meterial_code = $("input[name='meterial_code']").val();
-				// var product_name = $("input[name='product_name']").val();
-				// var package = $("input[name='package']").val();
-				// var market = $("input[name='market']").val();
-				// var location = $("input[name='location']").val();
-				// var percentage = $("input[name='percentage']").val();
+				var meterial_code = $("input[name='meterial_code']").val();
+				var product_name = $("input[name='product_name']").val();
+				var package = $("input[name='package']").val();
+				var market = $("input[name='market']").val();
+				var location = $("input[name='location']").val();
+				var percentage = $("input[name='percentage']").val();
+
+				$('.mc-card').text(meterial_code);
+				$('.pn-card').text(product_name);
+				$('.pa-card').text(package);
+				$('.ma-card').text(market);
+				$('.lo-card').text(location);
+				$('.pe-card').text(percentage);
+
+
+
+
 				// var st_form = {
 				// 	"company_id" : company_id,
 				// 	"meterial_code" : meterial_code,
@@ -609,7 +691,7 @@
 			$("#Submit").css("display", "none");
 			$("#Close").css("display", "block");
 
-			$("#question-test").css("display", "none");
+			$(".question-test").css("display", "none");
 
 			var previous_question_id = QuestionID_array[index_pos];
 			console.log(previous_question_id);
@@ -648,7 +730,7 @@
 					}
 				);
 
-				$('#start-question').css("display","block");
+				$('.start-question').css("display","block");
 				$('#start-qt').css("display","none");
 
 				// for(var i = 0; i < result_array.length; i++){
@@ -720,8 +802,9 @@
 				}
 
 				$('#result-view').css("display","block");
-
-				var company_id = $("input[name='company_id']").val();
+				
+				var company_id = {{$company_id}};
+				//var company_id = $("input[name='company_id']").val();
 				var meterial_code = $("input[name='meterial_code']").val();
 				var product_name = $("input[name='product_name']").val();
 				var package = $("input[name='package']").val();

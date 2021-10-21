@@ -336,12 +336,40 @@ class QuestionController extends Controller
     {
 
         $question_data = $request->json()->all();
-       
 
-        $newqusid = $request->input('new_question');
-        $updatequsid = $request->input('update_question.question_id');
-        Log::debug("test".print_r($newqusid,true));
-        Log::debug("JSON data".print_r($request->all(),true));
+        $new_question = $question_data['new_question'];
+        $update_question = $question_data['update_question'];
+        $delete_question = $question_data['delete_question'];
+
+        for($i = 0; $i < count($new_question); $i++){
+            $newqus = new Question();
+            $newqus = Question::create([
+            'form_id' => $new_question[$i]['form_id'],
+            'question_type' => 'child',
+            'question' => $new_question[$i]['question'],
+            'question_id' => $new_question[$i]['question_id'],
+            ]);
+
+            $new_option = $new_question[$i]['data'];
+            for($j = 0; $j < count($new_option); $j++){
+                $newqus = Option::create([
+                    'question_id' => $new_question[$i]['question_id'],
+                    'option' => $new_option[$j]['option'],
+                    'child_id' => $new_option[$j]['child_id'],
+                    'number' => $new_option[$j]['number'],
+                    'message' => $new_option[$j]['message'],
+        
+                ]);
+            }
+        }
+
+
+        // $newqusid = $request->new_question['id'];
+
+        Log::debug("JSON data".print_r($question_data,true));
+
+        return redirect()->back()
+                        ->with('success',' updated successfully');
 
     }
 

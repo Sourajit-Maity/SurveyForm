@@ -10,7 +10,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <style>
@@ -47,9 +47,14 @@
         font-family: 'Montserrat', sans-serif;
     }
 
+    .f-bold{
+        font-weight: 500; 
+    }
+
     .swal2-popup {
         font-size: 16px !important;
         font-family: 'Montserrat', sans-serif;
+        font-weight: 400;
     }
 
 </style>
@@ -281,11 +286,11 @@
             result += '<input type="hidden" name="moreFields['+ct+'][form_id]" value="'+form_id+'" class="form-control" />';
             result += '<input type="hidden" name="moreFields['+ct+'][question_type]" value="'+Qus_type+'" class="form-control" /></td>';
             result += '<td rowspan='+rowspan+'><textarea name="moreFields['+ct+'][question]" class="form-control" rows="3" cols="40" readonly/>'+Qus+'</textarea></td>';
-            result += '<td><input type="hidden" name="moreFields['+ct+'][options]" value="" class="form-control" /><p>Option</p></td>';
-            result += '<td>Child ID</td>';
-            result += '<td>Last Node</td>';
-            result += '<td>Number</td>';
-            result += '<td>Message</td>';
+            result += '<td><input type="hidden" name="moreFields['+ct+'][options]" value="" class="form-control" /><p class="f-bold">Option</p></td>';
+            result += '<td class="f-bold">Child ID</td>';
+            result += '<td class="f-bold">Last Node</td>';
+            result += '<td class="f-bold">Number</td>';
+            result += '<td class="f-bold">Message</td>';
             result += '<td><button type="button" name="opt_add" id="optadd_'+ct+'" class="btn btn-success optadd_'+QusId+'" style="display:block;" onclick="addoption(this)" disabled>';
             result += '<i class="fa fa-plus" aria-hidden="true"></i></button></td>';
 
@@ -345,11 +350,11 @@
         result += '<input type="hidden" name="moreFields['+ct+'][form_id]" value="'+form_id+'" class="form-control" />';
         result += '<input type="hidden" name="moreFields['+ct+'][question_type]" value="child" class="form-control" /></td>';
         result += '<td rowspan=2><textarea name="moreFields['+ct+'][question]" placeholder="Enter question" class="form-control" rows="3" cols="40"/></textarea></td>';
-        result += '<td><input type="hidden" name="moreFields['+ct+'][options]" value="" class="form-control" /><p>Option</p></td>';
-        result += '<td>Child ID</td>';
-        result += '<td>Last Node</td>';
-        result += '<td>Number</td>';
-        result += '<td>Message</td>';
+        result += '<td><input type="hidden" name="moreFields['+ct+'][options]" value="" class="form-control" /><p class="f-bold">Option</p></td>';
+        result += '<td class="f-bold">Child ID</td>';
+        result += '<td class="f-bold">Last Node</td>';
+        result += '<td class="f-bold">Number</td>';
+        result += '<td class="f-bold">Message</td>';
         result += '<td><button type="button" name="opt_add" id="optadd_'+ct+'" class="btn btn-success optadd_'+QusId+'" style="display:block;" onclick="addoption(this)">';
         result += '<i class="fa fa-plus" aria-hidden="true"></i></button></td>';
         result += '<td rowspan=2><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr>';
@@ -436,16 +441,21 @@
                 var class_array = class1.split("_");
                 var qid2 = class_array[1];
 
+                console.log(update_question_id);
+                console.log(parseInt(qid2));
                 const index = update_question_id.indexOf(qid2);
                 if (index > -1) {
                     update_question_id.splice(index, 1);
                     delete_question_id.push(qid2);
                 }
-
-                const index2 = new_question_id.indexOf(qid2);
+                //console.log(new_question_id);
+                //console.log(parseInt(qid2));
+                const index2 = new_question_id.indexOf(parseInt(qid2));
+                //console.log(index2);
                 if (index2 > -1) {
                     new_question_id.splice(index2, 1);
                 }
+                //console.log(new_question_id);
                 
                 
                 //console.log(update_question_id);
@@ -609,6 +619,9 @@
         var update_question = [];
         var new_question = [];
 
+        var questiondata = @json($allquestion ?? '');
+        var form_id = questiondata[0].form_id;
+
         for(var x = 0; x < optcount.length; x++){
             var Qid3 = optcount[x].qid;
             var Ocount = optcount[x].optcount;
@@ -646,6 +659,7 @@
 
                 update_question.push({
                     "question_id" : Qid3,
+                    "form_id" : form_id,
                     "question" : qt_question,
                     "data" : final_opt
                 });
@@ -681,12 +695,15 @@
 
                     new_question.push({
                         "question_id" : Qid3,
+                        "form_id" : form_id,
                         "question" : qt_question,
                         "data" : final_opt2
                     });
                 }
             }
         }    
+
+
 
         var final_data = {
             "new_question" : new_question,
