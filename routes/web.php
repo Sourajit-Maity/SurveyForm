@@ -10,7 +10,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ResultController;
-
+use App\Http\Controllers\AssignCompanyController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,7 +42,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('form', FormController::class);
     Route::resource('companys', CompanyController::class);
     Route::resource('results', ResultController::class);
-    Route::resource('assignment', AssignCompanyController::class);
+    Route::resource('assign', AssignCompanyController::class);
 
     Route::post('/store2/{id}', [QuestionController::class, 'store2'])->name('store2');
     Route::post('/update-question', [QuestionController::class, 'updateQuestion'])->name('update-question');

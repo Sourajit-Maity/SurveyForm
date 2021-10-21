@@ -30,6 +30,20 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $currentuserid = Auth::user()->id;
+        $assignform='';
+        $assignformArr=[];
+        $arruser= DB::table('assign_companies')->get()->toArray();
+        foreach($arruser as $usr) {
+            $users = explode(',', $usr->employee_id);
+            foreach($users as $us) {
+                if($us==$currentuserid){
+                    array_push($assignformArr,$usr->message);
+                }
+            } 
+            
+        }
+
         $newemployee = DB::table('users')->select(
             'name','company_id','user_image',
             //'emp_img',
@@ -55,6 +69,6 @@ class HomeController extends Controller
         $companydetails = Company::where('id',$currentusercompid)->first();
        // dd($companydetails);
         
-        return view('home',compact('newemployee','user','form','company','question','role','companyuser','companydetails'));
+        return view('home',compact('newemployee','assignformArr','user','form','company','question','role','companyuser','companydetails'));
     }
 }

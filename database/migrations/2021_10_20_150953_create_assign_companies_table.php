@@ -15,10 +15,10 @@ class CreateAssignCompaniesTable extends Migration
     {
         Schema::create('assign_companies', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('company_id')->nullable();
-            $table->foreignId('employee_id')->nullable();
-            $table->foreignId('form_id')->nullable();
-            $table->foreignId('message')->nullable();
+            $table->string('company_id')->nullable();
+            $table->string('employee_id')->nullable();
+            $table->string('form_id')->nullable();
+            $table->longText('message')->nullable(); 
             $table->timestamps();
         });
     }

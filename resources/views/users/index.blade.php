@@ -32,7 +32,7 @@
    <th>Reporting To Name</th>
    <th>Email</th>
    <th>Roles</th>
-   <th width="280px">Action</th>
+   <th width="280px">Action</th> 
  </tr>
  @foreach ($data as $key => $user)
   <tr>

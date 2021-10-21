@@ -7,7 +7,7 @@ use App\Models\Company;
 use App\Models\User;
 use App\Models\AssignCompany;
 use App\Models\Form;
-
+use Illuminate\Support\Facades\Log;
 
 class AssignCompanyController extends Controller
 {
@@ -35,7 +35,9 @@ class AssignCompanyController extends Controller
      */
     public function create()
     {
-        //
+        $company = Company::get();
+        $forms = Form::get();
+        return view('assigncompany.create',compact('company','forms'));
     }
 
     /**
@@ -59,7 +61,7 @@ class AssignCompanyController extends Controller
         $arraytostringcompany =  implode(',',$request->input('company_id'));
 
         $announcement = new AssignCompany;
-        $announcement->text = $request->get('message');
+        $announcement->message = $request->get('message');
         $announcement['form_id'] = $arraytostringform;
         $announcement['company_id'] = $arraytostringcompany;
         $announcement['employee_id'] = $arraytostringemp;
@@ -115,69 +117,7 @@ class AssignCompanyController extends Controller
         //
     }
 
-    public function getannouncementuser($lid,$did) 
-    {
-        
-        $desig_id_array=[];
-
-        $locArray = explode(',', $lid);  
-        $desigArray = explode(',', $did); 
-
-
-        $employeelocation = CompanyLocation::get(); 
-        $employeedesignation = Roles::get();
-        
-        foreach($locArray as $locarray) {
-            foreach($desigArray as $desigarray) {
-               
-                    $unit= Employee::select(
-                        'rrhrms_user_role.display_name','rrhrms_company_gen_info.c_name','rrhrms_employee.emp_nick_name',
-                        'rrhrms_employee.operational_company_id','rrhrms_employee.id as id')
-                        ->join('rrhrms_company_gen_info','rrhrms_employee.operational_company_id','=','rrhrms_company_gen_info.id')
-                        ->join('rrhrms_user_role','rrhrms_employee.designation','=','rrhrms_user_role.id')
-
-                    ->where("rrhrms_employee.operational_company_location_id",$locarray)
-                    ->where("rrhrms_employee.designation",$desigarray)
-                    ->get();
-                    
-                    array_push($desig_id_array,$unit);
-                }
-            }
-        
-            Log::debug("designation arrayaa".print_r($desig_id_array,true));
-        return json_encode($desig_id_array);
-       
-    }
-
-    public function getannouncementrole($id) 
-    {
-        $location_id_array=[]; 
-
-        $locationArray = explode(',', $id);  
-
-        //Log::debug("locationid".print_r($locationArray,true));
-
-       $comprole = CompanyLocation::get();  
-
-       
-
-        foreach($locationArray as $locationarray) {
-            foreach($comprole as $comproles) {
-                if($comproles->id == $locationarray){
-                    $role = Employee::select(
-                        'rrhrms_user_role.display_name',
-                        'rrhrms_employee.designation','rrhrms_user_role.id as id')
-                        ->join('rrhrms_user_role','rrhrms_employee.designation','=','rrhrms_user_role.id')
-                        ->where("rrhrms_employee.operational_company_location_id",$comproles->id)->get();
-
-                    array_push($location_id_array,$role);
-                }
-            }
-        }
-
-        return json_encode($location_id_array);
-    }
-
+  
     public function getlocationid($id) 
     {
         $company_id_array=[];
@@ -185,12 +125,12 @@ class AssignCompanyController extends Controller
 
         $companyArray = explode(',', $id); 
 
-        $complocation = CompanyGenInfo::get();
+        $complocation = Company::get();
 
         foreach($companyArray as $companyarray) {
             foreach($complocation as $complocations) {
                 if($complocations->id == $companyarray){
-                    $companylocation = CompanyLocation::where("operational_company_id",$complocations->id)->get();
+                    $companylocation = User::where("company_id",$complocations->id)->get();
                     
                     array_push($company_id_array,$companylocation);
                 }
