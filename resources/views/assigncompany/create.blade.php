@@ -1,13 +1,12 @@
 @extends('layouts.adminlayapp')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 
 $(document).ready(function(){
 
-    $('#emp_id').select2();
+    $('#employee_id').select2();
     $('#company_id').select2();
-    $('#location_id').select2();
-    $('#designation_id').select2();
-
+    $('#form_id').select2();
 
     $("#checkbox_company").click(function(){
         if($("#checkbox_company").is(':checked') ){
@@ -19,39 +18,18 @@ $(document).ready(function(){
         }
     });
 
-    $("#checkbox_location").click(function(){
-        if($("#checkbox_location").is(':checked') ){
-            $("#location_id > option").prop("selected","selected");
-            $("#location_id").trigger("change");
-        }else{
-            $("#location_id > option").prop("selected","");
-            $("#location_id").trigger("change");
-        }
-    });
-
-    $("#checkbox_designation").click(function(){
-        if($("#checkbox_designation").is(':checked') ){
-            $("#designation_id > option").prop("selected","selected");
-            $("#designation_id").trigger("change");
-        }else{
-            $("#designation_id > option").prop("selected","");
-            $("#designation_id").trigger("change");
-        }
-    });
-
     $("#checkbox_emp").click(function(){
         if($("#checkbox_emp").is(':checked') ){
-            $("#emp_id > option").prop("selected","selected");
-            $("#emp_id").trigger("change");
+            $("#employee_id > option").prop("selected","selected");
+            $("#employee_id").trigger("change");
         }else{
-            $("#emp_id > option").prop("selected","");
-            $("#emp_id").trigger("change");
+            $("#employee_id > option").prop("selected","");
+            $("#employee_id").trigger("change");
         }
     });
 
     var company_id;
     var location_id;
-    var designation_id;
 
     $('#company_id').on('change',function(){
         company_id = $(this).val();
@@ -66,77 +44,23 @@ $(document).ready(function(){
                 {
                     // data = JSON.stringify(data);
                     console.log(data);
-                    $('#location_id').empty();
+                    $('#employee_id').empty();
                     for(var i=0;i<data.length;i++){
                         for(var j=0;j<data[i].length;j++){
-                            $('#location_id').append('<option value="'+ data[i][j].id +'">'+ data[i][j].l_name +'</option>');
+                            $('#employee_id').append('<option value="'+ data[i][j].id +'">'+ data[i][j].name +'</option>');
                         }
                     }
 
 
-                    // $.each(data, function(key,value){
-                    //     $('#location_id').append('<option value="'+ key +'">'+ value +'</option>');
-                    // });
                 }
             });
         }
         else
         {
-            $('#location_id').empty();
+            $('#employee_id').empty();
         }
     });
 
-    $("#location_id").change(function(){
-      
-      location_id = $(this).val();
-      
-    //   alert(location_id);
-    //   var op;
-    //   $("#designation_id").html('');
-    //   jQuery.ajax({ 
-    //       url : '/getannouncementrole/' +location_id,
-    //       type : "GET",
-    //       dataType : "json",
-    //       success:function(data)
-    //       {
-           
-    //         for(var i=0;i<data.length;i++){
-    //             for(var j=0;j<data[i].length;j++){
-    //                 $('#designation_id').append('<option value="'+ data[i][j].id +'">'+ data[i][j].display_name +'</option>');
-
-                 
-    //           }
-    //       }
-    //     }
-    //   });
-      
-  });
-
-   $("#designation_id").change(function(){
-      
-       designation_id = $(this).val();
-       var op;
-       $("#emp_id").html('');
-        
-       jQuery.ajax({ 
-           url : '/getannouncementuser/'+location_id+'/'+designation_id,
-           type : "GET",
-           dataType : "json",
-           success:function(data)
-           {
-                  
-               for(var i=0;i<data.length;i++){
-
-                for(var j=0;j<data[i].length;j++){          
-                        $('#emp_id').append('<option value="'+ data[i][j].id +'">'+ data[i][j].emp_nick_name +' - '+ data[i][j].display_name +' - '+ data[i][j].c_name +'</option>');
-                }
-               }
-           }
-       });
-       
-   });
-
- 
 });
     </script>
 @section('content')
@@ -146,7 +70,7 @@ $(document).ready(function(){
               
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('products.index') }}"> Back</a>
+                <a class="btn btn-primary" href="{{ route('assign.index') }}"> Back</a>
             </div>
         </div>
     </div>
@@ -175,7 +99,7 @@ $(document).ready(function(){
                         </div>
                     @endif
                 <div class="card-body">
-                    <form method="POST" action="{{ route('assignment.store') }}">
+                    <form method="POST" action="{{ route('assign.store') }}">
                         @csrf
 
                         <div class="form-group row">
@@ -187,7 +111,7 @@ $(document).ready(function(){
                                 <select style="width:100% !important" name="company_id[]" id="company_id" class="form-control @error('company_id') is-invalid @enderror employee"   required autocomplete="company_id" multiple="multiple">
 
                                     @foreach ($company as $companys)
-                                        <option value="{{ $companys->id }}">{{ $companys->c_name }}</option>
+                                        <option value="{{ $companys->id }}">{{ $companys->company_name }}</option>
                                     @endforeach                                 
                                                       
                                 </select>
@@ -201,16 +125,16 @@ $(document).ready(function(){
                        
                        
                         <div class="form-group row">
-                        <label for="emp_id" class="col-md-4 col-form-label text-md-right">{{ __('Employee Name') }}<span style="color:red"> *</span></label>
+                        <label for="employee_id" class="col-md-4 col-form-label text-md-right">{{ __('Employee Name') }}<span style="color:red"> *</span></label>
 
                         <div class="col-md-6">
                         <input type="checkbox" id="checkbox_emp" >Select All
-                        <select style="width:100% !important" name="emp_id[]" id="emp_id" class="form-control @error('emp_id') is-invalid @enderror employee"   required autocomplete="emp_id" multiple="multiple">
+                        <select style="width:100% !important" name="employee_id[]" id="employee_id" class="form-control @error('employee_id') is-invalid @enderror employee"   required autocomplete="employee_id" multiple="multiple">
 
                                                                                
                                                      
                              </select>
-                                @error('emp_id')
+                                @error('employee_id')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -221,11 +145,11 @@ $(document).ready(function(){
                         <label for="form_id" class="col-md-4 col-form-label text-md-right">{{ __('Forms') }}<span style="color:red"> *</span></label>
 
                         <div class="col-md-6">
-                        <input type="checkbox" id="checkbox_designation" >Select All
+                        <!-- <input type="checkbox" id="checkbox_designation" >Select All -->
                         <select style="width:100% !important" name="form_id[]" id="form_id" class="form-control @error('form_id') is-invalid @enderror employee"   required autocomplete="form_id" multiple="multiple">
 
-                                 @foreach ($designation as $desig)
-                                   <option value="{{$desig->id}}">{{$desig->display_name}}</option>
+                                 @foreach ($forms as $form)
+                                   <option value="{{$form->id}}">{{$form->form_name}}</option>
                                  @endforeach                                            
                                                      
                              </select>
@@ -241,10 +165,10 @@ $(document).ready(function(){
 
                             <div class="col-md-6">
                              
-                            <textarea class="form-control @error('text') is-invalid @enderror" type="text" name="text" required></textarea>
+                            <textarea class="form-control @error('message') is-invalid @enderror" type="text" name="message" required></textarea>
 
 
-                                @error('text')
+                                @error('message')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
