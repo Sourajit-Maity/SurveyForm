@@ -17,4 +17,9 @@ class Form extends Model
     {
          return $this->hasMany(Question::class);
     }
+
+    public function assignform()
+    {
+         return $this->hasMany(AssignCompany::class);
+    }
 }

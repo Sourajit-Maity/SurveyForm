@@ -240,8 +240,8 @@ class QuestionController extends Controller
             ->where('child_id', '!=', 'undefined')
             ->where('number', '!=', 'undefined')
             ->where('message', '!=', 'undefined')->get();
-            Log::debug("childquestion".print_r($questionid,true));
-            //
+            //Log::debug("childquestion".print_r($questionid,true));
+            
             $question_option = '';
             for ($x = 0; $x < count($questionid); $x++) {
                 $option = $questionid[$x]['option'];
@@ -334,9 +334,10 @@ class QuestionController extends Controller
 
     public function updateQuestion(Request $request)
     {
+        
 
         $question_data = $request->json()->all();
-
+        
         $new_question = $question_data['new_question'];
         $update_question = $question_data['update_question'];
         $delete_question = $question_data['delete_question'];
@@ -363,10 +364,32 @@ class QuestionController extends Controller
             }
         }
 
-
-        // $newqusid = $request->new_question['id'];
-
-        Log::debug("JSON data".print_r($question_data,true));
+        
+        for($k = 0; $k < count($update_question); $k++){
+            $oldqusid = Question::where('question_id',$update_question[$k]['question_id'])->value('id');
+            
+            
+            $updatequs = Question::findOrFail($oldqusid);
+            
+            $updatequs->question= $update_question[$k]['question'];
+            $updatequs->update();
+            $update_option = $update_question[$k]['data'];
+            $oldoptionid = Option::where('question_id',$update_question[$k]['question_id'])->get();
+                
+            Log::debug("oldoptionid".print_r($oldoptionid,true));
+            foreach ($oldoptionid as $value) {
+                $alloption = Option::where('question_id', $value)->delete();
+            }
+            for($l = 0; $l < count($update_option); $l++){
+                
+                $updateoption = Option::findOrFail($oldqusid);
+                $updateoption->option= $update_option[$l]['option'];
+                $updateoption->child_id= $update_option[$l]['child_id'];
+                $updateoption->number= $update_option[$l]['number'];
+                $updateoption->message= $update_option[$l]['message'];
+                $updateoption->update();               
+            }
+        }
 
         return redirect()->back()
                         ->with('success',' updated successfully');

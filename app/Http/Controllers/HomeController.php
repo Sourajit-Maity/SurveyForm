@@ -33,7 +33,8 @@ class HomeController extends Controller
         $currentuserid = Auth::user()->id;
         $assignform='';
         $assignformArr=[];
-        $arruser= DB::table('assign_companies')->get()->toArray();
+        $arruser= DB::table('assign_companies')->orderBy('id','DESC')
+        ->limit(2)->get()->toArray();
         foreach($arruser as $usr) {
             $users = explode(',', $usr->employee_id);
             foreach($users as $us) {

@@ -18,4 +18,8 @@ class Company extends Model
     {
          return $this->hasMany(User::class);
     }
+    public function assignform()
+    {
+         return $this->hasMany(AssignCompany::class);
+    }
 }
