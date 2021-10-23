@@ -12,4 +12,22 @@ class AssignCompany extends Model
     protected $fillable = [
         'message', 'company_id','employee_id', 'form_id',
     ];
+
+    public function company()
+    {
+        
+         return $this->belongsTo(Company::class,'company_id');
+    }
+
+    public function form()
+    {
+        
+         return $this->belongsTo(Form::class,'form_id');
+    }
+
+    public function employee()
+    {
+        
+         return $this->belongsTo(User::class,'form_id');
+    }
 }

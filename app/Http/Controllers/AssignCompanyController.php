@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Company;
 use App\Models\User;
+use App\Models\Question;
 use App\Models\AssignCompany;
 use App\Models\Form;
 use Illuminate\Support\Facades\Log;
+use DB;
+use Illuminate\Support\Facades\Auth;
 
 class AssignCompanyController extends Controller
 {
@@ -25,7 +28,28 @@ class AssignCompanyController extends Controller
      */
     public function index()
     {
-        //
+        $currentuserid = Auth::user()->id;
+        $assignform='';
+        $assignformArr=[];
+        $arruser= DB::table('assign_companies')->orderBy('id','DESC')->get()->toArray();
+         
+        foreach($arruser as $usr) {
+            $users = explode(',', $usr->employee_id);
+            $companys = explode(',', $usr->company_id);
+            $forms = explode(',', $usr->form_id);
+            foreach($users as $us) {
+                if($us==$currentuserid){
+                    array_push($assignformArr,$usr->message);
+                }
+            } 
+            
+        }     
+        foreach ($forms as $formdata) {
+            $form = Form::where('id',$formdata)->with('assignform')->get();
+        }
+        
+        return view('assigncompany.index',compact('form'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -91,7 +115,7 @@ class AssignCompanyController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
