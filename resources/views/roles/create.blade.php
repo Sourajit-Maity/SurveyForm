@@ -40,6 +40,20 @@
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <strong>Company:</strong>
+                                    {{ Form::select('company_id', $company, null, array('class'=>'form-control', 'placeholder'=>'Please select ...')) }}
+
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <strong>Reporting To:</strong>
+                                    {{ Form::select('parent_id', $reporting, null, array('class'=>'form-control', 'placeholder'=>'Please select ...')) }}
+
+                                </div>
+                            </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
                                 <strong>Permission:</strong>
                                 <br/>

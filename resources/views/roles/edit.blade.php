@@ -41,6 +41,19 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
+                                <strong>Company:</strong>
+                                {!! Form::select('company_id', $company,$usercompany, array('class' => 'form-control')) !!}
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <strong>Reporting To:</strong>
+                                    {{ Form::select('parent_id', $reporting, $userreporting, array('class'=>'form-control')) }}
+
+                                </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
                                 <strong>Permission:</strong>
                                 <br/>
                                 @foreach($permission as $value)

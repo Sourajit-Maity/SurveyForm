@@ -55,4 +55,8 @@ class User extends Authenticatable
     {
          return $this->hasMany(AssignCompany::class);
     }
+    public function roleparents()
+    {
+         return $this->hasMany(RoleParent::class);
+    }
 }
