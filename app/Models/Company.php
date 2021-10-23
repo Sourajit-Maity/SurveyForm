@@ -22,4 +22,8 @@ class Company extends Model
     {
          return $this->hasMany(AssignCompany::class);
     }
+    public function roleparents()
+    {
+         return $this->hasMany(RoleParent::class);
+    }
 }

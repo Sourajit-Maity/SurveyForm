@@ -24,14 +24,21 @@
 
 <table class="table table-bordered">
   <tr>
-     <th>No</th>
+   
      <th>Name</th>
+     <!-- <th>Company Name</th>
+     <th>Reporting Name</th> -->
      <th width="280px">Action</th>
   </tr>
     @foreach ($roles as $key => $role)
     <tr>
-        <td>{{ ++$i }}</td>
+        
         <td>{{ $role->name }}</td>
+
+        <!-- @foreach ($roleparents as $key => $roleparent)
+            <td>{{ $roleparent->company->company_name }}</td>
+            <td>{{ $roleparent->parent->name }}</td>
+        @endforeach -->
         <td>
             <a class="btn btn-info" href="{{ route('roles.show',$role->id) }}">Show</a>
             @can('role-edit')
@@ -46,9 +53,5 @@
     </tr>
     @endforeach
 </table>
-
-
-{!! $roles->render() !!}
-
 
 @stop

@@ -15,9 +15,9 @@ class CreateRoleParentsTable extends Migration
     {
         Schema::create('role_parents', function (Blueprint $table) {
             $table->id();
-            $table->string('company_id')->nullable();
-            $table->string('designation_name')->nullable();
-            $table->string('parent_id')->nullable();
+            $table->foreignId('company_id')->nullable();
+            $table->foreignId('designation_id')->nullable();
+            $table->foreignId('parent_id')->nullable();
             $table->timestamps();
         });
     }
