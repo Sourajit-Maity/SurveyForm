@@ -267,7 +267,7 @@
 				</div>
 
 				<div class="col-md-3">
-					<section class="start-question">
+					<section class="start-question sticky-top">
 						<div class="card card-primary card-outline" style="width:100%;font-size: 14px;">
 							<div class="card-body box-profile">
 								<div class="text-center">
@@ -298,7 +298,7 @@
 
 
 
-					<section class="question-test">
+					<section class="question-test sticky-top">
 						<div class="card card-primary">
 							<div class="card-header">
 								<h3 class="card-title">Product Details</h3>

@@ -234,37 +234,46 @@ class QuestionController extends Controller
         $allquestion = Question::where('form_id', $question->form_id)->get();
 
         for ($y = 0; $y < count($allquestion); $y++) {
-            $questionid = Option::select('option', 'child_id', 'number', 'message')
-            ->where('question_id', $allquestion[$y]->question_id)
+            $alloption = Option::where('question_id', $allquestion[$y]->question_id)
             ->where('option', '!=', 'undefined')
             ->where('child_id', '!=', 'undefined')
             ->where('number', '!=', 'undefined')
-            ->where('message', '!=', 'undefined')->get();
+            ->where('message', '!=', 'undefined')
+            ->get();
+
+            //dd($alloption);
+
+            
+
             //Log::debug("childquestion".print_r($questionid,true));
             
-            $question_option = '';
-            for ($x = 0; $x < count($questionid); $x++) {
-                $option = $questionid[$x]['option'];
-                $child_id = $questionid[$x]['child_id'];
-                $number = $questionid[$x]['number'];
-                $message = $questionid[$x]['message'];
+            // $question_option = '';
+            // for ($x = 0; $x < count($questionid); $x++) {
+            //     $option_id = $questionid[$x]['id'];
+            //     $option = $questionid[$x]['option'];
+            //     $child_id = $questionid[$x]['child_id'];
+            //     $number = $questionid[$x]['number'];
+            //     $message = $questionid[$x]['message'];
 
-                if($x == 0){
-                    if(($number != '') || ($message != '')){
-                        $question_option = $option . ":" . $child_id . ":" . $number . ":" . $message;
-                    } else {
-                        $question_option = $option . ":" . $child_id;
-                    }
-                } else {
-                    if(($number != '') || ($message != '')){
-                        $question_option .= "|" . $option . ":" . $child_id . ":" . $number . ":" . $message;
-                    } else {
-                        $question_option .= "|" . $option . ":" . $child_id;
-                    }
-                } 
-            }
-            $allquestion[$y]['options'] = $question_option;         
+            //     if($x == 0){
+            //         if(($number != '') || ($message != '')){
+            //             $question_option = $option . ":" . $child_id . ":" . $number . ":" . $message;
+            //         } else {
+            //             $question_option = $option . ":" . $child_id;
+            //         }
+            //     } else {
+            //         if(($number != '') || ($message != '')){
+            //             $question_option .= "|" . $option . ":" . $child_id . ":" . $number . ":" . $message;
+            //         } else {
+            //             $question_option .= "|" . $option . ":" . $child_id;
+            //         }
+            //     } 
+            // }
+            //$allquestion[$y]['options'] = $question_option;
+            $allquestion[$y]['options'] = $alloption;         
         }
+
+        //dd($allquestion);
 
         //echo $result;
         
@@ -337,6 +346,8 @@ class QuestionController extends Controller
         
 
         $question_data = $request->json()->all();
+
+        Log::debug("question_data: ".print_r($question_data,true));
         
         $new_question = $question_data['new_question'];
         $update_question = $question_data['update_question'];
@@ -353,46 +364,99 @@ class QuestionController extends Controller
 
             $new_option = $new_question[$i]['data'];
             for($j = 0; $j < count($new_option); $j++){
+                $new_option_number = '';
+                if($new_option[$j]['number'] != ''){
+                    $new_option_number = $new_option[$j]['number'];
+                }
+
+                $new_option_message = '';
+                if($new_option[$j]['message'] != ''){
+                    $new_option_message = $new_option[$j]['message'];
+                }
+
+            
+
                 $newqus = Option::create([
                     'question_id' => $new_question[$i]['question_id'],
                     'option' => $new_option[$j]['option'],
                     'child_id' => $new_option[$j]['child_id'],
-                    'number' => $new_option[$j]['number'],
-                    'message' => $new_option[$j]['message'],
+                    'number' => $new_option_number,
+                    'message' => $new_option_message,
         
                 ]);
             }
         }
 
+        Log::debug("update_question: ".print_r($update_question,true));
+
         
         for($k = 0; $k < count($update_question); $k++){
             $oldqusid = Question::where('question_id',$update_question[$k]['question_id'])->value('id');
-            
-            
             $updatequs = Question::findOrFail($oldqusid);
-            
-            $updatequs->question= $update_question[$k]['question'];
+            $updatequs->question = $update_question[$k]['question'];
             $updatequs->update();
-            $update_option = $update_question[$k]['data'];
-            $oldoptionid = Option::where('question_id',$update_question[$k]['question_id'])->get();
-                
-            Log::debug("oldoptionid".print_r($oldoptionid,true));
-            foreach ($oldoptionid as $value) {
-                $alloption = Option::where('question_id', $value)->delete();
+
+            $new_option = $update_question[$k]['new_option'];
+            $update_option = $update_question[$k]['update_option'];
+            $delete_option = $update_question[$k]['delete_option'];
+
+            for($l = 0; $l < count($new_option); $l++){
+                $new_option2_number = '';
+                if($new_option[$l]['number'] != ''){
+                    $new_option2_number = $new_option[$l]['number'];
+                }
+
+                $new_option2_message = '';
+                if($new_option[$l]['message'] != ''){
+                    $new_option2_message = $new_option[$l]['message'];
+                }
+
+
+                $newopt = new Option();
+                $newopt = Option::create([
+                    'question_id' => $update_question[$k]['question_id'],
+                    'option' => $new_option[$l]['option'],
+                    'child_id' => $new_option[$l]['child_id'],
+                    'number' => $new_option2_number,
+                    'message' => $new_option2_message   
+                ]);
             }
-            for($l = 0; $l < count($update_option); $l++){
-                
-                $updateoption = Option::findOrFail($oldqusid);
-                $updateoption->option= $update_option[$l]['option'];
-                $updateoption->child_id= $update_option[$l]['child_id'];
-                $updateoption->number= $update_option[$l]['number'];
-                $updateoption->message= $update_option[$l]['message'];
-                $updateoption->update();               
+
+            for($m = 0; $m < count($update_option); $m++){
+                $update_option2_number = '';
+                if($update_option[$m]['number'] != ''){
+                    $update_option2_number = $update_option[$m]['number'];
+                }
+
+                $update_option2_message = '';
+                if($update_option[$m]['message'] != ''){
+                    $update_option2_message = $update_option[$m]['message'];
+                }
+
+                $updateoption = Option::findOrFail($update_option[$m]['option_id']);
+
+                $updateoption->option = $update_option[$m]['option'];
+                $updateoption->child_id = $update_option[$m]['child_id'];
+                $updateoption->number = $update_option2_number;
+                $updateoption->message = $update_option2_message;
+                $updateoption->update();
+            }
+
+            foreach ($delete_option as $value) {
+                $deleteoption = Option::where('id', $value)->delete();
             }
         }
 
-        return redirect()->back()
-                        ->with('success',' updated successfully');
+        foreach ($delete_question as $value) {
+            $deletequestion = Question::where('question_id', $value)->delete();
+            $deleteoption = Option::where('question_id', $value)->delete();
+        }
+
+        //return redirect()->back()
+        //->with('success',' updated successfully');
+        $sen['success'] = true;
+        $sen['result'] = 'updated successfully';
+        return response()->json(200);
 
     }
 

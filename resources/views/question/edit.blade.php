@@ -172,6 +172,8 @@
     var delete_question_id = [];
     var new_question_id = [];
 
+    var final_delete_opt = [];
+
     var child_question = '';
 
     var optcount = [];
@@ -221,6 +223,7 @@
     $(document).ready(function(){
         var questiondata = @json($allquestion ?? '');
         var form_id = $("#form_id option:selected").val();
+        console.log(questiondata);
 
         var tform_id = questiondata[0].form_id;
         var forms = @json($forms ?? '');
@@ -244,40 +247,64 @@
             
             var opt_result = "";
             var raw_option = questiondata[i].options;
-            var tarray = raw_option.split("|");
+            //var tarray = raw_option.split("|");
             var option_text, option_value;
             var option_lastnode = false;
             var option_number = "";
             var option_message = "";
-            for(var j = 0; j < tarray.length; j++){
-                var varray = tarray[j].split(":");
+            //for(var j = 0; j < tarray.length; j++){
+            for(var j = 0; j < raw_option.length; j++){
+                // var varray = tarray[j].split(":");
                 
-                option_text = varray[0];
-                option_value = varray[1];
+                // option_text = varray[0];
+                // option_value = varray[1];
 
-                opt_result += '<tr class="tr_'+QusId+'"><td><input type="text" name="option['+QusId+']['+j+']" value="'+option_text+'" class="form-control" readonly/></td>';
+                option_id = raw_option[j]['id'];
+                option_text = raw_option[j]['option'];
+                option_value = raw_option[j]['child_id'];
+
+                opt_result += '<tr class="tr_'+QusId+'"><td><input type="text" name="option_id['+QusId+']['+j+']" value="'+option_id+'" class="form-control" style="display:none;" readonly/>';
+                opt_result += '<input type="text" name="option['+QusId+']['+j+']" value="'+option_text+'" class="form-control" readonly/></td>';
                 opt_result += '<td><input type="text" name="child_id['+QusId+']['+j+']" value="'+option_value+'" class="form-control" readonly/></td>';
                 
-                if(varray.length == 4){
+                // if(varray.length == 4){
+                //     option_lastnode = true;
+                //     option_number = varray[2];
+                //     option_message = varray[3];
+
+                //     opt_result += '<td><input type="checkbox" name="last_node['+QusId+']['+j+']" onclick="ckbox(this);" checked disabled/></td>';
+                //     opt_result += '<td><input type="number" name="number['+QusId+']['+j+']" value="'+option_number+'" class="form-control" readonly/></td>';
+                //     opt_result += '<td><input type="text" name="message['+QusId+']['+j+']" value="'+option_message+'" class="form-control" readonly/></td>';
+                // } else{
+                //     opt_result += '<td><input type="checkbox" name="last_node['+QusId+']['+j+']" onclick="ckbox(this);" disabled/></td>';
+                //     opt_result += '<td></td>';
+                //     opt_result += '<td></td>';
+                // }
+
+
+                option_number = raw_option[j]['number'];
+                option_message = raw_option[j]['message'];
+
+                if((option_number == '') && (option_message == '')){
+                    opt_result += '<td><input type="checkbox" name="last_node['+QusId+']['+j+']" onclick="ckbox(this);" disabled/></td>';
+                    opt_result += '<td></td>';
+                    opt_result += '<td></td>';
+                } else {
                     option_lastnode = true;
-                    option_number = varray[2];
-                    option_message = varray[3];
 
                     opt_result += '<td><input type="checkbox" name="last_node['+QusId+']['+j+']" onclick="ckbox(this);" checked disabled/></td>';
                     opt_result += '<td><input type="number" name="number['+QusId+']['+j+']" value="'+option_number+'" class="form-control" readonly/></td>';
                     opt_result += '<td><input type="text" name="message['+QusId+']['+j+']" value="'+option_message+'" class="form-control" readonly/></td>';
-                } else{
-                    opt_result += '<td><input type="checkbox" name="last_node['+QusId+']['+j+']" onclick="ckbox(this);" disabled/></td>';
-                    opt_result += '<td></td>';
-                    opt_result += '<td></td>';
                 }
                 
 
                 if(j == 0){
                     opt_result += '<td></td></tr>';
                 } else {
-                    opt_result += '<td><button type="button" name="opt_remove" id="optremove_'+j+'" class="btn btn-danger remove-opt-tr" style="display:block;" disabled>'
-                    opt_result += '<i class="fa fa-times" aria-hidden="true"></i></button></td></tr>';
+                    // opt_result += '<td class="count_'+j+'"><button type="button" name="opt_remove" id="optremove_'+j+'" class="btn btn-danger remove-opt-tr" style="display:block;" disabled>'
+                    //opt_result += '<i class="fa fa-times" aria-hidden="true"></i></button></td></tr>';
+                    opt_result += '<td class="count_'+j+'"></td></tr>';
+                    
                 }
                 rowspan++;
             }
@@ -537,37 +564,71 @@
     }
 
     $(document).on('click', '.remove-opt-tr', function(){  
-        var class1 = $(this).parents('tr').attr('class');
-        var class_array = class1.split("_");
-        var qid2 = class_array[1];
-        console.log(qid2);
-        var count;
-        for(var x = 0; x < optcount.length; x++){
-            if(optcount[x].qid == qid2){
-                //console.log(optcount[x].optcount);
-                optcount[x].optcount--;
-                count = optcount[x].optcount;
-                //console.log(optcount[x].optcount);
+
+        Swal.fire({
+            title: 'Do you want to delete this option?',
+            text: "You won't be able to revert this!",
+            type: 'error',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                var class1 = $(this).parents('tr').attr('class');
+                var class_array = class1.split("_");
+                var qid2 = class_array[1];
+                console.log(qid2);
+
+                var opt_class = $(this).parents('td').attr('class');
+                if(opt_class != undefined){
+                    var temp_opt_class = opt_class.split('_');
+                    var opt_count = temp_opt_class[1];
+                    var option_id = $("input[name='option_id["+qid2+"]["+opt_count+"]']").val();
+                    console.log('option_id: '+option_id);
+
+                    final_delete_opt.push(option_id);
+                }
+
+                
+
+                var count;
+                for(var x = 0; x < optcount.length; x++){
+                    if(optcount[x].qid == qid2){
+                        //console.log(optcount[x].optcount);
+                        optcount[x].optcount--;
+                        count = optcount[x].optcount;
+                        //console.log(optcount[x].optcount);
+                    }
+                    break;
+                }
+
+                var rowspan = $('.tr_'+qid2+':first td:eq(0)').attr('rowspan');
+                console.log("rowspan: "+rowspan);
+                rowspan--;
+                $('.tr_'+qid2+':first td:eq(0), .tr_'+qid2+':first td:eq(1), .tr_'+qid2+':first td:eq(8)').attr('rowspan',rowspan);
+
+                $(this).parents('tr').remove();
+                console.log(optcount);
+
+                var option_count = $("."+class1).length;
+                console.log("option count: "+option_count);
+                
+                for(var y = 2; y < option_count; y++){
+                    var t = y - 1;
+                    $("."+class1+":eq("+y+") td:eq(0) input").attr("name", "option["+qid2+"]["+t+"]");
+                    $("."+class1+":eq("+y+") td:eq(1) input").attr("name", "child_id["+qid2+"]["+t+"]");
+                    $("."+class1+":eq("+y+") td:eq(2) input").attr("name", "last_node["+qid2+"]["+t+"]");
+                    $("."+class1+":eq("+y+") td:eq(3) input").attr("name", "number["+qid2+"]["+t+"]");
+                    $("."+class1+":eq("+y+") td:eq(4) input").attr("name", "message["+qid2+"]["+t+"]");
+
+                }
             }
-            break;
-        }
+        });
 
-        var rowspan = $('.tr_'+qid2+':first td:eq(0)').attr('rowspan');
-        console.log("rowspan: "+rowspan);
-        rowspan--;
-        $('.tr_'+qid2+':first td:eq(0), .tr_'+qid2+':first td:eq(1), .tr_'+qid2+':first td:eq(8)').attr('rowspan',rowspan);
 
-        $(this).parents('tr').remove();
-        console.log(optcount);
 
-        var option_count = $("."+class1).length;
-        console.log("option count: "+option_count);
         
-        for(var y = 2; y < option_count; y++){
-            var t = y - 1;
-            $("."+class1+":eq("+y+") td:eq(0) input").attr("name", "option["+qid2+"]["+t+"]");
-            $("."+class1+":eq("+y+") td:eq(1) input").attr("name", "child_id["+qid2+"]["+t+"]");
-        }
         
     });
 
@@ -630,12 +691,16 @@
 
             const index = update_question_id.indexOf(Qid3);
             if (index > -1) {
-                var final_opt = [];
+                var final_new_opt = [];
+                var final_update_opt = [];
 
                 for(var y = 0; y <= Ocount; y++){
                     var tnumber = '';
                     var tmessage = '';
                     
+                    var option_id = $("input[name='option_id["+Qid3+"]["+y+"]']").val();
+                    
+                    //console.log('option_id: '+ option_id);
                     var toption = $("input[name='option["+Qid3+"]["+y+"]']").val();
                     var tchild_id = $("input[name='child_id["+Qid3+"]["+y+"]']").val();
                     var tlast_node = $("input[name='last_node["+Qid3+"]["+y+"]']").prop("checked");
@@ -649,19 +714,33 @@
                         tchild_id = "0";
                     }
 
-                    final_opt.push({
-                        "option" : toption,
-                        "child_id" : tchild_id,
-                        "number" : tnumber,
-                        "message" : tmessage
-                    });
+                    if(option_id == undefined){
+                        final_new_opt.push({
+                            "option" : toption,
+                            "child_id" : tchild_id,
+                            "number" : tnumber,
+                            "message" : tmessage
+                        });
+                    } else {
+                        final_update_opt.push({
+                            "option_id" : option_id,
+                            "option" : toption,
+                            "child_id" : tchild_id,
+                            "number" : tnumber,
+                            "message" : tmessage
+                        });
+                    }   
                 }
+
+                console.log(final_new_opt);
 
                 update_question.push({
                     "question_id" : Qid3,
                     "form_id" : form_id,
                     "question" : qt_question,
-                    "data" : final_opt
+                    "new_option" : final_new_opt,
+                    "update_option" : final_update_opt,
+                    "delete_option" : final_delete_opt
                 });
             } else {
                 const index2 = new_question_id.indexOf(Qid3);
@@ -735,18 +814,33 @@
                     //console.log(json_data);
                     //
                     //alert("Result updated successfully");
+
+                    // Swal.fire({
+                    //     type: 'success',
+                    //     title: 'Updated...',
+                    //     text: 'Questions updated successfully',
+                    // }).then((result) => {
+                    //     if (result.value) {
+                    //         location.reload();
+                    //     }
+                    // });
+                },
+                error: function(xhr, resp, text) {
+                    //alert("Sorry! Unable to update details.");
+                    // Swal.fire({
+                    //     type: 'error',
+                    //     title: 'Oops...',
+                    //     text: 'Unable to update details!',
+                    // });
+
                     Swal.fire({
                         type: 'success',
                         title: 'Updated...',
                         text: 'Questions updated successfully',
-                    });
-                },
-                error: function(xhr, resp, text) {
-                    //alert("Sorry! Unable to update details.");
-                    Swal.fire({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: 'Unable to update details!',
+                    }).then((result) => {
+                        if (result.value) {
+                            location.reload();
+                        }
                     });
                 }  
             });

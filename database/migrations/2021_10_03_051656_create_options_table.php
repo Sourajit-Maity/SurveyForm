@@ -15,9 +15,9 @@ class CreateOptionsTable extends Migration
     {
         Schema::create('options', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('question_id')->nullable();
-            $table->longText('option')->nullable();
-            $table->longText('child_id')->nullable();
+            $table->foreignId('question_id');
+            $table->longText('option');
+            $table->longText('child_id')->default('0');
             $table->longText('number')->nullable();
             $table->longText('message')->nullable();
             $table->timestamps();
