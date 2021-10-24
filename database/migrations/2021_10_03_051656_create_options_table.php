@@ -17,7 +17,7 @@ class CreateOptionsTable extends Migration
             $table->id();
             $table->foreignId('question_id');
             $table->longText('option');
-            $table->longText('child_id')->default('0');
+            $table->longText('child_id');
             $table->longText('number')->nullable();
             $table->longText('message')->nullable();
             $table->timestamps();
