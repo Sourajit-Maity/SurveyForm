@@ -93,7 +93,7 @@ class AssignCompanyController extends Controller
 
         Log::debug("all".print_r($request->all(),true));
     
-        return back()->with('status', 'Form Asigned Successfully');
+        return redirect()->route('assign.index')->with('status', 'Form Asigned Successfully');
      }
 
     /**
