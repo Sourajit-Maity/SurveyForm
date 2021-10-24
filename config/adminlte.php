@@ -275,7 +275,7 @@ return [
         ],
         [
             'text' => 'Assign Form',
-            'url'  => 'assign',
+            'url'  => 'assign/create',
             'icon' => 'fas fa-fw fa-lock',
         ],
         [
