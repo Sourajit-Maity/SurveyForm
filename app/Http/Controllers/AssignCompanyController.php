@@ -32,8 +32,9 @@ class AssignCompanyController extends Controller
         $assignform='';
         $assignformArr=[];
         $arruser= DB::table('assign_companies')->orderBy('id','DESC')->get()->toArray();
-         
+      
         foreach($arruser as $usr) {
+            
             $users = explode(',', $usr->employee_id);
             $companys = explode(',', $usr->company_id);
             $forms = explode(',', $usr->form_id);
@@ -45,8 +46,9 @@ class AssignCompanyController extends Controller
             
         }     
         foreach ($forms as $formdata) {
-            $form = Form::where('id',$formdata)->with('assignform')->get();
+            $forms = Form::where('id',$formdata)->with('assignform')->get();
         }
+        $form= AssignCompany::orderBy('id','DESC')->get();
         
         return view('assigncompany.index',compact('form'))
             ->with('i', (request()->input('page', 1) - 1) * 5);

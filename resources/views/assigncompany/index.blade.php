@@ -21,6 +21,8 @@
                             <th>No</th>
 
                             <th>Form Name</th>
+                            <th>Company Name</th>
+                            <th>Employee Name</th>
 
                             <th width="280px">Action</th>
                         </tr>
@@ -31,10 +33,12 @@
                             @foreach ($form as $forms)
                                 <tr data-entry-id="h">
                                     <td>{{ ++$i }}</td>
-                                    <td>{{ $forms->form_name }}</td>
+                                    <td>{{ $forms->form->form_name }}</td>
+                                    <td>{{ $forms->company->company_name }}</td>
+                                    <td>{{ $forms->employee->name }}</td>
                                     
                                     <td>
-                                        <form action="{{ route('form.destroy',$forms->id) }}" method="POST">
+                                        <form action="{{ route('form.destroy',$forms->form->id) }}" method="POST">
                                         <a class="btn btn-success" href="{{ route('view-question-forms',[$forms->id]) }}" class="btn btn-xs btn-success">
                                     Show</a>
                                             <!-- <a class="btn btn-info" href="{{ route('form.show',$forms->id) }}">Show</a> -->

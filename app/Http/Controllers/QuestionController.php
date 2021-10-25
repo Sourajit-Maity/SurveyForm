@@ -347,7 +347,7 @@ class QuestionController extends Controller
 
         $question_data = $request->json()->all();
 
-        Log::debug("question_data: ".print_r($question_data,true));
+       // Log::debug("question_data: ".print_r($question_data,true));
         
         $new_question = $question_data['new_question'];
         $update_question = $question_data['update_question'];
@@ -387,7 +387,7 @@ class QuestionController extends Controller
             }
         }
 
-        Log::debug("update_question: ".print_r($update_question,true));
+       // Log::debug("update_question: ".print_r($update_question,true));
 
         
         for($k = 0; $k < count($update_question); $k++){

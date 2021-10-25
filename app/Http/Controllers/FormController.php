@@ -150,7 +150,7 @@ class FormController extends Controller
         //Log::debug("id".print_r($id,true));
         $allquestion = Question::where('form_id',$id)->get();
 
-        Log::debug("childquestion".print_r($allquestion,true));
+       // Log::debug("childquestion".print_r($allquestion,true));
 
         for ($y = 0; $y < count($allquestion); $y++) {
             $questionid = Option::select('option', 'child_id', 'number', 'message')
@@ -159,7 +159,7 @@ class FormController extends Controller
             ->where('child_id', '!=', 'undefined')
             ->where('number', '!=', 'undefined')
             ->where('message', '!=', 'undefined')->get();
-            Log::debug("childquestion".print_r($questionid,true));
+            //Log::debug("childquestion".print_r($questionid,true));
 
             $question_option = '';
             for ($x = 0; $x < count($questionid); $x++) {

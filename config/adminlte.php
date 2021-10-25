@@ -45,12 +45,12 @@ return [
     |
     */
 
-    'logo' => '<b>HRMS</b>LTE',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => '<b>IRA Education</b>',
+    'logo_img' => 'assets/logos/logo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'HRMS',
+    'logo_img_alt' => 'IRAEducation',
 
     /*
     |--------------------------------------------------------------------------
