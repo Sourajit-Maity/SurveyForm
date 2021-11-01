@@ -28,6 +28,6 @@ class AssignCompany extends Model
     public function employee()
     {
         
-         return $this->belongsTo(User::class,'form_id');
+         return $this->belongsTo(User::class,'employee_id');
     }
 }

@@ -49,12 +49,14 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/get-my-info', [UserController::class, 'getMyInfo'])->name('get-my-info');
     Route::post('/submit-my-info', [UserController::class, 'updateMyInfo'])->name('submit-my-info');
     Route::post('update-password', [UserController::class,'updatePassword'])->name('update-password');
-
+    Route::get('/getuserid/{id}', [RoleController::class, 'getuserid']);
     Route::get('/add-announcements', [AssignCompanyController::class, 'addannouncement'])->name('add-announcements');
     Route::get('/view-announcements', [AssignCompanyController::class, 'viewannouncement'])->name('view-announcements');
     Route::get('/getannouncementuser/{lid}/{did}', [AssignCompanyController::class, 'getannouncementuser']);
     Route::get('/getannouncementrole/{id}', [AssignCompanyController::class, 'getannouncementrole']);
     Route::get('/getlocationid/{id}', [AssignCompanyController::class, 'getlocationid']);
+    
+
 
 
 

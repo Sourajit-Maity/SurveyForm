@@ -35,9 +35,8 @@ class RoleController extends Controller
     public function index(Request $request)
     {
         $roles = Role::orderBy('id','DESC')->get();
-        $roleparents = RoleParent::orderBy('id','DESC')->with('company','parent','roles')->paginate(5);
-        
-        return view('roles.index',compact('roles','roleparents'));
+        $roleparents = RoleParent::orderBy('id','DESC')->with('company','parent','roles')->paginate(5);    
+        return view('roles.index',compact('roles','roleparents')); 
                        
     }
     
@@ -139,9 +138,7 @@ class RoleController extends Controller
         $roleparent->company_id = $request->input('company_id');
         $roleparent->parent_id = $request->input('parent_id');
         $roleparent->save();
-    
-        
-    
+   
         return redirect()->route('roles.index')
                         ->with('success','Role updated successfully');
     }
@@ -158,4 +155,10 @@ class RoleController extends Controller
         return redirect()->route('roles.index')
                         ->with('success','Role deleted successfully');
     }
+
+    public function getuserid($id) 
+   {
+       $users = User::where("company_id",$id)->pluck("name","id");
+       return json_encode($users);
+   }
 }
