@@ -141,6 +141,10 @@
 		border-radius: 50%
 	}
 
+	.qt-message {
+		display:none;
+	}
+
 </style>
 <script>
 	$(document).ready(function(){
@@ -243,7 +247,7 @@
 									<button id="Previous" class="btn btn-primary" style="display:none;">Previous</button> 
 								</div>
 								<div class="ml-auto mr-sm-5"> 
-									<button id="Submit" class="btn btn-success" style="display:none;">Submit</button>
+									<button id="Preview" class="btn btn-success" style="display:none;">Preview</button>
 									<button id="Next" class="btn btn-success" style="display:none;">Next</button> 
 									<!-- <a id="Close" class="btn btn-success" href="/question" style="display:none;">Close</a> -->
 								</div>
@@ -257,7 +261,7 @@
 
 								<div class="d-flex align-items-center pt-3">
 									<div class="ml-auto mr-sm-5"> 
-										<a id="Close" class="btn btn-success" href="/question" style="display:none;">Close</a>
+										<a id="Submit" class="btn btn-success" href="/question" style="display:none;">Submit</a>
 									</div>
 								</div>
 							</div>
@@ -456,7 +460,7 @@
                     option_number = varray[2];
                     option_message = varray[3];
 
-					result += "<div id='"+question_id+"_lt' class='alert alert-primary' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:none;'>"+option_message+"</div>";
+					result += "<div id='"+question_id+"_lt' class='alert alert-primary qt-message' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:none;'>"+option_message+"</div>";
 				}
 
 			}
@@ -472,22 +476,25 @@
 				var qt_raw = $('input[name="'+qt_id+'"]:checked').val();
 				var qt_raw_arr = qt_raw.split(":");
 				var qt_cid = qt_raw_arr[0];
+				var opt_text = qt_raw_arr[1];
 				var message_stat = qt_raw_arr[2];
 				console.log("message_stat: "+message_stat);
 
 				if(message_stat == 1){
-					console.log('#'+qt_id+'_lt');
-					$('#'+qt_id+'_lt').css('display', 'block');
+					
+					$('input[name="'+qt_id+'"]:checked').parent().next().css('display', 'block');
+					$('input[name="'+qt_id+'"]:not(:checked)').parent().next().css('display', 'none');
+					
 				} else {
 					$('#'+qt_id+'_lt').css('display', 'none');
 				}
 
 				if (qt_cid == "0"){
-					$("#Submit").css("display", "block");
+					$("#Preview").css("display", "block");
 					$("#Next").css("display", "none");
 
 				} else {
-					$("#Submit").css("display", "none");
+					$("#Preview").css("display", "none");
 					$("#Next").css("display", "block");
 				}
 			}
@@ -590,7 +597,7 @@
 								option_number = varray[2];
 								option_message = varray[3];
 
-								result += "<div id='"+question_id+"_lt' class='alert alert-primary' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:none;'>"+option_message+"</div>";
+								result += "<div id='"+question_id+"_lt' class='alert alert-primary qt-message' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:none;'>"+option_message+"</div>";
 							}
 						}
 
@@ -654,7 +661,7 @@
 							option_number = varray[2];
 							option_message = varray[3];
 
-							result += "<div id='"+question_id+"_lt' class='alert alert-primary' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:none;'>"+option_message+"</div>";
+							result += "<div id='"+question_id+"_lt' class='alert alert-primary qt-message' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:none;'>"+option_message+"</div>";
 						}
 					}
 
@@ -677,7 +684,7 @@
 				}
 			}
 
-			$("#Submit").css("display", "none");
+			$("#Preview").css("display", "none");
 			$("#Next").css("display", "block");
 			if(index_pos == 0){
 				$("#Previous").css("display", "none");
@@ -686,10 +693,10 @@
 			}
 		});
 
-		$('#Submit').click(function() {
+		$('#Preview').click(function() {
 			$("#Previous").css("display", "none");
-			$("#Submit").css("display", "none");
-			$("#Close").css("display", "block");
+			$("#Preview").css("display", "none");
+			$("#Submit").css("display", "block");
 
 			$(".question-test").css("display", "none");
 
@@ -793,6 +800,7 @@
 					}
 
 					//result += "<div class='ml-md-3 ml-sm-3 pl-md-3 pt-sm-0 pt-3'>Answer: "+q_answer+"</div></div></br>";
+					
 
 					if(i == 0){
 						$("#result-view .card-body #qt_content").html(result); 
@@ -800,6 +808,10 @@
 						$("#result-view .card-body #qt_content").append(result); 
 					}	
 				}
+
+				var result2 = '<div class="form-group"><label>Comments:</label>';
+				result2 += '<textarea class="form-control" id="comment" rows="3" placeholder="Comment here"></textarea></div>';
+				$("#result-view .card-body #qt_content").append(result2); 
 
 				$('#result-view').css("display","block");
 				

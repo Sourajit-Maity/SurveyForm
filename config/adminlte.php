@@ -45,10 +45,10 @@ return [
     |
     */
 
-    'logo' => '<b>IRA Education</b>',
-    'logo_img' => 'assets/logos/logo.png',
-    'logo_img_class' => 'brand-image img-circle elevation-3',
-    'logo_img_xl' => null,
+    // 'logo' => '<b>IRA Education</b>',
+    'logo_img' => 'assets/logos/logo_small.png',
+    'logo_img_class' => 'brand-image',
+    'logo_img_xl' => 'assets/logos/logo.png',
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => 'IRAEducation',
 
@@ -247,41 +247,51 @@ return [
         //     'can'  => 'manage-blog',
         // ],
       
-        ['header' => 'account_settings'],
+        // ['header' => 'account_settings'],
+        [
+            'text' => 'Dashboard',
+            'url'  => 'home',
+            'icon' => 'nav-icon fas fa-fw fa-tachometer-alt',
+        ],
         [
             'text' => 'Company',
             'url'  => 'companys',
-            'icon' => 'far fa-building-o',
+            'active' => ['companys', 'companys*'],
+            'icon' => 'nav-icon fas fa-fw fa-building',
         ],
         [
-            'text' => 'User',
+            'text' => 'Users',
             'url'  => 'users',
-            'icon' => 'fas fa-fw fa-user',
+            'active' => ['users', 'users*'],
+            'icon' => 'nav-icon fas fa-fw fa-users',
         ],
         [
             'text' => 'Designation',
             'url'  => 'roles',
-            'icon' => 'fas fa-fw fa-lock',
+            'active' => ['roles', 'roles*'],
+            'icon' => 'nav-icon fas fa-fw fa-id-badge',
         ],
         [
             'text' => 'Forms',
             'url'  => 'form',
-            'icon' => 'fas fa-fw fa-lock',
+            'active' => ['form', 'form*', 'view-question-forms*'],
+            'icon' => 'nav-icon fas fa-fw fa-edit',
         ],
         [
             'text' => 'Question',
             'url'  => 'question',
-            'icon' => 'fas fa-fw fa-lock',
+            'active' => ['question', 'question*'],
+            'icon' => 'nav-icon fas fa-fw fa-question-circle',
         ],
         [
             'text' => 'Assign Form',
             'url'  => 'assign/create',
-            'icon' => 'fas fa-fw fa-lock',
+            'icon' => 'nav-icon fas fa-fw fa-share-square',
         ],
         [
             'text' => 'My Info',
             'url'  => 'get-my-info',
-            'icon' => 'fas fa-fw fa-user',
+            'icon' => 'nav-icon fas fa-fw fa-cog',
         ],
         
         // [
@@ -428,6 +438,16 @@ return [
                     'type' => 'js',
                     'asset' => true,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
+                ],
+            ],
+        ],
+        'ionicons' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '//unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js',
                 ],
             ],
         ],
