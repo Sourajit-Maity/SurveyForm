@@ -29,6 +29,7 @@ class AssignCompanyController extends Controller
     public function index()
     {
         $currentuserid = Auth::user()->id;
+        $currentusecompanyid =  Auth::user()->company_id;
         $assignform='';
         $assignformArr=[];
         $arruser= DB::table('assign_companies')->orderBy('id','DESC')->get()->toArray();
@@ -48,7 +49,7 @@ class AssignCompanyController extends Controller
         foreach ($forms as $formdata) {
             $forms = Form::where('id',$formdata)->with('assignform')->get();
         }
-        $form= AssignCompany::orderBy('id','DESC')->get();
+        $form= AssignCompany::where('employee_id',$currentuserid)->where('company_id',$currentusecompanyid)->orderBy('id','DESC')->get();
         
         return view('assigncompany.index',compact('form'))
             ->with('i', (request()->input('page', 1) - 1) * 5);

@@ -93,7 +93,7 @@ $(document).ready(function(){
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <strong>Reporting To:</strong>
+                                    <strong>Reporting Designation:</strong> 
                                     <!-- <select  name="parent_id" id="parent_id" class="form-control @error('parent_id') is-invalid @enderror"  required autocomplete="parent_id">
                                    
                                        

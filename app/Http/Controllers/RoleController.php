@@ -49,7 +49,7 @@ class RoleController extends Controller
     {
         $permission = Permission::get();
         $company = Company::pluck('company_name','id')->all();
-        $reporting = User::pluck('name','id')->all();
+        $reporting = Role::pluck('name','id')->all();
         return view('roles.create',compact('permission','company','reporting'));
     }
     
@@ -105,9 +105,9 @@ class RoleController extends Controller
         $roleparentuser = RoleParent::where('designation_id',$id)->value('parent_id');
         $permission = Permission::get();
         $company = Company::pluck('company_name','id')->all();
-        $reporting = User::pluck('name','id')->all();
+        $reporting = Role::pluck('name','id')->all();
         $usercompany = Company::where('id',$roleparentcompany)->pluck('id','company_name');        
-        $userreporting = User::where('id',$roleparentuser)->pluck('id','name');
+        $userreporting = Role::where('id',$roleparentuser)->pluck('id','name');
         $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
             ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
             ->all();
