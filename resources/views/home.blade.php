@@ -162,18 +162,19 @@
               <a href="{{ route('assign.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> 
             </div>
 
-            <div class="small-box bg-success">
+            <div class="small-box wid-1">
               <div class="inner">
-              <h3>{{$question}}</h3>
-
-                <p>All Questions</p>
+              <h3>{{count($assignformArr)}}</h3>
+                <p> Forward Forms</p>
               </div>
               <div class="icon">
-                <!-- <i class="ion ion-stats-bars"></i> -->
-                <i class="fas fa-question-circle"></i>
+                <!-- <i class="ion ion-person-add"></i> -->
+                <i class="fas fa-share-alt"></i>
               </div>
-              <a href="{{ route('question.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{ route('assign.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> 
             </div>
+
+            
           </div>
           <!-- ./col -->
           <div class="col-lg-3 col-6">
@@ -278,6 +279,21 @@
                 <!--/.card -->
               </div>
               <!-- /.col -->
+
+              <div class="col-md-3 pull-left">
+                <div class="small-box bg-success">
+                  <div class="inner">
+                  <h3>{{$question}}</h3>
+
+                    <p>All Questions</p>
+                  </div>
+                  <div class="icon">
+                    <!-- <i class="ion ion-stats-bars"></i> -->
+                    <i class="fas fa-question-circle"></i>
+                  </div>
+                  <a href="{{ route('question.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+              </div>
             </div> 
            
           

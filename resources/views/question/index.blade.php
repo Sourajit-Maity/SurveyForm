@@ -3,14 +3,21 @@
 @section('content')
 
 @section('plugins.Datatables', true)
+
+@section('content_header')
+    <h1>Question</h1>
+@stop
+<style>
+    div.dataTables_wrapper div.dataTables_length select {
+        width: 50px;
+    }
+</style>
     
-    <div class="panel panel-default">
-        <div class="panel-body">
+    <div class="card card-default">
+        <div class="card-body">
             <div class="row">
                 <div class="col-lg-12 margin-tb">
-                    <div class="pull-left">
-                        <h2>Question</h2>
-                    </div>
+
             <div class="pull-right">
                 @can('question-create')
                 <a class="btn btn-success" href="{{ route('question.create') }}"> Create New question</a>

@@ -293,7 +293,7 @@ return [
         [
             'text' => 'Report',
             'url'  => 'get-report-info',
-            'icon' => 'nav-icon fas fa-fw fa-cog',
+            'icon' => 'nav-icon fas fa-book-open',
         ],
         [
             'text' => 'My Info',

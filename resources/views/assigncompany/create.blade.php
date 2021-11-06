@@ -1,5 +1,12 @@
 @extends('layouts.adminlayapp')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<style>
+    .hr-al {
+        padding-top: 13px;
+    }
+</style>
+
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -61,6 +68,23 @@ $(document).ready(function(){
         }
     });
 
+    $("form").submit(function(e){
+        var assign = $('#assign').is(":checked");
+        var forward = $('#forward').is(":checked");
+        console.log('assign: '+assign+' forward: '+forward);
+
+        if((assign == false) && (forward == false)){
+            Swal.fire({
+                title: 'Please select any options between Assign or Forward Form',
+                type: 'question',
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+            });
+            e.preventDefault();
+        }
+        
+    });
+
 });
     </script>
 @section('content')
@@ -92,7 +116,7 @@ $(document).ready(function(){
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Asign Form') }}</div>
+                <div class="card-header">{{ __('Assign Form') }}</div>
                 @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
@@ -160,6 +184,21 @@ $(document).ready(function(){
                                 @enderror
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <label for="assign" class="col-md-4 col-form-label text-md-right">{{ __('Assign Form') }}<span style="color:red"> *</span></label>
+                            <div class="col-md-6 hr-al">
+                                <input name="assign" value="1" type="checkbox" id="assign" >
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="forward" class="col-md-4 col-form-label text-md-right">{{ __('Forward Form') }}<span style="color:red"> *</span></label>
+                            <div class="col-md-6 hr-al">
+                                <input name="forward" value="1" type="checkbox" id="forward" >
+                            </div>
+                        </div>
+
                         <div class="form-group row">
                             <label for="text" class="col-md-4 col-form-label text-md-right">{{ __('Enter Your Message') }}<span style="color:red"> *</span></label>
 

@@ -26,7 +26,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('ADD Company') }}</div>
+                <div class="card-header">{{ __('ADD Form') }}</div>
 
                 <div class="card-body">
                 <form action="{{ route('form.store') }}" method="POST" enctype="multipart/form-data">

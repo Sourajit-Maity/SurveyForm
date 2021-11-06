@@ -3,27 +3,35 @@
 @section('content')
 
 @section('plugins.Datatables', true)
+
+@section('content_header')
+    <h1>Form</h1>
+@stop
+
+<style>
+    div.dataTables_wrapper div.dataTables_length select {
+        width: 50px;
+    }
+</style>
     
-    <div class="panel panel-default">
-        <div class="panel-body">
+    <div class="card card-default">
+        <div class="card-body">
             <div class="row">
                 <div class="col-lg-12 margin-tb">
-                    <div class="pull-left">
-                        <h2>Form</h2>
+                    <div class="pull-right">
+                        @can('form-create')
+                        <a class="btn btn-success" href="{{ route('form.create') }}"> Create New Form</a>
+                        @endcan
                     </div>
-            <div class="pull-right">
-                @can('form-create')
-                <a class="btn btn-success" href="{{ route('form.create') }}"> Create New Form</a>
-                @endcan
+                </div>
             </div>
-        </div>
-    </div>
+
             @if ($message = Session::get('success'))
                 <div class="alert alert-success">
                     <p>{{ $message }}</p>
                 </div>
             @endif
-            <div class="table-responsive">
+            <div class="">
            
    <br>     
                
@@ -48,11 +56,12 @@
                                     
                                     <td>
                                         <form action="{{ route('form.destroy',$forms->id) }}" method="POST">
-                                        <a class="btn btn-success" href="{{ route('view-question-forms',[$forms->id]) }}" class="btn btn-xs btn-success">
-                                    Show</a>
+                                            <a class="btn btn-app bg-gradient-success" href="{{ route('view-question-forms',[$forms->id]) }}">
+                                            <i class="fas fa-eye"></i>Show</a>
                                             <!-- <a class="btn btn-info" href="{{ route('form.show',$forms->id) }}">Show</a> -->
                                             @can('form-edit')
-                                            <a class="btn btn-primary" href="{{ route('form.edit',$forms->id) }}">Edit</a>
+                                                <a class="btn btn-app bg-gradient-warning" href="{{ route('form.edit',$forms->id) }}">
+                                                <i class="fas fa-edit"></i>Edit</a>
                                             @endcan
 
 
