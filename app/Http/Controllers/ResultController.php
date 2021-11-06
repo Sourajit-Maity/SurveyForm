@@ -23,9 +23,9 @@ class ResultController extends Controller
     public function index()
     {
         $reports
-        = Result::where('user_id',Auth::user()->id())->latest()->get();
-       return view('report.myreport',compact('reports'))
-           ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
+        = Result::where('user_id',auth()->user()->id)->latest()->get();
+       return view('report.viewreport',compact('reports'))
+           ->with('i', (request()->input('page', 1) - 1) * 5, 'reports');
     }
 
     /**

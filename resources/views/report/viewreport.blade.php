@@ -21,30 +21,30 @@
     <table class="table table-bordered">
         <tr>
             <th>No</th>
-            <th>Name</th>
-            <th>Email</th>
+            <th>Result Id</th>
+            <th>Answer</th>
+            <th>Form Id</th>
+            <th>Question Id</th>
             <th width="280px">Action</th>
         </tr>
-	    @foreach ($users as $user)
+	    @foreach ($reports as $report)
 	    <tr>
 	        <td>{{ ++$i }}</td>
-	        <td>{{ $user->name }}</td>
-	        <td>{{ $user->email }}</td>
+	        <td>{{ $report->result_id }}</td>
+	        <td>{{ $report->answer }}</td>
+            <td>{{ $report->form_id }}</td>
+	        <td>{{ $report->question_id }}</td>
 	        <td>
-                <form action="{{ route('products.destroy',$product->id) }}" method="POST">
+                <form action="{{ route('products.destroy',$report->id) }}" method="POST">
                   
                 
-                    <a class="btn btn-primary" href="{{ route('products.edit',$user->id) }}">Edit</a>
+                    <a class="btn btn-primary" href="{{ route('products.edit',$report->id) }}">Show</a>
                   
                 </form>
 	        </td>
 	    </tr>
 	    @endforeach
     </table>
-
-
-    {!! $products->links() !!}
-
 
 
     @stop
