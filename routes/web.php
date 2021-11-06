@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/store2/{id}', [QuestionController::class, 'store2'])->name('store2');
     Route::post('/update-question', [QuestionController::class, 'updateQuestion'])->name('update-question');
     Route::get('/get-my-info', [UserController::class, 'getMyInfo'])->name('get-my-info');
+    Route::get('/get-report-info', [ResultController::class, 'getReportInfo'])->name('get-report-info');
     Route::post('/submit-my-info', [UserController::class, 'updateMyInfo'])->name('submit-my-info');
     Route::post('update-password', [UserController::class,'updatePassword'])->name('update-password');
     Route::get('/getuserid/{id}', [RoleController::class, 'getuserid']);

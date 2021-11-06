@@ -17,8 +17,9 @@ class CreateResultsTable extends Migration
             $table->id();
             $table->string('result_id');
             $table->string('answer');
-            $table->foreignId('form_id')->nullable()->references('id')->on('forms')->onDelete('cascade');
-            $table->foreignId('question_id')->nullable()->references('id')->on('questions')->onDelete('cascade');
+            $table->foreignId('form_id')->nullable();
+            $table->foreignId('question_id')->nullable();
+            $table->foreignId('user_id')->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

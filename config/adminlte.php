@@ -273,12 +273,14 @@ return [
         ],
         [
             'text' => 'Forms',
+           // 'can' => ['Admin'],
             'url'  => 'form',
             'active' => ['form', 'form*', 'view-question-forms*'],
             'icon' => 'nav-icon fas fa-fw fa-edit',
         ],
         [
             'text' => 'Question',
+           // 'can' => ['isAdmin'],
             'url'  => 'question',
             'active' => ['question', 'question*'],
             'icon' => 'nav-icon fas fa-fw fa-question-circle',
@@ -287,6 +289,11 @@ return [
             'text' => 'Assign Form',
             'url'  => 'assign/create',
             'icon' => 'nav-icon fas fa-fw fa-share-square',
+        ],
+        [
+            'text' => 'Report',
+            'url'  => 'get-report-info',
+            'icon' => 'nav-icon fas fa-fw fa-cog',
         ],
         [
             'text' => 'My Info',

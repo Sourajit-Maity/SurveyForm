@@ -113,20 +113,19 @@
                     <h2 class="lead"><b>{{ $companydetails->company_name }}</b></h2>
                     <p class="text-muted text-sm" style="text-align: justify;">
                       <b>About: </b>  
-                      Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                    </p>
+                      {{ $companydetails->company_details }}                    </p>
                     <ul class="ml-4 mb-0 fa-ul text-muted">
                       <li class="small">
                         <span class="fa-li">
                           <i class="fas fa-lg fa-building"></i>
                         </span> 
-                        Address: Demo Street 123, Demo City 04312, NJ
+                        {{ $companydetails->address }}
                       </li>
                       <li class="small" style="margin-top: 10px;">
                         <span class="fa-li">
                           <i class="fas fa-lg fa-phone"></i>
                         </span> 
-                        Phone #: + 800 - 12 12 23 52
+                        Phone #: + {{ $companydetails->phone }}
                       </li>
                     </ul>
                   </div>
@@ -209,7 +208,12 @@
                   </div>
 
                   <h3 class="profile-username text-center">{{ Auth::user()->name }}</h3>
-                  <p class="text-muted text-center">Admin</p>
+                  
+                  <p class="text-muted text-center">@if(!empty(Auth::user()->getRoleNames()))
+                    @foreach(Auth::user()->getRoleNames() as $v)
+                    <label class="badge badge-success">{{ $v }}</label>
+                    @endforeach
+                    @endif</p>
 
                   <ul class="list-group list-group-unbordered mb-3" style="margin-top: 20px;">
                     <!-- <li class="list-group-item" style="border-bottom-width: 0px;">

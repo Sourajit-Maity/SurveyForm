@@ -27,7 +27,6 @@
    
      <th>Name</th>
      <th>Company Name</th>
-     <th>Reporting Name</th>
      <th width="280px">Action</th>
   </tr>
     
@@ -36,7 +35,6 @@
         
         <td>{{ $role->roles->name }}</td>
         <td>{{ $role->company->company_name }}</td>
-        <td>{{ $role->parent->name }}</td>
         
 
         <td>

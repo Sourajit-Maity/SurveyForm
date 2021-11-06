@@ -8,6 +8,7 @@ use App\Models\Company;
 use Spatie\Permission\Models\Role;
 use App\Models\Form;
 use App\Models\Question;
+use App\Models\RoleParent;
 use DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,6 +32,7 @@ class HomeController extends Controller
     public function index()
     {
         $currentuserid = Auth::user()->id;
+        
         $assignform='';
         $assignformArr=[];
         $arruser= DB::table('assign_companies')->orderBy('id','DESC')
@@ -69,7 +71,8 @@ class HomeController extends Controller
         $companyuser= Company::where('id',$currentusercompid)->value('company_name');
         $companydetails = Company::where('id',$currentusercompid)->first();
        // dd($companydetails);
-        
-        return view('home',compact('newemployee','assignformArr','user','form','company','question','role','companyuser','companydetails'));
+       $rolenameid =  RoleParent::where('designation_id',$currentuserid)->value('id');
+       $rolename = Role::where('id',$rolenameid)->value('name');
+        return view('home',compact('newemployee','assignformArr','rolename','user','form','company','question','role','companyuser','companydetails'));
     }
 }
