@@ -32,8 +32,7 @@ class HomeController extends Controller
     public function index()
     {
         $currentuserid = Auth::user()->id;
-        $currentuserrole = Auth::user()->role;
-        dd($currentuserrole);
+        
         $assignform='';
         $assignformArr=[];
         $arruser= DB::table('assign_companies')->orderBy('id','DESC')

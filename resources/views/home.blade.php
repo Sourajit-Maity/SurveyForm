@@ -208,7 +208,12 @@
                   </div>
 
                   <h3 class="profile-username text-center">{{ Auth::user()->name }}</h3>
-                  <p class="text-muted text-center">{{ $rolename }}</p>
+                  
+                  <p class="text-muted text-center">@if(!empty(Auth::user()->getRoleNames()))
+                    @foreach(Auth::user()->getRoleNames() as $v)
+                    <label class="badge badge-success">{{ $v }}</label>
+                    @endforeach
+                    @endif</p>
 
                   <ul class="list-group list-group-unbordered mb-3" style="margin-top: 20px;">
                     <!-- <li class="list-group-item" style="border-bottom-width: 0px;">
