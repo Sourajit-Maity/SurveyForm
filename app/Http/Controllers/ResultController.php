@@ -65,16 +65,10 @@ class ResultController extends Controller
         //     'company_name' => 'required',
        // ]);
 
-       //Log::debug("qwerty".print_r($request->all(),true));
-    //    $productpriceid = $request->input('start_form.company_id');
-    //    $productprice= $request->input('question_result.formid');
-       //$material = $request->all();
        $inputs = $request->json()->all();
-       //Log::debug("qwerty".print_r($inputs,true));
-       
-       //$start_form = $inputs['start_form']['company_id'];
+
        $question_result = $inputs['question_result'];
-       Log::debug("qwerty".print_r($question_result,true));
+       //Log::debug("qwerty".print_r($question_result,true));
 
        $materialresult = new MaterialResult();
        $materialresult->company_id= $inputs['start_form']['company_id'];
@@ -90,16 +84,6 @@ class ResultController extends Controller
        $materialresult->user_email= Auth::user()->email;
        $materialresult->user_id= Auth::user()->id;       
        $materialresult->save();
-
-    //    foreach ($question_result as $row)  
-    //    {
-    //        $result = Result::create([
-    //                'form_id'     => $row['question_result']['formid'],
-    //                'result_id'    => $row['question_result']['ResultId'], 
-    //                'question_id'    => $row['question_result']['id'], 
-    //                'answer'    => $row['question_result']['answer'], 
-    //        ]);
-    //    } 
 
        for($i = 0; $i < count($question_result); $i++){
         $result = new Result();
