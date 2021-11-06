@@ -261,7 +261,8 @@
 
 								<div class="d-flex align-items-center pt-3">
 									<div class="ml-auto mr-sm-5"> 
-										<a id="Submit" class="btn btn-success" href="/question" style="display:none;">Submit</a>
+										<!-- <a id="Submit" class="btn btn-success" href="/question" style="display:none;">Submit</a> -->
+										<button id="Submit" class="btn btn-success" style="display:none;">Submit</button> 
 									</div>
 								</div>
 							</div>
@@ -349,6 +350,7 @@
 		var QuestionID_array = [];
 		var result_array = [];
 		var questions = [];
+		var final_report_data = [];
 
 		var index_pos = 0;
 		var question_length = questions.length;
@@ -841,7 +843,7 @@
 
 				console.log(final_data);
 
-
+				final_report_data = final_data;
 
 				
 				// var final_result ={
@@ -849,33 +851,59 @@
 				// 	"data" : result_array
 				// }
 				
-				$.ajax({
-					headers: {
-						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-					},
-					type: 'POST',
-					url: '/submit-answer',
-					data: JSON.stringify(final_data),
-					contentType: 'application/json; charset=utf-8',
-					dataType: 'application/json',
-					cache: false,
-					crossDomain:true,
-					success: function (result) {
-						//var newData = JSON.stringify(result);
-						//var json_data = JSON.parse(newData);
-						//console.log(json_data);
-						//
-						alert("Result updated successfully");
-					},
-					error: function(xhr, resp, text) {
-						//alert("Sorry! Unable to update details.");
-					}  
-				});
+				// $.ajax({
+				// 	headers: {
+				// 		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				// 	},
+				// 	type: 'POST',
+				// 	url: '/submit-answer',
+				// 	data: JSON.stringify(final_data),
+				// 	contentType: 'application/json; charset=utf-8',
+				// 	dataType: 'application/json',
+				// 	cache: false,
+				// 	crossDomain:true,
+				// 	success: function (result) {
+				// 		//var newData = JSON.stringify(result);
+				// 		//var json_data = JSON.parse(newData);
+				// 		//console.log(json_data);
+				// 		//
+				// 		alert("Result updated successfully");
+				// 	},
+				// 	error: function(xhr, resp, text) {
+				// 		//alert("Sorry! Unable to update details.");
+				// 	}  
+				// });
 			}
 		});  
 
 		
+		$('#Submit').click(function() {
+			//console.log(final_report_data);
+			var comment = $('#comment').val();
+			final_report_data['comment'] = comment;
+			console.log(final_report_data);
 
+
+			$.ajax({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				type: 'POST',
+				url: '/submit-answer',
+				data: JSON.stringify(final_report_data),
+				contentType: 'application/json; charset=utf-8',
+				dataType: 'application/json',
+				cache: false,
+				crossDomain:true,
+				success: function (result) {
+
+					alert("Result updated successfully");
+				},
+				error: function(xhr, resp, text) {
+					//alert("Sorry! Unable to update details.");
+				}  
+			});
+		});
 		
 
 

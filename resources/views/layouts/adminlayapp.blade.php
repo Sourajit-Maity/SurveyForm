@@ -1,10 +1,8 @@
 @extends('adminlte::page')
 
-@section('title', 'HRMS')
+<!-- @section('title', 'HRMS') -->
 
-@section('content_header')
-    <h1>HRMS</h1>
-@stop
+
 
 
 

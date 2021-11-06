@@ -92,6 +92,10 @@ class AssignCompanyController extends Controller
         $announcement['form_id'] = $arraytostringform;
         $announcement['company_id'] = $arraytostringcompany;
         $announcement['employee_id'] = $arraytostringemp;
+        $announcement['user_id'] = Auth::user()->id;
+        $announcement['user_company_id'] = Auth::user()->company_id;
+        $announcement['assign'] = $request->input('assign');
+        $announcement['forward'] = $request->input('forward');
         $announcement->save();
 
         Log::debug("all".print_r($request->all(),true));

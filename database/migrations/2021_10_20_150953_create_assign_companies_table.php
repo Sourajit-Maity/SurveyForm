@@ -17,8 +17,12 @@ class CreateAssignCompaniesTable extends Migration
             $table->id();
             $table->string('company_id')->nullable();
             $table->string('employee_id')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('user_company_id')->nullable();
             $table->string('form_id')->nullable();
             $table->longText('message')->nullable(); 
+            $table->boolean('assign')->default(false);  
+            $table->boolean('forward')->default(false);  
             $table->timestamps();
         });
     }
