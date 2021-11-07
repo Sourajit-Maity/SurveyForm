@@ -7,6 +7,8 @@ use App\Models\Question;
 use App\Models\Form;
 use App\Models\MaterialResult;
 use App\Models\Result;
+use App\Models\AssignResult;
+use App\Models\AssignCompany;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -85,16 +87,35 @@ class ResultController extends Controller
        $materialresult->user_id= Auth::user()->id;       
        $materialresult->save();
 
+       
+
        for($i = 0; $i < count($question_result); $i++){
-        $result = new Result();
-        $result = Result::create([
-        'form_id' => $question_result[$i]['formid'],
-        'result_id' => $question_result[$i]['ResultId'],
-        'answer' => $question_result[$i]['answer'],
-        'question_id' => $question_result[$i]['id'],
-        'user_id' => Auth::user()->id,
-        ]);
-    }
+            $result = new Result();
+            $result = Result::create([
+            'form_id' => $question_result[$i]['formid'],
+            'result_id' => $question_result[$i]['ResultId'],
+            'answer' => $question_result[$i]['answer'],
+            'question_id' => $question_result[$i]['id'],
+            'user_id' => Auth::user()->id,
+            ]);
+        }
+
+
+        $assignresults = new AssignResult();
+        $assignresults->result_id= $question_result[0]['ResultId'];
+        $assignresults->material_result_id= $materialresult->id;
+        $assignresults->assign_company_id= $inputs['assign_company_id'];     
+        $assignresults->user_id= Auth::user()->id;  
+        $assignresults->save();
+
+        
+
+        $assign = AssignCompany::where('id', $inputs['assign_company_id'])->update(array("assign" => 0));
+
+
+
+        return redirect()->route('assign.index')
+                        ->with('success','result saved successfully.');
 
     }
 
@@ -106,8 +127,8 @@ class ResultController extends Controller
      */
     public function show($id)
     {
-        $reportdetails
-        = Result::where('user_id',Auth::user()->id())->latest()->get();
+        $reportdetails = Result::where('user_id',Auth::user()->id())->latest()->get();
+
        return view('report.viewreport',compact('reportdetails'))
            ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     }

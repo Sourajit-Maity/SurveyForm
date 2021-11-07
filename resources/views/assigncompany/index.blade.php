@@ -48,17 +48,9 @@
                                 <td>{!! \Carbon\Carbon::parse($forms->created_at)->format('d M Y') !!}</td>
                                 
                                 <td>
-                                    <form action="{{ route('form.destroy',$forms->form->id) }}" method="POST">
-                                    <a class="btn btn-success" href="{{ route('view-question-forms',[$forms->id]) }}" class="btn btn-xs btn-success">
-                                Show</a>
-                                    
-                                        <!-- <a class="btn btn-info" href="{{ route('form.show',$forms->id) }}">Show</a> -->
-                                        <!-- @can('form-edit')
-                                        <a class="btn btn-primary" href="{{ route('question.edit',$forms->id) }}">Edit</a>
-
-                                        @endcan -->
-
-                                    </form>
+                                    <a class="btn btn-success" href="{{ route('assign-form-show',[$forms->id]) }}" class="btn btn-xs btn-success">
+                                Start</a>
+                                 
                                 </td>
                             </tr>
                         @endforeach

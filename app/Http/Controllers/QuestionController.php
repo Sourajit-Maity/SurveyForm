@@ -5,6 +5,7 @@ use App\Models\Question;
 use App\Models\Form;
 use App\Models\Company;
 use App\Models\Option;
+use App\Models\AssignCompany;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -209,6 +210,7 @@ class QuestionController extends Controller
         $user_email = Auth::user()->email;
         $company_name = Company::where('id',$company_id)->value('company_name');
         $company_logo = Company::where('id',$company_id)->value('logo');
+        
         
         //Log::debug("allid".print_r($company_id,true));
         $form_id = Question::where('id',$id)->value('form_id');

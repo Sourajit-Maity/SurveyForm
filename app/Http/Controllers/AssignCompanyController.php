@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Question;
 use App\Models\AssignCompany;
 use App\Models\Form;
+use App\Models\Option;
+
 use Illuminate\Support\Facades\Log;
 use DB;
 use Illuminate\Support\Facades\Auth;
@@ -130,7 +132,7 @@ class AssignCompanyController extends Controller
 
         Log::debug("all".print_r($request->all(),true));
     
-        return redirect()->route('assign.index')->with('status', 'Form Asigned Successfully');
+        return redirect()->back()->with('status', 'Form Asigned Successfully');
      }
 
     /**
@@ -200,6 +202,39 @@ class AssignCompanyController extends Controller
 
        
         return json_encode($company_id_array);
+    }
+
+    public function assignFormShow(Request $request,$id)
+    {
+        $assign_form_id = $id;
+        $company_id = Auth::user()->company_id;
+        $user_name = Auth::user()->name;
+        $user_email = Auth::user()->email;
+        $company_name = Company::where('id',$company_id)->value('company_name');
+        $company_logo = Company::where('id',$company_id)->value('logo');
+
+        $formid = AssignCompany::where('id',$id)->value('form_id');
+     
+        return view('question.show',compact('assign_form_id','company_logo','formid','company_name','company_id','user_name','user_email'));
+    }
+
+    public function forwardshow(Request $request,$id)
+    {
+        $formid = AssignCompany::where('id',$id)->value('form_id');
+        
+        $forms = DB::table('forms')->get();
+        $allquestion = Question::where('form_id', $formid)->get();
+
+        for ($y = 0; $y < count($allquestion); $y++) {
+            $alloption = Option::where('question_id', $allquestion[$y]->question_id)
+            ->where('option', '!=', 'undefined')
+            ->where('child_id', '!=', 'undefined')
+            ->where('number', '!=', 'undefined')
+            ->where('message', '!=', 'undefined')
+            ->get();
+            $allquestion[$y]['options'] = $alloption;         
+        }
+        return view('assigncompany.forwardshow',compact('forms','allquestion')); 
     }
 
 }

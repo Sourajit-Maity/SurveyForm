@@ -880,7 +880,9 @@
 		$('#Submit').click(function() {
 			//console.log(final_report_data);
 			var comment = $('#comment').val();
+			
 			final_report_data['comment'] = comment;
+			final_report_data['assign_company_id'] = "{{$assign_form_id}}";
 			console.log(final_report_data);
 
 
@@ -901,6 +903,8 @@
 				},
 				error: function(xhr, resp, text) {
 					//alert("Sorry! Unable to update details.");
+
+					window.location = '/assign';
 				}  
 			});
 		});
