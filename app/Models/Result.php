@@ -11,4 +11,9 @@ class Result extends Model
     protected $table = 'results';
 
     protected $fillable = ['result_id','form_id','question_id','answer','user_id'];
+
+    public function assignresult()
+    {
+         return $this->hasOne(AssignResult::class);
+    }
 }
