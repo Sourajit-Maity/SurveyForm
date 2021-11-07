@@ -41,14 +41,14 @@
                             <tr>
                                 <td>{{ ++$i }}</td>
                                 <td>{{ $report->result_id }}</td>
-                                <td></td>
+                                <td>{{ $report->result_id }}</td>
                                 <td>{{ $report->answer }}</td>
-                                <td>{{ $report->form_id }}</td>
-                                <td>{{ $report->question_id }}</td>
+                                <td>{!! \Carbon\Carbon::parse($report->created_at)->format('d M Y') !!}</td>
+                                <td>{!! \Carbon\Carbon::parse($report->created_at)->format('d M Y') !!}</td>
                                 <td>
-                                    <form action="{{ route('products.destroy',$report->id) }}" method="POST">
-                                        <a class="btn btn-primary" href="{{ route('products.edit',$report->id) }}">Show</a>
-                                    </form>
+                                    
+                                        <a class="btn btn-primary" href="{{ route('results.show',$report->id) }}">Show</a>
+                                    
                                 </td>
                             </tr>
                         @endforeach

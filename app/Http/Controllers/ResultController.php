@@ -9,6 +9,7 @@ use App\Models\MaterialResult;
 use App\Models\Result;
 use App\Models\AssignResult;
 use App\Models\AssignCompany;
+use App\Models\Option;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -24,7 +25,7 @@ class ResultController extends Controller
      */
     public function index()
     {
-        $reports = Result::where('user_id',auth()->user()->id)->latest()->get();
+        $reports = AssignResult::where('user_id',auth()->user()->id)->latest()->get();
         
        return view('report.viewreport',compact('reports'))
            ->with('i', (request()->input('page', 1) - 1) * 5, 'reports');
@@ -80,7 +81,7 @@ class ResultController extends Controller
        $materialresult->market= $inputs['start_form']['market'];
        $materialresult->location= $inputs['start_form']['location'];
        $materialresult->percentage= $inputs['start_form']['percentage'];
-       $materialresult->company_name= $inputs['start_form']['company_id'];
+       $materialresult->company_name= $question_result[0]['ResultId'];
        $materialresult->result_id= $inputs['start_form']['company_id'];
        $materialresult->user_name= Auth::user()->name;
        $materialresult->user_email= Auth::user()->email;
@@ -127,9 +128,28 @@ class ResultController extends Controller
      */
     public function show($id)
     {
-        $reportdetails = Result::where('user_id',Auth::user()->id())->latest()->get();
+        $result_id = AssignResult::where('id',$id)->value('result_id');
+        $material_result_id = AssignResult::where('id',$id)->value('material_result_id');
+        $assign_company_id = AssignResult::where('id',$id)->value('assign_company_id');
+        $formid = AssignCompany::where('id',$assign_company_id)->value('form_id');
+        
+        $forms = DB::table('forms')->get();
+        $allquestion = Question::where('form_id', $formid)->get();
 
-       return view('report.viewreport',compact('reportdetails'))
+        for ($y = 0; $y < count($allquestion); $y++) {
+            $alloption = Option::where('question_id', $allquestion[$y]->question_id)
+            ->where('option', '!=', 'undefined')
+            ->where('child_id', '!=', 'undefined')
+            ->where('number', '!=', 'undefined')
+            ->where('message', '!=', 'undefined')
+            ->get();
+            $allquestion[$y]['options'] = $alloption; 
+        }
+
+        $reportdetails = Result::where('result_id',$result_id)->get();
+        $materialdetails = MaterialResult::where('id',$material_result_id)->get();
+
+       return view('report.myreport',compact('reportdetails', 'allquestion', 'materialdetails', 'formid'))
            ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     }
 
