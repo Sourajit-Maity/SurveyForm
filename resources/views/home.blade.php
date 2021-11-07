@@ -171,7 +171,7 @@
                 <!-- <i class="ion ion-person-add"></i> -->
                 <i class="fas fa-share-alt"></i>
               </div>
-              <a href="{{ route('assign.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> 
+              <a href="{{ route('forward-assign') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> 
             </div>
 
             

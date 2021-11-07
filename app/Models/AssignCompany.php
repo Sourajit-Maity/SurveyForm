@@ -18,6 +18,11 @@ class AssignCompany extends Model
         
          return $this->belongsTo(Company::class,'company_id');
     }
+    public function assigncompany()
+    {
+        
+         return $this->belongsTo(Company::class,'user_company_id');
+    }
 
     public function form()
     {
@@ -29,5 +34,10 @@ class AssignCompany extends Model
     {
         
          return $this->belongsTo(User::class,'employee_id');
+    }
+    public function assignuser()
+    {
+        
+         return $this->belongsTo(User::class,'user_id');
     }
 }
