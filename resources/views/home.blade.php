@@ -157,12 +157,12 @@
               </div>
               <div class="icon">
                 <!-- <i class="ion ion-person-add"></i> -->
-                <i class="fas fa-share-alt"></i>
+                <i class="fab fa-wpforms"></i>
               </div>
               <a href="{{ route('assign.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> 
             </div>
 
-            <div class="small-box wid-1">
+            <div class="small-box wid-4">
               <div class="inner">
               <h3>{{count($assignformArr)}}</h3>
                 <p> Forward Forms</p>
@@ -171,7 +171,7 @@
                 <!-- <i class="ion ion-person-add"></i> -->
                 <i class="fas fa-share-alt"></i>
               </div>
-              <a href="{{ route('forward-assign') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> 
+              <a href="{{ route('forward-assign') }}" class="small-box-footer" style="color: #000;">More info <i class="fas fa-arrow-circle-right"></i></a> 
             </div>
 
             

@@ -5,7 +5,7 @@
 @section('plugins.Datatables', true)
 
 @section('content_header')
-    <h1>Assigned Forms</h1>
+    <h1>Forward Forms</h1>
 @stop
 
 <style>
@@ -48,17 +48,8 @@
                                 <td>{!! \Carbon\Carbon::parse($forms->created_at)->format('d M Y') !!}</td>
                                 
                                 <td>
-                                    <form action="{{ route('form.destroy',$forms->form->id) }}" method="POST">
-                                    <a class="btn btn-success" href="{{ route('view-question-forms',[$forms->id]) }}" class="btn btn-xs btn-success">
+                                <a class="btn btn-success" href="{{ route('forward-show',[$forms->id]) }}" class="btn btn-xs btn-success">
                                 Show</a>
-                                    
-                                        <!-- <a class="btn btn-info" href="{{ route('form.show',$forms->id) }}">Show</a> -->
-                                        <!-- @can('form-edit')
-                                        <a class="btn btn-primary" href="{{ route('question.edit',$forms->id) }}">Edit</a>
-
-                                        @endcan -->
-
-                                    </form>
                                 </td>
                             </tr>
                         @endforeach

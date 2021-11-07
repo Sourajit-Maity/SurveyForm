@@ -62,6 +62,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/getannouncementrole/{id}', [AssignCompanyController::class, 'getannouncementrole']);
     Route::get('/getlocationid/{id}', [AssignCompanyController::class, 'getlocationid']);
     Route::get('/forward-assign', [AssignCompanyController::class, 'forwardindex'])->name('forward-assign');
+    Route::get('/forward-show/{id}', [AssignCompanyController::class, 'forwardshow'])->name('forward-show');
+    Route::get('/assign-form-show/{id}', [AssignCompanyController::class, 'assignFormShow'])->name('assign-form-show');
     
 
 
