@@ -22,4 +22,8 @@ class Form extends Model
     {
          return $this->hasMany(AssignCompany::class);
     }
+
+    public function comments(){
+        return $this->hasMany(AssignMessage::class);
+    }
 }
