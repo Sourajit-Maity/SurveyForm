@@ -26,4 +26,7 @@ class Company extends Model
     {
          return $this->hasMany(RoleParent::class);
     }
+    public function comments(){
+     return $this->hasMany(AssignMessage::class);
+ }
 }

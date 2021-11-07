@@ -59,4 +59,7 @@ class User extends Authenticatable
     {
          return $this->hasMany(RoleParent::class);
     }
+    public function comments(){
+        return $this->hasMany(AssignMessage::class);
+    }
 }
