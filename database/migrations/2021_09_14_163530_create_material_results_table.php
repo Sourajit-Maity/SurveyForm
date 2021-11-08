@@ -19,6 +19,7 @@ class CreateMaterialResultsTable extends Migration
             $table->string('user_name');
             $table->string('user_email');
             $table->string('company_name');
+            $table->string('material_code');
             $table->string('product_name');
             $table->string('package');
             $table->string('market');

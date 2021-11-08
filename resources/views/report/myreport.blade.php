@@ -145,6 +145,23 @@
 		display:none;
 	}
 
+	.noprint-area {
+		display : block;
+	}
+	.print-area {
+		display : none;
+	}
+	@media print {
+		.noprint-area {
+			display : none;
+		}
+
+		.print-area {
+			display : block;
+		}
+	}
+
+
 </style>
 <script>
 	$(document).ready(function(){
@@ -165,16 +182,61 @@
 			<div class="row">
 				<div class="col-md-9">
 					<div class="container card" style="max-width:90% !important;">
+
+						<section id="user-info" class='print-area'>
+							<div id="header-hero" class="card-header"> 
+							Basic Info </div>
+							<div class="card-body">
+								<div id="user_content">
+									<form id="form2">
+										
+										<div class="row m-top-bottom">
+											<div class="col-md-6 col-sm-12 col-xs-12">
+												<strong>User Name:</strong>
+												<input type="text" name="" value="{{Auth::user()->name}}" class="form-control" readonly/>
+											</div>
+											<div class="col-md-6 col-sm-12 col-xs-12">
+												<strong>Company Name:</strong>
+												<input type="text" name="" value="{{$companyname}}" class="form-control" readonly/>
+											</div>
+										</div>
+										<div class="row m-top-bottom">
+											<div class="col-md-6 col-sm-12 col-xs-12">
+												<strong>Assigner Name:</strong>
+												<input type="text" name="" value="{{$assigner_name}}" class="form-control" readonly/>
+											</div>
+											<div class="col-md-6 col-sm-12 col-xs-12">
+												<strong>Assigner Company Name:</strong>
+												<input type="text" name="" value="{{$assigner_company_name}}" class="form-control" readonly/>
+											</div>
+										</div>
+										<div class="row m-top-bottom">
+											<div class="col-md-6 col-sm-12 col-xs-12">
+												<strong>Form name:</strong>
+												<input type="text" name="" value="{{$form_name}}" class="form-control" readonly/>
+											</div>
+											<div class="col-md-6 col-sm-12 col-xs-12">
+												<strong>Form Assign Date:</strong>
+												<input type="text" name="" value="{{$assign_date}}" class="form-control" readonly/>
+											</div>
+										</div>
+										<div class="row m-top-bottom">
+											<div class="col-md-6 col-sm-12 col-xs-12">
+												<strong>Form Submission Date:</strong>
+												<input type="text" name="" value="{{$submission_date}}" class="form-control" readonly/>
+											</div>
+											<div class="col-md-6 col-sm-12 col-xs-12">
+					
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</section>
+
 						<section class="start-question">
 							<div id="header-hero" class="card-header"> 
-								<!-- <div class="profile"> 
-								@if (isset($company_logo))
-									<img class="profile-user-img img-fluid img-circle" src="{{url('assets/logos')}}/{{$company_logo}}"> 
-								@else 
-									<span></span>
-								@endif
-								</div> -->
-							Fill product info </div>
+							Product Info </div>
 							<div class="card-body">
 								
 
@@ -210,40 +272,23 @@
 											<input type=number max="100" accuracy="2" min="0" step=0.01 name="percentage" value="" class="form-control" required/>
 										</div>
 									</div>
-
-									<div class="d-flex align-items-center pt-3">
-										<div class="ml-auto mr-sm-5"> 
-											<button id="start-qt" class="btn btn-success">Start</button> 
-										</div>
-									</div>	
 								</form>
 								
 							</div>
 						</section>
 
-						<section class="question-test">
-							<div id="question-data"></div>
-							<div class="d-flex align-items-center pt-3">
-								<div id="prev" class="ml-sm-5"> 
-									<button id="Previous" class="btn btn-primary" style="display:none;">Previous</button> 
-								</div>
-								<div class="ml-auto mr-sm-5"> 
-									<button id="Preview" class="btn btn-success" style="display:none;">Preview</button>
-									<button id="Next" class="btn btn-success" style="display:none;">Next</button> 
-									<!-- <a id="Close" class="btn btn-success" href="/question" style="display:none;">Close</a> -->
-								</div>
-							</div>
-						</section>
-
 						<section id="result-view">
-							<!-- <div id="header-hero" class="card-header"> Fill basic info </div> -->
+							<div id="header-hero" class="card-header"> 
+							User Response </div>
 							<div class="card-body">
 								<div id="qt_content"></div>
 
 								<div class="d-flex align-items-center pt-3">
-									<div class="ml-auto mr-sm-5"> 
-										<!-- <a id="Submit" class="btn btn-success" href="/question" style="display:none;">Submit</a> -->
-										<button id="Submit" class="btn btn-success" style="display:none;">Submit</button> 
+									<div class="ml-sm-5 noprint-area"> 
+										<button id="download" class="btn btn-block bg-gradient-primary"><i class="fas fa-download"></i>  Download</button> 
+									</div>
+									<div class="ml-auto mr-sm-5  noprint-area">
+										<a id="Close" class="btn btn-success" href="/get-report-info">Close</a> 
 									</div>
 								</div>
 							</div>
@@ -254,7 +299,7 @@
 
 				<div class="col-md-3">
 					<section class="start-question sticky-top">
-						<div class="card card-primary card-outline" style="width:100%;font-size: 14px;">
+						<div class="card card-primary card-outline noprint-area" style="width:100%;font-size: 14px;">
 							<div class="card-body box-profile">
 								<div class="text-center">
 									@if (isset($companylogo))
@@ -264,7 +309,7 @@
 									@endif
 								</div>
 
-								<h3 class="profile-username text-center">{{Auth::user()->company_name}}</h3>
+								<h3 class="profile-username text-center">{{$companyname}}</h3>
 
 								<ul class="list-group list-group-unbordered mb-3" style="margin-top: 50px;">
 									<li class="list-group-item">
@@ -278,41 +323,6 @@
 									</li>
 								</ul>
 							</div>
-						</div>
-					</section>
-					
-
-
-
-					<section class="question-test sticky-top">
-						<div class="card card-primary">
-							<div class="card-header">
-								<h3 class="card-title">Product Details</h3>
-							</div>
-							
-							<div class="card-body">
-								<ul class="list-group list-group-unbordered mb-3">
-									<li class="list-group-item" style="border-top-width: 0px;">
-										<b>Material code</b> <a class="float-right mc-card"></a>
-									</li>
-									<li class="list-group-item">
-										<b>Product Name</b> <a class="float-right pn-card"></a>
-									</li>
-									<li class="list-group-item">
-										<b>Package</b> <a class="float-right pa-card"></a>
-									</li>
-									<li class="list-group-item">
-										<b>Market</b> <a class="float-right ma-card"></a>
-									</li>
-									<li class="list-group-item">
-										<b>Location</b> <a class="float-right lo-card"></a>
-									</li>
-									<li class="list-group-item" style="border-bottom-width: 0px;">
-										<b>Percentage</b> <a class="float-right pe-card"></a>
-									</li>
-								</ul>
-							</div>
-							
 						</div>
 					</section>
 					
@@ -338,344 +348,110 @@
 
 		var formid = "{{$formid}}";
 
-		$("#start-qt").on("click", function(e){
-			if($("#form1")[0].checkValidity()) {
-				e.preventDefault();
-				//alert('validated');
-				$('.start-question').css("display","none");
-				$('.question-test').css("display","block");
-
-				var meterial_code = $("input[name='meterial_code']").val();
-				var product_name = $("input[name='product_name']").val();
-				var package = $("input[name='package']").val();
-				var market = $("input[name='market']").val();
-				var location = $("input[name='location']").val();
-				var percentage = $("input[name='percentage']").val();
-
-				$('.mc-card').text(meterial_code);
-				$('.pn-card').text(product_name);
-				$('.pa-card').text(package);
-				$('.ma-card').text(market);
-				$('.lo-card').text(location);
-				$('.pe-card').text(percentage);
-
-
-
-
-				// var st_form = {
-				// 	"company_id" : company_id,
-				// 	"meterial_code" : meterial_code,
-				// 	"product_name" : product_name,
-				// 	"package" : package,
-				// 	"market" : market,
-				// 	"location" : location,
-				// 	"percentage" : percentage
-				// };
-
-				// console.log(st_form);
-
-			} else {
-				$("#form1")[0].reportValidity();
-			}
-		});
-
 		$(document).ready(function(){
-			//$(".footer").css("display", "none");
-
-			$.ajax({
-				type: 'GET',
-				url: '/get_question/'+formid,
-				contentType: 'application/json; charset=utf-8',
-				dataType: "json",
-				cache: false,
-				crossDomain:true,
-				success: function (result) {
-					questions = result;
-					console.log(questions);
-
-					
-				},
-				error: function(xhr, resp, text) {
-					alert("Sorry! Unable to get details.");
-				}  
-			});
-
 			showreport();
 
+			$('#download').click(function() {
+				window.print();
+			});
 		});
 
-		function set_master_question(){
-			var master_index = 0;
-			for(var i = 0; i < questions.length; i++){
-				if(questions[i].question_type == "master"){
-					master_index = i;
-					break;
-				}
-			}
-
-			var question_id = questions[master_index].question_id;
-			var question_text = questions[master_index].question;
-			var raw_option = questions[master_index].options;
-			console.log("question_id: "+question_id);
-			console.log(raw_option);
-
-			QuestionID_array[0] = question_id;
-
-			var Qno = index_pos + 1;
-			var result = "<div class='question ml-sm-5 pl-sm-5 pt-2' id='"+question_id+"' onclick='check_button(this)'><div class='py-2 h5'><b>Q"+Qno+". "+question_text+"</b></div>";
-			result += "<div class='ml-md-3 ml-sm-3 pl-md-3 pt-sm-0 pt-3' id='options'>";
-
-			var tarray = raw_option.split("|");
-			var option_text, option_value;
-			var option_lastnode = false;
-            var option_number = "";
-            var option_message = "";
-			for(var i = 0; i < tarray.length; i++){
-				var varray = tarray[i].split(":");
-				
-				option_text = varray[0];
-				option_value = varray[1];
-				var message_alert_stat = 0;
-				if(varray.length == 4){
-					message_alert_stat = 1;
-				}
-
-				result += "<label class='options'>"+option_text+" <input type='radio' name='"+question_id+"' value='"+option_value+":"+option_text+":"+message_alert_stat+"'><span class='checkmark'></span> </label>";
-
-				if(varray.length == 4){
-                    option_lastnode = true;
-                    option_number = varray[2];
-                    option_message = varray[3];
-
-					result += "<div id='"+question_id+"_lt' class='alert alert-primary qt-message' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:none;'>"+option_message+"</div>";
-				}
-
-			}
-			result += "</div> </div>";
-			$("#question-data").html(result);
-		}
-
-		function check_button(opt){
-			var qt_id = $(opt).attr("id");
-			console.log(qt_id);
-
-			if($('input[name="'+qt_id+'"]').is(':checked') == true){
-				var qt_raw = $('input[name="'+qt_id+'"]:checked').val();
-				var qt_raw_arr = qt_raw.split(":");
-				var qt_cid = qt_raw_arr[0];
-				var opt_text = qt_raw_arr[1];
-				var message_stat = qt_raw_arr[2];
-				console.log("message_stat: "+message_stat);
-
-				if(message_stat == 1){
-					
-					$('input[name="'+qt_id+'"]:checked').parent().next().css('display', 'block');
-					$('input[name="'+qt_id+'"]:not(:checked)').parent().next().css('display', 'none');
-					
-				} else {
-					$('#'+qt_id+'_lt').css('display', 'none');
-				}
-
-				if (qt_cid == "0"){
-					$("#Preview").css("display", "block");
-					$("#Next").css("display", "none");
-
-				} else {
-					$("#Preview").css("display", "none");
-					$("#Next").css("display", "block");
-				}
-			}
-
-		}
 
 		
 
 		function showreport() {
+			$("#Close").css("display", "block");
 
-			$("#Previous").css("display", "none");
-			$("#Preview").css("display", "none");
-			$("#Submit").css("display", "block");
+			var material_info = @json($materialdetails ?? '');
+			console.log(material_info);
 
-			$(".question-test").css("display", "none");
-
-			var previous_question_id = QuestionID_array[index_pos];
-			console.log(previous_question_id);
-			
-			if($('input[name="'+previous_question_id+'"]').is(':checked') == false){
-				alert("Please select an option first!");
-			} else {
-				var question_text = $("#"+previous_question_id+" div b").text();
-				var question_raw_value = $('input[name="'+previous_question_id+'"]:checked').val();
-				console.log(question_raw_value);
-				var raw_value_array = question_raw_value.split(":");
-				var qt_ChildId = raw_value_array[0];
-				var qt_answer = raw_value_array[1];
-
-				result_array.push({
-					"formid" : formid,
-					"id" : previous_question_id,
-					"question" : question_text,
-					"answer" : qt_answer,
-					"childId" : qt_ChildId,
-					"ResultId" : ResultId
-				});
-
-				console.log(result_array);
+			$("input[name='meterial_code']").val(material_info[0]['material_code']);
+			$("input[name='product_name']").val(material_info[0]['product_name']);
+			$("input[name='package']").val(material_info[0]['package']);
+			$("input[name='market']").val(material_info[0]['market']);
+			$("input[name='location']").val(material_info[0]['location']);
+			$("input[name='percentage']").val(material_info[0]['percentage']);
 
 
-				//var result_header = "<h3 style='text-align:center;'>User Response</h3><hr/>";
-				//$(result_header).insertBefore("#question-data");
-
-				$("#header-hero").html("User Response");
+			//$("#header-hero").html("User Response");
 				
-				$('#form1 input').each(
-					function(index){  
-						var input = $(this);
-						input.attr("readonly",true);
-					}
-				);
+			$('#form1 input').each(
+				function(index){  
+					var input = $(this);
+					input.attr("readonly",true);
+				}
+			);
 
-				$('.start-question').css("display","block");
-				$('#start-qt').css("display","none");
+			result_array = @json($reportdetails ?? '');
+			console.log(result_array);
 
-				// for(var i = 0; i < result_array.length; i++){
-				// 	var q_text = result_array[i].question;
-				// 	var q_answer = result_array[i].answer;
+			questions = @json($allquestion ?? '');
+			console.log(questions);
 
-				// 	var result = "<div class='question ml-sm-5 pl-sm-5 pt-2'><div class='py-2 h5'><b>"+q_text+"</b></div>";
-				// 	result += "<div class='ml-md-3 ml-sm-3 pl-md-3 pt-sm-0 pt-3'>Answer: "+q_answer+"</div></div></br>";
+			for(var i = 0; i < result_array.length; i++){
+				var q_id = result_array[i].question_id;
+				var q_text = result_array[i].question;
+				var q_answer = result_array[i].answer;
+				console.log(i);
+				console.log(q_text);
 
-				// 	if(i == 0){
-				// 		$("#question-data").html(result); 
-				// 	} else {
-				// 		$("#question-data").append(result); 
-				// 	}		
-				// }
+				var result = "<div class=''><div class='py-2 h5'><b>"+q_text+"</b></div>";
 
-				for(var i = 0; i < result_array.length; i++){
-					var q_id = result_array[i].id;
-					var q_text = result_array[i].question;
-					var q_answer = result_array[i].answer;
-					console.log(i);
-					console.log(q_text);
+				for(var x = 0; x < questions.length; x++){
+					if(questions[x].question_id == q_id){
+						var raw_option = questions[x].options;
 
-					var result = "<div class=''><div class='py-2 h5'><b>"+q_text+"</b></div>";
+						result += "<div class='ml-md-3 ml-sm-3 pl-md-3 pt-sm-0 pt-3' id='options'>";
 
-					for(var x = 0; x < questions.length; x++){
-						if(questions[x].question_id == q_id){
-							var raw_option = questions[x].options;
+						var option_text, option_value;
 
-							result += "<div class='ml-md-3 ml-sm-3 pl-md-3 pt-sm-0 pt-3' id='options'>";
-
-							var tarray = raw_option.split("|");
-							var option_text, option_value;
-							for(var y = 0; y < tarray.length; y++){
-								var varray = tarray[y].split(":");
-								option_text = varray[0];
-								option_value = varray[1];
-								var message_alert_stat = 0;
-								if(varray.length == 4){
-									message_alert_stat = 1;
-								}
-
-								if(option_text == q_answer) {
-									result += "<label class='options'>"+option_text+" <input type='radio' checked disabled><span class='checkmark'></span> </label>";
-
-									if(varray.length == 4){
-										option_lastnode = true;
-										option_number = varray[2];
-										option_message = varray[3];
-
-										result += "<div class='alert alert-primary' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:block;'>"+option_message+"</div>";
-									}
-								} else {
-									result += "<label class='options'>"+option_text+" <input type='radio'disabled><span class='checkmark'></span> </label>";
-								}
+						for(var y = 0; y < raw_option.length; y++){
+							option_text = raw_option[y].option;
+							option_value = raw_option[y].child_id;
+							
+							var message_alert_stat = 0;
+							if((raw_option[y].message != '') || (raw_option[y].number != '')){
+								message_alert_stat = 1;
 							}
-							result += "</div> </div></br>";
 
+							if(option_text == q_answer) {
+								result += "<label class='options'>"+option_text+" <input type='radio' checked disabled><span class='checkmark'></span> </label>";
+
+								if((raw_option[y].message != '') || (raw_option[y].number != '')){
+									option_lastnode = true;
+									option_number = raw_option[y].number;
+									option_message = raw_option[y].message;
+
+									result += "<div class='alert alert-primary' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:block;'>"+option_message+"</div>";
+								}
+							} else {
+								result += "<label class='options'>"+option_text+" <input type='radio'disabled><span class='checkmark'></span> </label>";
+							}
 						}
+						result += "</div> </div></br>";
+
 					}
-
-					//result += "<div class='ml-md-3 ml-sm-3 pl-md-3 pt-sm-0 pt-3'>Answer: "+q_answer+"</div></div></br>";
-					
-
-					if(i == 0){
-						$("#result-view .card-body #qt_content").html(result); 
-					} else {
-						$("#result-view .card-body #qt_content").append(result); 
-					}	
 				}
 
-				var result2 = '<div class="form-group"><label>Comments:</label>';
-				result2 += '<textarea class="form-control" id="comment" rows="3" placeholder="Comment here"></textarea></div>';
-				$("#result-view .card-body #qt_content").append(result2); 
-
-				$('#result-view').css("display","block");
+				//result += "<div class='ml-md-3 ml-sm-3 pl-md-3 pt-sm-0 pt-3'>Answer: "+q_answer+"</div></div></br>";
 				
-				//var company_id = {{Auth::user()->company_id}};
-				//var company_id = $("input[name='company_id']").val();
-				var meterial_code = $("input[name='meterial_code']").val();
-				var product_name = $("input[name='product_name']").val();
-				var package = $("input[name='package']").val();
-				var market = $("input[name='market']").val();
-				var location = $("input[name='location']").val();
-				var percentage = $("input[name='percentage']").val();
-				// var st_form = {
-				// 	"company_id" : company_id,
-				// 	"meterial_code" : meterial_code,
-				// 	"product_name" : product_name,
-				// 	"package" : package,
-				// 	"market" : market,
-				// 	"location" : location,
-				// 	"percentage" : percentage
-				// };
-				// //console.log(st_form);
 
-				// var final_data = {
-				// 	"start_form" : st_form,
-				// 	"question_result" : result_array
-				// };
-
-				console.log(final_data);
-
-				final_report_data = final_data;
-
+				if(i == 0){
+					$("#result-view .card-body #qt_content").html(result); 
+				} else {
+					$("#result-view .card-body #qt_content").append(result); 
+				}	
 			}
-		});  
 
-		
-		// $('#Submit').click(function() {
-		// 	//console.log(final_report_data);
-		// 	var comment = $('#comment').val();
-			
-		// 	final_report_data['comment'] = comment;
-		// 	final_report_data['assign_company_id'] = "";
-		// 	console.log(final_report_data);
+			var result2 = '<div class="form-group"><label>User Comments:</label>';
+			result2 += '<textarea class="form-control" id="comment" rows="3" placeholder="Comment here" disabled>hello</textarea></div>';
+			$("#result-view .card-body #qt_content").append(result2); 
 
+			$('#result-view').css("display","block");
+				
 
-		// 	$.ajax({
-		// 		headers: {
-		// 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		// 		},
-		// 		type: 'POST',
-		// 		url: '/submit-answer',
-		// 		data: JSON.stringify(final_report_data),
-		// 		contentType: 'application/json; charset=utf-8',
-		// 		dataType: 'application/json',
-		// 		cache: false,
-		// 		crossDomain:true,
-		// 		success: function (result) {
+		};  
 
-		// 			alert("Result updated successfully");
-		// 		},
-		// 		error: function(xhr, resp, text) {
-		// 			//alert("Sorry! Unable to update details.");
-
-		// 			window.location = '/assign';
-		// 		}  
-		// 	});
-		// });
 		
 
 
