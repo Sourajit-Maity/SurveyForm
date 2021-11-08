@@ -7,9 +7,11 @@ use App\Models\Question;
 use App\Models\Form;
 use App\Models\MaterialResult;
 use App\Models\Result;
+use App\Models\Company;
 use App\Models\AssignResult;
 use App\Models\AssignCompany;
 use App\Models\Option;
+use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -88,6 +90,7 @@ class ResultController extends Controller
 
        $materialresult = new MaterialResult();
        $materialresult->company_id= $inputs['start_form']['company_id'];
+       $materialresult->material_code= $inputs['start_form']['material_code'];
        $materialresult->product_name= $inputs['start_form']['product_name'];
        $materialresult->form_id= $inputs['start_form']['company_id'];
        $materialresult->package= $inputs['start_form']['package'];
@@ -108,8 +111,10 @@ class ResultController extends Controller
             $result = Result::create([
             'form_id' => $question_result[$i]['formid'],
             'result_id' => $question_result[$i]['ResultId'],
+            'question' => $question_result[$i]['question'],
             'answer' => $question_result[$i]['answer'],
             'question_id' => $question_result[$i]['id'],
+            'child_question_id' => $question_result[$i]['childId'],
             'user_id' => Auth::user()->id,
             ]);
         }
@@ -143,8 +148,19 @@ class ResultController extends Controller
     {
         $result_id = AssignResult::where('id',$id)->value('result_id');
         $material_result_id = AssignResult::where('id',$id)->value('material_result_id');
+
         $assign_company_id = AssignResult::where('id',$id)->value('assign_company_id');
+        $assigner_id = AssignCompany::where('id',$assign_company_id)->value('user_id');
+        $assigner_name = User::where('id',$assigner_id)->value('name');
+        
+        $assigner_company_id = AssignCompany::where('id',$assign_company_id)->value('user_company_id');
+        $assigner_company_name = Company::where('id',$assigner_company_id)->value('company_name');
+
+        $assign_date = AssignCompany::where('id',$assign_company_id)->value('created_at');
+        $submission_date = AssignResult::where('id',$id)->value('created_at');
+
         $formid = AssignCompany::where('id',$assign_company_id)->value('form_id');
+        $form_name = Form::where('id',$formid)->value('form_name');
         
         $forms = DB::table('forms')->get();
         $allquestion = Question::where('form_id', $formid)->get();
@@ -161,8 +177,11 @@ class ResultController extends Controller
 
         $reportdetails = Result::where('result_id',$result_id)->get();
         $materialdetails = MaterialResult::where('id',$material_result_id)->get();
+        $companylogo = Company::where('id',Auth::user()->company_id)->value('logo');
 
-       return view('report.myreport',compact('reportdetails', 'allquestion', 'materialdetails', 'formid'))
+        $companyname = Company::where('id',Auth::user()->company_id)->value('company_name');
+
+       return view('report.myreport',compact('reportdetails', 'allquestion', 'materialdetails', 'formid', 'companylogo', 'companyname', 'assigner_name', 'assigner_company_name', 'form_name', 'assign_date', 'submission_date'))
            ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     }
 

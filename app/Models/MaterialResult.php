@@ -12,7 +12,7 @@ class MaterialResult extends Model
 
     protected $fillable = 
     ['result_id','form_id','company_id','user_id',
-        'product_name','package','market','location','percentage',
+        'material_code','product_name','package','market','location','percentage',
         'user_name','user_email','company_name','company_logo'
         ];
 
