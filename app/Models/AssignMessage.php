@@ -13,4 +13,18 @@ class AssignMessage extends Model
     protected $fillable = [
         'form_id', 'company_id', 'user_id',  'message'
     ];
+
+    public function post()
+    {
+        return $this->belongsTo(Form::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function company()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

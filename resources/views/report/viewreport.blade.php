@@ -41,8 +41,8 @@
                             <tr>
                                 <td>{{ ++$i }}</td>
                                 <td>{{ $report->result_id }}</td>
-                                <td>{{ $report->result_id }}</td>
-                                <td>{{ $report->answer }}</td>
+                                <td>{{ $report->form_name }}</td>
+                                <td>{{ $report->name }}</td>
                                 <td>{!! \Carbon\Carbon::parse($report->created_at)->format('d M Y') !!}</td>
                                 <td>{!! \Carbon\Carbon::parse($report->created_at)->format('d M Y') !!}</td>
                                 <td>

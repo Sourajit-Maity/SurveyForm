@@ -26,7 +26,20 @@ class ResultController extends Controller
      */
     public function index()
     {
-        $reports = AssignResult::where('user_id',auth()->user()->id)->latest()->get();
+        // $reports = AssignResult::
+        
+        // where('user_id',auth()->user()->id)->with('assigncompany')
+        // ->get();
+        
+        $reports = AssignCompany::
+        join('companies', 'assign_companies.company_id', '=', 'companies.id')->
+        join('forms', 'assign_companies.form_id', '=', 'forms.id')->
+        join('users', 'assign_companies.user_id', '=', 'users.id')->
+        join('assign_results', 'assign_companies.id', '=', 'assign_results.assign_company_id')->
+        where('employee_id',auth()->user()->id)
+        ->get();
+
+        //dd($reports);
         
        return view('report.viewreport',compact('reports'))
            ->with('i', (request()->input('page', 1) - 1) * 5, 'reports');
