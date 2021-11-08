@@ -179,26 +179,7 @@
 								
 
 								<form id="form1">
-									<!-- <div class="row m-top-bottom">
-										<div class="col-md-6 col-sm-12 col-xs-12">
-											<strong>Company Serial No.:</strong>
-											<input type="text" name="company_id" value="{{$company_id}}" class="form-control" readonly/>
-										</div>
-										<div class="col-md-6 col-sm-12 col-xs-12">
-											<strong>Company Name:</strong>
-											<input type="text" name="company_name" value="{{$company_name}}" class="form-control" readonly/>
-										</div>
-									</div>
-									<div class="row m-top-bottom">
-										<div class="col-md-6 col-sm-12 col-xs-12">
-											<strong>User Name:</strong>
-											<input type="text" name="user_name" value="{{$user_name}}" class="form-control" readonly/>
-										</div>
-										<div class="col-md-6 col-sm-12 col-xs-12">
-											<strong>User Email:</strong>
-											<input type="text" name="user_email" value="{{$user_email}}" class="form-control" readonly/>
-										</div>
-									</div> -->
+									
 									<div class="row m-top-bottom">
 										<div class="col-md-6 col-sm-12 col-xs-12">
 											<strong>Material code:</strong>
@@ -276,24 +257,24 @@
 						<div class="card card-primary card-outline" style="width:100%;font-size: 14px;">
 							<div class="card-body box-profile">
 								<div class="text-center">
-									@if (isset($company_logo))
-										<img class="profile-user-img img-fluid" src="{{url('assets/logos')}}/{{$company_logo}}" alt="User profile picture"> 
+									@if (isset($companylogo))
+										<img class="profile-user-img img-fluid" src="{{url('assets/logos')}}/{{$companylogo}}" alt="User profile picture"> 
 									@else 
 										<span></span>
 									@endif
 								</div>
 
-								<h3 class="profile-username text-center">{{$company_name}}</h3>
+								<h3 class="profile-username text-center">{{Auth::user()->company_name}}</h3>
 
 								<ul class="list-group list-group-unbordered mb-3" style="margin-top: 50px;">
 									<li class="list-group-item">
-										<b>Company SL No.</b> <a class="float-right">{{$company_id}}</a>
+										<b>Company SL No.</b> <a class="float-right">{{Auth::user()->company_id}}</a>
 									</li>
 									<li class="list-group-item">
-										<b>User Name</b> <a class="float-right">{{$user_name}}</a>
+										<b>User Name</b> <a class="float-right">{{Auth::user()->name}}</a>
 									</li>
 									<li class="list-group-item" style="border-bottom-width: 0px;">
-										<b>User Email</b> <a class="float-right">{{$user_email}}</a>
+										<b>User Email</b> <a class="float-right">{{Auth::user()->email}}</a>
 									</li>
 								</ul>
 							</div>
@@ -412,15 +393,15 @@
 					questions = result;
 					console.log(questions);
 
-					showreport();
+					
 				},
 				error: function(xhr, resp, text) {
 					alert("Sorry! Unable to get details.");
 				}  
 			});
 
+			showreport();
 
-			
 		});
 
 		function set_master_question(){
@@ -632,7 +613,7 @@
 
 				$('#result-view').css("display","block");
 				
-				var company_id = {{$company_id}};
+				//var company_id = {{Auth::user()->company_id}};
 				//var company_id = $("input[name='company_id']").val();
 				var meterial_code = $("input[name='meterial_code']").val();
 				var product_name = $("input[name='product_name']").val();
@@ -640,21 +621,21 @@
 				var market = $("input[name='market']").val();
 				var location = $("input[name='location']").val();
 				var percentage = $("input[name='percentage']").val();
-				var st_form = {
-					"company_id" : company_id,
-					"meterial_code" : meterial_code,
-					"product_name" : product_name,
-					"package" : package,
-					"market" : market,
-					"location" : location,
-					"percentage" : percentage
-				};
-				//console.log(st_form);
+				// var st_form = {
+				// 	"company_id" : company_id,
+				// 	"meterial_code" : meterial_code,
+				// 	"product_name" : product_name,
+				// 	"package" : package,
+				// 	"market" : market,
+				// 	"location" : location,
+				// 	"percentage" : percentage
+				// };
+				// //console.log(st_form);
 
-				var final_data = {
-					"start_form" : st_form,
-					"question_result" : result_array
-				};
+				// var final_data = {
+				// 	"start_form" : st_form,
+				// 	"question_result" : result_array
+				// };
 
 				console.log(final_data);
 
@@ -669,7 +650,7 @@
 		// 	var comment = $('#comment').val();
 			
 		// 	final_report_data['comment'] = comment;
-		// 	final_report_data['assign_company_id'] = "{{$assign_form_id}}";
+		// 	final_report_data['assign_company_id'] = "";
 		// 	console.log(final_report_data);
 
 

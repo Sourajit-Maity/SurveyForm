@@ -7,6 +7,7 @@ use App\Models\Question;
 use App\Models\Form;
 use App\Models\MaterialResult;
 use App\Models\Result;
+use App\Models\Company;
 use App\Models\AssignResult;
 use App\Models\AssignCompany;
 use App\Models\Option;
@@ -148,8 +149,9 @@ class ResultController extends Controller
 
         $reportdetails = Result::where('result_id',$result_id)->get();
         $materialdetails = MaterialResult::where('id',$material_result_id)->get();
+        $companylogo = Company::where('id',Auth::user()->company_id)->value('logo');;
 
-       return view('report.myreport',compact('reportdetails', 'allquestion', 'materialdetails', 'formid'))
+       return view('report.myreport',compact('reportdetails', 'allquestion', 'materialdetails', 'formid', 'companylogo'))
            ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     }
 
