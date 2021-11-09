@@ -10,7 +10,7 @@ class Result extends Model
     use HasFactory;
     protected $table = 'results';
 
-    protected $fillable = ['result_id','form_id','question_id','answer','user_id'];
+    protected $fillable = ['result_id','form_id','question_id','child_question_id','question','answer','user_id'];
 
     public function assignresult()
     {

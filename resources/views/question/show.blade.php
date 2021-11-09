@@ -827,7 +827,7 @@
 				var percentage = $("input[name='percentage']").val();
 				var st_form = {
 					"company_id" : company_id,
-					"meterial_code" : meterial_code,
+					"material_code" : meterial_code,
 					"product_name" : product_name,
 					"package" : package,
 					"market" : market,
