@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Form extends Model
 {
     use HasFactory;
+    protected $guarded = [];
     protected $table = 'forms';
     protected $fillable = [
         'emp_id', 'form_name',
@@ -23,7 +24,12 @@ class Form extends Model
          return $this->hasMany(AssignCompany::class);
     }
 
-    public function comments(){
+    public function comment(){
         return $this->hasMany(AssignMessage::class);
+    }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable')->whereNull('parent_id');
     }
 }

@@ -141,10 +141,10 @@ class ResultController extends Controller
      */
     public function show($id)
     {
-        $result_id = AssignResult::where('id',$id)->value('result_id');
-        $material_result_id = AssignResult::where('id',$id)->value('material_result_id');
-        $assign_company_id = AssignResult::where('id',$id)->value('assign_company_id');
-        $formid = AssignCompany::where('id',$assign_company_id)->value('form_id');
+        $result_id = AssignResult::where('assign_company_id',$id)->value('result_id');
+        $material_result_id = AssignResult::where('assign_company_id',$id)->value('material_result_id');
+        // $assign_company_id = AssignResult::where('assign_company_id',$id)->value('assign_company_id');
+        $formid = AssignCompany::where('id',$id)->value('form_id');
         
         $forms = DB::table('forms')->get();
         $allquestion = Question::where('form_id', $formid)->get();
