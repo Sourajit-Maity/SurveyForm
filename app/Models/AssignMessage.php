@@ -11,7 +11,7 @@ class AssignMessage extends Model
 
     protected $table = 'assign_messages';
     protected $fillable = [
-        'form_id', 'company_id', 'user_id',  'message'
+        'form_id', 'company_id', 'user_id', 'assign_result_id', 'message'
     ];
 
     public function post()
@@ -26,5 +26,9 @@ class AssignMessage extends Model
     public function company()
     {
         return $this->belongsTo(User::class);
+    }
+    public function assignresult()
+    {
+        return $this->belongsTo(AssignResult::class,'assign_result_id');
     }
 }

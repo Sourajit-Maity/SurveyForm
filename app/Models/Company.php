@@ -29,4 +29,8 @@ class Company extends Model
     public function comments(){
      return $this->hasMany(AssignMessage::class);
  }
+ public function forwardmessage()
+    {
+         return $this->hasOne(ForwardMessage::class);
+    }
 }

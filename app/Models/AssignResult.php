@@ -25,6 +25,10 @@ class AssignResult extends Model
     {
          return $this->belongsTo(AssignCompany::class,'assign_company_id');
     }
+    public function assignmessage()
+    {
+         return $this->hasMany(AssignMessage::class);
+    }
 
 
 }

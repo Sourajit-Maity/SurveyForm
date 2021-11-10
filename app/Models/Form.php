@@ -32,4 +32,8 @@ class Form extends Model
     {
         return $this->morphMany(Comment::class, 'commentable')->whereNull('parent_id');
     }
+    public function forwardmessage()
+    {
+         return $this->hasOne(ForwardMessage::class);
+    }
 }

@@ -11,7 +11,9 @@
 
 $(document).ready(function(){
 
-    
+    $('#employee_id').select2();
+    $('#company_id').select2();
+    $('#form_id').select2();
 
     $("#checkbox_company").click(function(){
         if($("#checkbox_company").is(':checked') ){
@@ -130,7 +132,7 @@ $(document).ready(function(){
                             <div class="col-md-6">
                              
                                 <!-- <input type="checkbox" id="checkbox_company" >Select All -->
-                                <select style="width:100% !important" name="company_id[]" id="company_id" class="form-control @error('company_id') is-invalid @enderror employee"   required autocomplete="company_id" >
+                                <select style="width:100% !important" name="company_id[]" id="company_id" class="form-control @error('company_id') is-invalid @enderror employee"   required autocomplete="company_id" multiple="multiple">
                                         <option value=""disabled>Please Select</option>
                                     @foreach ($company as $companys)
                                         <option value="{{ $companys->id }}">{{ $companys->company_name }}</option>
@@ -151,7 +153,7 @@ $(document).ready(function(){
 
                         <div class="col-md-6">
                         <!-- <input type="checkbox" id="checkbox_emp" >Select All -->
-                        <select style="width:100% !important" name="employee_id[]" id="employee_id" class="form-control @error('employee_id') is-invalid @enderror employee"   required autocomplete="employee_id" >
+                        <select style="width:100% !important" name="employee_id[]" id="employee_id" class="form-control @error('employee_id') is-invalid @enderror employee"   required autocomplete="employee_id" multiple="multiple">
 
                                                                                
                                                      
@@ -168,7 +170,7 @@ $(document).ready(function(){
 
                         <div class="col-md-6">
                         <!-- <input type="checkbox" id="checkbox_designation" >Select All -->
-                        <select style="width:100% !important" name="form_id[]" id="form_id" class="form-control @error('form_id') is-invalid @enderror employee"   required autocomplete="form_id" >
+                        <select style="width:100% !important" name="form_id[]" id="form_id" class="form-control @error('form_id') is-invalid @enderror employee"   required autocomplete="form_id" multiple="multiple">
 
                                  @foreach ($forms as $form)
                                    <option value="{{$form->id}}">{{$form->form_name}}</option>

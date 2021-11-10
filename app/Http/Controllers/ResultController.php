@@ -10,6 +10,8 @@ use App\Models\Result;
 use App\Models\Company;
 use App\Models\AssignResult;
 use App\Models\AssignCompany;
+use App\Models\AssignMessage;
+use App\Models\ForwardMessage;
 use App\Models\Option;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
@@ -127,11 +129,16 @@ class ResultController extends Controller
         $assignresults->user_id= Auth::user()->id;  
         $assignresults->save();
 
-        
+        $assignmessage = new AssignMessage();
+        $assignmessage->assign_result_id= $assignresults->id;
+        $assignmessage->form_id= $question_result[0]['formid'];
+        $assignmessage->company_id= $inputs['start_form']['company_id'];    
+        $assignmessage->user_id= Auth::user()->id;  
+        $assignmessage->message= 1;  
+
+        $assignmessage->save();        
 
         $assign = AssignCompany::where('id', $inputs['assign_company_id'])->update(array("assign" => 0));
-
-
 
         return redirect()->route('assign.index')
                         ->with('success','result saved successfully.');
@@ -221,5 +228,23 @@ class ResultController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function forwardmessagestore()
+    {
+        
+        $forwardmessage = new ForwardMessage();
+        $forwardmessage->assign_company_id= 1;
+        $forwardmessage->form_id= 1;
+        $forwardmessage->company_id= 1;    
+        $forwardmessage->user_id= Auth::user()->id;  
+        $forwardmessage->message= 1;  
+
+        $forwardmessage->save();        
+
+        $assign = AssignCompany::where('id', $inputs['assign_company_id'])->update(array("forward" => 0));
+
+        return redirect()->route('assign.index')
+                        ->with('success','result saved successfully.');
+
     }
 }
