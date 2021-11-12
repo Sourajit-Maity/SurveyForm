@@ -81,7 +81,6 @@
                     </div>
                 </div>
                 <br/>
-
                 <table class="table table-bordered table-responsive" id="dynamicAddRemove" style="margin-top:20px;">   
                     <tr>
                         <th>Question ID</th>

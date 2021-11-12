@@ -88,7 +88,7 @@ class ResultController extends Controller
        $inputs = $request->json()->all();
 
        $question_result = $inputs['question_result'];
-       //Log::debug("qwerty".print_r($question_result,true));
+       //Log::debug("qwerty".print_r($inputs,true));
 
        $materialresult = new MaterialResult();
        $materialresult->company_id= $inputs['start_form']['company_id'];
@@ -126,6 +126,7 @@ class ResultController extends Controller
         $assignresults->result_id= $question_result[0]['ResultId'];
         $assignresults->material_result_id= $materialresult->id;
         $assignresults->assign_company_id= $inputs['assign_company_id'];     
+        $assignresults->message= $inputs['comment']; 
         $assignresults->user_id= Auth::user()->id;  
         $assignresults->save();
 
