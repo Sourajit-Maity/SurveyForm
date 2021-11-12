@@ -18,6 +18,7 @@ class CreateAssignMessagesTable extends Migration
             $table->foreignId('form_id');
             $table->foreignId('company_id');
             $table->foreignId('user_id');
+            $table->foreignId('assign_result_id');
             $table->string('message');
             $table->timestamps();
         });

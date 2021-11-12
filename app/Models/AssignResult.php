@@ -11,7 +11,7 @@ class AssignResult extends Model
 
     protected $table = 'assign_results';
     protected $fillable = [
-        'result_id', 'material_result_id', 'assign_company_id', 'user_id'
+        'result_id','message', 'material_result_id', 'assign_company_id', 'user_id'
     ];
     public function result()
     {
@@ -24,6 +24,10 @@ class AssignResult extends Model
     public function assigncompany()
     {
          return $this->belongsTo(AssignCompany::class,'assign_company_id');
+    }
+    public function assignmessage()
+    {
+         return $this->hasMany(AssignMessage::class);
     }
 
 

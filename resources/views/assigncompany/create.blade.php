@@ -131,9 +131,9 @@ $(document).ready(function(){
 
                             <div class="col-md-6">
                              
-                                <input type="checkbox" id="checkbox_company" >Select All
+                                <!-- <input type="checkbox" id="checkbox_company" >Select All -->
                                 <select style="width:100% !important" name="company_id[]" id="company_id" class="form-control @error('company_id') is-invalid @enderror employee"   required autocomplete="company_id" multiple="multiple">
-
+                                        <option value=""disabled>Please Select</option>
                                     @foreach ($company as $companys)
                                         <option value="{{ $companys->id }}">{{ $companys->company_name }}</option>
                                     @endforeach                                 
@@ -152,7 +152,7 @@ $(document).ready(function(){
                         <label for="employee_id" class="col-md-4 col-form-label text-md-right">{{ __('Employee Name') }}<span style="color:red"> *</span></label>
 
                         <div class="col-md-6">
-                        <input type="checkbox" id="checkbox_emp" >Select All
+                        <!-- <input type="checkbox" id="checkbox_emp" >Select All -->
                         <select style="width:100% !important" name="employee_id[]" id="employee_id" class="form-control @error('employee_id') is-invalid @enderror employee"   required autocomplete="employee_id" multiple="multiple">
 
                                                                                

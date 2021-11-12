@@ -11,6 +11,7 @@ use App\Http\Controllers\FormController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ResultController;
 use App\Http\Controllers\AssignCompanyController;
+use App\Http\Controllers\CommentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -64,7 +65,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/forward-assign', [AssignCompanyController::class, 'forwardindex'])->name('forward-assign');
     Route::get('/forward-show/{id}', [AssignCompanyController::class, 'forwardshow'])->name('forward-show');
     Route::get('/assign-form-show/{id}', [AssignCompanyController::class, 'assignFormShow'])->name('assign-form-show');
-    
+    Route::post('/comment/store', [CommentController::class,'store'])->name('comment.add');
+    Route::post('/reply/store', [CommentController::class,'replyStore'])->name('reply.add');
+    Route::post('forward-messgae-store', [ResultController::class,'forwardmessagestore'])->name('forward-messgae-store');
+
 
 
 

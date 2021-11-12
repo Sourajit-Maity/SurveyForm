@@ -45,4 +45,9 @@ class AssignCompany extends Model
     {
          return $this->hasOne(AssignResult::class);
     }
+    public function forwardmessage()
+    {
+         return $this->hasOne(ForwardMessage::class);
+    }
+    
 }

@@ -10,6 +10,8 @@ use App\Models\Result;
 use App\Models\Company;
 use App\Models\AssignResult;
 use App\Models\AssignCompany;
+use App\Models\AssignMessage;
+use App\Models\ForwardMessage;
 use App\Models\Option;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
@@ -86,7 +88,7 @@ class ResultController extends Controller
        $inputs = $request->json()->all();
 
        $question_result = $inputs['question_result'];
-       //Log::debug("qwerty".print_r($question_result,true));
+       //Log::debug("qwerty".print_r($inputs,true));
 
        $materialresult = new MaterialResult();
        $materialresult->company_id= $inputs['start_form']['company_id'];
@@ -124,14 +126,20 @@ class ResultController extends Controller
         $assignresults->result_id= $question_result[0]['ResultId'];
         $assignresults->material_result_id= $materialresult->id;
         $assignresults->assign_company_id= $inputs['assign_company_id'];     
+        $assignresults->message= $inputs['comment']; 
         $assignresults->user_id= Auth::user()->id;  
         $assignresults->save();
 
-        
+        $assignmessage = new AssignMessage();
+        $assignmessage->assign_result_id= $assignresults->id;
+        $assignmessage->form_id= $question_result[0]['formid'];
+        $assignmessage->company_id= $inputs['start_form']['company_id'];    
+        $assignmessage->user_id= Auth::user()->id;  
+        $assignmessage->message= 1;  
+
+        $assignmessage->save();        
 
         $assign = AssignCompany::where('id', $inputs['assign_company_id'])->update(array("assign" => 0));
-
-
 
         return redirect()->route('assign.index')
                         ->with('success','result saved successfully.');
@@ -146,14 +154,18 @@ class ResultController extends Controller
      */
     public function show($id)
     {
-        $result_id = AssignResult::where('id',$id)->value('result_id');
-        $material_result_id = AssignResult::where('id',$id)->value('material_result_id');
-
-        $assign_company_id = AssignResult::where('id',$id)->value('assign_company_id');
+        $result_id = AssignResult::where('assign_company_id',$id)->value('result_id');
+        $material_result_id = AssignResult::where('assign_company_id',$id)->value('material_result_id');
+        $assign_company_id = AssignResult::where('assign_company_id',$id)->value('assign_company_id');
+        $formid = AssignCompany::where('id',$id)->value('form_id');
+        //$result_id = AssignResult::where('id',$id)->value('result_id');
+        //$material_result_id = AssignResult::where('id',$id)->value('material_result_id');
+        //$assign_company_id = AssignResult::where('id',$id)->value('assign_company_id');
+        $assigner_company_id = AssignCompany::where('id',$assign_company_id)->value('user_company_id');
         $assigner_id = AssignCompany::where('id',$assign_company_id)->value('user_id');
         $assigner_name = User::where('id',$assigner_id)->value('name');
         
-        $assigner_company_id = AssignCompany::where('id',$assign_company_id)->value('user_company_id');
+        
         $assigner_company_name = Company::where('id',$assigner_company_id)->value('company_name');
 
         $assign_date = AssignCompany::where('id',$assign_company_id)->value('created_at');
@@ -217,5 +229,23 @@ class ResultController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function forwardmessagestore()
+    {
+        
+        $forwardmessage = new ForwardMessage();
+        $forwardmessage->assign_company_id= 1;
+        $forwardmessage->form_id= 1;
+        $forwardmessage->company_id= 1;    
+        $forwardmessage->user_id= Auth::user()->id;  
+        $forwardmessage->message= 1;  
+
+        $forwardmessage->save();        
+
+        $assign = AssignCompany::where('id', $inputs['assign_company_id'])->update(array("forward" => 0));
+
+        return redirect()->route('assign.index')
+                        ->with('success','result saved successfully.');
+
     }
 }
