@@ -240,4 +240,12 @@ class AssignCompanyController extends Controller
         return view('assigncompany.forwardshow',compact('forms','allquestion', 'company')); 
     }
 
+    public function myinfodetails(){
+
+
+        $assigndetails = AssignCompany::where('user_id',Auth::user()->id)->with('company','assigncompany','form','employee','assignuser','assignresult','forwardmessage')->get();
+        //dd($assigndetails);
+        return view('assigncompany.myinfodetails',compact('assigndetails'))->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+
 }
