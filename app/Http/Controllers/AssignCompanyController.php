@@ -214,6 +214,8 @@ class AssignCompanyController extends Controller
         $company_logo = Company::where('id',$company_id)->value('logo');
 
         $formid = AssignCompany::where('id',$id)->value('form_id');
+
+
      
         return view('question.show',compact('assign_form_id','company_logo','formid','company_name','company_id','user_name','user_email'));
     }
@@ -237,7 +239,13 @@ class AssignCompanyController extends Controller
             ->get();
             $allquestion[$y]['options'] = $alloption;         
         }
-        return view('assigncompany.forwardshow',compact('forms','allquestion', 'company')); 
+
+        $assigncompany = AssignCompany::where('form_id',$formid)->with('assignuser')->get();
+        // dd($assigncompany);
+
+
+
+        return view('assigncompany.forwardshow',compact('forms','allquestion', 'company','assigncompany')); 
     }
 
     public function myinfodetails(){
