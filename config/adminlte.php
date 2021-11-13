@@ -302,6 +302,11 @@ return [
             'url'  => 'get-my-info',
             'icon' => 'nav-icon fas fa-fw fa-cog',
         ],
+        [
+            'text' => 'Assigned/Forward Info',
+            'url'  => 'my-info-details',
+            'icon' => 'nav-icon fas fa-fw fa-cog',
+        ],
         
         // [
         //     'text'    => 'multilevel',

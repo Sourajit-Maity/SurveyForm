@@ -169,6 +169,7 @@
                                 <!-- <input type="checkbox" id="checkbox_designation" >Select All -->
     
                                 <input type="text" name="tform_id" value="" class="form-control" readonly style="font-size:14px;"/>
+                                <input type="hidden" name="form_id[]" value="" class="form-control" readonly style="font-size:14px;"/>
                                 @error('form_id')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -329,6 +330,7 @@
             if(tform_id == forms[x].id){
                 var form_name = forms[x].form_name;
                 $("input[name='tform_id']").val(form_name);
+                $("input[name='form_id[]']").val(tform_id);
             }
         }
 
