@@ -152,7 +152,7 @@
             <!-- small box -->
             <div class="small-box wid-1">
               <div class="inner">
-              <h3>{{count($assignformArr)}}</h3>
+              <h3>{{$assignform}}</h3>
                 <p> Assigned Forms</p>
               </div>
               <div class="icon">
@@ -164,7 +164,7 @@
 
             <div class="small-box wid-4">
               <div class="inner">
-              <h3>{{count($assignformArr)}}</h3>
+              <h3>{{$forwardform}}</h3>
                 <p> Forward Forms</p>
               </div>
               <div class="icon">

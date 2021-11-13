@@ -9,6 +9,7 @@ use Spatie\Permission\Models\Role;
 use App\Models\Form;
 use App\Models\Question;
 use App\Models\RoleParent;
+use App\Models\AssignCompany;
 use DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -63,9 +64,12 @@ class HomeController extends Controller
         $company =  Company::count();
         $question =  Question::count();
         $role =  Role::count();
-     
+        $assignform = AssignCompany::where('employee_id',$currentuserid)->where('assign',1)->count();
+        
+        $forwardform = AssignCompany::where('employee_id',$currentuserid)->where('forward',1)->count();
+        //dd($forwardform);
         $currentuserid = Auth::user()->name;
-        $currentusercompid = Auth::user()->company_id;
+        $currentusercompid = Auth::user()->company_id; 
        // $currentuserroleid = Auth::roles()->name;
         //dd($currentuserroleid);
         $companyuser= Company::where('id',$currentusercompid)->value('company_name');
@@ -73,6 +77,6 @@ class HomeController extends Controller
        // dd($companydetails);
        $rolenameid =  RoleParent::where('designation_id',$currentuserid)->value('id');
        $rolename = Role::where('id',$rolenameid)->value('name');
-        return view('home',compact('newemployee','assignformArr','rolename','user','form','company','question','role','companyuser','companydetails'));
+        return view('home',compact('newemployee','assignformArr','forwardform','assignform','rolename','user','form','company','question','role','companyuser','companydetails'));
     }
 }

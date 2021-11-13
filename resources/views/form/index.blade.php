@@ -56,8 +56,8 @@
                                     
                                     <td>
                                         <form action="{{ route('form.destroy',$forms->id) }}" method="POST">
-                                            <a class="btn btn-app bg-gradient-success" href="{{ route('view-question-forms',[$forms->id]) }}">
-                                            <i class="fas fa-eye"></i>Show</a>
+                                            <!-- <a class="btn btn-app bg-gradient-success" href="{{ route('view-question-forms',[$forms->id]) }}">
+                                            <i class="fas fa-eye"></i>Show</a> -->
                                             <!-- <a class="btn btn-info" href="{{ route('form.show',$forms->id) }}">Show</a> -->
                                             @can('form-edit')
                                                 <a class="btn btn-app bg-gradient-warning" href="{{ route('form.edit',$forms->id) }}">
