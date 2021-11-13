@@ -85,8 +85,8 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
-    'layout_fixed_navbar' => null,
+    'layout_fixed_sidebar' => TRUE,
+    'layout_fixed_navbar' => TRUE,
     'layout_fixed_footer' => null,
     'layout_dark_mode' => null,
 
@@ -288,11 +288,13 @@ return [
         [
             'text' => 'Assign Form',
             'url'  => 'assign/create',
+            'active' => ['assign/create', 'assign', 'forward-assign', 'forward-show*'],
             'icon' => 'nav-icon fas fa-fw fa-share-square',
         ],
         [
             'text' => 'Report',
             'url'  => 'get-report-info',
+            'active' => ['get-report-info', 'results*'],
             'icon' => 'nav-icon fas fa-book-open',
         ],
         [
