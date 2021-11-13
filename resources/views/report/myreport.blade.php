@@ -327,7 +327,7 @@
 							</div>
 						</section>
 
-						<section class='comments'>
+						<!-- <section class='comments'>
 							<div class="card card-primary card-outline direct-chat direct-chat-primary">
 								<div class="card-header">
 									<i class="fas fa-comments" style='color:#007bff;'></i>&nbsp;Comments
@@ -375,7 +375,7 @@
 								</div>
 
 							</div>
-						</section>
+						</section> -->
 					</section>
 					
 					
@@ -497,9 +497,9 @@
 				}	
 			}
 
-			// var result2 = '<div class="form-group"><label>User Comments:</label>';
-			// result2 += '<textarea class="form-control" id="comment" rows="3" placeholder="Comment here" disabled>hello</textarea></div>';
-			// $("#result-view .card-body #qt_content").append(result2); 
+			var result2 = '<div class="form-group"><label>User Comments:</label>';
+			result2 += '<textarea class="form-control" id="comment" rows="3" placeholder="Comment here" disabled>hello</textarea></div>';
+			$("#result-view .card-body #qt_content").append(result2); 
 
 			$('#result-view').css("display","block");
 				

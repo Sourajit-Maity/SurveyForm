@@ -47,7 +47,7 @@
         <div class="col-md-7">
             <div class="card mt-3 card-primary card-outline">
                 <div class="card-header"><i class="far fa-question-circle" style='color:#007bff;'></i>&nbsp; Questions</div>
-                <div class="card-body">
+                <div class="card-body" style="overflow-y: scroll; max-height:500px;">
                     @csrf
                     @if ($errors->any())
                     <div class="alert alert-danger">
@@ -79,37 +79,51 @@
                     <i class="fas fa-comments" style='color:#007bff;'></i>&nbsp;Comments
                 </div>
 
-                <div class="card-body">
+                <div class="card-body" style="overflow-y: scroll; max-height:400px;">
                     <div class="direct-chat-messages">
-                        <div class="direct-chat-msg">
-                            <div class="direct-chat-infos clearfix">
-                                <span class="direct-chat-name float-left">Alexander Pierce</span>
-                                <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
-                            </div>
-                    
-                            <img class="direct-chat-img" src="">
-                    
-                            <div class="direct-chat-text">
-                                Is this template really for free? That's unbelievable!
-                            </div>
-                        </div>
+                        @foreach ($assigncompany as $message)
+                            @if ($message->user_id != Auth::user()->id)
+                                <div class="direct-chat-msg">
+                                    <div class="direct-chat-infos clearfix">
+                                        <span class="direct-chat-name float-left">{{$message->assignuser->name}}</span>
+                                        <span class="direct-chat-timestamp float-right">{!! \Carbon\Carbon::parse($message->created_at)->format('d M g:i A') !!}</span>
+                                    </div>
 
-                        <div class="direct-chat-msg right">
-                            <div class="direct-chat-infos clearfix">
-                                <span class="direct-chat-name float-right">Sarah Bullock</span>
-                                <span class="direct-chat-timestamp float-left">23 Jan 2:05 pm</span>
-                            </div>
-     
-                            <img class="direct-chat-img" src="">
-                    
-                            <div class="direct-chat-text">
-                                You better believe it!
-                            </div>
-                        </div>
+                                    @if (isset($message->assignuser->user_image))
+                                        <img class="direct-chat-img" src="{{url('assets/images')}}/{{$message->assignuser->user_image}}">
+                                    @else
+                                        <img class="direct-chat-img" src="../assets/images/dummy.png">
+                                    @endif
+
+                                    <div class="direct-chat-text">
+                                        {{$message->message}}
+                                    </div>
+                                </div>
+                            @else
+                                <div class="direct-chat-msg right">
+                                    <div class="direct-chat-infos clearfix">
+                                        <span class="direct-chat-name float-right">{{$message->assignuser->name}}</span>
+                                        <span class="direct-chat-timestamp float-left">{!! \Carbon\Carbon::parse($message->created_at)->format('d M g:i A') !!}</span>
+                                    </div>
+            
+                                    @if (isset($message->assignuser->user_image))
+                                        <img class="direct-chat-img" src="{{url('assets/images')}}/{{$message->assignuser->user_image}}">
+                                    @else
+                                        <img class="direct-chat-img" src="../assets/images/dummy.png">
+                                    @endif
+                            
+                                    <div class="direct-chat-text">
+                                        {{$message->message}}
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+
+                        
                     </div>
                 </div>
 
-                <div class="card-footer">
+                <!-- <div class="card-footer">
                     <form action="#" method="post">
                         <div class="input-group">
                             <input type="text" name="message" placeholder="Type Message ..." class="form-control">
@@ -118,7 +132,7 @@
                             </span>
                         </div>
                     </form>
-                </div>
+                </div> -->
 
             </div>
 
@@ -167,8 +181,9 @@
                             <label for="form_id" class="col-md-4 col-form-label text-md-right">{{ __('Forms') }}</label>
                             <div class="col-md-8">
                                 <!-- <input type="checkbox" id="checkbox_designation" >Select All -->
-    
+
                                 <input type="text" name="tform_id" value="" class="form-control" readonly style="font-size:14px;"/>
+                                <input type="hidden" name="form_id[]" value="" class="form-control" readonly/>
                                 @error('form_id')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -329,6 +344,7 @@
             if(tform_id == forms[x].id){
                 var form_name = forms[x].form_name;
                 $("input[name='tform_id']").val(form_name);
+                $("input[name='form_id[]']").val(tform_id);
             }
         }
 

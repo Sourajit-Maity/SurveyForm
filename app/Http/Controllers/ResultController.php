@@ -193,6 +193,8 @@ class ResultController extends Controller
 
         $companyname = Company::where('id',Auth::user()->company_id)->value('company_name');
 
+        //dd($materialdetails);
+
        return view('report.myreport',compact('reportdetails', 'allquestion', 'materialdetails', 'formid', 'companylogo', 'companyname', 'assigner_name', 'assigner_company_name', 'form_name', 'assign_date', 'submission_date'))
            ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     }
