@@ -220,6 +220,9 @@ class AssignCompanyController extends Controller
 
     public function forwardshow(Request $request,$id)
     {
+        $company = Company::get();
+        //$forms = Form::get();
+
         $formid = AssignCompany::where('id',$id)->value('form_id');
         
         $forms = DB::table('forms')->get();
@@ -234,7 +237,7 @@ class AssignCompanyController extends Controller
             ->get();
             $allquestion[$y]['options'] = $alloption;         
         }
-        return view('assigncompany.forwardshow',compact('forms','allquestion')); 
+        return view('assigncompany.forwardshow',compact('forms','allquestion', 'company')); 
     }
 
 }

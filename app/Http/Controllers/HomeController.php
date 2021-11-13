@@ -64,9 +64,9 @@ class HomeController extends Controller
         $company =  Company::count();
         $question =  Question::count();
         $role =  Role::count();
-        $assignform = AssignCompany::where('user_id',$currentuserid)->where('assign',1)->count();
+        $assignform = AssignCompany::where('employee_id',$currentuserid)->where('assign',1)->count();
         
-        $forwardform = AssignCompany::where('user_id',$currentuserid)->where('forward',1)->count();
+        $forwardform = AssignCompany::where('employee_id',$currentuserid)->where('forward',1)->count();
         //dd($forwardform);
         $currentuserid = Auth::user()->name;
         $currentusercompid = Auth::user()->company_id; 

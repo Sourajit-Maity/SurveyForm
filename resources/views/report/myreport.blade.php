@@ -298,33 +298,86 @@
 				</div>
 
 				<div class="col-md-3">
-					<section class="start-question sticky-top">
-						<div class="card card-primary card-outline noprint-area" style="width:100%;font-size: 14px;">
-							<div class="card-body box-profile">
-								<div class="text-center">
-									@if (isset($companylogo))
-										<img class="profile-user-img img-fluid" src="{{url('assets/logos')}}/{{$companylogo}}" alt="User profile picture"> 
-									@else 
-										<span></span>
-									@endif
+					<section class='sticky-top'>
+						<section class="start-question">
+							<div class="card card-primary card-outline noprint-area" style="width:100%;font-size: 14px;">
+								<div class="card-body box-profile">
+									<div class="text-center">
+										@if (isset($companylogo))
+											<img class="profile-user-img img-fluid" src="{{url('assets/logos')}}/{{$companylogo}}" alt="User profile picture"> 
+										@else 
+											<span></span>
+										@endif
+									</div>
+
+									<h3 class="profile-username text-center">{{$companyname}}</h3>
+
+									<ul class="list-group list-group-unbordered mb-3" style="margin-top: 50px;">
+										<li class="list-group-item">
+											<b>Company SL No.</b> <a class="float-right">{{Auth::user()->company_id}}</a>
+										</li>
+										<li class="list-group-item">
+											<b>User Name</b> <a class="float-right">{{Auth::user()->name}}</a>
+										</li>
+										<li class="list-group-item" style="border-bottom-width: 0px;">
+											<b>User Email</b> <a class="float-right">{{Auth::user()->email}}</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</section>
+
+						<section class='comments'>
+							<div class="card card-primary card-outline direct-chat direct-chat-primary">
+								<div class="card-header">
+									<i class="fas fa-comments" style='color:#007bff;'></i>&nbsp;Comments
 								</div>
 
-								<h3 class="profile-username text-center">{{$companyname}}</h3>
+								<div class="card-body">
+									<div class="direct-chat-messages">
+										<div class="direct-chat-msg">
+											<div class="direct-chat-infos clearfix">
+												<span class="direct-chat-name float-left">Alexander Pierce</span>
+												<span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
+											</div>
+									
+											<img class="direct-chat-img" src="">
+									
+											<div class="direct-chat-text">
+												Is this template really for free? That's unbelievable!
+											</div>
+										</div>
 
-								<ul class="list-group list-group-unbordered mb-3" style="margin-top: 50px;">
-									<li class="list-group-item">
-										<b>Company SL No.</b> <a class="float-right">{{Auth::user()->company_id}}</a>
-									</li>
-									<li class="list-group-item">
-										<b>User Name</b> <a class="float-right">{{Auth::user()->name}}</a>
-									</li>
-									<li class="list-group-item" style="border-bottom-width: 0px;">
-										<b>User Email</b> <a class="float-right">{{Auth::user()->email}}</a>
-									</li>
-								</ul>
+										<div class="direct-chat-msg right">
+											<div class="direct-chat-infos clearfix">
+												<span class="direct-chat-name float-right">Sarah Bullock</span>
+												<span class="direct-chat-timestamp float-left">23 Jan 2:05 pm</span>
+											</div>
+					
+											<img class="direct-chat-img" src="">
+									
+											<div class="direct-chat-text">
+												You better believe it!
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="card-footer">
+									<form action="#" method="post">
+										<div class="input-group">
+											<input type="text" name="message" placeholder="Type Message ..." class="form-control">
+											<span class="input-group-append">
+												<button type="submit" class="btn btn-primary">Send</button>
+											</span>
+										</div>
+									</form>
+								</div>
+
 							</div>
-						</div>
+						</section>
 					</section>
+					
 					
 				</div>
 			</div>
@@ -395,7 +448,8 @@
 				console.log(i);
 				console.log(q_text);
 
-				var result = "<div class=''><div class='py-2 h5'><b>"+q_text+"</b></div>";
+				var no = i+1;
+				var result = "<div class=''><div class='py-2 h5'><b>Q"+no+". "+q_text+"</b></div>";
 
 				for(var x = 0; x < questions.length; x++){
 					if(questions[x].question_id == q_id){
@@ -443,9 +497,9 @@
 				}	
 			}
 
-			var result2 = '<div class="form-group"><label>User Comments:</label>';
-			result2 += '<textarea class="form-control" id="comment" rows="3" placeholder="Comment here" disabled>hello</textarea></div>';
-			$("#result-view .card-body #qt_content").append(result2); 
+			// var result2 = '<div class="form-group"><label>User Comments:</label>';
+			// result2 += '<textarea class="form-control" id="comment" rows="3" placeholder="Comment here" disabled>hello</textarea></div>';
+			// $("#result-view .card-body #qt_content").append(result2); 
 
 			$('#result-view').css("display","block");
 				
