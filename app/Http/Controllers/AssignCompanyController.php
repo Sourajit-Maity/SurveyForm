@@ -9,6 +9,9 @@ use App\Models\Question;
 use App\Models\AssignCompany;
 use App\Models\Form;
 use App\Models\Option;
+use App\Models\AssignResult;
+use App\Models\Result;
+use App\Models\MaterialResult;
 
 use Illuminate\Support\Facades\Log;
 use DB;
@@ -258,10 +261,50 @@ class AssignCompanyController extends Controller
 
     public function assignformdetails($id){
 
+        $assigndetails = AssignCompany::where('user_id',Auth::user()->id)->where('assign','!=', NULL)->with('company','assigncompany','form','employee','assignuser','assignresult','forwardmessage')->get();
+        
+        $result_id = AssignResult::where('assign_company_id',$id)->value('result_id');
+        $message= AssignResult::where('assign_company_id',$id)->value('message');
+        $material_result_id = AssignResult::where('assign_company_id',$id)->value('material_result_id');
+        $assign_company_id = AssignResult::where('assign_company_id',$id)->value('assign_company_id');
+        $formid = AssignCompany::where('id',$id)->value('form_id');
+        
+        $assigner_company_id = AssignCompany::where('id',$assign_company_id)->value('user_company_id');
+        $assigner_id = AssignCompany::where('id',$assign_company_id)->value('user_id');
+        $assigner_name = User::where('id',$assigner_id)->value('name');
+        
+        
+        $assigner_company_name = Company::where('id',$assigner_company_id)->value('company_name');
 
-        $assigndetails = AssignCompany::where('user_id',Auth::user()->id)->with('company','assigncompany','form','employee','assignuser','assignresult','forwardmessage')->get();
-        //dd($assigndetails);
-        return view('assigncompany.myinfodetails',compact('assigndetails'))->with('i', (request()->input('page', 1) - 1) * 5);
+        $assign_date = AssignCompany::where('id',$assign_company_id)->value('created_at');
+        $submission_date = AssignResult::where('id',$id)->value('created_at');
+
+        $formid = AssignCompany::where('id',$assign_company_id)->value('form_id');
+        $form_name = Form::where('id',$formid)->value('form_name');
+        
+        $forms = DB::table('forms')->get();
+        $allquestion = Question::where('form_id', $formid)->get();
+
+        for ($y = 0; $y < count($allquestion); $y++) {
+            $alloption = Option::where('question_id', $allquestion[$y]->question_id)
+            ->where('option', '!=', 'undefined')
+            ->where('child_id', '!=', 'undefined')
+            ->where('number', '!=', 'undefined')
+            ->where('message', '!=', 'undefined')
+            ->get();
+            $allquestion[$y]['options'] = $alloption; 
+        }
+
+        $reportdetails = Result::where('result_id',$result_id)->get();
+        $materialdetails = MaterialResult::where('id',$material_result_id)->get();
+        $companylogo = Company::where('id',Auth::user()->company_id)->value('logo');
+
+        $companyname = Company::where('id',Auth::user()->company_id)->value('company_name');
+
+        //dd($materialdetails);
+
+       return view('assigncompany.assignformdetails',compact('reportdetails','message', 'assigndetails','allquestion', 'materialdetails', 'formid', 'companylogo', 'companyname', 'assigner_name', 'assigner_company_name', 'form_name', 'assign_date', 'submission_date'))
+           ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     }
 
 }

@@ -36,7 +36,7 @@
                         <th>Forward</th>
                         <th>Message</th>
                         <th>Assign Date</th>
-                        <th width="100px">Action</th>
+                        <!-- <th width="100px">Action</th> -->
                         
                     </tr>
                 </thead>
@@ -50,23 +50,33 @@
                                 <td>{{ $assigndetail->assigncompany->company_name }}</td>
                                 <td>{{ $assigndetail->employee->name }}</td>
                                 <td>{{ $assigndetail->form->form_name }}</td>
-                                @if ($assigndetail->assign != NULL)
-                                    <td>Assigned</td>
-                                @else
-                                    <td>Not Assigned</td>
+                                @if (isset($assigndetail->assign))
+                                    @if ($assigndetail->assign == 0)
+                                   
+                                        <td>
+                                        <a class="btn btn-success" href="{{ route('assign-form-details',[$assigndetail->id]) }}" class="btn btn-xs btn-success">
+                                        Assigned</a>
+                                        </td>
+                                    @else 
+                                        <td>Assigned</td>
+                                    @endif
+                                @else <td>Not Assigned</td>
                                 @endif
-                                @if ($assigndetail->forward != NULL)
-                                    <td>Forwared</td>
-                                @else
-                                    <td>Not Forwared</td>
+                                @if (isset($assigndetail->forward))
+                                <td>
+                                <a class="btn btn-success" href="{{ route('forward-show',[$assigndetail->id]) }}" class="btn btn-xs btn-success">
+                                Forwarded</a>
+                                </td>
+                                @else <td>Not Forwarded</td>
                                 @endif
+                                
                                 <td>{{ $assigndetail->message }}</td>
                                 <td>{!! \Carbon\Carbon::parse($assigndetail->created_at)->format('d M Y') !!}</td>
-                                <td>
+                                <!-- <td>
                                     <a class="btn btn-success" href="{{ route('assign-form-details',[$assigndetail->id]) }}" class="btn btn-xs btn-success">
                                 Details</a>
                                  
-                                </td>
+                                </td> -->
                                 
                             </tr>
                         @endforeach

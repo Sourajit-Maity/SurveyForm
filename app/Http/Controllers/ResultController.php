@@ -192,12 +192,12 @@ class ResultController extends Controller
         $companylogo = Company::where('id',Auth::user()->company_id)->value('logo');
 
         $companyname = Company::where('id',Auth::user()->company_id)->value('company_name');
+        $message= AssignResult::where('assign_company_id',$id)->value('message');
+        //dd($allquestion);
 
-        //dd($materialdetails);
-
-       return view('report.myreport',compact('reportdetails', 'allquestion', 'materialdetails', 'formid', 'companylogo', 'companyname', 'assigner_name', 'assigner_company_name', 'form_name', 'assign_date', 'submission_date'))
+       return view('report.myreport',compact('reportdetails','message', 'allquestion', 'materialdetails', 'formid', 'companylogo', 'companyname', 'assigner_name', 'assigner_company_name', 'form_name', 'assign_date', 'submission_date'))
            ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
-    }
+    } 
 
     /**
      * Show the form for editing the specified resource.
