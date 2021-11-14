@@ -16,13 +16,13 @@ use Illuminate\Support\Facades\Auth;
 
 class AssignCompanyController extends Controller
 {
-    function __construct()
-    {
-         $this->middleware('permission:assign-list|assign-create|assign-edit|assign-delete', ['only' => ['index','show']]);
-         $this->middleware('permission:assign-create', ['only' => ['create','store']]);
-         $this->middleware('permission:assign-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:assign-delete', ['only' => ['destroy']]);
-    }
+    // function __construct()
+    // {
+    //      $this->middleware('permission:assign-list|assign-create|assign-edit|assign-delete', ['only' => ['index','show']]);
+    //      $this->middleware('permission:assign-create', ['only' => ['create','store']]);
+    //      $this->middleware('permission:assign-edit', ['only' => ['edit','update']]);
+    //      $this->middleware('permission:assign-delete', ['only' => ['destroy']]);
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -249,6 +249,14 @@ class AssignCompanyController extends Controller
     }
 
     public function myinfodetails(){
+
+
+        $assigndetails = AssignCompany::where('user_id',Auth::user()->id)->with('company','assigncompany','form','employee','assignuser','assignresult','forwardmessage')->get();
+        //dd($assigndetails);
+        return view('assigncompany.myinfodetails',compact('assigndetails'))->with('i', (request()->input('page', 1) - 1) * 5);
+    }
+
+    public function assignformdetails($id){
 
 
         $assigndetails = AssignCompany::where('user_id',Auth::user()->id)->with('company','assigncompany','form','employee','assignuser','assignresult','forwardmessage')->get();

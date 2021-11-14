@@ -72,7 +72,25 @@ class FormController extends Controller
      */
     public function show(Form $form)
     {
-        return view('form.show',compact('form'));
+ 
+
+        $formid = $form->id;
+        
+        $forms = Form::get();
+        $allquestion = Question::where('form_id', $formid)->get();
+
+        for ($y = 0; $y < count($allquestion); $y++) {
+            $alloption = Option::where('question_id', $allquestion[$y]->question_id)
+            ->where('option', '!=', 'undefined')
+            ->where('child_id', '!=', 'undefined')
+            ->where('number', '!=', 'undefined')
+            ->where('message', '!=', 'undefined')
+            ->get();
+            $allquestion[$y]['options'] = $alloption;         
+        }
+
+        return view('form.show',compact('forms','allquestion')); 
+    
     }
 
     /**
