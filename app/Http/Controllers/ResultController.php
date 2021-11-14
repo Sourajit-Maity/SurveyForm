@@ -88,19 +88,19 @@ class ResultController extends Controller
        $inputs = $request->json()->all();
 
        $question_result = $inputs['question_result'];
-       //Log::debug("qwerty".print_r($inputs,true));
+       Log::debug("qwerty".print_r($inputs,true));
 
        $materialresult = new MaterialResult();
        $materialresult->company_id= $inputs['start_form']['company_id'];
        $materialresult->material_code= $inputs['start_form']['material_code'];
        $materialresult->product_name= $inputs['start_form']['product_name'];
-       $materialresult->form_id= $inputs['start_form']['company_id'];
+       $materialresult->form_id= $question_result[0]['formid'];
        $materialresult->package= $inputs['start_form']['package'];
        $materialresult->market= $inputs['start_form']['market'];
        $materialresult->location= $inputs['start_form']['location'];
        $materialresult->percentage= $inputs['start_form']['percentage'];
-       $materialresult->company_name= $question_result[0]['ResultId'];
-       $materialresult->result_id= $inputs['start_form']['company_id'];
+       $materialresult->result_id= $question_result[0]['ResultId'];
+       $materialresult->company_name= $inputs['start_form']['company_id'];
        $materialresult->user_name= Auth::user()->name;
        $materialresult->user_email= Auth::user()->email;
        $materialresult->user_id= Auth::user()->id;       
