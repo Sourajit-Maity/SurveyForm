@@ -46,9 +46,9 @@ return [
     */
 
     // 'logo' => '<b>IRA Education</b>',
-    'logo_img' => 'assets/logos/logo.jpg',
+    'logo_img' => 'assets/logos/logo.png',
     'logo_img_class' => 'brand-image',
-    'logo_img_xl' => 'assets/logos/logo.jpg',
+    'logo_img_xl' => 'assets/logos/logo.png',
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => 'OptitaxConsultants',
 
