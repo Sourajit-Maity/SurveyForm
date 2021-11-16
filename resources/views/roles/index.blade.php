@@ -64,6 +64,9 @@
                     @endif
                 </tbody>
             </table>
+            <div class="d-flex justify-content-center">
+                {!! $roleparents->links() !!}
+            </div>
         </div>
 
     </div>

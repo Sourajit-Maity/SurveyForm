@@ -39,9 +39,9 @@ class UserController extends Controller
 
         $data = User::select('users.name','spoc','user_image','reporting_to_name','users.email','users.id','users.email','companies.company_name')->
         join('companies', 'users.company_id', '=', 'companies.id')
-        ->orderBy('id','DESC')->paginate(15);
+        ->orderBy('id','DESC')->paginate(5);
         return view('users.index',compact('data'))
-            ->with('i', ($request->input('page', 1) - 1) * 15);
+            ->with('i', ($request->input('page', 1) - 1) * 5);
     }
     else{
         
