@@ -153,11 +153,12 @@ class UserController extends Controller
         ]);
     
         $input = $request->all();
-        if(!empty($input['password'])){ 
-            $input['password'] = Hash::make($input['password']);
-        }else{
-            $input = Arr::except($input,array('password'));    
-        }
+
+        // if(!empty($input['password'])){ 
+        //     $input['password'] = Hash::make($input['password']);
+        // }else{
+        //     $input = Arr::except($input,array('password'));    
+        // }
     
         $user = User::find($id);
         
@@ -165,13 +166,14 @@ class UserController extends Controller
             $fileName = time().'.'.$request->user_image->extension();  
             $request->user_image->move(public_path('/assets/images/'), $fileName);
             
-            $user->user_image= $fileName;
-            //dd($user->user_image);
+            $input['user_image'] = $fileName;
+           // $fileName =  $input['user_image'];
+            //dd($input['user_image']);
           }
       
-         $user->update();
+         //$user->update();
 
-       // $user->update($input);
+        $user->update($input);
 
 
         DB::table('model_has_roles')->where('model_id',$id)->delete();

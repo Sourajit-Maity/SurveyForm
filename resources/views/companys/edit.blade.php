@@ -132,8 +132,7 @@
                             <label for="company_details" class="col-md-4 col-form-label text-md-right">{{ __('Company Details') }}</label><span style="color:red"> *</span>
 
                             <div class="col-md-6">
-                            <textarea class="form-control" style="height:150px" name="company_details" value="{{ $company->company_details }}"></textarea>
-
+                            <textarea class="form-control" style="height:150px" name="company_details" value="{{ $company->company_details }}">{{ $company->company_details }}</textarea>
                                 @error('company_details')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

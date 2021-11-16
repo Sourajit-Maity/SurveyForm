@@ -58,7 +58,7 @@
 
                                 </div>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12">
+                        <!-- <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
                                 <strong>Password:</strong>
                                 {!! Form::password('password', array('placeholder' => 'Password','class' => 'form-control')) !!}
@@ -69,7 +69,7 @@
                                 <strong>Confirm Password:</strong>
                                 {!! Form::password('confirm-password', array('placeholder' => 'Confirm Password','class' => 'form-control')) !!}
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
                                 <strong>Role:</strong>

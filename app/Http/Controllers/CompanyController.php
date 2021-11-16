@@ -116,10 +116,10 @@ class CompanyController extends Controller
         if ($request->hasFile('logo')) {
             $fileName = time().'.'.$request->logo->extension();  
             $request->logo->move(public_path('/assets/logos/'), $fileName);
-            $company->logo= $fileName;
+            $input['logo']= $fileName;
           }
       
-          $company->update();
+          $company->update($input);
  
         return redirect()->route('companys.index')
                         ->with('success','Company updated successfully');
