@@ -87,19 +87,20 @@
                                     <!-- {!! Form::checkbox('spoc',$user->spoc, false, array('placeholder' => 'Spoc','class' => 'form-control')) !!} -->
                                 <!-- </div>
                         </div> --> 
-                        <!-- <div class="form-group row">
+                        <div class="form-group row">
                             <label for="user_image" class="col-md-4 col-form-label text-md-right">{{ __('User Profile Picture') }}</label><span style="color:red"> *</span>
 
                             <div class="col-md-6">
-                                <input id="user_image" type="file" value="{{ $user->user_image }}" class="form-control @error('user_image') is-invalid @enderror" name="user_image" value="{{ old('user_image') }}"  autocomplete="user_image">
+                                <input id="user_image" type="file" class="form-control @error('user_image') is-invalid @enderror" name="user_image" value="{{ old('user_image') }}"  autocomplete="user_image">
                                 <img src="{{url('assets/images')}}/{{$user->user_image}}" width="100" class="img-circle img-left">
+
                                 @error('user_image')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
-                        </div> -->
+                        </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>

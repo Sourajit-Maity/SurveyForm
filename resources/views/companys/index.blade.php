@@ -87,7 +87,9 @@
                         @endif
                     </tbody>
         </table>
-
+            <div class="d-flex justify-content-center">
+                {!! $companys->links() !!}
+            </div>
             </div>
         </div>
     </div>

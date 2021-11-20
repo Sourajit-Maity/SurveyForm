@@ -160,16 +160,18 @@ class UserController extends Controller
         }
     
         $user = User::find($id);
-
-        // if ($request->hasFile('user_image')) {
-        //     $fileName = time().'.'.$request->user_image->extension();  
-        //     $request->user_image->move(public_path('/assets/images/'), $fileName);
-        //     $user->user_image= $fileName;           
-        //   }
+        
+        if ($request->hasFile('user_image')) {
+            $fileName = time().'.'.$request->user_image->extension();  
+            $request->user_image->move(public_path('/assets/images/'), $fileName);
+            
+            $user->user_image= $fileName;
+            //dd($user->user_image);
+          }
       
-         // $company->update($request->all());
+         $user->update();
 
-        $user->update($input);
+       // $user->update($input);
 
 
         DB::table('model_has_roles')->where('model_id',$id)->delete();

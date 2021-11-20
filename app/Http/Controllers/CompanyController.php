@@ -21,9 +21,9 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companys = Company::latest()->paginate(5);
+        $companys = Company::latest()->paginate(15);
         return view('companys.index',compact('companys'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+            ->with('i', (request()->input('page', 1) - 1) * 15);
     }
 
     /**
@@ -113,15 +113,14 @@ class CompanyController extends Controller
         ]);
         $input = $request->all();
 
-        // if ($request->hasFile('logo')) {
-        //     $fileName = time().'.'.$request->logo->extension();  
-        //     $request->logo->move(public_path('/assets/logos/'), $fileName);
-        //     $company->logo= $fileName;
-        //   }
+        if ($request->hasFile('logo')) {
+            $fileName = time().'.'.$request->logo->extension();  
+            $request->logo->move(public_path('/assets/logos/'), $fileName);
+            $company->logo= $fileName;
+          }
       
-          $company->update($input);
-      
-    
+          $company->update();
+ 
         return redirect()->route('companys.index')
                         ->with('success','Company updated successfully');
     }

@@ -496,9 +496,9 @@
 					$("#result-view .card-body #qt_content").append(result); 
 				}	
 			}
-
+			var msg = {!! json_encode($message) !!};
 			var result2 = '<div class="form-group"><label>User Comments:</label>';
-			result2 += '<textarea class="form-control" id="comment" rows="3" placeholder="Comment here" disabled>hello</textarea></div>';
+			result2 += '<textarea class="form-control" id="comment" rows="3" placeholder="Comment here" disabled>'+msg+'</textarea></div>';
 			$("#result-view .card-body #qt_content").append(result2); 
 
 			$('#result-view').css("display","block");

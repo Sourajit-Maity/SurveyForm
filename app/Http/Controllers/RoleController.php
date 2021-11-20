@@ -36,7 +36,7 @@ class RoleController extends Controller
     {
         $roles = Role::orderBy('id','DESC')->get();
         $roleparents = RoleParent::orderBy('id','DESC')->with('company','parent','roles')->paginate(5);    
-        return view('roles.index',compact('roles','roleparents')); 
+        return view('roles.index',compact('roles','roleparents'))->with('i', ($request->input('page', 1) - 1) * 5); 
                        
     }
     

@@ -72,7 +72,24 @@ class FormController extends Controller
      */
     public function show(Form $form)
     {
-        return view('form.show',compact('form'));
+ 
+
+        $id = $form->id;
+        
+        $q_id = Question::where('form_id', $id)->value('id');
+
+        $company_id = Auth::user()->company_id;
+        $user_name = Auth::user()->name;
+        $user_email = Auth::user()->email;
+        $company_name = Company::where('id',$company_id)->value('company_name');
+        $company_logo = Company::where('id',$company_id)->value('logo');
+        
+       
+        $allquestion = Question::where('form_id','=',$id)->where('question_type','=','master')->get();
+        $questions = Question::get(); 
+        $formid = Question::where('id', $q_id)->value('form_id');
+       
+        return view ('form.show',compact('questions','formid','allquestion','company_logo','formid','company_name','company_id','user_name','user_email'));
     }
 
     /**
