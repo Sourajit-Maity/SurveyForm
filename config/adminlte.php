@@ -282,7 +282,7 @@ return [
             'text' => 'Question',
            // 'can' => ['isAdmin'],
             'url'  => 'question',
-            'active' => ['question', 'question*'],
+            'active' => ['question', 'question*', 'assign-form-show*'],
             'icon' => 'nav-icon fas fa-fw fa-question-circle',
         ],
         [
@@ -305,7 +305,7 @@ return [
         [
             'text' => 'Assigned/Forward Info',
             'url'  => 'my-info-details',
-            'icon' => 'nav-icon fas fa-fw fa-cog',
+            'icon' => 'nav-icon fas fa-fw fa-retweet',
         ],
         
         // [
