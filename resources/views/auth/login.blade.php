@@ -28,8 +28,8 @@
 					<div class="wrap d-md-flex">
 						<div class="img" >
                         <p>
-                        <h4>HRMS</h4>
-                        <h5>Reactive Question</h5>
+                        <h4>Optitax’s Consultants</h4>
+                        <h5>Survey Forms</h5> 
                         Hyderabad 501301
                         </p>
                         <p>
