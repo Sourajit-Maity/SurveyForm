@@ -32,7 +32,7 @@ class QuestionController extends Controller
     public function index()
     {
         $questions
-         = Question::where('question_type','=','master')->where('deleted_at',NULL) ->whereNotNull('form_id')->with(['form'])->latest()->get();
+         = Question::where('question_type','=','master')->where('deleted_at',NULL) ->whereNotNull('form_id')->with(['form'])->latest()->paginate(5);
         return view('question.index',compact('questions'))
             ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     }
@@ -81,7 +81,7 @@ class QuestionController extends Controller
              'form_id' => $value['form_id'],
              'question_type' => $value['question_type'],
              'question' => $value['question'],
-             //'options' => $value['options'],
+              'created_id' => Auth::user()->id,
              'question_id' => $value['question_id'],
  
              ]);

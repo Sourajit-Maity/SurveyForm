@@ -81,7 +81,9 @@
                         @endif
                     </tbody>
         </table>
-
+            <div class="d-flex justify-content-center">
+                {!! $form->links() !!}
+            </div>
             </div>
         </div>
     </div>
