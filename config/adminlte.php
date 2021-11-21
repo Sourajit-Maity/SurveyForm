@@ -272,7 +272,7 @@ return [
             'icon' => 'nav-icon fas fa-fw fa-id-badge',
         ],
         [
-            'text' => 'Forms',
+            'text' => 'Survey Forms',
            // 'can' => ['Admin'],
             'url'  => 'form',
             'active' => ['form', 'form*', 'view-question-forms*'],
