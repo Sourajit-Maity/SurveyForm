@@ -46,6 +46,12 @@
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <strong>Phone:</strong>
+                                    {!! Form::text('phone_number', null, array('placeholder' => 'Phone Number','class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
                                 <strong>Company:</strong>
                                 {!! Form::select('company_id', $company,$usercompany, array('class' => 'form-control')) !!}

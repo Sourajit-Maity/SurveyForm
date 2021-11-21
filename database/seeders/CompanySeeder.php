@@ -17,8 +17,7 @@ class CompanySeeder extends Seeder
         $company = Company::create([
             'company_name' => 'Ira India Pvt Ltd', 
             'res_company_name' => 'ira', 
-            'tax_id' => '123456',
-            'email' => 'ira@gmail.com',
+            'website_name' => 'ira.com',
             'phone' => '1234567890', 
             'address' => 'Hyderabad', 
             'gst_no' => '123456',

@@ -81,7 +81,7 @@ class QuestionController extends Controller
              'form_id' => $value['form_id'],
              'question_type' => $value['question_type'],
              'question' => $value['question'],
-             //'options' => $value['options'],
+              'created_id' => Auth::user()->id,
              'question_id' => $value['question_id'],
  
              ]);

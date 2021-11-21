@@ -55,7 +55,7 @@ class FormController extends Controller
     {
         request()->validate([
             'form_name' => 'required',
-            'emp_id' => 'required',
+            'created_id' => 'required',
         ]);
     
         Form::create($request->all());
@@ -114,7 +114,7 @@ class FormController extends Controller
     {
          request()->validate([
             'form_name' => 'required',
-            'emp_id' => 'required',
+            'updated_id' => 'required',
         ]);
     
         $form->update($request->all());

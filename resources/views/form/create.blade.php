@@ -37,7 +37,7 @@
 
                             <div class="col-md-6">
                                 <input id="form_name" type="text" class="form-control @error('form_name') is-invalid @enderror" name="form_name" value="{{ old('form_name') }}" required autocomplete="form_name">
-                                <input id="emp_id" type="hidden" class="form-control @error('emp_id') is-invalid @enderror" name="emp_id" value="{{ Auth::user()->id }}" required autocomplete="emp_id">
+                                <input id="created_id" type="hidden" class="form-control @error('created_id') is-invalid @enderror" name="created_id" value="{{ Auth::user()->id }}" required autocomplete="created_id">
 
                                 @error('form_name')
                                     <span class="invalid-feedback" role="alert">

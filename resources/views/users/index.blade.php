@@ -29,14 +29,18 @@
       <table class="table table-bordered table-striped {{ count($data) > 0 ? 'datatable' : '' }} pointer">
         <thead>
           <tr>
-            <th>No</th>
+            <!-- <th>No</th> -->
             <th>Profile Picture</th>
             <th>Name</th>
-            <th>Company Name</th>
-            <th>Company SPOC</th>
+            <th>Designation</th>
             <th>Reporting To Name</th>
+            <th>Phone</th>
             <th>Email</th>
-            <th>Roles</th>
+            <th>Company Name</th>
+            <!-- <th>Company SPOC</th> -->
+            
+            
+            
             <th width="280px">Action</th> 
           </tr>
         </thead>  
@@ -45,25 +49,13 @@
           @if (count($data) > 0)
             @foreach ($data as $key => $user)
               <tr>
-                <td>{{ ++$i }}</td>
+                <!-- <td>{{ ++$i }}</td> -->
                 @if (isset($user->user_image))
                   <td><img src="{{url('assets/images')}}/{{$user->user_image}}" width="100" class="img-circle img-left"></td>
                 @else 
                   <td><img src="assets/images/dummy.png" width="100" class="img-circle img-left"></td>
                 @endif
                 <td>{{ $user->name }}</td>
-                <td>{{ $user->company_name }}</td>
-                @if($user->spoc =='1') 
-                  <td>Company SPOC</td>
-                @else 
-                  <td></td>
-                @endif
-                @if (isset($user->reporting_to_name))
-                  <td>{{ $user->reporting_to_name }}</td>
-                @else 
-                  <td></td>
-                @endif
-                <td>{{ $user->email }}</td>
                 <td>
                   @if(!empty($user->getRoleNames()))
                     @foreach($user->getRoleNames() as $v)
@@ -71,12 +63,34 @@
                     @endforeach
                   @endif
                 </td>
+                @if (isset($user->reporting_to_name))
+                  <td>{{ $user->reporting_to_name }}</td>
+                @else 
+                  <td></td>
+                @endif
+                <td>{{ $user->phone_number }}</td> 
+                <td>{{ $user->email }}</td> 
+                <td>{{ $user->company_name }}</td>
+                <!-- @if($user->spoc =='1') 
+                  <td>Company SPOC</td>
+                @else 
+                  <td></td>
+                @endif -->
+               
+                
+               
                 <td>
                   <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Show</a>
+                  @can('users-edit')
                   <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
+                  @endcan
+                  @csrf
+                  @method('DELETE')
+                  @can('company-delete')
                     {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
                         {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
                     {!! Form::close() !!}
+                  @endcan
                 </td>
               </tr>
             @endforeach

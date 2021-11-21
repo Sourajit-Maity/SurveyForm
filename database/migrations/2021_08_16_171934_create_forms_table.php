@@ -16,8 +16,8 @@ class CreateFormsTable extends Migration
         Schema::create('forms', function (Blueprint $table) {
             $table->id();
             $table->string('form_name');
-            $table->foreignId('emp_id')->nullable()->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('form_forwarded_by_id')->nullable()->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('created_id')->nullable()->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('updated_id')->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->boolean('active')->default(false);
             $table->timestamps();
         });

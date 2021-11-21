@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends Controller
 {
@@ -21,9 +22,28 @@ class CompanyController extends Controller
      */
     public function index()
     {
+        $currentuserid = Auth::user()->id;
+
+    $emp_comp_id = User::where('users.id',$currentuserid)->value('company_id');
+
+    //$comp_id = Company::where('companies.id',$emp_comp_id)->value('id');
+
+  
+    //Log::debug("ids".print_r($comp_id,true));
+    if(Auth::user()->id == 1) {
+
         $companys = Company::latest()->paginate(15);
         return view('companys.index',compact('companys'))
             ->with('i', (request()->input('page', 1) - 1) * 15);
+    }
+    else{
+        
+        $companys = Company::where('id',$emp_comp_id)->paginate(15);
+        return view('companys.index',compact('companys'))
+            ->with('i', (request()->input('page', 1) - 1) * 15);
+
+    }
+        
     }
 
     /**
@@ -47,13 +67,6 @@ class CompanyController extends Controller
     {
         request()->validate([
             'company_name' => 'required',
-            'res_company_name' => 'required',
-            'tax_id' => 'required',
-            'email' => 'required',
-            'gst_no' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
-            'logo' => 'required',
         ]);
     
        
@@ -103,12 +116,6 @@ class CompanyController extends Controller
     {
          request()->validate([
             'company_name' => 'required',
-            'res_company_name' => 'required',
-            'tax_id' => 'required',
-            'gst_no' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
            
         ]);
         $input = $request->all();
