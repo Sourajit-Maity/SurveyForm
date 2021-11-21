@@ -15,14 +15,17 @@ class CompanySeeder extends Seeder
     public function run()
     {
         $company = Company::create([
-            'company_name' => 'Ira India Pvt Ltd', 
-            'res_company_name' => 'ira', 
-            'tax_id' => '123456',
-            'email' => 'ira@gmail.com',
+            'company_name' => 'Optitax’s Consultants', 
+            'res_company_name' => 'optx', 
+            'website_name' => 'optx.com',
             'phone' => '1234567890', 
             'address' => 'Hyderabad', 
             'gst_no' => '123456',
-            'company_details' => 'ira details',
+            'company_details' => 'Vision- To deliver best-in-class services with customized solutions at affordable prices
+
+            Mission- To nurture a knowledge-building work culture by encouraging associates to grow on focussed forefronts
+            
+            Values- commitment, integrity',
             'logo' => 'logo.png',
         ]);
     }

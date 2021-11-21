@@ -42,6 +42,11 @@
                             <th>No</th>
 
                             <th>Form Name</th>
+                            <th>Created By</th>
+                            <th>Created On</th>
+                            <th>Modified By</th>
+                            <th>Modified On</th>
+                            
 
                             <th width="280px">Action</th>
                         </tr>
@@ -53,6 +58,16 @@
                                 <tr data-entry-id="h">
                                     <td>{{ ++$i }}</td>
                                     <td>{{ $forms->form_name }}</td>
+                                    <td>{{ $forms->createdby->name }}</td>
+                                    <td>{!! \Carbon\Carbon::parse($forms->created_at)->format('d M Y') !!}</td>
+                                    @if (isset($forms->updated_id))
+                                    <td>{{ $forms->updatedby->name }}</td>
+                                    @else <td></td>
+                                    @endif
+                                    
+                                    <td>{!! \Carbon\Carbon::parse($forms->updated_at)->format('d M Y') !!}</td>
+
+
                                     
                                     <td>
                                         <form action="{{ route('form.destroy',$forms->id) }}" method="POST">

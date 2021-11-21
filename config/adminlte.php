@@ -260,12 +260,6 @@ return [
             'icon' => 'nav-icon fas fa-fw fa-building',
         ],
         [
-            'text' => 'Users',
-            'url'  => 'users',
-            'active' => ['users', 'users*'],
-            'icon' => 'nav-icon fas fa-fw fa-users',
-        ],
-        [
             'text' => 'Designation',
             'url'  => 'roles',
             'active' => ['roles', 'roles*'],

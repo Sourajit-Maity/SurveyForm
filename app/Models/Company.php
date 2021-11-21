@@ -10,7 +10,7 @@ class Company extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'company_name', 'res_company_name', 'tax_id', 'email', 'phone',
+        'company_name', 'res_company_name', 'website_name', 'phone',
         'address', 'logo', 'gst_no','company_details'
     ];
 
@@ -29,6 +29,7 @@ class Company extends Model
     public function comments(){
      return $this->hasMany(AssignMessage::class);
  }
+ 
  public function forwardmessage()
     {
          return $this->hasOne(ForwardMessage::class);

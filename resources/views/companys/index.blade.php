@@ -37,11 +37,11 @@
                     <thead>
                         <tr>
                             <!-- <th style="text-align:center;"><input type="checkbox" id="select-all" /></th> -->
-                            <th>No</th>
+                            <!-- <th>No</th> -->
                             <th>Company Logo</th>
                             <th>Company Name</th>
                             <th>GST No.</th>
-                            <th>Email</th>
+                            <th>Website Name</th>
                             <th>Phone</th>
                             <th width="280px">Action</th>
                         </tr>
@@ -51,14 +51,16 @@
                         @if (count($companys) > 0)
                             @foreach ($companys as $company)
                                 <tr data-entry-id="h">
-                                    <td>{{ ++$i }}</td>
+                                    <!-- <td>{{ ++$i }}</td> -->
                                     @if (isset($company->logo))
                                     <td><img src="{{url('assets/logos')}}/{{$company->logo}}" width="100" class="img-circle img-left"></td>
-                                    @else <td></td>
+                                    @else 
+                                    <td><img src="assets/images/dummy.png" width="100" class="img-circle img-left"></td>
+                                  
                                     @endif
-                                    <td>{{ $company->company_name }}</td>
+                                    <td> <a href="{{ route('get-company-user',$company->id) }}">{{ $company->company_name }}</a> </td>
                                     <td>{{ $company->gst_no }}</td>
-                                    <td>{{ $company->email }}</td>
+                                    <td>{{ $company->website_name }}</td>
                                     <td>{{ $company->phone }}</td>
                                     <td>
                                         <form action="{{ route('companys.destroy',$company->id) }}" method="POST">

@@ -12,7 +12,7 @@ class Question extends Model
     use SoftDeletes; 
     
     protected $table = "questions";
-    protected $fillable = ["question_id", "question_type","question","form_id","company_id",'deleted_at'];
+    protected $fillable = ["question_id", "question_type","question","form_id","company_id",'deleted_at','created_id', 'updated_id',];
 
 
     public function form()
@@ -22,6 +22,14 @@ class Question extends Model
     public function option()
     {
          return $this->hasMany(Option::class,'question_id');
+    }
+    public function createdby()
+    {
+         return $this->belongsTo(User::class, 'created_id');
+    }
+    public function updatedby()
+    {
+         return $this->belongsTo(User::class,'updated_id');
     }
 }
 

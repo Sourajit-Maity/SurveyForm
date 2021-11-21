@@ -40,7 +40,7 @@
 
                             <div class="col-md-6">
                                 <input id="form_name" value="{{ $form->form_name }}" type="text" class="form-control @error('form_name') is-invalid @enderror" name="form_name" value="{{ old('form_name') }}" required autocomplete="form_name">
-                                <input id="emp_id" type="hidden" class="form-control @error('emp_id') is-invalid @enderror" name="emp_id" value="{{ Auth::user()->id }}" required autocomplete="emp_id">
+                                <input id="updated_id" type="hidden" class="form-control @error('updated_id') is-invalid @enderror" name="updated_id" value="{{ Auth::user()->id }}" required autocomplete="updated_id">
 
                                 @error('form_name')
                                     <span class="invalid-feedback" role="alert">

@@ -17,6 +17,14 @@ use Illuminate\Support\Facades\Session;
     
 class UserController extends Controller
 {
+
+    function __construct()
+    {
+         $this->middleware('permission:users-list|users-create|users-edit|users-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:users-create', ['only' => ['create','store']]);
+         $this->middleware('permission:users-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:users-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -32,28 +40,39 @@ class UserController extends Controller
     $emp_comp_id = User::where('users.id',$currentuserid)->value('company_id');
 
     $comp_id = Company::where('companies.id',$emp_comp_id)->value('id');
+$role = Auth::user()->getRoleNames(); 
 
-  
+//dd($role);
     //Log::debug("ids".print_r($comp_id,true));
-    if(Auth::user()->company_id == 1) {
+    if($role[0] == 'Director'){
+        if(Auth::user()->company_id == 1) {
 
-        $data = User::select('users.name','spoc','user_image','reporting_to_name','users.email','users.id','users.email','companies.company_name')->
-        join('companies', 'users.company_id', '=', 'companies.id')
-        ->orderBy('id','DESC')->paginate(5);
-        return view('users.index',compact('data'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+            $data = User::select('users.name','spoc','phone_number','user_image','reporting_to_name','users.email','users.id','users.email','companies.company_name')->
+            join('companies', 'users.company_id', '=', 'companies.id')
+            ->orderBy('id','DESC')->paginate(5);
+            return view('users.index',compact('data'))
+                ->with('i', ($request->input('page', 1) - 1) * 5);
+        }
+        else{
+            
+            $data = User::select('users.name','spoc','user_image','phone_number','reporting_to_name','users.email','users.id','users.email','companies.company_name')->
+            join('companies', 'users.company_id', '=', 'companies.id')
+            ->where('users.company_id',$comp_id)
+            ->orderBy('id','DESC')->paginate(5);
+            return view('users.index',compact('data'))
+                ->with('i', ($request->input('page', 1) - 1) * 5);
+    
+        }
+        
     }
     else{
-        
-      
-
-        $data = User::select('users.name','spoc','user_image','reporting_to_name','users.email','users.id','users.email','companies.company_name')->
+        $data = User::select('users.name','spoc','user_image','phone_number','reporting_to_name','users.email','users.id','users.email','companies.company_name')->
         join('companies', 'users.company_id', '=', 'companies.id')
-        ->where('users.company_id',$comp_id)
+        ->where('users.id',$currentuserid)
         ->orderBy('id','DESC')->paginate(5);
         return view('users.index',compact('data'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
-
+            ->with('i', ($request->input('page', 1) - 1) * 5); 
+        
     }
        
     }
@@ -153,11 +172,12 @@ class UserController extends Controller
         ]);
     
         $input = $request->all();
-        if(!empty($input['password'])){ 
-            $input['password'] = Hash::make($input['password']);
-        }else{
-            $input = Arr::except($input,array('password'));    
-        }
+
+        // if(!empty($input['password'])){ 
+        //     $input['password'] = Hash::make($input['password']);
+        // }else{
+        //     $input = Arr::except($input,array('password'));    
+        // }
     
         $user = User::find($id);
         
@@ -165,13 +185,14 @@ class UserController extends Controller
             $fileName = time().'.'.$request->user_image->extension();  
             $request->user_image->move(public_path('/assets/images/'), $fileName);
             
-            $user->user_image= $fileName;
-            //dd($user->user_image);
+            $input['user_image'] = $fileName;
+           // $fileName =  $input['user_image'];
+            //dd($input['user_image']);
           }
       
-         $user->update();
+         //$user->update();
 
-       // $user->update($input);
+        $user->update($input);
 
 
         DB::table('model_has_roles')->where('model_id',$id)->delete();

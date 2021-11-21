@@ -25,6 +25,7 @@ class User extends Authenticatable
         'password',
         'user_image',
         'spoc',
+        'phone_number',
         'reporting_to_name'
     ];
 
@@ -65,5 +66,19 @@ class User extends Authenticatable
     public function forwardmessage()
     {
          return $this->hasOne(ForwardMessage::class);
+    }
+
+    public function formcreatedby(){
+        return $this->hasMany(Form::class);
+    }
+    public function formupdatedby(){
+        return $this->hasMany(Form::class);
+    }
+
+    public function questioncreatedby(){
+        return $this->hasMany(Question::class);
+    }
+    public function questionupdatedby(){
+        return $this->hasMany(Question::class);
     }
 }

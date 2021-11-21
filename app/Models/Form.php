@@ -11,7 +11,7 @@ class Form extends Model
     protected $guarded = [];
     protected $table = 'forms';
     protected $fillable = [
-        'emp_id', 'form_name',
+        'created_id', 'form_name', 'updated_id',
     ];
 
     public function question()
@@ -35,5 +35,14 @@ class Form extends Model
     public function forwardmessage()
     {
          return $this->hasOne(ForwardMessage::class);
+    }
+
+    public function createdby()
+    {
+         return $this->belongsTo(User::class, 'created_id');
+    }
+    public function updatedby()
+    {
+         return $this->belongsTo(User::class, 'updated_id');
     }
 }

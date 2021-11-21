@@ -19,9 +19,10 @@ class CreateQuestionsTable extends Migration
             $table->string('question_id');
             $table->string('question_type');
             $table->longText('question');
-            //$table->longText('options');
             $table->integer('form_id')->nullable();
             $table->integer('company_id')->nullable();
+            $table->foreignId('created_id')->nullable()->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('updated_id')->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

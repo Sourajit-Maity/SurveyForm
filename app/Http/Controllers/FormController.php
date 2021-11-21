@@ -30,7 +30,8 @@ class FormController extends Controller
      */
     public function index()
     {
-        $form = Form::latest()->paginate(5);
+        $form = Form::latest()->with('updatedby','createdby',)->paginate(5);
+        //dd($form);
         return view('form.index',compact('form'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
@@ -55,7 +56,7 @@ class FormController extends Controller
     {
         request()->validate([
             'form_name' => 'required',
-            'emp_id' => 'required',
+            'created_id' => 'required',
         ]);
     
         Form::create($request->all());
@@ -114,7 +115,7 @@ class FormController extends Controller
     {
          request()->validate([
             'form_name' => 'required',
-            'emp_id' => 'required',
+            'updated_id' => 'required',
         ]);
     
         $form->update($request->all());

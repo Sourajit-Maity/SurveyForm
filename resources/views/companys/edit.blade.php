@@ -49,110 +49,62 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="res_company_name" class="col-md-4 col-form-label text-md-right">{{ __('Company short Name') }}</label><span style="color:red"> *</span>
+                            <label for="res_company_name" class="col-md-4 col-form-label text-md-right">{{ __('Company short Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="res_company_name" value="{{ $company->res_company_name }}" type="text" class="form-control @error('res_company_name') is-invalid @enderror" name="res_company_name" value="{{ old('res_company_name') }}" required autocomplete="res_company_name">
+                                <input id="res_company_name" value="{{ $company->res_company_name }}" type="text" class="form-control" name="res_company_name" value="{{ old('res_company_name') }}" required autocomplete="res_company_name">
 
-                                @error('res_company_name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="tax_id" class="col-md-4 col-form-label text-md-right">{{ __('Website Name') }}</label><span style="color:red"> *</span>
+                            <label for="website_name" class="col-md-4 col-form-label text-md-right">{{ __('Website Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="tax_id" type="text" value="{{ $company->tax_id }}" class="form-control @error('tax_id') is-invalid @enderror" name="tax_id" value="{{ old('tax_id') }}" required autocomplete="tax_id">
+                                <input id="website_name" type="text" value="{{ $company->website_name }}" class="form-control" name="website_name" value="{{ old('website_name') }}" required autocomplete="website_name">
 
-                                @error('tax_id')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
                             </div>
                         </div>
                         
                         <div class="form-group row">
-                            <label for="gst_no" class="col-md-4 col-form-label text-md-right">{{ __('GST Number') }}</label><span style="color:red"> *</span>
+                            <label for="gst_no" class="col-md-4 col-form-label text-md-right">{{ __('GST Number') }}</label>
 
                             <div class="col-md-6">
-                                <input id="gst_no" type="text" class="form-control @error('gst_no') is-invalid @enderror" name="gst_no" value="{{ $company->gst_no }}" required autocomplete="gst_no">
-                                <input id="registration_number" value="{{ $company->registration_number }}" type="hidden" class="form-control @error('registration_number') is-invalid @enderror" name="registration_number" value="{{ old('registration_number') }}" required autocomplete="registration_number">
+                                <input id="gst_no" type="text" class="form-control" name="gst_no" value="{{ $company->gst_no }}" required autocomplete="gst_no">
 
-                                @error('gst_no')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Phone Number') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="phone" type="text" value="{{ $company->phone }}" class="form-control" name="phone" value="{{ old('phone') }}" required autocomplete="phone">
+
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label><span style="color:red"> *</span>
+                            <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" value="{{ $company->email }}" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                            <input id="address" type="text" value="{{ $company->address }}" class="form-control" name="address" value="{{ old('address') }}" required autocomplete="address">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Phone Number') }}</label><span style="color:red"> *</span>
+                            <label for="company_details" class="col-md-4 col-form-label text-md-right">{{ __('Company Details') }}</label>
 
                             <div class="col-md-6">
-                                <input id="phone" type="text" value="{{ $company->phone }}" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone">
-
-                                @error('phone')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label><span style="color:red"> *</span>
-
-                            <div class="col-md-6">
-                            <input id="address" type="text" value="{{ $company->address }}" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" required autocomplete="address">
-
-                                @error('address')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="company_details" class="col-md-4 col-form-label text-md-right">{{ __('Company Details') }}</label><span style="color:red"> *</span>
-
-                            <div class="col-md-6">
-                            <textarea class="form-control" style="height:150px" name="company_details" value="{{ $company->company_details }}"></textarea>
-
-                                @error('company_details')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                            <textarea class="form-control" style="height:150px" name="company_details" value="{{ $company->company_details }}">{{ $company->company_details }}</textarea>
+                               
                             </div>
                         </div>
                        
                         <div class="form-group row">
-                            <label for="logo" class="col-md-4 col-form-label text-md-right">{{ __('Logo') }}</label><span style="color:red"> *</span>
+                            <label for="logo" class="col-md-4 col-form-label text-md-right">{{ __('Logo') }}</label>
 
                             <div class="col-md-6">
-                                <input id="logo" type="file" value="{{ $company->logo }}" class="form-control @error('logo') is-invalid @enderror" name="logo" value="{{ old('logo') }}"  autocomplete="logo">
+                                <input id="logo" type="file" value="{{ $company->logo }}" class="form-control" name="logo" value="{{ old('logo') }}"  autocomplete="logo">
                                 <img src="{{url('assets/logos')}}/{{$company->logo}}" width="100" class="img-circle img-left">
-                                @error('logo')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                
                             </div>
                         </div>
                        

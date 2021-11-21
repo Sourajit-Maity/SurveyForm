@@ -39,12 +39,12 @@
                         <tr>
                             <!-- <th style="text-align:center;"><input type="checkbox" id="select-all" /></th> -->
                             <th>No</th>
-                            <th> Form Name</th>
-                            <th> Question Type</th>
-                            <th> Question</th>
-                            <!-- <th>Option</th> -->
-                            <th>Question Created on</th>
-                            <th width="280px">Action</th>
+                            <th>Survey Form Name</th>
+                            <th>Question Created By</th>
+                            <th>Question Created On</th>
+                            <th>Question Modified By</th>
+                            <th>Question Modified On</th>
+                            <th width="80px">Action</th>
                         </tr>
                     </thead>
 
@@ -59,11 +59,14 @@
                                          <td></td>
                                     @endif
                                     
-                                    
-                                    <td>{{ $question->question_type }}</td>
-                                    <td>{{ $question->question }}</td>
-                                    <!-- <td>{{ $question->options }}</td> -->
+                                    <td>{{ $question->createdby->name }}</td>
                                     <td>{!! \Carbon\Carbon::parse($question->created_at)->format('d M Y') !!}</td>
+                                    @if (isset($question->updated_id))
+                                    <td>{{ $question->updatedby->name }}</td>
+                                    @else <td></td>
+                                    @endif
+                                    
+                                    <td>{!! \Carbon\Carbon::parse($question->updated_at)->format('d M Y') !!}</td>
                                     <td>
                                         <form action="{{ route('question.destroy',$question->id) }}" method="POST">
                                             <!-- <a class="btn btn-info" href="{{ route('question.show',$question->id) }}">Show</a> -->
