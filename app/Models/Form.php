@@ -39,10 +39,10 @@ class Form extends Model
 
     public function createdby()
     {
-         return $this->belongsTo(User::class,);
+         return $this->belongsTo(User::class, 'created_id');
     }
     public function updatedby()
     {
-         return $this->belongsTo(User::class,);
+         return $this->belongsTo(User::class, 'updated_id');
     }
 }

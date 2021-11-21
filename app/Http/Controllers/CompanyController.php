@@ -93,6 +93,13 @@ class CompanyController extends Controller
         return view('companys.show',compact('company'));
     }
 
+    public function getCompanyUser( $id)
+    {
+        
+        $companyusers = User::where('company_id',$id)->paginate(15);
+        return view('companys.get-company-user',compact('companyusers'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
