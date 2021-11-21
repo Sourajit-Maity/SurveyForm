@@ -58,7 +58,7 @@
                                     <td><img src="assets/images/dummy.png" width="100" class="img-circle img-left"></td>
                                   
                                     @endif
-                                    <td>{{ $company->company_name }}</td>
+                                    <td> <a href="{{ route('get-company-user',$company->id) }}">{{ $company->company_name }}</a> </td>
                                     <td>{{ $company->gst_no }}</td>
                                     <td>{{ $company->website_name }}</td>
                                     <td>{{ $company->phone }}</td>

@@ -44,7 +44,7 @@ $role = Auth::user()->getRoleNames();
 
 //dd($role);
     //Log::debug("ids".print_r($comp_id,true));
-    if($role[0] == 'Admin'){
+    if($role[0] == 'Director'){
         if(Auth::user()->company_id == 1) {
 
             $data = User::select('users.name','spoc','phone_number','user_image','reporting_to_name','users.email','users.id','users.email','companies.company_name')->

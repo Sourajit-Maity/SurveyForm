@@ -30,7 +30,8 @@ class FormController extends Controller
      */
     public function index()
     {
-        $form = Form::latest()->paginate(5);
+        $form = Form::latest()->with('updatedby','createdby',)->paginate(5);
+        //dd($form);
         return view('form.index',compact('form'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
