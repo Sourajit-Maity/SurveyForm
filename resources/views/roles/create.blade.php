@@ -30,15 +30,52 @@ $(document).ready(function(){
 
 });
 </script> -->
+<style>
+    .more-less {
+		float: right;
+		color: #047afb;
+	}
+    a:not(.collapsed) .more-less {
+        -webkit-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        -o-transform: rotate(180deg);
+        transform: rotate(180deg);
+        -webkit-transition: all 0.25s ease;
+        -o-transition: all 0.25s ease;
+        transition: all 0.25s ease;
+    }
+    a:is(.collapsed) .more-less {
+        -webkit-transition: all 0.25s ease;
+        -o-transition: all 0.25s ease;
+        transition: all 0.25s ease;
+    }
+
+    .acor-head {
+        background: #f4f6f9 !important;
+    }
+
+    .acor-head a {
+        color: #000 !important;
+    }  
+    
+    .acor-head a:hover {
+        color: #047afb !important;
+        -webkit-transition: all 0.25s ease;
+        -o-transition: all 0.25s ease;
+        transition: all 0.25s ease;
+    } 
+</style>
+
+
 @section('content')
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
             <h2>Create New Role</h2>
         </div>
-        <div class="pull-right">
+        <!-- <div class="pull-right">
             <a class="btn btn-primary" href="{{ route('roles.index') }}"> Back</a>
-        </div>
+        </div> -->
     </div>
 </div>
 
@@ -62,10 +99,17 @@ $(document).ready(function(){
                 <div class="card-body">
 
                     {!! Form::open(array('route' => 'roles.store','method'=>'POST')) !!}
-                    <div class="row">
+                    <div class="row" style="padding: 40px;" >
                         <div class="col-xs-12 col-sm-12 col-md-12">
+                            <strong>
+                            <i class="fas fa-id-badge"></i>
+                                    Role Info
+                            </strong>
+                            <hr>
+
+
                             <div class="form-group">
-                                <strong>Name:</strong>
+                                <strong>Role Name:</strong>
                                 {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
                             </div>
                         </div>
@@ -91,7 +135,7 @@ $(document).ready(function(){
 
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="col-xs-12 col-sm-12 col-md-12 mb-5">
                                 <div class="form-group">
                                     <strong>Reporting Designation:</strong> 
                                     <!-- <select  name="parent_id" id="parent_id" class="form-control @error('parent_id') is-invalid @enderror"  required autocomplete="parent_id">
@@ -109,13 +153,119 @@ $(document).ready(function(){
                             </div>
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
-                                <strong>Permission:</strong>
-                                <br/>
-                                @foreach($permission as $value)
-                                    <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }}
-                                    {{ $value->name }}</label>
-                                <br/>
-                                @endforeach
+                                <strong>
+                                    <i class="fas fa-user-lock"></i>
+                                    Permissions
+                                </strong>
+                                <hr>
+
+                                <div id="accordion" role="tablist" aria-multiselectable="true">
+                                    <div class="card">
+                                        <div class="card-header acor-head">
+                                            <input type="checkbox" value="role" onchange="check(this);">
+                                            <a class="collapsed card-link" data-toggle="collapse" href="#collapseOne">
+                                                Role
+                                                <i class="more-less fas fa-chevron-down"></i>
+                                            </a>
+                                        </div>
+                                        <div id="collapseOne" class="collapse" data-parent="#accordion">
+                                            <div class="card-body">
+                                                @for ($i = 0; $i < 4; $i++)
+                                                    <label>
+                                                    <input type="checkbox" name="permission[]" value="{{$permission[$i]->id}}" id="{{ $permission[$i]->name }}">
+                                                        &nbsp;{{ $permission[$i]->name }}                                                    </label>
+                                                    <br/>
+                                                @endfor
+                                            </div>
+                                        </div>  
+                                    </div>
+
+                                    <div class="card">
+                                        <div class="card-header acor-head">
+                                            <input type="checkbox" value="user" onchange="check(this);">
+                                            <a class="collapsed card-link" data-toggle="collapse" href="#collapse2">
+                                                Users
+                                                <i class="more-less fas fa-chevron-down"></i>
+                                            </a>
+                                        </div>
+                                        <div id="collapse2" class="collapse" data-parent="#accordion">
+                                            <div class="card-body">
+                                                @for ($i = 4; $i < 8; $i++)
+                                                    <label>
+                                                    <input type="checkbox" name="permission[]" value="{{$permission[$i]->id}}" id="{{ $permission[$i]->name }}">
+                                                        &nbsp;{{ $permission[$i]->name }}                                                    </label>
+                                                    <br/>
+                                                @endfor
+                                            </div>
+                                        </div>  
+                                    </div>
+
+
+                                    <div class="card">
+                                        <div class="card-header acor-head">
+                                            <input type="checkbox" value="company" onchange="check(this);">
+                                            <a class="collapsed card-link" data-toggle="collapse" href="#collapse3">
+                                                Company
+                                                <i class="more-less fas fa-chevron-down"></i>
+                                            </a>
+                                        </div>
+                                        <div id="collapse3" class="collapse" data-parent="#accordion">
+                                            <div class="card-body acor-head">
+                                                @for ($i = 8; $i < 12; $i++)
+                                                    <label>
+                                                    <input type="checkbox" name="permission[]" value="{{$permission[$i]->id}}" id="{{ $permission[$i]->name }}">
+                                                        &nbsp;{{ $permission[$i]->name }}                                                    </label>
+                                                    <br/>
+                                                @endfor
+                                            </div>
+                                        </div>  
+                                    </div>
+
+                                    <div class="card">
+                                        <div class="card-header acor-head">
+                                            <input type="checkbox" value="form" onchange="check(this);">
+                                            <a class="collapsed card-link" data-toggle="collapse" href="#collapse4">
+                                                Form
+                                                <i class="more-less fas fa-chevron-down"></i>
+                                            </a>
+                                        </div>
+                                        <div id="collapse4" class="collapse" data-parent="#accordion">
+                                            <div class="card-body">
+                                                @for ($i = 12; $i < 16; $i++)
+                                                    <label>
+                                                    <input type="checkbox" name="permission[]" value="{{$permission[$i]->id}}" id="{{ $permission[$i]->name }}">
+                                                        &nbsp;{{ $permission[$i]->name }}    
+                                                    </label>
+                                                    <br/>
+                                                @endfor
+                                            </div>
+                                        </div>  
+                                    </div>
+
+                                    <div class="card">
+                                        <div class="card-header acor-head">
+                                            <input type="checkbox" value="question" onchange="check(this);">
+                                            <a class="collapsed card-link" data-toggle="collapse" href="#collapse5">
+                                                Question
+                                                <i class="more-less fas fa-chevron-down"></i>
+                                            </a>
+                                        </div>
+                                        <div id="collapse5" class="collapse" data-parent="#accordion">
+                                            <div class="card-body">
+                                                @for ($i = 16; $i < 20; $i++)
+                                                    <label>
+                                                        <input type="checkbox" name="permission[]" value="{{$permission[$i]->id}}" id="{{ $permission[$i]->name }}">
+                                                        &nbsp;{{ $permission[$i]->name }}
+                                                    </label>
+                                                    <br/>
+                                                @endfor
+                                            </div>
+                                        </div>  
+                                    </div>
+                                    
+                                    
+                                </div>
+  
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
@@ -128,5 +278,29 @@ $(document).ready(function(){
         </div>
     </div>
 </div>
+
+<script>
+    function check(obj){
+        var value = $(obj).val();
+
+        if(value == 'user'){
+            value = 'users';
+        }
+        console.log(value);
+        
+        if ($(obj).is(":checked")) {
+            $('#'+value+'-list').prop('checked',true);
+            $('#'+value+'-create').prop('checked',true);
+            $('#'+value+'-edit').prop('checked',true);
+            $('#'+value+'-delete').prop('checked',true);
+        } else {
+            $('#'+value+'-list').prop('checked',false);
+            $('#'+value+'-create').prop('checked',false);
+            $('#'+value+'-edit').prop('checked',false);
+            $('#'+value+'-delete').prop('checked',false);
+        }
+    }
+    
+</script>
 
 @stop

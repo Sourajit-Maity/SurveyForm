@@ -256,7 +256,7 @@ return [
         [
             'text' => 'Company',
             'url'  => 'companys',
-            'active' => ['companys', 'companys*'],
+            'active' => ['companys', 'companys*', 'get-company-user*'],
             'icon' => 'nav-icon fas fa-fw fa-building',
         ],
         [
@@ -264,6 +264,12 @@ return [
             'url'  => 'roles',
             'active' => ['roles', 'roles*'],
             'icon' => 'nav-icon fas fa-fw fa-id-badge',
+        ],
+        [
+            'text' => 'Users',
+            'url'  => 'users',
+            'active' => ['users', 'users*'],
+            'icon' => 'nav-icon fas fa-fw fa-user',
         ],
         [
             'text' => 'Survey Forms',

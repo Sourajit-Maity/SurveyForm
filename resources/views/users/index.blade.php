@@ -7,6 +7,16 @@
     <h1>Users Management</h1>
 @stop
 
+<style>
+  .spoc {
+    box-shadow: 0px 0px 30px #ffc107;
+    border: 5px solid #ffc107;
+  }
+  div.dataTables_wrapper div.dataTables_length select {
+    width: 50px;
+  }
+
+</style>
 
 <div class="card card-default">
   <div class="card-body">
@@ -26,7 +36,7 @@
 
     <div class="table-responsive dataTables_wrapper dt-bootstrap4">
       <br>
-      <table class="table table-bordered table-striped {{ count($data) > 0 ? 'datatable' : '' }} pointer">
+      <table id="myTable" class="table table-bordered table-striped {{ count($data) > 0 ? 'datatable' : '' }} pointer">
         <thead>
           <tr>
             <!-- <th>No</th> -->
@@ -51,9 +61,17 @@
               <tr>
                 <!-- <td>{{ ++$i }}</td> -->
                 @if (isset($user->user_image))
-                  <td><img src="{{url('assets/images')}}/{{$user->user_image}}" width="100" class="img-circle img-left"></td>
+                  @if($user->spoc =='1')
+                    <td><img src="{{url('assets/images')}}/{{$user->user_image}}" width="100" class="img-circle img-left spoc"></td>
+                  @else
+                    <td><img src="{{url('assets/images')}}/{{$user->user_image}}" width="100" class="img-circle img-left"></td>
+                  @endif
                 @else 
-                  <td><img src="assets/images/dummy.png" width="100" class="img-circle img-left"></td>
+                  @if($user->spoc =='1')
+                    <td><img src="assets/images/dummy.png" width="100" class="img-circle img-left spoc"></td>
+                  @else
+                    <td><img src="assets/images/dummy.png" width="100" class="img-circle img-left"></td>
+                  @endif  
                 @endif
                 <td>{{ $user->name }}</td>
                 <td>
