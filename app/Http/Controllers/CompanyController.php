@@ -66,7 +66,8 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
         request()->validate([
-            'company_name' => 'required',
+            'company_name' => 'required', 
+            'res_company_name' => 'required',
         ]);
     
        
@@ -123,6 +124,7 @@ class CompanyController extends Controller
     {
          request()->validate([
             'company_name' => 'required',
+            'res_company_name' => 'required',
            
         ]);
         $input = $request->all();

@@ -30,10 +30,13 @@
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
+<br><br>
 <section class="content">
+@if (Auth::user()->company_id ==1)
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
         <div class="row">
+        
           <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box wid-1">
@@ -97,7 +100,7 @@
               <a href="{{ route('form.index') }}" class="small-box-footer" style="color:#000;">More info <i class="fas fa-arrow-circle-right"></i></a>            
           </div>
         </div>
-
+      @endif
           <!-- //2nd  -->
 
       <div class="container-fluid">
@@ -139,7 +142,7 @@
                   <!-- <a href="#" class="btn btn-sm bg-teal">
                     <i class="fas fa-comments"></i>
                   </a> -->
-                  <a href="/companys" class="btn btn-sm btn-primary">
+                  <a href="#" class="btn btn-sm btn-primary">
                     <i class="fas fa-building"></i> View Company
                   </a>
                 </div>
@@ -233,7 +236,7 @@
               </div>
             </section>
           </div>
-
+        @if (Auth::user()->company_id ==1)
           <div class="col-md-6 pull-left">
                 <!-- USERS LIST -->
                 <div class="card">
@@ -295,7 +298,7 @@
                 </div>
               </div>
             </div> 
-           
+           @endif
           
 </section>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
