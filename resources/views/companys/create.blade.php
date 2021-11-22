@@ -46,11 +46,15 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="res_company_name" class="col-md-4 col-form-label text-md-right">{{ __('Company short Name') }}</label>
+                            <label for="res_company_name" class="col-md-4 col-form-label text-md-right">{{ __('Company short Name') }}</label><span style="color:red"> *</span>
 
                             <div class="col-md-6">
-                                <input id="res_company_name" type="text" class="form-control" name="res_company_name" value="{{ old('res_company_name') }}"  autocomplete="res_company_name" maxlength="5">
-
+                                <input id="res_company_name" type="text" class="form-control  @error('res_company_name') is-invalid @enderror" name="res_company_name" value="{{ old('res_company_name') }}" required autocomplete="res_company_name" maxlength="5">
+                                @error('res_company_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
