@@ -58,7 +58,7 @@
                                         Assigned</a>
                                         </td>
                                     @else 
-                                        <td>Assigned</td>
+                                        <td>Assigned But Not Filled</td>
                                     @endif
                                 @else <td>Not Assigned</td>
                                 @endif
