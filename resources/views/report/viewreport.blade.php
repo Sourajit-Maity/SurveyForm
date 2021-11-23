@@ -62,15 +62,5 @@
     </div>
 </div>
 
-
-
-    
-
-
-    <table class="table table-bordered">
-        
-	    
-    </table>
-
-
-    @stop
+@include('layouts.datatable')
+@stop

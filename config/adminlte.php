@@ -257,7 +257,7 @@ return [
             'text' => 'Company',
             'can' => ['isDirector'],
             'url'  => 'companys',
-            'active' => ['companys', 'companys*'],
+            'active' => ['companys', 'companys*', 'get-company-user*'],
             'icon' => 'nav-icon fas fa-fw fa-building',
         ],
         [
@@ -271,8 +271,8 @@ return [
             'text' => 'Users',
             'url'  => 'users',
             'active' => ['users', 'users*'],
-            'icon' => 'nav-icon fas fa-fw fa-users',
-        ],      
+            'icon' => 'nav-icon fas fa-fw fa-user',
+        ],
         [
             'text' => 'Survey Form',
             'can' => ['isDirector'],
@@ -284,7 +284,7 @@ return [
             'text' => 'Question',
             'can' => ['isDirector'],
             'url'  => 'question',
-            'active' => ['question', 'question*'],
+            'active' => ['question', 'question*', 'assign-form-show*'],
             'icon' => 'nav-icon fas fa-fw fa-question-circle',
         ],
         [
@@ -308,7 +308,7 @@ return [
         [
             'text' => 'Assigned/Forward Info',
             'url'  => 'my-info-details',
-            'icon' => 'nav-icon fas fa-fw fa-cog',
+            'icon' => 'nav-icon fas fa-fw fa-retweet',
         ],
         
         // [

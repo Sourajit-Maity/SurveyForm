@@ -28,7 +28,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Company Name</th>
+                        <!-- <th>Company Name</th> -->
                         <th>Assigned Company Name</th>
                         <th>Assigned User</th>
                         <th>Form Name</th>
@@ -46,7 +46,7 @@
                         @foreach ($assigndetails as $assigndetail)
                             <tr data-entry-id="h">
                                 <td>{{ ++$i }}</td>
-                                <td>{{ $assigndetail->company->company_name }}</td>
+                                <!-- <td>{{ $assigndetail->company->company_name }}</td> -->
                                 <td>{{ $assigndetail->assigncompany->company_name }}</td>
                                 <td>{{ $assigndetail->employee->name }}</td>
                                 <td>{{ $assigndetail->form->form_name }}</td>
