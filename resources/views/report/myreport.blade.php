@@ -285,7 +285,9 @@
 
 								<div class="d-flex align-items-center pt-3">
 									<div class="ml-sm-5 noprint-area"> 
-										<button id="download" class="btn btn-block bg-gradient-primary"><i class="fas fa-download"></i>  Download</button> 
+									@if (Auth::user()->id ==1)
+										<button id="download" class="btn btn-block bg-gradient-primary"><i class="fas fa-download"></i>  eDownload</button> 
+									@endif
 									</div>
 									<div class="ml-auto mr-sm-5  noprint-area">
 										<a id="Close" class="btn btn-success" href="/get-report-info">Close</a> 
