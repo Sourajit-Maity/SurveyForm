@@ -73,8 +73,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('my-info-details', [AssignCompanyController::class,'myinfodetails'])->name('my-info-details');
     Route::get('assign-form-details/{id}', [AssignCompanyController::class,'assignformdetails'])->name('assign-form-details');
 
-
-
+    Route::post('result-message-store', [ResultController::class,'resultMessageStore'])->name('result-message-store');
 
 
 

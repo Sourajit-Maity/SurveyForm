@@ -27,11 +27,17 @@ class Company extends Model
          return $this->hasMany(RoleParent::class);
     }
     public function comments(){
-     return $this->hasMany(AssignMessage::class);
- }
+          return $this->hasMany(AssignMessage::class);
+     }
  
- public function forwardmessage()
+     public function forwardmessage()
     {
          return $this->hasOne(ForwardMessage::class);
+    }
+
+    public function reportcompanyname()
+    {
+        
+         return $this->hasMany(ReportMessages::class);
     }
 }

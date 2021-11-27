@@ -16,4 +16,10 @@ class Result extends Model
     {
          return $this->hasOne(AssignResult::class);
     }
+
+    public function reportmessage()
+    {
+        
+         return $this->hasMany(ReportMessages::class);
+    }
 }

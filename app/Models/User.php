@@ -81,4 +81,10 @@ class User extends Authenticatable
     public function questionupdatedby(){
         return $this->hasMany(Question::class);
     }
+
+    public function reportusername()
+    {
+        
+         return $this->hasMany(ReportMessages::class);
+    }
 }

@@ -286,21 +286,21 @@
 
 								<div class="d-flex align-items-center pt-3">
 									@if (Auth::user()->company_id ==1)
-									<div class="ml-sm-4 noprint-area"> 
+									<!-- <div class="ml-sm-4 noprint-area"> 
 									
 										<button id="admin_download" class="btn btn-block bg-gradient-primary"><i class="fas fa-download"></i> Admin Download</button> 
 									
 									</div>
 									<div class="ml-auto mr-sm-4  noprint-area">
 										<button id="user_download" class="btn btn-block bg-gradient-warning"><i class="fas fa-download"></i> User Download</button>
-									</div>
+									</div> -->
 									<div class="ml-auto mr-sm-4  noprint-area">
 										<a id="Close" class="btn btn-success" href="/get-report-info">Close</a> 
 									</div>
 									@else
-									<div class="ml-auto mr-sm-5  noprint-area">
+									<!-- <div class="ml-auto mr-sm-5  noprint-area">
 										<button id="user_download" class="btn btn-block bg-gradient-warning"><i class="fas fa-download"></i> User Download</button>
-									</div>
+									</div> -->
 									<div class="ml-auto mr-sm-5  noprint-area">
 										<a id="Close" class="btn btn-success" href="/get-report-info">Close</a> 
 									</div>
@@ -343,45 +343,81 @@
 							</div>
 						</section>
 
-						<!-- <section class='comments'>
+						@if (Auth::user()->company_id ==1)
+						<section class='pdf noprint-area'>
+							<div class="card card-primary card-outline direct-chat direct-chat-primary">
+								<div class="card-header">
+									<i class="fas fa-file-pdf" style='color:#007bff;'></i>&nbsp;PDF Download
+								</div>
+								<div class="card-body">
+									<div class="mt-3 mb-3" style="width: 90%;margin-left: auto;margin-right: auto;"> 
+									
+										<button id="admin_download" class="btn btn-block bg-gradient-primary"><i class="fas fa-download"></i> Admin Download</button> 
+									
+									</div>
+									<div class="mt-3 mb-3"  style="width: 90%;margin-left: auto;margin-right: auto;">
+										<button id="user_download" class="btn btn-block bg-gradient-warning"><i class="fas fa-download"></i> User Download</button>
+									</div>
+								</div>
+							</div>
+						</section>
+						@endif
+
+						<section class='comments noprint-area'>
 							<div class="card card-primary card-outline direct-chat direct-chat-primary">
 								<div class="card-header">
 									<i class="fas fa-comments" style='color:#007bff;'></i>&nbsp;Comments
 								</div>
-
-								<div class="card-body">
+								
+								<div class="card-body" style="overflow-y: scroll; max-height:400px;">
 									<div class="direct-chat-messages">
-										<div class="direct-chat-msg">
-											<div class="direct-chat-infos clearfix">
-												<span class="direct-chat-name float-left">Alexander Pierce</span>
-												<span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
-											</div>
-									
-											<img class="direct-chat-img" src="">
-									
-											<div class="direct-chat-text">
-												Is this template really for free? That's unbelievable!
-											</div>
-										</div>
+										@foreach ($resultmessage as $message)
+											@if ($message->messageuser->id != Auth::user()->id)
+												<div class="direct-chat-msg">
+													<div class="direct-chat-infos clearfix">
+														<span class="direct-chat-name float-left">{{$message->messageuser->name}}</span>
+														<span class="direct-chat-timestamp float-right">{!! \Carbon\Carbon::parse($message->created_at)->format('d M g:i A') !!}</span>
+													</div>
 
-										<div class="direct-chat-msg right">
-											<div class="direct-chat-infos clearfix">
-												<span class="direct-chat-name float-right">Sarah Bullock</span>
-												<span class="direct-chat-timestamp float-left">23 Jan 2:05 pm</span>
-											</div>
-					
-											<img class="direct-chat-img" src="">
-									
-											<div class="direct-chat-text">
-												You better believe it!
-											</div>
-										</div>
+													@if (isset($message->messageuser->user_image))
+														<img class="direct-chat-img" src="{{url('assets/images')}}/{{$message->messageuser->user_image}}">
+													@else
+														<img class="direct-chat-img" src="../assets/images/dummy.png">
+													@endif
+
+													<div class="direct-chat-text">
+														{{$message->message}}
+													</div>
+												</div>
+											@else
+												<div class="direct-chat-msg right">
+													<div class="direct-chat-infos clearfix">
+														<span class="direct-chat-name float-right">{{$message->messageuser->name}}</span>
+														<span class="direct-chat-timestamp float-left">{!! \Carbon\Carbon::parse($message->created_at)->format('d M g:i A') !!}</span>
+													</div>
+							
+													@if (isset($message->messageuser->user_image))
+														<img class="direct-chat-img" src="{{url('assets/images')}}/{{$message->messageuser->user_image}}">
+													@else
+														<img class="direct-chat-img" src="../assets/images/dummy.png">
+													@endif
+											
+													<div class="direct-chat-text">
+														{{$message->message}}
+													</div>
+												</div>
+											@endif
+										@endforeach
+
+										
 									</div>
 								</div>
 
 								<div class="card-footer">
-									<form action="#" method="post">
+									<form action="{{ route('result-message-store') }}" method="POST" enctype="multipart/form-data">
+                        				@csrf
 										<div class="input-group">
+											<input type="hidden" name="result_id" value="{{$resultmessage[0]->result_id}}">
 											<input type="text" name="message" placeholder="Type Message ..." class="form-control">
 											<span class="input-group-append">
 												<button type="submit" class="btn btn-primary">Send</button>
@@ -391,7 +427,9 @@
 								</div>
 
 							</div>
-						</section> -->
+						</section>
+
+				
 					</section>
 					
 					
@@ -534,9 +572,9 @@
            
             var msg = {!! json_encode($message) !!};
             
-			var result2 = '<div class="form-group"><label>User Comments:</label>';
-			result2 += '<textarea class="form-control" id="comment" rows="3" placeholder="Comment here" disabled>'+msg+'</textarea></div>';
-			$("#result-view .card-body #qt_content").append(result2); 
+			// var result2 = '<div class="form-group"><label>User Comments:</label>';
+			// result2 += '<textarea class="form-control" id="comment" rows="3" placeholder="Comment here" disabled>'+msg+'</textarea></div>';
+			// $("#result-view .card-body #qt_content").append(result2); 
 
 			$('#result-view').css("display","block");
 				
