@@ -27,7 +27,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Result ID</th>
+                        <!-- <th>Result ID</th> -->
                         <th>Form Name</th>
                         <th>Assigner Name</th>
                         <th>Assign Date</th>
@@ -40,9 +40,8 @@
                         @foreach ($reports as $report)
                             <tr>
                                 <td>{{ ++$i }}</td>
-                                <td>{{ $report->result_id }}</td>
-                                <td>{{ $report->form_name }}</td>
-                                <td>{{ $report->name }}</td>
+                                <td>{{ $report->form->form_name }}</td>
+                                <td>{{ $report->assignuser->name }}</td>
                                 <td>{!! \Carbon\Carbon::parse($report->created_at)->format('d M Y') !!}</td>
                                 <td>{!! \Carbon\Carbon::parse($report->created_at)->format('d M Y') !!}</td>
                                 <td>

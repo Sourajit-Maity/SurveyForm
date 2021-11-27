@@ -36,15 +36,15 @@ class ResultController extends Controller
         
         $reports = AssignCompany::
 
-        join('companies', 'assign_companies.company_id', '=', 'companies.id')->
-        join('forms', 'assign_companies.form_id', '=', 'forms.id')->
-        join('users', 'assign_companies.user_id', '=', 'users.id')->
-        join('users', 'assign_companies.employee_id', '=', 'users.id')->
-        join('assign_results', 'assign_companies.id', '=', 'assign_results.assign_company_id')
-       // ->where('employee_id',auth()->user()->id)
+        //join('companies', 'assign_companies.company_id', '=', 'companies.id')->
+        // join('forms', 'assign_companies.form_id', '=', 'forms.id')->
+        //join('users', 'assign_companies.user_id', '=', 'users.id')->
+        //join('assign_results', 'assign_companies.id', '=', 'assign_results.assign_company_id')
+        where('assign',0)
+         ->with('assignuser','form','company','assignresult')
         ->get();
 
-        dd($reports);
+        //dd($reports);
         
        return view('report.viewreport',compact('reports'))
            ->with('i', (request()->input('page', 1) - 1) * 5, 'reports');
