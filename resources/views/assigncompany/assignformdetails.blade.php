@@ -347,7 +347,7 @@
 						<section class='pdf noprint-area'>
 							<div class="card card-primary card-outline direct-chat direct-chat-primary">
 								<div class="card-header">
-									<i class="fas fa-comments" style='color:#007bff;'></i>&nbsp;PDF Download
+									<i class="fas fa-file-pdf" style='color:#007bff;'></i>&nbsp;PDF Download
 								</div>
 								<div class="card-body">
 									<div class="mt-3 mb-3" style="width: 90%;margin-left: auto;margin-right: auto;"> 
