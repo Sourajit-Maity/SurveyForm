@@ -8,6 +8,13 @@
 @stop
 
 
+<style>
+  div.dataTables_wrapper div.dataTables_length select {
+    width: 50px;
+  }
+
+</style>
+
 
 <div class="card card-default">
     <div class="card-body">
@@ -72,4 +79,6 @@
     </div>
 </div>
 
+
+@include('layouts.datatable')
 @stop

@@ -35,11 +35,13 @@ class ResultController extends Controller
         // ->get();
         
         $reports = AssignCompany::
-        join('companies', 'assign_companies.company_id', '=', 'companies.id')->
-        join('forms', 'assign_companies.form_id', '=', 'forms.id')->
-        join('users', 'assign_companies.user_id', '=', 'users.id')->
-        join('assign_results', 'assign_companies.id', '=', 'assign_results.assign_company_id')->
-        where('employee_id',auth()->user()->id)
+
+        //join('companies', 'assign_companies.company_id', '=', 'companies.id')->
+        // join('forms', 'assign_companies.form_id', '=', 'forms.id')->
+        //join('users', 'assign_companies.user_id', '=', 'users.id')->
+        //join('assign_results', 'assign_companies.id', '=', 'assign_results.assign_company_id')
+        where('assign',0)
+         ->with('assignuser','form','company','assignresult')
         ->get();
 
         //dd($reports);
@@ -88,6 +90,7 @@ class ResultController extends Controller
        $inputs = $request->json()->all();
 
        $question_result = $inputs['question_result'];
+
        Log::debug("qwerty".print_r($inputs,true));
 
        $materialresult = new MaterialResult();
@@ -153,6 +156,7 @@ class ResultController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
+
     {
         $result_id = AssignResult::where('assign_company_id',$id)->value('result_id');
         $material_result_id = AssignResult::where('assign_company_id',$id)->value('material_result_id');

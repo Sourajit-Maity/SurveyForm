@@ -255,12 +255,14 @@ return [
         ],
         [
             'text' => 'Company',
+            'can' => ['isDirector'],
             'url'  => 'companys',
-            'active' => ['companys', 'companys*'],
+            'active' => ['companys', 'companys*', 'get-company-user*'],
             'icon' => 'nav-icon fas fa-fw fa-building',
         ],
         [
             'text' => 'Designation',
+            'can' => ['isDirector'],
             'url'  => 'roles',
             'active' => ['roles', 'roles*'],
             'icon' => 'nav-icon fas fa-fw fa-id-badge',
@@ -269,24 +271,25 @@ return [
             'text' => 'Users',
             'url'  => 'users',
             'active' => ['users', 'users*'],
-            'icon' => 'nav-icon fas fa-fw fa-users',
-        ],      
+            'icon' => 'nav-icon fas fa-fw fa-user',
+        ],
         [
-            'text' => 'Forms',
-           // 'can' => ['Admin'],
+            'text' => 'Survey Form',
+            'can' => ['isDirector'],
             'url'  => 'form',
             'active' => ['form', 'form*', 'view-question-forms*'],
             'icon' => 'nav-icon fas fa-fw fa-edit',
         ],
         [
             'text' => 'Question',
-           // 'can' => ['isAdmin'],
+            'can' => ['isDirector'],
             'url'  => 'question',
-            'active' => ['question', 'question*'],
+            'active' => ['question', 'question*', 'assign-form-show*'],
             'icon' => 'nav-icon fas fa-fw fa-question-circle',
         ],
         [
             'text' => 'Assign Form',
+            'can' => ['isDirector'],
             'url'  => 'assign/create',
             'active' => ['assign/create', 'assign', 'forward-assign', 'forward-show*'],
             'icon' => 'nav-icon fas fa-fw fa-share-square',
@@ -305,7 +308,7 @@ return [
         [
             'text' => 'Assigned/Forward Info',
             'url'  => 'my-info-details',
-            'icon' => 'nav-icon fas fa-fw fa-cog',
+            'icon' => 'nav-icon fas fa-fw fa-retweet',
         ],
         
         // [

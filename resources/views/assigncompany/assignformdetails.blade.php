@@ -285,7 +285,9 @@
 
 								<div class="d-flex align-items-center pt-3">
 									<div class="ml-sm-5 noprint-area"> 
+									@if (Auth::user()->company_id ==1)
 										<button id="download" class="btn btn-block bg-gradient-primary"><i class="fas fa-download"></i>  Download</button> 
+									@endif
 									</div>
 									<div class="ml-auto mr-sm-5  noprint-area">
 										<a id="Close" class="btn btn-success" href="/get-report-info">Close</a> 
@@ -436,10 +438,10 @@
 			);
 
 			result_array = @json($reportdetails ?? '');
-			console.log(result_array);
+			//console.log(result_array);
 
 			questions = @json($allquestion ?? '');
-			console.log(questions);
+			//console.log(questions);
 
 			for(var i = 0; i < result_array.length; i++){
 				var q_id = result_array[i].question_id;

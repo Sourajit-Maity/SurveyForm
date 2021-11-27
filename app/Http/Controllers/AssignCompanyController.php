@@ -39,21 +39,21 @@ class AssignCompanyController extends Controller
         $assignformArr=[];
         $arruser= DB::table('assign_companies')->orderBy('id','DESC')->get()->toArray();
       
-        foreach($arruser as $usr) {
+        // foreach($arruser as $usr) {
             
-            $users = explode(',', $usr->employee_id);
-            $companys = explode(',', $usr->company_id);
-            $forms = explode(',', $usr->form_id);
-            foreach($users as $us) {
-                if($us==$currentuserid){
-                    array_push($assignformArr,$usr->message);
-                }
-            } 
+        //     $users = explode(',', $usr->employee_id);
+        //     $companys = explode(',', $usr->company_id);
+        //     $forms = explode(',', $usr->form_id);
+        //     foreach($users as $us) {
+        //         if($us==$currentuserid){
+        //             array_push($assignformArr,$usr->message);
+        //         }
+        //     } 
             
-        }     
-        foreach ($forms as $formdata) {
-            $forms = Form::where('id',$formdata)->with('assignform')->get();
-        }
+        // }     
+        // foreach ($forms as $formdata) {
+        //     $forms = Form::where('id',$formdata)->with('assignform')->get();
+        // }
         $form= AssignCompany::where('employee_id',$currentuserid)->where('company_id',$currentusecompanyid)->
         where('assign',1)->orderBy('id','DESC')->get();
         
@@ -68,21 +68,21 @@ class AssignCompanyController extends Controller
         $assignformArr=[];
         $arruser= DB::table('assign_companies')->orderBy('id','DESC')->get()->toArray();
       
-        foreach($arruser as $usr) {
+        // foreach($arruser as $usr) {
             
-            $users = explode(',', $usr->employee_id);
-            $companys = explode(',', $usr->company_id);
-            $forms = explode(',', $usr->form_id);
-            foreach($users as $us) {
-                if($us==$currentuserid){
-                    array_push($assignformArr,$usr->message);
-                }
-            } 
+        //     $users = explode(',', $usr->employee_id);
+        //     $companys = explode(',', $usr->company_id);
+        //     $forms = explode(',', $usr->form_id);
+        //     foreach($users as $us) {
+        //         if($us==$currentuserid){
+        //             array_push($assignformArr,$usr->message);
+        //         }
+        //     } 
             
-        }     
-        foreach ($forms as $formdata) {
-            $forms = Form::where('id',$formdata)->with('assignform')->get();
-        }
+        // }     
+        // foreach ($forms as $formdata) {
+        //     $forms = Form::where('id',$formdata)->with('assignform')->get();
+        // }
         $form= AssignCompany::where('employee_id',$currentuserid)->where('company_id',$currentusecompanyid)->
         where('forward',1)->orderBy('id','DESC')->get();
         
@@ -133,7 +133,7 @@ class AssignCompanyController extends Controller
         $announcement['forward'] = $request->input('forward');
         $announcement->save();
 
-        Log::debug("all".print_r($request->all(),true));
+       // Log::debug("all".print_r($request->all(),true));
     
         return redirect()->back()->with('status', 'Form Asigned Successfully');
      }
@@ -254,15 +254,17 @@ class AssignCompanyController extends Controller
     public function myinfodetails(){
 
 
-        $assigndetails = AssignCompany::where('user_id',Auth::user()->id)->with('company','assigncompany','form','employee','assignuser','assignresult','forwardmessage')->get();
+        $assigndetails = AssignCompany::where('user_id',Auth::user()->id)->orWhere('employee_id',Auth::user()->id)->with('company','assigncompany','form','employee','assignuser','assignresult','forwardmessage')->get();
         //dd($assigndetails);
         return view('assigncompany.myinfodetails',compact('assigndetails'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     public function assignformdetails($id){
 
-        $assigndetails = AssignCompany::where('user_id',Auth::user()->id)->where('assign','!=', NULL)->with('company','assigncompany','form','employee','assignuser','assignresult','forwardmessage')->get();
+        $assigndetails = AssignCompany::where('user_id',Auth::user()->id)->orWhere('employee_id',Auth::user()->id)->where('assign','!=', NULL)->with('company','assigncompany','form','employee','assignuser','assignresult','forwardmessage')->get();
         
+       // dd($assigndetails);
+
         $result_id = AssignResult::where('assign_company_id',$id)->value('result_id');
         $message= AssignResult::where('assign_company_id',$id)->value('message');
         $material_result_id = AssignResult::where('assign_company_id',$id)->value('material_result_id');
