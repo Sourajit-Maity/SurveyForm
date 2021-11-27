@@ -2,6 +2,8 @@
 
 @section('content')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.1.95/css/materialdesignicons.min.css">
+<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 

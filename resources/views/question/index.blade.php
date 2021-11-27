@@ -4,6 +4,8 @@
 
 @section('plugins.Datatables', true)
 
+<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+
 @section('content_header')
     <h1>Question</h1>
 @stop
@@ -97,7 +99,7 @@
             </div>
         </div>
     </div>
-    @include('layouts.footerimport')
+    <!-- @include('layouts.footerimport') -->
     @include('layouts.datatable')
     @endsection
   

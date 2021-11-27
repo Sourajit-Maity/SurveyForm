@@ -2,6 +2,8 @@
 
 @section('content')
 
+<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+
 <style>
   .wid-1{
     background: -webkit-linear-gradient(291deg, rgb(77, 77, 253) 0%, rgb(108, 143, 234) 100%);
@@ -25,88 +27,89 @@
     background: -webkit-linear-gradient(59deg, rgb(254, 208, 63) 0%, rgb(230, 190, 63) 110%);
     background: linear-gradient(31deg, rgb(254, 208, 63) 0%, rgb(230, 190, 63) 110%);
   }
+
+  
 </style>
 
-<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
 
 <br><br>
 <section class="content">
-@if (Auth::user()->company_id ==1)
-      <div class="container-fluid">
-        <!-- Small boxes (Stat box) -->
-        <div class="row">
-        
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box wid-1">
-              <div class="inner">
-                <h3>{{$company}}</h3>
+  @if (Auth::user()->company_id ==1)
+  <div class="container-fluid">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+    
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box wid-1">
+          <div class="inner">
+            <h3>{{$company}}</h3>
 
-                <p>Companys</p>
-              </div>
-              <div class="icon">
-                <!-- <i class="ion ion-bag"></i> -->
-                <i class="fas fa-building"></i>
-              </div>
-              <a href="{{ route('companys.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
+            <p>Companys</p>
           </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box wid-2">
-              <div class="inner">
-              <h3>{{$user}}</h3>
-
-                <p>Users</p>
-              </div>
-              <div class="icon">
-                <!-- <i class="ion ion-stats-bars"></i> -->
-                <i class="fas fa-user-plus"></i>
-              </div>
-              <a href="{{ route('users.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
+          <div class="icon">
+            <!-- <i class="ion ion-bag"></i> -->
+            <i class="fas fa-building"></i>
           </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box wid-3">
-              <div class="inner">
-                <h3>{{$role}}</h3>
-
-                <p>Designations</p>
-              </div>
-              <div class="icon">
-                <!-- <i class="ion ion-person-add"></i> -->
-                <i class="fas fa-id-card"></i>
-              </div>
-              <a href="{{ route('roles.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> 
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-
-              <div class="inner">
-                <h3>{{$form}}</h3>
-                <p>Forms</p>
-              </div>
-              <div class="icon">
-                <!-- <i class="ion ion-bag"></i> -->
-                <i class="fas fa-poll"></i>
-              </div>
-              <a href="{{ route('form.index') }}" class="small-box-footer" style="color:#000;">More info <i class="fas fa-arrow-circle-right"></i></a>            
-          </div>
+          <a href="{{ route('companys.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
-      @endif
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box wid-2">
+          <div class="inner">
+          <h3>{{$user}}</h3>
+
+            <p>Users</p>
+          </div>
+          <div class="icon">
+            <!-- <i class="ion ion-stats-bars"></i> -->
+            <i class="fas fa-user-plus"></i>
+          </div>
+          <a href="{{ route('users.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box wid-3">
+          <div class="inner">
+            <h3>{{$role}}</h3>
+
+            <p>Designations</p>
+          </div>
+          <div class="icon">
+            <!-- <i class="ion ion-person-add"></i> -->
+            <i class="fas fa-id-card"></i>
+          </div>
+          <a href="{{ route('roles.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> 
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-warning">
+
+          <div class="inner">
+            <h3>{{$form}}</h3>
+            <p>Forms</p>
+          </div>
+          <div class="icon">
+            <!-- <i class="ion ion-bag"></i> -->
+            <i class="fas fa-poll"></i>
+          </div>
+          <a href="{{ route('form.index') }}" class="small-box-footer" style="color:#000;">More info <i class="fas fa-arrow-circle-right"></i></a>            
+      </div>
+    </div>
+  @endif
           <!-- //2nd  -->
 
       <div class="container-fluid">
         <div class='row'>
           <div class="col-lg-6 col-6 d-flex align-items-stretch flex-column">
-            <div class="card bg-light d-flex flex-fill">
+            <div class="card d-flex flex-fill">
               <div class="card-header text-muted border-bottom-0">
                 
               </div>
@@ -128,7 +131,7 @@
                         <span class="fa-li">
                           <i class="fas fa-lg fa-phone"></i>
                         </span> 
-                        Phone #: + {{ $companydetails->phone }}
+                        Phone: {{ $companydetails->phone }}
                       </li>
                     </ul>
                   </div>

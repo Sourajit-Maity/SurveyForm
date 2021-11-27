@@ -1,6 +1,9 @@
 @extends('layouts.adminlayapp')
 
 @section('content')
+
+<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">

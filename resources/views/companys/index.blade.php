@@ -4,6 +4,8 @@
 
 @section('plugins.Datatables', true)
 
+<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+
 @section('content_header')
     <h1>Company</h1>
 @stop
@@ -33,7 +35,7 @@
             
             <div class="table-responsive">
                <br>
-        <table id="myTable" class="table table-bordered table-striped {{ count($companys) > 0 ? 'datatable' : '' }} pointer">
+        <table id="myTable" class="table table-bordered {{ count($companys) > 0 ? 'datatable' : '' }} pointer">
                     <thead>
                         <tr>
                             <!-- <th style="text-align:center;"><input type="checkbox" id="select-all" /></th> -->
@@ -55,7 +57,7 @@
                                     @if (isset($company->logo))
                                     <td><img src="{{url('assets/logos')}}/{{$company->logo}}" width="100" class="img-circle img-left"></td>
                                     @else 
-                                    <td><img src="assets/images/dummy.png" width="100" class="img-circle img-left"></td>
+                                    <td><img src="assets/images/dummy.png" height="70" class="img-circle img-left"></td>
                                   
                                     @endif
                                     <td> <a href="{{ route('get-company-user',$company->id) }}">{{ $company->company_name }}</a> </td>
@@ -95,7 +97,6 @@
             </div>
         </div>
     </div>
-    @include('layouts.footerimport')
     @include('layouts.datatable')
     @endsection
   

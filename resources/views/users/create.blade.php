@@ -1,4 +1,5 @@
 @extends('layouts.adminlayapp')
+<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 
 @section('content')
 <div class="row">

@@ -7,6 +7,9 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}">
+
+<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+
 <style>
     /* th,td{
     min-width:200px !important;

@@ -3,6 +3,8 @@
 @section('content')
 @section('plugins.Datatables', true)
 
+<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+
 @section('content_header')
     <h1>Role Management</h1>
 @stop

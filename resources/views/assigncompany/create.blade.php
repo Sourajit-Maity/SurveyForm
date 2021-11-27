@@ -1,6 +1,8 @@
 @extends('layouts.adminlayapp')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+
 <style>
     .hr-al {
         padding-top: 13px;
@@ -94,7 +96,8 @@ $(document).ready(function(){
               
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('assign.index') }}"> Back</a>
+                </br></br>
+                <!-- <a class="btn btn-primary" href="{{ route('assign.index') }}"> Back</a> -->
             </div>
         </div>
     </div>
@@ -219,7 +222,7 @@ $(document).ready(function(){
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Submit') }}
                                 </button>
-                                <input type="button" onclick="history.go(-1);" value="Back" class="btn btn-primary">
+                                <!-- <input type="button" onclick="history.go(-1);" value="Back" class="btn btn-primary"> -->
                             </div>
                         </div>
                     </form>

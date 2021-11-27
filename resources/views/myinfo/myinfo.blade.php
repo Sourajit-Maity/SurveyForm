@@ -1,5 +1,7 @@
 @extends('layouts.adminlayapp')
 
+<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+
 @section('content')
   @if (Session::has('success'))
                       <div class="alert alert-success text-center">

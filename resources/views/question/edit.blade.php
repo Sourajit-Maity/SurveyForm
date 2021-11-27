@@ -13,6 +13,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
+
+<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+
 <style>
     /* th,td{
         min-width:200px !important;

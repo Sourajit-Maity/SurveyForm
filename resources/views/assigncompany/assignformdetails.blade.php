@@ -2,6 +2,7 @@
 
 @section('content')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.1.95/css/materialdesignicons.min.css">
+<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
@@ -284,14 +285,27 @@
 								<div id="qt_content"></div>
 
 								<div class="d-flex align-items-center pt-3">
-									<div class="ml-sm-5 noprint-area"> 
 									@if (Auth::user()->company_id ==1)
-										<button id="download" class="btn btn-block bg-gradient-primary"><i class="fas fa-download"></i>  Download</button> 
-									@endif
+									<div class="ml-sm-4 noprint-area"> 
+									
+										<button id="admin_download" class="btn btn-block bg-gradient-primary"><i class="fas fa-download"></i> Admin Download</button> 
+									
+									</div>
+									<div class="ml-auto mr-sm-4  noprint-area">
+										<button id="user_download" class="btn btn-block bg-gradient-warning"><i class="fas fa-download"></i> User Download</button>
+									</div>
+									<div class="ml-auto mr-sm-4  noprint-area">
+										<a id="Close" class="btn btn-success" href="/get-report-info">Close</a> 
+									</div>
+									@else
+									<div class="ml-auto mr-sm-5  noprint-area">
+										<button id="user_download" class="btn btn-block bg-gradient-warning"><i class="fas fa-download"></i> User Download</button>
 									</div>
 									<div class="ml-auto mr-sm-5  noprint-area">
 										<a id="Close" class="btn btn-success" href="/get-report-info">Close</a> 
 									</div>
+									@endif
+									
 								</div>
 							</div>
 						</section>
@@ -406,8 +420,24 @@
 		$(document).ready(function(){
 			showreport();
 
-			$('#download').click(function() {
+			@if (Auth::user()->company_id ==1)
+				$('.options').css('display','block');
+				$('.ans').css('display','none');
+			@else
+				$('.options').css('display','none');
+				$('.ans').css('display','block');
+			@endif
+
+			$('#admin_download').click(function() {
 				window.print();
+			});
+
+			$('#user_download').click(function() {
+				$('.options').css('display','none');
+				$('.ans').css('display','block');
+				window.print();
+				$('.ans').css('display','none');
+				$('.options').css('display','block');
 			});
 		});
 
@@ -484,6 +514,8 @@
 								result += "<label class='options'>"+option_text+" <input type='radio'disabled><span class='checkmark'></span> </label>";
 							}
 						}
+
+						result +="<label class='ans' ><i class='fas fa-angle-right' style='color:#007bff;'></i>&nbsp;&nbsp;&nbsp;<span style='color: #6c757d!important; style='font-size:14px;''>"+q_answer+"</span></label> </br>";
 						result += "</div> </div></br>";
 
 					}
