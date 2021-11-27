@@ -2,7 +2,11 @@
 
 @section('content')
 
+@if (Auth::user()->company_id ==1)
 <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+@else
+<link href="{{ asset('/css/app2.css') }}" rel="stylesheet">
+@endif
 
 <style>
   .wid-1{

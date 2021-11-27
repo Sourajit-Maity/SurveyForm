@@ -12,6 +12,7 @@ use App\Models\Option;
 use App\Models\AssignResult;
 use App\Models\Result;
 use App\Models\MaterialResult;
+use App\Models\ReportMessages;
 
 use Illuminate\Support\Facades\Log;
 use DB;
@@ -303,9 +304,11 @@ class AssignCompanyController extends Controller
 
         $companyname = Company::where('id',Auth::user()->company_id)->value('company_name');
 
-        //dd($materialdetails);
+        $resultmessage = ReportMessages::where('result_id',$result_id)->with('resultmessage','companyname', 'messageuser')->get();
 
-       return view('assigncompany.assignformdetails',compact('reportdetails','message', 'assigndetails','allquestion', 'materialdetails', 'formid', 'companylogo', 'companyname', 'assigner_name', 'assigner_company_name', 'form_name', 'assign_date', 'submission_date'))
+        //dd($resultmessage);
+
+       return view('assigncompany.assignformdetails',compact('reportdetails','message', 'assigndetails','allquestion', 'materialdetails', 'formid', 'companylogo', 'companyname', 'assigner_name', 'assigner_company_name', 'form_name', 'assign_date', 'submission_date','resultmessage'))
            ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     }
 

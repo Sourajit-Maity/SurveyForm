@@ -38,9 +38,9 @@ body {
 
 .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
   /* background-color: #8275ffcf; */
-  background: #fcd833;
+  background: #007bff;
   /* background: #FFF; */
-  color: #000;
+  color: #FFF;
   border-radius: 25px;
 }
 
@@ -49,7 +49,7 @@ body {
 }
 
 .layout-navbar-fixed .wrapper .sidebar-dark-primary .brand-link:not([class*=navbar]) {
-  background-color: rgb(87,16,178);
+  background-color: #212529;
 }
 
 [class*=sidebar-dark-] .sidebar a {
@@ -57,7 +57,7 @@ body {
 }
 
 [class*=sidebar-dark-] {
-  background-color: rgb(87,16,178);
+  background-color: #212529;
 }
 
 

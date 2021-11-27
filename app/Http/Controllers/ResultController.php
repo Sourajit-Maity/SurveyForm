@@ -14,6 +14,7 @@ use App\Models\AssignMessage;
 use App\Models\ForwardMessage;
 use App\Models\Option;
 use App\Models\User;
+use App\Models\ReportMessages;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -133,14 +134,23 @@ class ResultController extends Controller
         $assignresults->user_id= Auth::user()->id;  
         $assignresults->save();
 
-        $assignmessage = new AssignMessage();
-        $assignmessage->assign_result_id= $assignresults->id;
-        $assignmessage->form_id= $question_result[0]['formid'];
-        $assignmessage->company_id= $inputs['start_form']['company_id'];    
-        $assignmessage->user_id= Auth::user()->id;  
-        $assignmessage->message= 1;  
+        $reportmessage = new ReportMessages();
+        $reportmessage->result_id= $question_result[0]['ResultId'];
+        $reportmessage->company_id= $inputs['start_form']['company_id'];    
+        $reportmessage->message= $inputs['comment']; 
+        $reportmessage->user_id= Auth::user()->id;  
+        $reportmessage->save();
 
-        $assignmessage->save();        
+
+
+        // $assignmessage = new AssignMessage();
+        // $assignmessage->assign_result_id= $assignresults->id;
+        // $assignmessage->form_id= $question_result[0]['formid'];
+        // $assignmessage->company_id= $inputs['start_form']['company_id'];    
+        // $assignmessage->user_id= Auth::user()->id;  
+        // $assignmessage->message= 1;  
+
+        //$assignmessage->save();        
 
         $assign = AssignCompany::where('id', $inputs['assign_company_id'])->update(array("assign" => 0));
 
@@ -253,5 +263,18 @@ class ResultController extends Controller
         return redirect()->route('assign.index')
                         ->with('success','result saved successfully.');
 
+    }
+
+    public function resultMessageStore(Request $request){
+        $reportmessage = new ReportMessages();
+        $reportmessage->result_id= $request->get('result_id');
+        $reportmessage->company_id= Auth::user()->company_id;    
+        $reportmessage->user_id= Auth::user()->id;  
+        $reportmessage->message= $request->get('message');  
+
+        $reportmessage->save();        
+
+        return redirect()->back();
+                       
     }
 }
