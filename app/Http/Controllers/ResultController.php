@@ -277,4 +277,11 @@ class ResultController extends Controller
         return redirect()->back();
                        
     }
+
+    public function reportShare($id, Request $request){
+        //dd($id);
+        $resultshare = AssignResult::where('result_id',$id)->update(array("share" => 1));
+        return redirect()->back()->with('success','Report Shared successfully.');
+    }
+
 }

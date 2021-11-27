@@ -75,6 +75,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::post('result-message-store', [ResultController::class,'resultMessageStore'])->name('result-message-store');
 
+    Route::get('report-share/{id}', [ResultController::class,'reportShare'])->name('report-share');
+
 
 
 });

@@ -170,6 +170,12 @@
 	});
 </script>
 
+@if ($message = Session::get('success'))
+	<div class="alert alert-success">
+		<p>{{ $message }}</p>
+	</div>
+@endif
+
     <div class="panel panel-default">
         <div class="panel-body">
         	<div class="row">
@@ -347,9 +353,14 @@
 						<section class='pdf noprint-area'>
 							<div class="card card-primary card-outline direct-chat direct-chat-primary">
 								<div class="card-header">
-									<i class="fas fa-file-pdf" style='color:#007bff;'></i>&nbsp;PDF Download
+									<i class="fas fa-tools" style='color:#007bff;'></i>&nbsp;Tools
 								</div>
 								<div class="card-body">
+									<div class="mt-3 mb-3" style="width: 90%;margin-left: auto;margin-right: auto;"> 
+										
+										<a id="share" href="{{ route('report-share',[$resultmessage[0]->result_id]) }}" class="btn btn-block bg-gradient-success" ><i class="fas fa-share-alt"></i> Share Report</a> 
+									
+									</div>
 									<div class="mt-3 mb-3" style="width: 90%;margin-left: auto;margin-right: auto;"> 
 									
 										<button id="admin_download" class="btn btn-block bg-gradient-primary"><i class="fas fa-download"></i> Admin Download</button> 
