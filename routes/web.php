@@ -77,6 +77,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('get-share-report', [ResultController::class,'getShareReport'])->name('get-share-report');
     Route::get('get-share-report-details/{id}', [ResultController::class,'getShareReportDetails'])->name('get-share-report-details');
+    Route::get('report-share/{id}', [ResultController::class,'reportShare'])->name('report-share');
+
 
 
 });

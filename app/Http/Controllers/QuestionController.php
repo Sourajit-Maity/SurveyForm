@@ -362,6 +362,7 @@ class QuestionController extends Controller
             'question_type' => 'child',
             'question' => $new_question[$i]['question'],
             'question_id' => $new_question[$i]['question_id'],
+            // 'updated_id' => Auth::user()->id,
             ]);
 
             $new_option = $new_question[$i]['data'];
@@ -396,6 +397,7 @@ class QuestionController extends Controller
             $oldqusid = Question::where('question_id',$update_question[$k]['question_id'])->value('id');
             $updatequs = Question::findOrFail($oldqusid);
             $updatequs->question = $update_question[$k]['question'];
+            // $updatequs->updated_id = Auth::user()->id;
             $updatequs->update();
 
             $new_option = $update_question[$k]['new_option'];

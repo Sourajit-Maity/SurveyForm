@@ -356,16 +356,13 @@
 									<i class="fas fa-tools" style='color:#007bff;'></i>&nbsp;Tools
 								</div>
 								<div class="card-body">
-									<div class="mt-3 mb-3" style="width: 90%;margin-left: auto;margin-right: auto;"> 
-										
-										<a id="share" href="{{ route('report-share',[$resultmessage[0]->result_id]) }}" class="btn btn-block bg-gradient-success" ><i class="fas fa-share-alt"></i> Share Report</a> 
 									
-									</div>
 									<div class="mt-3 mb-3" style="width: 90%;margin-left: auto;margin-right: auto;"> 
 									
 										<button id="admin_download" class="btn btn-block bg-gradient-primary"><i class="fas fa-download"></i> Admin Download</button> 
 									
 									</div>
+									@else
 									<div class="mt-3 mb-3"  style="width: 90%;margin-left: auto;margin-right: auto;">
 										<button id="user_download" class="btn btn-block bg-gradient-warning"><i class="fas fa-download"></i> User Download</button>
 									</div>
@@ -425,16 +422,7 @@
 								</div>
 
 								<div class="card-footer">
-									<form action="{{ route('result-message-store') }}" method="POST" enctype="multipart/form-data">
-                        				@csrf
-										<div class="input-group">
-											<input type="hidden" name="result_id" value="{{$resultmessage[0]->result_id}}">
-											<input type="text" name="message" placeholder="Type Message ..." class="form-control">
-											<span class="input-group-append">
-												<button type="submit" class="btn btn-primary">Send</button>
-											</span>
-										</div>
-									</form>
+								
 								</div>
 
 							</div>

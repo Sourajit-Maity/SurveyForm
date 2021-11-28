@@ -312,11 +312,11 @@ return [
             'icon' => 'nav-icon fas fa-fw fa-retweet',
         ],
         [
-            'text' => 'Report Info',
+            'text' => 'Shared Reports',
            // 'can' => ['isDirector'],
             'url'  => 'get-share-report',
             'active' => ['get-share-report', 'get-share-report*'],
-            'icon' => 'nav-icon far fa-fw fa-edit',
+            'icon' => 'nav-icon fas fa-share-alt',
         ],
         
         // [

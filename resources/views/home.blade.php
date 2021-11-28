@@ -303,6 +303,19 @@
                   </div>
                   <a href="{{ route('question.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
+
+                <div class="small-box wid-3">
+                  <div class="inner">
+                  <h3>{{$question}}</h3>
+
+                    <p>Shared Reports</p>
+                  </div>
+                  <div class="icon">
+                    <!-- <i class="ion ion-stats-bars"></i> -->
+                    <i class="fas fa-question-circle"></i>
+                  </div>
+                  <a href="{{ route('get-share-report') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
               </div>
             </div> 
            @endif
