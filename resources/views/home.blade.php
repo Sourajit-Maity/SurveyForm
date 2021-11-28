@@ -314,7 +314,7 @@
                     <!-- <i class="ion ion-stats-bars"></i> -->
                     <i class="fab fa-slideshare"></i>
                   </div>
-                  <a href="{{ route('question.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                  <a href="{{ route('get-share-report') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
               </div>
             </div> 

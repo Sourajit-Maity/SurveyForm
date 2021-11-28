@@ -42,6 +42,7 @@ class ResultController extends Controller
         //join('users', 'assign_companies.user_id', '=', 'users.id')->
         //join('assign_results', 'assign_companies.id', '=', 'assign_results.assign_company_id')
         where('assign',0)
+        ->where('employee_id',Auth::user()->id)
          ->with('assignuser','form','company','assignresult')
         ->get();
 
@@ -280,8 +281,72 @@ class ResultController extends Controller
 
     public function reportShare($id, Request $request){
         //dd($id);
-        $resultshare = AssignResult::where('result_id',$id)->update(array("share" => 1));
+        $assigncompanyid = AssignResult::where('result_id',$id)->value('assign_company_id');
+
+        $resultshare = AssignCompany::where('id',$assigncompanyid)->update(array("share" => 1));
         return redirect()->back()->with('success','Report Shared successfully.');
+    }
+
+
+    public function getShareReport( Request $request){
+     
+        $reports = AssignCompany::where('share',1)->where('company_id',Auth::user()->company_id)->Where('user_company_id',Auth::user()->company_id)
+        
+        ->with('company','assigncompany','form','employee','assignuser','assignresult','forwardmessage')->get();
+
+        return view('sharereport.sharereport',compact('reports'))
+        ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
+    }
+
+    public function getShareReportDetails($id, Request $request){
+
+        $assigndetails = AssignCompany::where('user_id',Auth::user()->id)->orWhere('employee_id',Auth::user()->id)->where('assign','!=', NULL)->with('company','assigncompany','form','employee','assignuser','assignresult','forwardmessage')->get();
+        
+       // dd($assigndetails);
+
+        $result_id = AssignResult::where('assign_company_id',$id)->value('result_id');
+        $message= AssignResult::where('assign_company_id',$id)->value('message');
+        $material_result_id = AssignResult::where('assign_company_id',$id)->value('material_result_id');
+        $assign_company_id = AssignResult::where('assign_company_id',$id)->value('assign_company_id');
+        $formid = AssignCompany::where('id',$id)->value('form_id');
+        
+        $assigner_company_id = AssignCompany::where('id',$assign_company_id)->value('user_company_id');
+        $assigner_id = AssignCompany::where('id',$assign_company_id)->value('user_id');
+        $assigner_name = User::where('id',$assigner_id)->value('name');
+        
+        
+        $assigner_company_name = Company::where('id',$assigner_company_id)->value('company_name');
+
+        $assign_date = AssignCompany::where('id',$assign_company_id)->value('created_at');
+        $submission_date = AssignResult::where('id',$id)->value('created_at');
+
+        $formid = AssignCompany::where('id',$assign_company_id)->value('form_id');
+        $form_name = Form::where('id',$formid)->value('form_name');
+        
+        $forms = DB::table('forms')->get();
+        $allquestion = Question::where('form_id', $formid)->get();
+
+        for ($y = 0; $y < count($allquestion); $y++) {
+            $alloption = Option::where('question_id', $allquestion[$y]->question_id)
+            ->where('option', '!=', 'undefined')
+            ->where('child_id', '!=', 'undefined')
+            ->where('number', '!=', 'undefined')
+            ->where('message', '!=', 'undefined')
+            ->get();
+            $allquestion[$y]['options'] = $alloption; 
+        }
+
+        $reportdetails = Result::where('result_id',$result_id)->get();
+        $materialdetails = MaterialResult::where('id',$material_result_id)->get();
+        $companylogo = Company::where('id',Auth::user()->company_id)->value('logo');
+
+        $companyname = Company::where('id',Auth::user()->company_id)->value('company_name');
+
+        $resultmessage = ReportMessages::where('result_id',$result_id)->with('resultmessage','companyname', 'messageuser')->get();
+
+
+       return view('sharereport.sharereportdetails',compact('reportdetails','message', 'assigndetails','allquestion', 'materialdetails', 'formid', 'companylogo', 'companyname', 'assigner_name', 'assigner_company_name', 'form_name', 'assign_date', 'submission_date','resultmessage'))
+           ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     }
 
 }

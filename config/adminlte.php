@@ -307,6 +307,13 @@ return [
             'icon' => 'nav-icon fas fa-fw fa-retweet',
         ],
         [
+            'text' => 'Shared Reports',
+           // 'can' => ['isDirector'],
+            'url'  => 'get-share-report',
+            'active' => ['get-share-report', 'get-share-report*'],
+            'icon' => 'nav-icon fas fa-share-alt',
+        ],
+        [
             'text' => 'My Info',
             'url'  => 'get-my-info',
             'icon' => 'nav-icon fas fa-fw fa-sliders-h',

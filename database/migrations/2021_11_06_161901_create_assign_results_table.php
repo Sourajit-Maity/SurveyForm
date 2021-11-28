@@ -20,7 +20,6 @@ class CreateAssignResultsTable extends Migration
             $table->foreignId('material_result_id');
             $table->foreignId('assign_company_id');
             $table->foreignId('user_id');
-            $table->boolean('share')->default(false);
             $table->timestamps();
         });
     }

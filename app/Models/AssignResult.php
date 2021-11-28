@@ -11,7 +11,7 @@ class AssignResult extends Model
 
     protected $table = 'assign_results';
     protected $fillable = [
-        'result_id','message', 'material_result_id', 'assign_company_id', 'user_id', 'share'
+        'result_id','message', 'material_result_id', 'assign_company_id', 'user_id', 
     ];
     public function result()
     {
