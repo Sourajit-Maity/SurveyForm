@@ -221,16 +221,22 @@ $role = Auth::user()->getRoleNames();
     {
         $currentuserid = Auth::user()->id;
 
-        $company= Company::pluck("company_name","id");
+        //$company= Company::pluck("company_name","id");
+
         // $empcompany= Company::select('companies.company_name as company','users.company_id as org_id')->
         // join('companies', 'users.company_id', '=', 'companies.id')
         // ->where('users.id',$currentuserid)->get(); 
 
-        //$users= DB::table('users')->get();
+        
+
+        $usercompanyid= User::where('company_id',Auth::user()->company_id)->value('company_id');
+        $usercompany= Company::where('id',$usercompanyid)->value('company_name');
+        //dd($usercompany);
 
         $users = User::findOrFail($currentuserid);
+       // dd($users);
  
-        return view('myinfo.myinfo', compact('users','company') );
+        return view('myinfo.myinfo', compact('users','usercompany') );
     }
  
  

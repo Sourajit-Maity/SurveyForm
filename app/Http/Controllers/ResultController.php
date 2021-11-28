@@ -42,6 +42,7 @@ class ResultController extends Controller
         //join('users', 'assign_companies.user_id', '=', 'users.id')->
         //join('assign_results', 'assign_companies.id', '=', 'assign_results.assign_company_id')
         where('assign',0)
+        ->where('employee_id',Auth::user()->id)
          ->with('assignuser','form','company','assignresult')
         ->get();
 

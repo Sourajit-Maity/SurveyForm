@@ -51,13 +51,11 @@
                            <label for="company_id" class="col-md-4 col-form-label text-md-right">{{ __('Company') }}</label><span style="color:red"> *</span>
 
                             <div class="col-md-6">
-                            
-                                <select id="company_id" name="company_id" class="form-control @error('company_id') is-invalid @enderror">
-                               
-                                 @foreach ($company as $key => $value)
-                               
-                                        <option value="{{ $key }}">{{ $value }}</option>
-                                @endforeach   
+
+                            <input id="company_id" type="text" class="form-control @error('company_id') is-invalid @enderror" name="company_id" value="{{ $usercompany }}" required autocomplete="company_id" readonly>
+                            <input id="company_id" type="hidden" class="form-control @error('company_id') is-invalid @enderror" name="company_id" value="{{ $users->company_id }}" required autocomplete="company_id" readonly>
+
+                                  
                                 </select>
                                 @error('company_id')
                                     <span class="invalid-feedback" role="alert">
