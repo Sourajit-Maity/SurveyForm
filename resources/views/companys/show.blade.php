@@ -1,6 +1,10 @@
 @extends('layouts.adminlayapp')
 
+@if (Auth::user()->company_id ==1)
 <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+@else
+<link href="{{ asset('/css/app2.css') }}" rel="stylesheet">
+@endif
 
 @section('content')
     <div class="row">

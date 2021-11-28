@@ -301,16 +301,17 @@ return [
             'icon' => 'nav-icon far fa-newspaper',
         ],
         [
-            'text' => 'My Info',
-            'url'  => 'get-my-info',
-            'icon' => 'nav-icon fas fa-fw fa-sliders-h',
-        ],
-        [
             'text' => 'Job Info',
             'url'  => 'my-info-details',
             'active' => ['my-info-details', 'assign-form-details*'],
             'icon' => 'nav-icon fas fa-fw fa-retweet',
         ],
+        [
+            'text' => 'My Info',
+            'url'  => 'get-my-info',
+            'icon' => 'nav-icon fas fa-fw fa-sliders-h',
+        ],
+        
         
         // [
         //     'text'    => 'multilevel',
@@ -431,6 +432,16 @@ return [
                     'type' => 'js',
                     'asset' => true,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js',
+                ],
+            ],
+        ],
+        'jQuery' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => '//ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js',
                 ],
             ],
         ],

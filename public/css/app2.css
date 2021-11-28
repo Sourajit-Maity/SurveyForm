@@ -32,15 +32,15 @@
 
 body {
   /* font-family: 'Karla', sans-serif; */
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif !important;
 }
 
 
 .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
   /* background-color: #8275ffcf; */
-  background: #007bff;
+  background: #007bff !important;
   /* background: #FFF; */
-  color: #FFF;
+  color: #FFF !important;
   border-radius: 25px;
 }
 
@@ -49,20 +49,20 @@ body {
 }
 
 .layout-navbar-fixed .wrapper .sidebar-dark-primary .brand-link:not([class*=navbar]) {
-  background-color: #212529;
+  background-color: #212529 !important;
 }
 
 [class*=sidebar-dark-] .sidebar a {
-  color: #FFF;
+  color: #FFF !important;
 }
 
 [class*=sidebar-dark-] {
-  background-color: #212529;
+  background-color: #212529 !important;
 }
 
 
 [class*=sidebar-dark] .brand-link {
-    border-bottom: 0px;
+    border-bottom: 0px !important;
  
 }
 

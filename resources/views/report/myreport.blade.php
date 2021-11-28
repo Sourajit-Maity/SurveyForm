@@ -2,10 +2,15 @@
 
 @section('content')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.1.95/css/materialdesignicons.min.css">
+
+@if (Auth::user()->company_id ==1)
 <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+@else
+<link href="{{ asset('/css/app2.css') }}" rel="stylesheet">
+@endif
 
 <style>
-	@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+	/* @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap'); */
 
 	* {
 		margin: 0;
@@ -15,7 +20,7 @@
 
 	body {
 		background-color: #eee;
-		font-family: 'Montserrat', sans-serif;
+		/* font-family: 'Montserrat', sans-serif; */
 	}
 
 	.container {
@@ -23,7 +28,7 @@
 		color: #000;
 		border-radius: 10px;
 		padding: 20px;
-		font-family: 'Montserrat', sans-serif;
+		/* font-family: 'Montserrat', sans-serif; */
 		max-width: 700px;
 	}
 
@@ -288,7 +293,7 @@
 								<div class="d-flex align-items-center pt-3">
 									<div class="ml-sm-5 noprint-area"> 
 									@if (Auth::user()->id ==1)
-										<button id="download" class="btn btn-block bg-gradient-primary"><i class="fas fa-download"></i>  eDownload</button> 
+										<button id="download" class="btn btn-block bg-gradient-primary"><i class="fas fa-download"></i>  Download</button> 
 									@endif
 									</div>
 									<div class="ml-auto mr-sm-5  noprint-area">
@@ -408,6 +413,14 @@
 		$(document).ready(function(){
 			showreport();
 
+			@if (Auth::user()->company_id ==1)
+				$('.options').css('display','block');
+				$('.ans').css('display','none');
+			@else
+				$('.options').css('display','none');
+				$('.ans').css('display','block');
+			@endif
+
 			$('#download').click(function() {
 				window.print();
 			});
@@ -453,7 +466,7 @@
 				console.log(q_text);
 
 				var no = i+1;
-				var result = "<div class=''><div class='py-2 h5'><b>Q"+no+". "+q_text+"</b></div>";
+				var result = "<div class=''><div class='py-2 h5'><b>"+q_text+"</b></div>";
 
 				for(var x = 0; x < questions.length; x++){
 					if(questions[x].question_id == q_id){
@@ -486,6 +499,7 @@
 								result += "<label class='options'>"+option_text+" <input type='radio'disabled><span class='checkmark'></span> </label>";
 							}
 						}
+						result +="<label class='ans' ><i class='fas fa-angle-right' style='color:#007bff;'></i>&nbsp;&nbsp;&nbsp;<span style='color: #6c757d!important; style='font-size:14px;''>"+q_answer+"</span></label> </br>";
 						result += "</div> </div></br>";
 
 					}

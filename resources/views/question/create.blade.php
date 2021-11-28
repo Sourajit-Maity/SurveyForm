@@ -8,7 +8,34 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js"></script>
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
+@if (Auth::user()->company_id ==1)
 <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+@else
+<link href="{{ asset('/css/app2.css') }}" rel="stylesheet">
+@endif
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    $(document).ready(function(){
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            width: '800px',
+            timer: 3000
+        });
+
+        @if (Session::has('success'))
+            Toast.fire({
+                type: 'success',
+                title: '{{ Session::get("success") }}'
+            });
+        @endif
+    
+    });
+</script>
 
 <style>
     /* th,td{
@@ -59,12 +86,12 @@
                     </ul>
                 </div>
                 @endif
-                @if (Session::has('success'))
+                <!-- @if (Session::has('success'))
                 <div class="alert alert-success text-center">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
                     <p>{{ Session::get('success') }}</p>
                 </div>
-                @endif
+                @endif -->
                 <div class="row">
                     <div class="col-md-6">
                         <select name="form_id" id="form_id" class="field-style field-split25 align-left  form-control" style="width:200px;" onchange="form_parse()">

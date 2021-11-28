@@ -1,11 +1,15 @@
 @extends('layouts.adminlayapp')
 
+@if (Auth::user()->company_id ==1)
 <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+@else
+<link href="{{ asset('/css/app2.css') }}" rel="stylesheet">
+@endif
 
 @section('content')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.1.95/css/materialdesignicons.min.css">
 <style>
-	@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+	/* @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap'); */
 
 	* {
 		margin: 0;
@@ -15,7 +19,7 @@
 
 	body {
 		background-color: #eee;
-		font-family: 'Montserrat', sans-serif;
+		/* font-family: 'Montserrat', sans-serif; */
 	}
 
 	.container {
@@ -23,7 +27,7 @@
 		color: #000;
 		border-radius: 10px;
 		padding: 20px;
-		font-family: 'Montserrat', sans-serif;
+		/* font-family: 'Montserrat', sans-serif; */
 		max-width: 700px;
 	}
 

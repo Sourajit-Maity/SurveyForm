@@ -32,15 +32,15 @@
 
 body {
   /* font-family: 'Karla', sans-serif; */
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif !important;
 }
 
 
 .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
   /* background-color: #8275ffcf; */
-  background: #fcd833;
+  background: #fcd833 !important;
   /* background: #FFF; */
-  color: #000;
+  color: #000 !important;
   border-radius: 25px;
 }
 
@@ -49,20 +49,20 @@ body {
 }
 
 .layout-navbar-fixed .wrapper .sidebar-dark-primary .brand-link:not([class*=navbar]) {
-  background-color: rgb(87,16,178);
+  background-color: rgb(87,16,178) !important;
 }
 
 [class*=sidebar-dark-] .sidebar a {
-  color: #FFF;
+  color: #FFF !important;
 }
 
 [class*=sidebar-dark-] {
-  background-color: rgb(87,16,178);
+  background-color: rgb(87,16,178) !important;
 }
 
 
 [class*=sidebar-dark] .brand-link {
-    border-bottom: 0px;
+    border-bottom: 0px !important;
  
 }
 

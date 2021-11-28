@@ -1,13 +1,19 @@
 @extends('layouts.adminlayapp')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+@if (Auth::user()->company_id ==1)
 <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+@else
+<link href="{{ asset('/css/app2.css') }}" rel="stylesheet">
+@endif
 
 <style>
     .hr-al {
         padding-top: 13px;
     }
 </style>
+
+
 
 <script type="text/javascript">
 

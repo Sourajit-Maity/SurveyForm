@@ -1,5 +1,10 @@
 @extends('layouts.adminlayapp')
+
+@if (Auth::user()->company_id ==1)
 <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+@else
+<link href="{{ asset('/css/app2.css') }}" rel="stylesheet">
+@endif
 
 @section('content')
     <div class="row">
@@ -95,7 +100,7 @@
                             <label for="company_details" class="col-md-4 col-form-label text-md-right">{{ __('Company Details') }}</label>
 
                             <div class="col-md-6">
-                            <textarea class="form-control" style="height:150px" name="company_details" placeholder="Deatils"></textarea>
+                            <textarea class="form-control" style="height:150px" name="company_details" placeholder="Details"></textarea>
 
                             </div>
                         </div>

@@ -3,7 +3,34 @@
 @section('content')
 @section('plugins.Datatables', true)
 
+@if (Auth::user()->company_id ==1)
 <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+@else
+<link href="{{ asset('/css/app2.css') }}" rel="stylesheet">
+@endif
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    $(document).ready(function(){
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            width: '800px',
+            timer: 3000
+        });
+
+        @if (Session::has('success'))
+            Toast.fire({
+                type: 'success',
+                title: '{{ Session::get("success") }}'
+            });
+        @endif
+    
+    });
+</script>
 
 @section('content_header')
     <h1>Users Management</h1>
@@ -30,11 +57,11 @@
       </div>
     </div>
 
-    @if ($message = Session::get('success'))
+    <!-- @if ($message = Session::get('success'))
       <div class="alert alert-success">
         <p>{{ $message }}</p>
       </div>
-    @endif
+    @endif -->
 
     <div class="table-responsive dataTables_wrapper dt-bootstrap4">
       <br>
