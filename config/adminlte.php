@@ -311,6 +311,13 @@ return [
             'active' => ['my-info-details', 'assign-form-details*'],
             'icon' => 'nav-icon fas fa-fw fa-retweet',
         ],
+        [
+            'text' => 'Report Info',
+           // 'can' => ['isDirector'],
+            'url'  => 'get-share-report',
+            'active' => ['get-share-report', 'get-share-report*'],
+            'icon' => 'nav-icon far fa-fw fa-edit',
+        ],
         
         // [
         //     'text'    => 'multilevel',
