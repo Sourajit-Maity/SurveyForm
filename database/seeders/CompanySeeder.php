@@ -15,7 +15,7 @@ class CompanySeeder extends Seeder
     public function run()
     {
         $company = Company::create([
-            'company_name' => 'Optitax’s Consultants', 
+            'company_name' => 'Optitax’s Consultants LLP', 
             'res_company_name' => 'optx', 
             'website_name' => 'optx.com',
             'phone' => '1234567890', 
@@ -26,7 +26,7 @@ class CompanySeeder extends Seeder
             Mission- To nurture a knowledge-building work culture by encouraging associates to grow on focussed forefronts
             
             Values- commitment, integrity',
-            'logo' => 'logo.png',
+            'logo' => 'logo-xl.png',
         ]);
     }
 }

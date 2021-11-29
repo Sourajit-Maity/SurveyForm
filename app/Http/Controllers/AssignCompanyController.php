@@ -99,8 +99,9 @@ class AssignCompanyController extends Controller
     public function create()
     {
         $company = Company::get();
+        $users = User::get();
         $forms = Form::get();
-        return view('assigncompany.create',compact('company','forms'));
+        return view('assigncompany.create',compact('company','forms','users'));
     }
 
     /**
@@ -119,15 +120,20 @@ class AssignCompanyController extends Controller
             'form_id' => 'required',       
         ]);
 
-        $arraytostringemp =  implode(',',$request->input('employee_id'));
-        $arraytostringform =  implode(',',$request->input('form_id'));
-        $arraytostringcompany =  implode(',',$request->input('company_id'));
+        // $arraytostringemp =  implode(',',$request->input('employee_id'));
+        // $arraytostringform =  implode(',',$request->input('form_id'));
+        // $arraytostringcompany =  implode(',',$request->input('company_id'));
 
         $announcement = new AssignCompany;
         $announcement->message = $request->get('message');
-        $announcement['form_id'] = $arraytostringform;
-        $announcement['company_id'] = $arraytostringcompany;
-        $announcement['employee_id'] = $arraytostringemp;
+        // $announcement['form_id'] = $arraytostringform;
+        // $announcement['company_id'] = $arraytostringcompany;
+        // $announcement['employee_id'] = $arraytostringemp;
+
+        $announcement['form_id'] = $request->get('form_id');
+        $announcement['company_id'] = $request->get('company_id');
+        $announcement['employee_id'] = $request->get('employee_id');
+
         $announcement['user_id'] = Auth::user()->id;
         $announcement['user_company_id'] = Auth::user()->company_id;
         $announcement['assign'] = $request->input('assign');
@@ -273,7 +279,7 @@ class AssignCompanyController extends Controller
         $formid = AssignCompany::where('id',$id)->value('form_id');
         
         $assigner_company_id = AssignCompany::where('id',$assign_company_id)->value('user_company_id');
-        $assigner_id = AssignCompany::where('id',$assign_company_id)->value('user_id');
+        $assigner_id = AssignCompany::where('id',$id)->value('user_id');
         $assigner_name = User::where('id',$assigner_id)->value('name');
         
         
@@ -311,5 +317,13 @@ class AssignCompanyController extends Controller
        return view('assigncompany.assignformdetails',compact('reportdetails','message', 'assigndetails','allquestion', 'materialdetails', 'formid', 'companylogo', 'companyname', 'assigner_name', 'assigner_company_name', 'form_name', 'assign_date', 'submission_date','resultmessage'))
            ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     }
+
+    public function getEmployee($id){
+
+    $editunit= User::where("company_id",$id)->pluck("name","id");
+
+       return json_encode($editunit);
+    }
+
 
 }

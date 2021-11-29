@@ -68,8 +68,7 @@ class HomeController extends Controller
         
         $forwardform = AssignCompany::where('employee_id',$currentuserid)->where('forward',1)->count();
 
-        $forwardform = AssignCompany::where('user_company_id',Auth::user()->company_id)->where('share',1)->count();
-        //dd($forwardform);
+        $reportshare = AssignCompany::where('user_company_id',Auth::user()->company_id)->where('share',1)->count();
         $currentuserid = Auth::user()->name;
         $currentusercompid = Auth::user()->company_id; 
        // $currentuserroleid = Auth::roles()->name;
@@ -79,6 +78,6 @@ class HomeController extends Controller
        // dd($companydetails);
        $rolenameid =  RoleParent::where('designation_id',$currentuserid)->value('id');
        $rolename = Role::where('id',$rolenameid)->value('name');
-        return view('home',compact('newemployee','assignformArr','forwardform','assignform','rolename','user','form','company','question','role','companyuser','companydetails'));
+        return view('home',compact('newemployee','reportshare','assignformArr','forwardform','assignform','rolename','user','form','company','question','role','companyuser','companydetails'));
     }
 }

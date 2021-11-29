@@ -2,9 +2,40 @@
 
 @section('content')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.1.95/css/materialdesignicons.min.css">
+
+@if (Auth::user()->company_id ==1)
 <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+@else
+<link href="{{ asset('/css/app2.css') }}" rel="stylesheet">
+@endif
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    $(document).ready(function(){
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            width: '800px',
+            timer: 3000
+        });
+
+        @if (Session::has('success'))
+            Toast.fire({
+                type: 'success',
+                title: '{{ Session::get("success") }}'
+            });
+        @endif
+
+		$("aside .sidebar-dark-primary").removeClass("elevation-4");
+    
+    });
+</script>
+
 <style>
-	@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+	/* @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap'); */
 
 	* {
 		margin: 0;
@@ -14,7 +45,7 @@
 
 	body {
 		background-color: #eee;
-		font-family: 'Montserrat', sans-serif;
+		/* font-family: 'Montserrat', sans-serif; */
 	}
 
 	.container {
@@ -22,7 +53,7 @@
 		color: #000;
 		border-radius: 10px;
 		padding: 20px;
-		font-family: 'Montserrat', sans-serif;
+		/* font-family: 'Montserrat', sans-serif; */
 		max-width: 700px;
 	}
 
@@ -164,17 +195,12 @@
 
 
 </style>
-<script>
-	$(document).ready(function(){
-		$("aside .sidebar-dark-primary").removeClass("elevation-4");
-	});
-</script>
 
-@if ($message = Session::get('success'))
+<!-- @if ($message = Session::get('success'))
 	<div class="alert alert-success">
 		<p>{{ $message }}</p>
 	</div>
-@endif
+@endif -->
 
     <div class="panel panel-default">
         <div class="panel-body">
@@ -289,6 +315,33 @@
 							User Response </div>
 							<div class="card-body">
 								<div id="qt_content"></div>
+							</div>
+						</section>
+
+						<section id="comment-view">
+							<div id="header-hero" class="card-header print-area"> 
+							User Comments </div>
+							<div class="card-body">
+								<div class="direct-chat-messages print-area" style="height:100%;">
+									@foreach ($resultmessage as $message)
+										<div class="direct-chat-msg">
+											<div class="direct-chat-infos clearfix">
+												<span class="direct-chat-name float-left">{{$message->messageuser->name}}</span>
+												<span class="direct-chat-timestamp float-right">{!! \Carbon\Carbon::parse($message->created_at)->format('d M g:i A') !!}</span>
+											</div>
+
+											@if (isset($message->messageuser->user_image))
+												<img class="direct-chat-img" src="{{url('assets/images')}}/{{$message->messageuser->user_image}}">
+											@else
+												<img class="direct-chat-img" src="../assets/images/dummy.png">
+											@endif
+
+											<div class="direct-chat-text">
+												{{$message->message}}
+											</div>
+										</div>
+									@endforeach
+								</div>
 
 								<div class="d-flex align-items-center pt-3">
 									@if (Auth::user()->company_id ==1)
@@ -315,6 +368,7 @@
 								</div>
 							</div>
 						</section>
+
 
 					</div>
 				</div>
@@ -422,7 +476,7 @@
 								</div>
 
 								<div class="card-footer">
-								
+									
 								</div>
 
 							</div>
@@ -456,6 +510,10 @@
 
 		$(document).ready(function(){
 			showreport();
+
+			@if ($message = Session::get('success'))
+				
+			@endif
 
 			@if (Auth::user()->company_id ==1)
 				$('.options').css('display','block');
@@ -571,8 +629,14 @@
            
             var msg = {!! json_encode($message) !!};
             
+							
+
+			// var result2 = '<section id="body-comment"><div id="header-hero" class="card-header"> User Comments </div>';
+			// result2 = '<div class="card-body"></div></section>';
+
 			// var result2 = '<div class="form-group"><label>User Comments:</label>';
 			// result2 += '<textarea class="form-control" id="comment" rows="3" placeholder="Comment here" disabled>'+msg+'</textarea></div>';
+			
 			// $("#result-view .card-body #qt_content").append(result2); 
 
 			$('#result-view').css("display","block");

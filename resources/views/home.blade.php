@@ -139,8 +139,13 @@
                       </li>
                     </ul>
                   </div>
-                  <div class="col-5 text-center">
+                  <div class="col-5 text-center"> 
+                  @if (isset($companydetails->logo))
+                  <img src="{{url('assets/logos')}}/{{ $companydetails->logo }}" alt="user-avatar" class="img-circle img-fluid js-tilt" data-tilt>
+
+                    @else 
                     <img src="{{url('assets/logos')}}/logo-xl.png" alt="user-avatar" class="img-circle img-fluid js-tilt" data-tilt>
+                    @endif
                   </div>
                 </div>
               </div>
@@ -306,7 +311,7 @@
 
                 <div class="small-box wid-3">
                   <div class="inner">
-                  <h3>{{$question}}</h3>
+                  <h3>{{$reportshare}}</h3> 
 
                     <p>Shared Reports</p>
                   </div>

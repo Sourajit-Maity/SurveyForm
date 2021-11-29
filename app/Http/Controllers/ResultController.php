@@ -302,7 +302,7 @@ class ResultController extends Controller
 
         $assigndetails = AssignCompany::where('user_id',Auth::user()->id)->orWhere('employee_id',Auth::user()->id)->where('assign','!=', NULL)->with('company','assigncompany','form','employee','assignuser','assignresult','forwardmessage')->get();
         
-       // dd($assigndetails);
+        
 
         $result_id = AssignResult::where('assign_company_id',$id)->value('result_id');
         $message= AssignResult::where('assign_company_id',$id)->value('message');
@@ -311,10 +311,10 @@ class ResultController extends Controller
         $formid = AssignCompany::where('id',$id)->value('form_id');
         
         $assigner_company_id = AssignCompany::where('id',$assign_company_id)->value('user_company_id');
-        $assigner_id = AssignCompany::where('id',$assign_company_id)->value('user_id');
+        $assigner_id = AssignCompany::where('id',$id)->value('user_id');
         $assigner_name = User::where('id',$assigner_id)->value('name');
         
-        
+        //dd($assigner_name);
         $assigner_company_name = Company::where('id',$assigner_company_id)->value('company_name');
 
         $assign_date = AssignCompany::where('id',$assign_company_id)->value('created_at');

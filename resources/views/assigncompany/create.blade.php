@@ -1,5 +1,4 @@
 @extends('layouts.adminlayapp')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 @if (Auth::user()->company_id ==1)
 <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
@@ -7,14 +6,18 @@
 <link href="{{ asset('/css/app2.css') }}" rel="stylesheet">
 @endif
 
-<style>
+@section('css')
+    <link rel="stylesheet" href="/css/admin_custom.css">
+    <style>
     .hr-al {
         padding-top: 13px;
     }
 </style>
+@stop
 
+@section('js')
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -93,8 +96,34 @@ $(document).ready(function(){
         
     });
 
+    $("#company_id").change(function(){
+        var val = $(this).val();
+        alert('hi');
+        $("#employee_id").html('');
+        var op='<option>Choose</option>';
+        $("#employee_id").append(op);
+
+        jQuery.ajax({ 
+            url : '/getemployee/' +val,
+            type : "GET",
+            dataType : "json",
+            success:function(data)
+            {
+                
+                for(var i=0;i<data.length;i++){
+                    op='<option value="'+data[i].id+'">'+data[i].name+'</option>';
+                    $("#employee_id").append(op);
+                }
+            }
+        });
+        
+    });
+
 });
     </script>
+@stop
+
+
 @section('content')
     <div class="row">
         <div class="col-lg-12 margin-tb">
@@ -140,12 +169,12 @@ $(document).ready(function(){
 
                             <div class="col-md-6">
                              
-                                <!-- <input type="checkbox" id="checkbox_company" >Select All -->
-                                <select style="width:100% !important" name="company_id[]" id="company_id" class="form-control @error('company_id') is-invalid @enderror employee"   required autocomplete="company_id" multiple="multiple">
-                                        <option value=""disabled>Please Select</option>
+                                <!-- <input type="checkbox" id="checkbox_company" >Select  All -->
+                                <select style="width:100% !important" name="company_id" id="company_id" class="form-control @error('company_id') is-invalid @enderror"   required autocomplete="company_id" >
+                                    <option value=""disable selected>Please Select</option> 
                                     @foreach ($company as $companys)
                                         <option value="{{ $companys->id }}">{{ $companys->company_name }}</option>
-                                    @endforeach                                 
+                                    @endforeach                                                                   
                                                       
                                 </select>
                                 @error('company_id')
@@ -162,9 +191,12 @@ $(document).ready(function(){
 
                         <div class="col-md-6">
                         <!-- <input type="checkbox" id="checkbox_emp" >Select All -->
-                        <select style="width:100% !important" name="employee_id[]" id="employee_id" class="form-control @error('employee_id') is-invalid @enderror employee"   required autocomplete="employee_id" multiple="multiple">
+                        <select style="width:100% !important" name="employee_id" id="employee_id" class="form-control @error('employee_id') is-invalid @enderror employee"   required autocomplete="employee_id">
 
-                                                                               
+                                <option value=""disable selected>Please Select</option> 
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endforeach                                                
                                                      
                              </select>
                                 @error('employee_id')
@@ -179,8 +211,8 @@ $(document).ready(function(){
 
                         <div class="col-md-6">
                         <!-- <input type="checkbox" id="checkbox_designation" >Select All -->
-                        <select style="width:100% !important" name="form_id[]" id="form_id" class="form-control @error('form_id') is-invalid @enderror employee"   required autocomplete="form_id" multiple="multiple">
-
+                        <select style="width:100% !important" name="form_id" id="form_id"  class="form-control @error('form_id') is-invalid @enderror employee"   required autocomplete="form_id">
+                            <option value=""disable selected>Please Select</option> 
                                  @foreach ($forms as $form)
                                    <option value="{{$form->id}}">{{$form->form_name}}</option>
                                  @endforeach                                            
