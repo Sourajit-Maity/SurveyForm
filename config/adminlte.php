@@ -308,9 +308,16 @@ return [
         ],
         [
             'text' => 'Shared Reports',
-           // 'can' => ['isDirector'],
+            'can' => ['isDirector'],
             'url'  => 'get-share-report',
-            'active' => ['get-share-report', 'get-share-report*'],
+            'active' => ['get-share-report'],
+            'icon' => 'nav-icon fas fa-share-alt',
+        ],
+        [
+            'text' => 'Shared Reports User',
+           // 'can' => ['isDirector'],
+            'url'  => 'get-share-report-user',
+            'active' => ['get-share-report-user', 'get-share-report*'],
             'icon' => 'nav-icon fas fa-share-alt',
         ],
         [
