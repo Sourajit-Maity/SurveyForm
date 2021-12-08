@@ -529,9 +529,11 @@
 
 			@if (Auth::user()->company_id ==1)
 				$('.options').css('display','block');
+				$('.opt-msg').css('display','block');
 				$('.ans').css('display','none');
 			@else
 				$('.options').css('display','none');
+				$('.opt-msg').css('display','none');
 				$('.ans').css('display','block');
 			@endif
 
@@ -541,10 +543,13 @@
 
 			$('#user_download').click(function() {
 				$('.options').css('display','none');
+				$('.opt-msg').css('display','none');
 				$('.ans').css('display','block');
 				window.print();
-				$('.ans').css('display','none');
+				
 				$('.options').css('display','block');
+				$('.opt-msg').css('display','block');
+				$('.ans').css('display','none');
 			});
 		});
 
@@ -615,7 +620,7 @@
 									option_number = raw_option[y].number;
 									option_message = raw_option[y].message;
 
-									result += "<div class='alert alert-primary' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:block;'>"+option_message+"</div>";
+									result += "<div class='alert alert-primary opt-msg' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:block;'>Message: &nbsp;"+option_message+"</br>Number: &nbsp;"+option_number+"</div>";
 								}
 							} else {
 								result += "<label class='options'>"+option_text+" <input type='radio'disabled><span class='checkmark'></span> </label>";

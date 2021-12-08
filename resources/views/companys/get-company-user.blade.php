@@ -39,6 +39,10 @@
 @stop
 
 <style>
+    .spoc {
+        box-shadow: 0px 0px 30px #ffc107;
+        border: 5px solid #ffc107;
+    }
     div.dataTables_wrapper div.dataTables_length select {
         width: 50px;
     }
@@ -81,10 +85,18 @@
                             @foreach ($companyusers as $user)
                                 <tr data-entry-id="h">
                                 @if (isset($user->user_image))
-                  <td><img src="{{url('assets/images')}}/{{$user->user_image}}" width="100" class="img-circle img-left"></td>
-                @else 
-                  <td><img src="/assets/images/dummy.png" width="100" class="img-circle img-left"></td>
-                @endif
+                                    @if($user->spoc =='1')
+                                        <td><img src="{{url('assets/images')}}/{{$user->user_image}}" width="100" class="img-circle img-left spoc"></td>
+                                    @else
+                                        <td><img src="{{url('assets/images')}}/{{$user->user_image}}" width="100" class="img-circle img-left"></td>
+                                    @endif                                
+                                @else 
+                                    @if($user->spoc =='1')
+                                        <td><img src="/assets/images/dummy.png" width="100" class="img-circle img-left spoc"></td>
+                                    @else
+                                        <td><img src="/assets/images/dummy.png" width="100" class="img-circle img-left"></td>
+                                    @endif 
+                                @endif
                 <td>{{ $user->name }}</td>
                 <td>
                   @if(!empty($user->getRoleNames()))

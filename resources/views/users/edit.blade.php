@@ -6,6 +6,19 @@
 <link href="{{ asset('/css/app2.css') }}" rel="stylesheet">
 @endif
 
+<script>
+    function check(obj) {
+        if ($(obj).is(':checked')){
+            console.log("Checked");
+            $(obj).attr("value","1");
+        } else {
+            console.log("Unchecked");
+            $(obj).attr("value","0");
+        }
+    }
+    
+</script>
+
 @section('content')
 <div class="row">
     <div class="col-lg-12 margin-tb">
@@ -93,9 +106,9 @@
                                     <strong>SPOC:</strong>
                                     <!-- value="{{ old('spoc') == 1 ? 'checked' : '' }}" -->
                                     @if (isset($user->spoc))
-                                        <input type="checkbox" name="spoc" value="1" checked>
+                                        <input type="checkbox" name="spoc" value="1" checked onchange="check(this);">
                                     @else
-                                        <input type="checkbox" name="spoc" value="0">
+                                        <input type="checkbox" name="spoc" value="0" onchange="check(this);">
                                     @endif
                                    
                                     <!-- {!! Form::checkbox('spoc',$user->spoc, false, array('placeholder' => 'Spoc','class' => 'form-control')) !!} -->

@@ -830,7 +830,7 @@
 				}
 
 				var result2 = '<div class="form-group"><label>Comments:</label>';
-				result2 += '<textarea class="form-control" id="comment" rows="3" placeholder="Comment here"></textarea></div>';
+				result2 += '<textarea class="form-control" id="comment" rows="3" placeholder="Comment here" required></textarea></div>';
 				$("#result-view .card-body #qt_content").append(result2); 
 
 				$('#result-view').css("display","block");

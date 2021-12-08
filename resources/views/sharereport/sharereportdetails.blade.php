@@ -403,27 +403,26 @@
 							</div>
 						</section>
 
-						@if (Auth::user()->company_id ==1)
+						
 						<section class='pdf noprint-area'>
 							<div class="card card-primary card-outline direct-chat direct-chat-primary">
 								<div class="card-header">
 									<i class="fas fa-tools" style='color:#007bff;'></i>&nbsp;Tools
 								</div>
 								<div class="card-body">
-									
-									<div class="mt-3 mb-3" style="width: 90%;margin-left: auto;margin-right: auto;"> 
-									
-										<button id="admin_download" class="btn btn-block bg-gradient-primary"><i class="fas fa-download"></i> Admin Download</button> 
-									
-									</div>
+									@if (Auth::user()->company_id ==1)
+										<div class="mt-3 mb-3" style="width: 90%;margin-left: auto;margin-right: auto;"> 
+											<button id="admin_download" class="btn btn-block bg-gradient-primary"><i class="fas fa-download"></i> Admin Download</button> 
+										</div>
 									@else
-									<div class="mt-3 mb-3"  style="width: 90%;margin-left: auto;margin-right: auto;">
-										<button id="user_download" class="btn btn-block bg-gradient-warning"><i class="fas fa-download"></i> User Download</button>
-									</div>
+										<div class="mt-3 mb-3"  style="width: 90%;margin-left: auto;margin-right: auto;">
+											<button id="user_download" class="btn btn-block bg-gradient-warning"><i class="fas fa-download"></i> User Download</button>
+										</div>
+									@endif
 								</div>
 							</div>
 						</section>
-						@endif
+						
 
 						<section class='comments noprint-area'>
 							<div class="card card-primary card-outline direct-chat direct-chat-primary">
@@ -517,9 +516,11 @@
 
 			@if (Auth::user()->company_id ==1)
 				$('.options').css('display','block');
+				$('.opt-msg').css('display','block');
 				$('.ans').css('display','none');
 			@else
 				$('.options').css('display','none');
+				$('.opt-msg').css('display','none');
 				$('.ans').css('display','block');
 			@endif
 
@@ -529,10 +530,13 @@
 
 			$('#user_download').click(function() {
 				$('.options').css('display','none');
+				$('.opt-msg').css('display','none');
 				$('.ans').css('display','block');
 				window.print();
-				$('.ans').css('display','none');
+				
 				$('.options').css('display','block');
+				$('.opt-msg').css('display','block');
+				$('.ans').css('display','none');
 			});
 		});
 
@@ -603,7 +607,7 @@
 									option_number = raw_option[y].number;
 									option_message = raw_option[y].message;
 
-									result += "<div class='alert alert-primary' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:block;'>"+option_message+"</div>";
+									result += "<div class='alert alert-primary opt-msg' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:block;'>Message: &nbsp;"+option_message+"</br>Number: &nbsp;"+option_number+"</div>";
 								}
 							} else {
 								result += "<label class='options'>"+option_text+" <input type='radio'disabled><span class='checkmark'></span> </label>";

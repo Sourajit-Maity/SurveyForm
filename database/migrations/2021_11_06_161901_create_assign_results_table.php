@@ -16,7 +16,7 @@ class CreateAssignResultsTable extends Migration
         Schema::create('assign_results', function (Blueprint $table) {
             $table->id();
             $table->string('result_id');
-            $table->string('message');
+            $table->string('message')->nullable();
             $table->foreignId('material_result_id');
             $table->foreignId('assign_company_id');
             $table->foreignId('user_id');
