@@ -83,7 +83,7 @@
                                 @if (isset($user->user_image))
                   <td><img src="{{url('assets/images')}}/{{$user->user_image}}" width="100" class="img-circle img-left"></td>
                 @else 
-                  <td><img src="assets/images/dummy.png" width="100" class="img-circle img-left"></td>
+                  <td><img src="/assets/images/dummy.png" width="100" class="img-circle img-left"></td>
                 @endif
                 <td>{{ $user->name }}</td>
                 <td>

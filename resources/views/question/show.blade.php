@@ -797,12 +797,13 @@
 										option_number = varray[2];
 										option_message = varray[3];
 
-										result += "<div class='alert alert-primary' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:block;'>"+option_message+"</div>";
+										result += "<div class='alert alert-primary opt-msg' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:block;'>Message: &nbsp;"+option_message+"</br>Number: &nbsp;"+option_number+"</div>";
 									}
 								} else {
 									result += "<label class='options'>"+option_text+" <input type='radio'disabled><span class='checkmark'></span> </label>";
 								}
 							}
+							result +="<label class='ans' ><i class='fas fa-angle-right' style='color:#007bff;'></i>&nbsp;&nbsp;&nbsp;<span style='color: #6c757d!important; style='font-size:14px;''>"+q_answer+"</span></label> </br>";
 							result += "</div> </div></br>";
 
 						}
@@ -816,6 +817,16 @@
 					} else {
 						$("#result-view .card-body #qt_content").append(result); 
 					}	
+
+					@if (Auth::user()->company_id ==1)
+						$('.options').css('display','block');
+						$('.opt-msg').css('display','block');
+						$('.ans').css('display','none');
+					@else
+						$('.options').css('display','none');
+						$('.opt-msg').css('display','none');
+						$('.ans').css('display','block');
+					@endif
 				}
 
 				var result2 = '<div class="form-group"><label>Comments:</label>';

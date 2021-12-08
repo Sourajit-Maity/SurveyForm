@@ -18,9 +18,26 @@
 @section('js')
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script type="text/javascript">
 
 $(document).ready(function(){
+    var Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        width: '800px',
+        timer: 3000
+    });
+
+    @if (Session::has('success'))
+        Toast.fire({
+            type: 'success',
+            title: '{{ Session::get("success") }}'
+        });
+    @endif
 
     $('#employee_id').select2();
     $('#company_id').select2();
@@ -98,7 +115,7 @@ $(document).ready(function(){
 
     $("#company_id").change(function(){
         var val = $(this).val();
-        alert('hi');
+        //alert('hi');
         $("#employee_id").html('');
         var op='<option>Choose</option>';
         $("#employee_id").append(op);
@@ -155,11 +172,11 @@ $(document).ready(function(){
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Assign Form') }}</div>
-                @if (session('status'))
+                <!-- @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
-                    @endif
+                    @endif -->
                 <div class="card-body">
                     <form method="POST" action="{{ route('assign.store') }}">
                         @csrf

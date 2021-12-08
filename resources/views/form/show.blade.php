@@ -8,6 +8,10 @@
 
 @section('content')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.1.95/css/materialdesignicons.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <style>
 	/* @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap'); */
 
@@ -155,6 +159,12 @@
 <script>
 	$(document).ready(function(){
 		$("aside .sidebar-dark-primary").removeClass("elevation-4");
+
+		Swal.fire({
+			type: 'info',
+			title: 'Info',
+			text: 'This form fillup is for demo purpose only. Submitted data will not be saved.'
+		});
 	});
 </script>
 
@@ -796,7 +806,7 @@
 										option_number = varray[2];
 										option_message = varray[3];
 
-										result += "<div class='alert alert-primary' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:block;'>"+option_message+"</div>";
+										result += "<div class='alert alert-primary' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:block;'>Message: &nbsp;"+option_message+"</br>Number: &nbsp;"+option_number+"</div>";
 									}
 								} else {
 									result += "<label class='options'>"+option_text+" <input type='radio'disabled><span class='checkmark'></span> </label>";

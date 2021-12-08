@@ -60,6 +60,23 @@
 </style>
 <script type="text/javascript">
 
+    $(document).ready(function(){
+        var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            width: '800px',
+            timer: 3000
+        });
+
+        @if (Session::has('success'))
+            Toast.fire({
+                type: 'success',
+                title: '{{ Session::get("success") }}'
+            });
+        @endif
+    });
+
     function form_parse(){
         console.log("inside form_parse");
         //var form_id = $("#form_id option:selected").val();
@@ -95,12 +112,12 @@
                     </ul>
                 </div>
                 @endif
-                @if (Session::has('success'))
+                <!-- @if (Session::has('success'))
                 <div class="alert alert-success text-center">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
                     <p>{{ Session::get('success') }}</p>
                 </div>
-                @endif
+                @endif -->
                 <div class="row">
                     <div class="col-md-6">
                         <strong>Form name:</strong>

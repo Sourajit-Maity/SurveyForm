@@ -88,24 +88,30 @@
                                 {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control')) !!}
                             </div>
                         </div>
-                        <!-- <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <strong>SPOC:</strong>
-                                    <input 
-                                        type="checkbox" name="spoc" value=1 
-                                        {{ old('spoc') == 1 ? 'checked' : '' }}
-                                        >
+                                    <!-- value="{{ old('spoc') == 1 ? 'checked' : '' }}" -->
+                                    @if (isset($user->spoc))
+                                        <input type="checkbox" name="spoc" value="1" checked>
+                                    @else
+                                        <input type="checkbox" name="spoc" value="0">
+                                    @endif
                                    
                                     <!-- {!! Form::checkbox('spoc',$user->spoc, false, array('placeholder' => 'Spoc','class' => 'form-control')) !!} -->
-                                <!-- </div>
-                        </div> --> 
+                                </div>
+                        </div> 
                         <div class="form-group row">
                             <label for="user_image" class="col-md-4 col-form-label text-md-right">{{ __('User Profile Picture') }}</label><span style="color:red"> *</span>
 
                             <div class="col-md-6">
                                 <input id="user_image" type="file" class="form-control @error('user_image') is-invalid @enderror" name="user_image" value="{{ old('user_image') }}"  autocomplete="user_image">
-                                <img src="{{url('assets/images')}}/{{$user->user_image}}" width="100" class="img-circle img-left">
-
+                                
+                                @if (isset($user->user_image))
+                                    <img src="{{url('assets/images')}}/{{$user->user_image}}" width="100" class="img-circle img-left">
+                                @else 
+                                    <img src="/assets/images/dummy.png" width="100" class="img-circle img-left">
+                                @endif
                                 @error('user_image')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
