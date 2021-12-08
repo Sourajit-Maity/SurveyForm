@@ -290,12 +290,26 @@ class ResultController extends Controller
 
     public function getShareReport( Request $request){
      
-        $reports = AssignCompany::where('share',1)->where('company_id',Auth::user()->company_id)->Where('user_company_id',Auth::user()->company_id)
+        $reports = AssignCompany::where('share',1)
+         ->Where('user_company_id',Auth::user()->company_id)
         
         ->with('company','assigncompany','form','employee','assignuser','assignresult','forwardmessage')->get();
 
+        // dd($reports);
         return view('sharereport.sharereport',compact('reports'))
-        ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
+        ->with('i', (request()->input('page', 1) - 1) * 5, 'form'); 
+    }
+
+    public function getShareReportuser( Request $request){
+     
+        $reports = AssignCompany::where('share',1)
+         ->where('company_id',Auth::user()->company_id)
+        
+        ->with('company','assigncompany','form','employee','assignuser','assignresult','forwardmessage')->get();
+
+         //dd($reports);
+        return view('sharereport.sharereportuser',compact('reports'))
+        ->with('i', (request()->input('page', 1) - 1) * 5, 'form'); 
     }
 
     public function getShareReportDetails($id, Request $request){
