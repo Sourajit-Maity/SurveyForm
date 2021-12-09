@@ -313,13 +313,13 @@ return [
             'active' => ['get-share-report', 'get-share-report-details*'],
             'icon' => 'nav-icon fas fa-share-alt',
         ],
-        // [
-        //     'text' => 'Shared Reports User',
-        //    // 'can' => ['isDirector'],
-        //     'url'  => 'get-share-report-user',
-        //     'active' => ['get-share-report-user', 'get-share-report*'],
-        //     'icon' => 'nav-icon fas fa-share-alt',
-        // ],
+        [
+            'text' => 'Shared Reports User',
+           // 'can' => ['isDirector'],
+            'url'  => 'get-share-report-user',
+            'active' => ['get-share-report-user', 'get-share-report*'],
+            'icon' => 'nav-icon fas fa-share-alt',
+        ],
         [
             'text' => 'My Info',
             'url'  => 'get-my-info',

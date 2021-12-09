@@ -3,7 +3,11 @@
 @section('content')
 @section('plugins.Datatables', true)
 
+@if (Auth::user()->company_id ==1)
 <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+@else
+<link href="{{ asset('/css/app2.css') }}" rel="stylesheet">
+@endif
 
 @section('content_header')
     <h1>Report</h1>

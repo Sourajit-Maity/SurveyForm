@@ -301,8 +301,11 @@
 											<input type="text" name="location" value="" class="form-control" required/>
 										</div>
 										<div class="col-md-6 col-sm-12 col-xs-12">
-											<strong>Percentage:</strong>
-											<input type=number max="100" accuracy="2" min="0" step=0.01 name="percentage" value="" class="form-control" required/>
+											<!-- <strong>Percentage:</strong>
+											<input type=number max="100" accuracy="2" min="0" step=0.01 name="percentage" value="" class="form-control" required/> -->										
+											<strong>Product Code:</strong>
+											<input type=number maxlength="12" name="percentage" value="" class="form-control" required/>
+										
 										</div>
 									</div>
 								</form>

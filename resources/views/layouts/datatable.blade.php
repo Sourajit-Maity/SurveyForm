@@ -22,6 +22,7 @@
         
    <script>
    $(document).ready( function () {
+    $.noConflict();
     $('#myTable').DataTable();
    } );
    </script>
