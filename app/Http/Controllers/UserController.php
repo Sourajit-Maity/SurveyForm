@@ -173,6 +173,11 @@ $role = Auth::user()->getRoleNames();
     
         $input = $request->all();
 
+        if ($request->has('spoc') == false) {
+            $input['spoc']= '0';
+        }
+        
+        //dd($input);
         // if(!empty($input['password'])){ 
         //     $input['password'] = Hash::make($input['password']);
         // }else{

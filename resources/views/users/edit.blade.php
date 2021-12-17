@@ -104,15 +104,14 @@
                         <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <strong>SPOC:</strong>
-                                    <!-- value="{{ old('spoc') == 1 ? 'checked' : '' }}" -->
-                                    @if (isset($user->spoc))
+                                    
+                                    @if ($user->spoc == 1)
                                         <input type="checkbox" name="spoc" value="1" checked onchange="check(this);">
                                     @else
                                         <input type="checkbox" name="spoc" value="0" onchange="check(this);">
                                     @endif
                                    
-                                    <!-- {!! Form::checkbox('spoc',$user->spoc, false, array('placeholder' => 'Spoc','class' => 'form-control')) !!} -->
-                                </div>
+                                    
                         </div> 
                         <div class="form-group row">
                             <label for="user_image" class="col-md-4 col-form-label text-md-right">{{ __('User Profile Picture') }}</label><span style="color:red"> *</span>

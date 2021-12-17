@@ -50,7 +50,7 @@
           <div class="inner">
             <h3>{{$company}}</h3>
 
-            <p>Companys</p>
+            <p>Companies</p>
           </div>
           <div class="icon">
             <!-- <i class="ion ion-bag"></i> -->
@@ -98,7 +98,7 @@
 
           <div class="inner">
             <h3>{{$form}}</h3>
-            <p>Forms</p>
+            <p>Survey Forms</p>
           </div>
           <div class="icon">
             <!-- <i class="ion ion-bag"></i> -->

@@ -72,7 +72,7 @@
                                 <td>{{ $report->form->form_name }}</td>
                                 <td>{{ $report->assignuser->name }}</td>
                                 <td>{!! \Carbon\Carbon::parse($report->created_at)->format('d M Y') !!}</td>
-                                <td>{!! \Carbon\Carbon::parse($report->created_at)->format('d M Y') !!}</td>
+                                <td>{!! \Carbon\Carbon::parse($report->updated_at)->format('d M Y') !!}</td>
                                 <td>
                                     
                                         <a class="btn btn-primary" href="{{ route('results.show',$report->id) }}">Show</a>

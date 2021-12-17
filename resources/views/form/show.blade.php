@@ -9,8 +9,73 @@
 @section('content')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.1.95/css/materialdesignicons.min.css">
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="{{url('vendor/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}/">
+
+
+
+<!-- <link href=
+'https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/
+ui-lightness/jquery-ui.css'
+        rel='stylesheet'>
+      
+    <script src=
+"https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" >
+    </script>
+      
+    <script src=
+"https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" >
+    </script> -->
+
+
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.38.0/js/tempusdominus-bootstrap-4.min.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.38.0/css/tempusdominus-bootstrap-4.min.css" crossorigin="anonymous" /> -->
+
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.38.0/js/tempusdominus-bootstrap-4.min.js" integrity="sha512-k6/Bkb8Fxf/c1Tkyl39yJwcOZ1P4cRrJu77p83zJjN2Z55prbFHxPs9vN7q3l3+tSMGPDdoH51AEU8Vgo1cgAA==" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.38.0/css/tempusdominus-bootstrap-4.min.css" integrity="sha512-3JRrEUwaCkFUBLK1N8HehwQgu8e23jTH4np5NHOmQOobuC4ROQxFwFgBLTnhcnQRMs84muMh0PnnwXlPq5MGjg==" crossorigin="anonymous" /> -->
+
+<script type="text/javascript" src="{{url('vendor/jquery/jquery.min.js')}}"></script>
+<script type="text/javascript" src="{{url('vendor/moment/moment.min.js')}}"></script>
+<!-- <script type="text/javascript" src="{{url('vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script> -->
+
+<script type="text/javascript" src="{{url('vendor/inputmask/jquery.inputmask.min.js')}}"></script>
+
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+	//$(function () {
+		//bsCustomFileInput.init();
+		// $.noConflict();
+		// $('#reservationdate').datetimepicker({
+		// 	format: 'L'
+		// });
+
+		//Datemask dd/mm/yyyy
+		// $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' });
+	//});
+	
+
+	// $(document).ready(function() {
+		// $(function () {
+		// 	// $.noConflict();
+		// 	// var $j = jQuery.noConflict();
+		// 	// //Date picker
+		// 	// $j('#datetimepicker4').datetimepicker({
+		// 	// 	format: 'L'
+		// 	// });
+
+		// 	$( "#pdate" ).datepicker();
+		// });
+		// $(function() {
+		// 	// var $j = jQuery.noConflict();
+		// 	$("#datetimepicker4").datepicker();
+		// });
+
+	// });
+</script>
+
 
 <style>
 	/* @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap'); */
@@ -249,6 +314,30 @@
 										
 										</div>
 									</div>
+									<div class="row m-top-bottom">
+										<div class="col-md-6 col-sm-12 col-xs-12">
+											<strong>Project Name:</strong>
+											<input type="text" name="project_name" value="" class="form-control" required/>
+										</div>
+										<div class="col-md-6 col-sm-12 col-xs-12">
+											<strong>Project Date:</strong>
+											<!-- <div class="input-group date" id="reservationdate" data-target-input="nearest">
+												<input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"/>
+												<div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+													<div class="input-group-text"><i class="fa fa-calendar"></i></div>
+												</div>
+											</div> -->
+
+											<!-- <div class="input-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+												</div>
+												<input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask>
+											</div> -->
+
+											<input type="date" name="project_date" value="" class="form-control" required/>
+										</div>
+									</div>
 
 									<div class="d-flex align-items-center pt-3">
 										<div class="ml-auto mr-sm-5"> 
@@ -346,8 +435,14 @@
 									<li class="list-group-item">
 										<b>Location</b> <a class="float-right lo-card"></a>
 									</li>
-									<li class="list-group-item" style="border-bottom-width: 0px;">
+									<li class="list-group-item">
 										<b>Product Code</b> <a class="float-right pe-card"></a>
+									</li>
+									<li class="list-group-item">
+										<b>Project Name</b> <a class="float-right pna-card"></a>
+									</li>
+									<li class="list-group-item" style="border-bottom-width: 0px;">
+										<b>Project Date</b> <a class="float-right pda-card"></a>
 									</li>
 								</ul>
 							</div>
@@ -365,6 +460,9 @@
 	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script> -->
+	<!-- bs-custom-file-input -->
+	<script src="{{url('vendor/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
+
 	<script type="text/javascript">
 		var ResultId = "RES" + Date.now();
 		var QuestionID_array = [];
@@ -376,6 +474,13 @@
 		var question_length = questions.length;
 
 		var formid = "{{$formid}}";
+
+
+		// $(function () {
+		// 	bsCustomFileInput.init();
+		// });
+
+		
 
 		$("#start-qt").on("click", function(e){
 			if($("#form1")[0].checkValidity()) {
@@ -390,6 +495,8 @@
 				var market = $("input[name='market']").val();
 				var location = $("input[name='location']").val();
 				var percentage = $("input[name='percentage']").val();
+				var project_name = $("input[name='project_name']").val();
+				var project_date = $("input[name='project_date']").val();
 
 				$('.mc-card').text(meterial_code);
 				$('.pn-card').text(product_name);
@@ -397,6 +504,8 @@
 				$('.ma-card').text(market);
 				$('.lo-card').text(location);
 				$('.pe-card').text(percentage);
+				$('.pna-card').text(project_name);
+				$('.pda-card').text(project_date);
 
 
 
@@ -831,11 +940,20 @@
 					}	
 				}
 
-				var result2 = '<div class="form-group"><label>Comments:</label>';
+
+				var result2 = '<div class="form-group"><label for="customFile"><i class="fas fa-paperclip" style="color: #007bff;"></i>&nbsp;Attachment:</label>';
+				result2 += '<div class="custom-file">';
+				result2 += '<input type="file" class="custom-file-input" id="customFile" accept="application/pdf">';
+				result2 += '<label class="custom-file-label" for="customFile">Choose file</label></div></div>';
+
+				result2 += '<div class="form-group"><label><i class="fas fa-comment" style="color: #007bff;"></i>&nbsp;Comments:</label>';
 				result2 += '<textarea class="form-control" id="comment" rows="3" placeholder="Comment here"></textarea></div>';
+				
 				$("#result-view .card-body #qt_content").append(result2); 
 
 				$('#result-view').css("display","block");
+
+				bsCustomFileInput.init();
 				
 				var company_id = {{$company_id}};
 				//var company_id = $("input[name='company_id']").val();

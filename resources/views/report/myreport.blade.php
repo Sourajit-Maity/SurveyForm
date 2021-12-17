@@ -166,6 +166,10 @@
 		.print-area {
 			display : block;
 		}
+
+		input[type="radio"]:checked+span { 
+			box-shadow: 0 0 0 1000px #21bf73 inset !important; 
+		}
 	}
 
 
@@ -281,6 +285,30 @@
 											<strong>Product Code:</strong>
 											<input type=number maxlength="12" name="percentage" value="" class="form-control" required/>
 										
+										</div>
+									</div>
+									<div class="row m-top-bottom">
+										<div class="col-md-6 col-sm-12 col-xs-12">
+											<strong>Project Name:</strong>
+											<input type="text" name="project_name" value="" class="form-control" required/>
+										</div>
+										<div class="col-md-6 col-sm-12 col-xs-12">
+											<strong>Project Date:</strong>
+											<!-- <div class="input-group date" id="reservationdate" data-target-input="nearest">
+												<input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"/>
+												<div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+													<div class="input-group-text"><i class="fa fa-calendar"></i></div>
+												</div>
+											</div> -->
+
+											<!-- <div class="input-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+												</div>
+												<input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask>
+											</div> -->
+
+											<input type="date" name="project_date" value="" class="form-control" required/>
 										</div>
 									</div>
 								</form>
@@ -447,6 +475,8 @@
 			$("input[name='market']").val(material_info[0]['market']);
 			$("input[name='location']").val(material_info[0]['location']);
 			$("input[name='percentage']").val(material_info[0]['percentage']);
+			$("input[name='project_name']").val(material_info[0]['project_name']);
+			$("input[name='project_date']").val(material_info[0]['project_date']);
 
 
 			//$("#header-hero").html("User Response");

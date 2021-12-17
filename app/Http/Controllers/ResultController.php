@@ -89,7 +89,13 @@ class ResultController extends Controller
         //     'company_name' => 'required',
        // ]);
 
-       $inputs = $request->json()->all();
+        $tmp_data = $request->get('data');
+        $inputs = json_decode($tmp_data, true);
+        $attachment = $request->get('attachment');
+
+        
+
+       //$inputs = $request->json()->all();
 
        $question_result = $inputs['question_result'];
 
@@ -104,11 +110,20 @@ class ResultController extends Controller
        $materialresult->market= $inputs['start_form']['market'];
        $materialresult->location= $inputs['start_form']['location'];
        $materialresult->percentage= $inputs['start_form']['percentage'];
+       $materialresult->project_name= $inputs['start_form']['project_name'];
+       $materialresult->project_date= $inputs['start_form']['project_date'];
        $materialresult->result_id= $question_result[0]['ResultId'];
        $materialresult->company_name= $inputs['start_form']['company_id'];
        $materialresult->user_name= Auth::user()->name;
        $materialresult->user_email= Auth::user()->email;
-       $materialresult->user_id= Auth::user()->id;       
+       $materialresult->user_id= Auth::user()->id;      
+       
+       if ($request->hasFile('attachment')) {
+            $fileName = time().'.'.$request->attachment->extension();  
+            $request->attachment->move(public_path('/assets/attachments/'), $fileName);
+            $materialresult->attachment= $fileName;
+        }
+
        $materialresult->save();
 
        

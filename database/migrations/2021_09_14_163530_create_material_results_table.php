@@ -25,6 +25,9 @@ class CreateMaterialResultsTable extends Migration
             $table->string('market');
             $table->string('location');
             $table->decimal('percentage');
+            $table->string('project_name');
+            $table->string('project_date');
+            $table->string('attachment');
             $table->string('result_id');
             $table->string('company_logo')->nullable();
             $table->foreignId('form_id')->nullable();

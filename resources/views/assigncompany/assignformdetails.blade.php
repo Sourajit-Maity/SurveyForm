@@ -308,6 +308,30 @@
 										
 										</div>
 									</div>
+									<div class="row m-top-bottom">
+										<div class="col-md-6 col-sm-12 col-xs-12">
+											<strong>Project Name:</strong>
+											<input type="text" name="project_name" value="" class="form-control" required/>
+										</div>
+										<div class="col-md-6 col-sm-12 col-xs-12">
+											<strong>Project Date:</strong>
+											<!-- <div class="input-group date" id="reservationdate" data-target-input="nearest">
+												<input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"/>
+												<div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+													<div class="input-group-text"><i class="fa fa-calendar"></i></div>
+												</div>
+											</div> -->
+
+											<!-- <div class="input-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+												</div>
+												<input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask>
+											</div> -->
+
+											<input type="date" name="project_date" value="" class="form-control" required/>
+										</div>
+									</div>
 								</form>
 								
 							</div>
@@ -416,6 +440,11 @@
 									<div class="mt-3 mb-3" style="width: 90%;margin-left: auto;margin-right: auto;"> 
 										
 										<a id="share" href="{{ route('report-share',[$resultmessage[0]->result_id]) }}" class="btn btn-block bg-gradient-success" ><i class="fas fa-share-alt"></i> Share Report</a> 
+									
+									</div>
+									<div class="mt-3 mb-3" style="width: 90%;margin-left: auto;margin-right: auto;"> 
+										
+										<a id="share" href="{{url('assets/attachments')}}/{{$materialdetails[0]->attachment}}" target="_blank" class="btn btn-block bg-gradient-secondary" ><i class="fas fa-paperclip"></i> View Attachment</a> 
 									
 									</div>
 									<div class="mt-3 mb-3" style="width: 90%;margin-left: auto;margin-right: auto;"> 
@@ -571,6 +600,8 @@
 			$("input[name='market']").val(material_info[0]['market']);
 			$("input[name='location']").val(material_info[0]['location']);
 			$("input[name='percentage']").val(material_info[0]['percentage']);
+			$("input[name='project_name']").val(material_info[0]['project_name']);
+			$("input[name='project_date']").val(material_info[0]['project_date']);
 
 
 			//$("#header-hero").html("User Response");
