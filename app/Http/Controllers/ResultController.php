@@ -91,9 +91,7 @@ class ResultController extends Controller
 
         $tmp_data = $request->get('data');
         $inputs = json_decode($tmp_data, true);
-        $attachment = $request->get('attachment');
-
-        
+        $attachment = $request->get('attachment');       
 
        //$inputs = $request->json()->all();
 
