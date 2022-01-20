@@ -119,7 +119,7 @@ class AssignCompanyController extends Controller
             'company_id'  => 'required',
             'form_id' => 'required',       
         ]);
-
+        //dd($request->all());
         // $arraytostringemp =  implode(',',$request->input('employee_id'));
         // $arraytostringform =  implode(',',$request->input('form_id'));
         // $arraytostringcompany =  implode(',',$request->input('company_id'));

@@ -181,7 +181,7 @@
 
                             <div class="col-md-8">
                                 <!-- <input type="checkbox" id="checkbox_company" >Select All -->
-                                <select style="width:100% !important" name="company_id[]" id="company_id" class="form-control @error('company_id') is-invalid @enderror employee"   required autocomplete="company_id" multiple="multiple">
+                                <select style="width:100% !important" name="company_id" id="company_id" class="form-control @error('company_id') is-invalid @enderror employee"   required autocomplete="company_id" multiple="multiple">
 
                                     @foreach ($company as $companys)
                                         <option value="{{ $companys->id }}">{{ $companys->company_name }}</option>
@@ -200,7 +200,7 @@
                             <label for="employee_id" class="col-md-4 col-form-label text-md-right">{{ __('Employee Name') }}</label>
                             <div class="col-md-8">
                                 <!-- <input type="checkbox" id="checkbox_emp" >Select All -->
-                                <select style="width:100% !important" name="employee_id[]" id="employee_id" class="form-control @error('employee_id') is-invalid @enderror employee"   required autocomplete="employee_id" multiple="multiple"></select>
+                                <select style="width:100% !important" name="employee_id" id="employee_id" class="form-control @error('employee_id') is-invalid @enderror employee"   required autocomplete="employee_id" multiple="multiple"></select>
                                 @error('employee_id')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -215,7 +215,7 @@
                                 <!-- <input type="checkbox" id="checkbox_designation" >Select All -->
 
                                 <input type="text" name="tform_id" value="" class="form-control" readonly style="font-size:14px;"/>
-                                <input type="hidden" name="form_id[]" value="" class="form-control" readonly/>
+                                <input type="hidden" name="form_id" value="" class="form-control" readonly/>
                                 @error('form_id')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -230,14 +230,14 @@
                                 <input name="assign" value="1" type="checkbox" id="assign" >
                             </div>
                         </div>
-                        @if (Auth::user()->company_id ==1)
+                        {{--@if (Auth::user()->company_id ==1)--}}
                             <div class="form-group row">
                                 <label for="forward" class="col-md-4 col-form-label text-md-right">{{ __('Forward Form') }}</label>
                                 <div class="col-md-8 hr-al" style="padding-top:10px;">
                                     <input name="forward" value="1" type="checkbox" id="forward" >
                                 </div>
                             </div>
-                        @endif
+                            {{--@endif--}}
                         <div class="form-group row">
                             <label for="text" class="col-md-4 col-form-label text-md-right">{{ __('Enter Your Message') }}</label>
 
@@ -376,7 +376,7 @@
             if(tform_id == forms[x].id){
                 var form_name = forms[x].form_name;
                 $("input[name='tform_id']").val(form_name);
-                $("input[name='form_id[]']").val(tform_id);
+                $("input[name='form_id']").val(tform_id);
             }
         }
 
