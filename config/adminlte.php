@@ -314,8 +314,8 @@ return [
             'icon' => 'nav-icon fas fa-share-alt',
         ],
         [
-            'text' => 'Shared Reports User',
-           // 'can' => ['isDirector'],
+            'text' => 'Shared Reports',
+            'can' => ['isNotDirector'],
             'url'  => 'get-share-report-user',
             'active' => ['get-share-report-user', 'get-share-report*'],
             'icon' => 'nav-icon fas fa-share-alt',

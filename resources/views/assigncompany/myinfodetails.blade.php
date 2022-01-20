@@ -84,7 +84,7 @@
                                    
                                         <td>
                                         <a class="btn btn-success" href="{{ route('assign-form-details',[$assigndetail->id]) }}" class="btn btn-xs btn-success">
-                                        Assigned</a>
+                                        Submitted</a>
                                         </td>
                                     @else 
                                         <td>Assigned But Not Filled</td>

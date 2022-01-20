@@ -29,6 +29,10 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('isDirector', function($user) {
             return $user->company_id == '1';
          });
+
+         Gate::define('isNotDirector', function($user) {
+            return $user->company_id != '1';
+         });
         
          /* define a manager user role */
          Gate::define('isManager', function($user) {

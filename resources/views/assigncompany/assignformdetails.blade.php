@@ -442,11 +442,13 @@
 										<a id="share" href="{{ route('report-share',[$resultmessage[0]->result_id]) }}" class="btn btn-block bg-gradient-success" ><i class="fas fa-share-alt"></i> Share Report</a> 
 									
 									</div>
+									@if ($materialdetails[0]->attachment != '')
 									<div class="mt-3 mb-3" style="width: 90%;margin-left: auto;margin-right: auto;"> 
 										
 										<a id="share" href="{{url('assets/attachments')}}/{{$materialdetails[0]->attachment}}" target="_blank" class="btn btn-block bg-gradient-secondary" ><i class="fas fa-paperclip"></i> View Attachment</a> 
 									
 									</div>
+									@endif
 									<div class="mt-3 mb-3" style="width: 90%;margin-left: auto;margin-right: auto;"> 
 									
 										<button id="admin_download" class="btn btn-block bg-gradient-primary"><i class="fas fa-download"></i> Admin Download</button> 
