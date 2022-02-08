@@ -60,6 +60,7 @@
                         <!-- <th>Company Name</th> -->
                         <th>Assigned Company Name</th>
                         <th>Assigned User</th>
+                        <th>Assigny User</th>
                         <th>Form Name</th>
                         <th>Assign</th>
                         <th>Forward</th>
@@ -78,6 +79,7 @@
                                 <!-- <td>{{ $assigndetail->company->company_name }}</td> -->
                                 <td>{{ $assigndetail->assigncompany->company_name }}</td>
                                 <td>{{ $assigndetail->employee->name }}</td>
+                                <td>{{ $assigndetail->assignuser->name }}</td>
                                 <td>{{ $assigndetail->form->form_name }}</td>
                                 @if (isset($assigndetail->assign))
                                     @if ($assigndetail->assign == 0)
