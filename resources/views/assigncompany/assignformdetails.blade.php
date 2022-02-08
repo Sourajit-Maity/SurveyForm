@@ -430,7 +430,7 @@
 							</div>
 						</section>
 
-						@if (Auth::user()->company_id ==1)
+						
 						<section class='pdf noprint-area'>
 							<div class="card card-primary card-outline direct-chat direct-chat-primary">
 								<div class="card-header">
@@ -449,18 +449,20 @@
 									
 									</div>
 									@endif
+									@if (Auth::user()->company_id ==1)
 									<div class="mt-3 mb-3" style="width: 90%;margin-left: auto;margin-right: auto;"> 
 									
 										<button id="admin_download" class="btn btn-block bg-gradient-primary"><i class="fas fa-download"></i> Admin Download</button> 
 									
 									</div>
+									@endif
 									<div class="mt-3 mb-3"  style="width: 90%;margin-left: auto;margin-right: auto;">
 										<button id="user_download" class="btn btn-block bg-gradient-warning"><i class="fas fa-download"></i> User Download</button>
 									</div>
 								</div>
 							</div>
 						</section>
-						@endif
+						
 
 						<section class='comments noprint-area'>
 							<div class="card card-primary card-outline direct-chat direct-chat-primary">
@@ -471,40 +473,42 @@
 								<div class="card-body" style="overflow-y: scroll; max-height:400px;">
 									<div class="direct-chat-messages">
 										@foreach ($resultmessage as $message)
-											@if ($message->messageuser->id != Auth::user()->id)
-												<div class="direct-chat-msg">
-													<div class="direct-chat-infos clearfix">
-														<span class="direct-chat-name float-left">{{$message->messageuser->name}}</span>
-														<span class="direct-chat-timestamp float-right">{!! \Carbon\Carbon::parse($message->created_at)->format('d M g:i A') !!}</span>
-													</div>
+											@if (isset($message->message))
+												@if ($message->messageuser->id != Auth::user()->id)
+													<div class="direct-chat-msg">
+														<div class="direct-chat-infos clearfix">
+															<span class="direct-chat-name float-left">{{$message->messageuser->name}}</span>
+															<span class="direct-chat-timestamp float-right">{!! \Carbon\Carbon::parse($message->created_at)->format('d M g:i A') !!}</span>
+														</div>
 
-													@if (isset($message->messageuser->user_image))
-														<img class="direct-chat-img" src="{{url('assets/images')}}/{{$message->messageuser->user_image}}">
-													@else
-														<img class="direct-chat-img" src="../assets/images/dummy.png">
-													@endif
+														@if (isset($message->messageuser->user_image))
+															<img class="direct-chat-img" src="{{url('assets/images')}}/{{$message->messageuser->user_image}}">
+														@else
+															<img class="direct-chat-img" src="../assets/images/dummy.png">
+														@endif
 
-													<div class="direct-chat-text">
-														{{$message->message}}
+														<div class="direct-chat-text" dd="{{$message->message}}">
+															{{$message->message}}
+														</div>
 													</div>
-												</div>
-											@else
-												<div class="direct-chat-msg right">
-													<div class="direct-chat-infos clearfix">
-														<span class="direct-chat-name float-right">{{$message->messageuser->name}}</span>
-														<span class="direct-chat-timestamp float-left">{!! \Carbon\Carbon::parse($message->created_at)->format('d M g:i A') !!}</span>
+												@else
+													<div class="direct-chat-msg right">
+														<div class="direct-chat-infos clearfix">
+															<span class="direct-chat-name float-right">{{$message->messageuser->name}}</span>
+															<span class="direct-chat-timestamp float-left">{!! \Carbon\Carbon::parse($message->created_at)->format('d M g:i A') !!}</span>
+														</div>
+								
+														@if (isset($message->messageuser->user_image))
+															<img class="direct-chat-img" src="{{url('assets/images')}}/{{$message->messageuser->user_image}}">
+														@else
+															<img class="direct-chat-img" src="../assets/images/dummy.png">
+														@endif
+												
+														<div class="direct-chat-text">
+															{{$message->message}}
+														</div>
 													</div>
-							
-													@if (isset($message->messageuser->user_image))
-														<img class="direct-chat-img" src="{{url('assets/images')}}/{{$message->messageuser->user_image}}">
-													@else
-														<img class="direct-chat-img" src="../assets/images/dummy.png">
-													@endif
-											
-													<div class="direct-chat-text">
-														{{$message->message}}
-													</div>
-												</div>
+												@endif
 											@endif
 										@endforeach
 

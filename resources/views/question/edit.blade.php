@@ -228,7 +228,7 @@
         );
         console.log(obj_num);
 
-        var num_string = '<input type="number" name="number['+obj_questionid+']['+obj_num+']" value="" class="form-control"/>';
+        var num_string = '<input type="text" name="number['+obj_questionid+']['+obj_num+']" value="" class="form-control"/>';
         var message_string = '<input type="text" name="message['+obj_questionid+']['+obj_num+']" value="" class="form-control"/>';
 
         $(obj).parents('td').closest('td').next().html(num_string);
@@ -322,7 +322,7 @@
                     option_lastnode = true;
 
                     opt_result += '<td><input type="checkbox" name="last_node['+QusId+']['+j+']" onclick="ckbox(this);" checked disabled/></td>';
-                    opt_result += '<td><input type="number" name="number['+QusId+']['+j+']" value="'+option_number+'" class="form-control" readonly/></td>';
+                    opt_result += '<td><input type="text" name="number['+QusId+']['+j+']" value="'+option_number+'" class="form-control" readonly/></td>';
                     opt_result += '<td><input type="text" name="message['+QusId+']['+j+']" value="'+option_message+'" class="form-control" readonly/></td>';
                 }
                 

@@ -119,26 +119,29 @@ class AssignCompanyController extends Controller
             'company_id'  => 'required',
             'form_id' => 'required',       
         ]);
-        //dd($request->all());
-        // $arraytostringemp =  implode(',',$request->input('employee_id'));
-        // $arraytostringform =  implode(',',$request->input('form_id'));
-        // $arraytostringcompany =  implode(',',$request->input('company_id'));
+        // dd($request->all());
+        $count = $request->assign_count;
+        for ($x=0; $x<$count; $x++){
+            // $arraytostringemp =  implode(',',$request->input('employee_id'));
+            // $arraytostringform =  implode(',',$request->input('form_id'));
+            // $arraytostringcompany =  implode(',',$request->input('company_id'));
+            $announcement = new AssignCompany;
+            $announcement->message = $request->get('message');
+            // $announcement['form_id'] = $arraytostringform;
+            // $announcement['company_id'] = $arraytostringcompany;
+            // $announcement['employee_id'] = $arraytostringemp;
+            $announcement['assign_id'] = $request->get('assign_id');
+            $announcement['form_id'] = $request->get('form_id');
+            $announcement['company_id'] = $request->get('company_id');
+            $announcement['employee_id'] = $request->get('employee_id');
 
-        $announcement = new AssignCompany;
-        $announcement->message = $request->get('message');
-        // $announcement['form_id'] = $arraytostringform;
-        // $announcement['company_id'] = $arraytostringcompany;
-        // $announcement['employee_id'] = $arraytostringemp;
-
-        $announcement['form_id'] = $request->get('form_id');
-        $announcement['company_id'] = $request->get('company_id');
-        $announcement['employee_id'] = $request->get('employee_id');
-
-        $announcement['user_id'] = Auth::user()->id;
-        $announcement['user_company_id'] = Auth::user()->company_id;
-        $announcement['assign'] = $request->input('assign');
-        $announcement['forward'] = $request->input('forward');
-        $announcement->save();
+            $announcement['user_id'] = Auth::user()->id;
+            $announcement['user_company_id'] = Auth::user()->company_id;
+            $announcement['assign'] = $request->input('assign');
+            $announcement['forward'] = $request->input('forward');
+            $announcement->save();
+        }
+        
 
        // Log::debug("all".print_r($request->all(),true));
     

@@ -55,7 +55,15 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="res_company_name" class="col-md-4 col-form-label text-md-right">{{ __('Company short Name') }}</label>
+                            <label for="company_location" class="col-md-4 col-form-label text-md-right">{{ __('Company Location') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="company_location" type="text" value="{{ $company->company_location }}" class="form-control" name="company_location" value="{{ old('company_location') }}" autocomplete="company_location">
+
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="res_company_name" class="col-md-4 col-form-label text-md-right">{{ __('Company short Name') }}</label><span style="color:red"> *</span>
 
                             <div class="col-md-6">
                                 <input id="res_company_name" value="{{ $company->res_company_name }}" type="text" class="form-control" name="res_company_name" value="{{ old('res_company_name') }}" required autocomplete="res_company_name">
@@ -66,7 +74,7 @@
                             <label for="website_name" class="col-md-4 col-form-label text-md-right">{{ __('Website Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="website_name" type="text" value="{{ $company->website_name }}" class="form-control" name="website_name" value="{{ old('website_name') }}" required autocomplete="website_name">
+                                <input id="website_name" type="text" value="{{ $company->website_name }}" class="form-control" name="website_name" value="{{ old('website_name') }}" autocomplete="website_name">
 
                             </div>
                         </div>
@@ -75,7 +83,7 @@
                             <label for="gst_no" class="col-md-4 col-form-label text-md-right">{{ __('GST Number') }}</label>
 
                             <div class="col-md-6">
-                                <input id="gst_no" type="text" class="form-control" name="gst_no" value="{{ $company->gst_no }}" required autocomplete="gst_no">
+                                <input id="gst_no" type="text" class="form-control" name="gst_no" value="{{ $company->gst_no }}" autocomplete="gst_no">
 
                             </div>
                         </div>
@@ -84,7 +92,7 @@
                             <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Phone Number') }}</label>
 
                             <div class="col-md-6">
-                                <input id="phone" type="text" value="{{ $company->phone }}" class="form-control" name="phone" value="{{ old('phone') }}" required autocomplete="phone">
+                                <input id="phone" type="text" value="{{ $company->phone }}" class="form-control" name="phone" value="{{ old('phone') }}" autocomplete="phone">
 
                             </div>
                         </div>
@@ -92,7 +100,7 @@
                             <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
 
                             <div class="col-md-6">
-                            <input id="address" type="text" value="{{ $company->address }}" class="form-control" name="address" value="{{ old('address') }}" required autocomplete="address">
+                            <input id="address" type="text" value="{{ $company->address }}" class="form-control" name="address" value="{{ old('address') }}" autocomplete="address">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -109,8 +117,13 @@
 
                             <div class="col-md-6">
                                 <input id="logo" type="file" value="{{ $company->logo }}" class="form-control" name="logo" value="{{ old('logo') }}"  autocomplete="logo">
-                                <img src="{{url('assets/logos')}}/{{$company->logo}}" width="100" class="img-circle img-left">
                                 
+                                @if (isset($company->logo))
+                                <img src="{{url('assets/logos')}}/{{$company->logo}}" width="100" class="img-circle img-left">
+                                @else 
+                                <img src="../../assets/images/dummy.png" height="70" class="img-circle img-left">
+                                
+                                @endif
                             </div>
                         </div>
                        

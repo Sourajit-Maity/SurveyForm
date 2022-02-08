@@ -69,9 +69,15 @@ class CompanyController extends Controller
             'company_name' => 'required', 
             'res_company_name' => 'required',
         ]);
-    
-       
+
         $company = new Company($request->all());
+
+        $location = $request->company_location;
+        if($location != null){
+            $company->company_name = $request->company_name . "(" . $location . ")";
+        }
+
+
         if ($request->hasFile('logo')) {
             $fileName = time().'.'.$request->logo->extension();  
             $request->logo->move(public_path('/assets/logos/'), $fileName);
@@ -91,6 +97,7 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
+
         return view('companys.show',compact('company'));
     }
 
@@ -109,6 +116,15 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
+        if (str_contains($company->company_name, '(')) { 
+            $company_name = $company->company_name;
+            $arr = explode("(",$company_name);
+            $arr1 = rtrim($arr[1], ')');
+            $company->company_name = $arr[0];
+            $company->company_location = $arr1;
+        }
+        //dd($arr1);
+
     
         return view('companys.edit',compact('company'));
     }
@@ -128,6 +144,11 @@ class CompanyController extends Controller
            
         ]);
         $input = $request->all();
+
+        $location = $request->company_location;
+        if($location != null){
+            $input['company_name'] = $request->company_name . "(" . $location . ")";
+        }
 
         if ($request->hasFile('logo')) {
             $fileName = time().'.'.$request->logo->extension();  

@@ -24,6 +24,7 @@ class CreateAssignCompaniesTable extends Migration
             $table->boolean('assign')->default(false)->nullable();  
             $table->boolean('forward')->default(false)->nullable(); 
             $table->boolean('share')->default(false)->nullable(); 
+            $table->string('assign_id')->nullable();
             $table->timestamps();
         });
     }

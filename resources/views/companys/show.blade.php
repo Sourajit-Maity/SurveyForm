@@ -23,7 +23,13 @@
     <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Logo:</strong>
+          
+                @if (isset($company->logo))
                 <img src="{{url('assets/logos')}}/{{$company->logo}}" width="100" class="img-circle img-left">
+                @else 
+                <img src="../assets/images/dummy.png" height="70" class="img-circle img-left">
+                
+                @endif
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">

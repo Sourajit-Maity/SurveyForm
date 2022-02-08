@@ -62,6 +62,7 @@
                         <th>Assigner Company</th>
                         <th>Assigner Name</th>
                         <th>Assign Date</th>
+                        <th>Count</th>
                         <th width="280px">Action</th>
                     </tr>
                 </thead>
@@ -75,7 +76,7 @@
                                 <td>{{ $forms->assigncompany->company_name }}</td>
                                 <td>{{ $forms->assignuser->name }}</td>
                                 <td>{!! \Carbon\Carbon::parse($forms->created_at)->format('d M Y') !!}</td>
-                                
+                                <td></td>
                                 <td>
                                     <a class="btn btn-success" href="{{ route('assign-form-show',[$forms->id]) }}" class="btn btn-xs btn-success">
                                 Start</a>

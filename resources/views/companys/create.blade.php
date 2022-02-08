@@ -35,7 +35,7 @@
                 <div class="card-header">{{ __('ADD Company') }}</div>
 
                 <div class="card-body">
-                <form action="{{ route('companys.store') }}" method="POST" enctype="multipart/form-data">
+                <form id="company_form" action="{{ route('companys.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <div class="form-group row">
@@ -51,6 +51,14 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="company_location" class="col-md-4 col-form-label text-md-right">{{ __('Company Location') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="company_location" type="text" class="form-control" name="company_location" value="{{ old('company_location') }}"  autocomplete="company_location">
+
+                            </div>
+                        </div>     
                         <div class="form-group row">
                             <label for="res_company_name" class="col-md-4 col-form-label text-md-right">{{ __('Company short Name') }}</label><span style="color:red"> *</span>
 
@@ -135,7 +143,20 @@
     <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-        $('.ckeditor').ckeditor();
+            $('.ckeditor').ckeditor();
+
+            // $('#company_form').on('submit', function(e){
+            //     e.preventDefault();
+            //     var com_name = $('#company_name').val();
+            //     var location = $('#company_location').val();
+
+            //     if(location.length > 0){
+            //         //$('#company_name').val(com_name+'('+location+')');
+            //         console.log(com_name+'('+location+')');
+            //     }
+            
+            //     //this.submit();
+            // });
         });
     </script>
 @stop

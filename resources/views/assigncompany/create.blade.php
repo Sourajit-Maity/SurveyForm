@@ -97,6 +97,8 @@ $(document).ready(function(){
     });
 
     $("form").submit(function(e){
+        $('input[name=assign_id]').val('A'+Date.now());
+        
         var assign = $('#assign').is(":checked");
         var forward = $('#forward').is(":checked");
         console.log('assign: '+assign+' forward: '+forward);
@@ -180,7 +182,7 @@ $(document).ready(function(){
                 <div class="card-body">
                     <form method="POST" action="{{ route('assign.store') }}">
                         @csrf
-
+                        <input type='hidden' name='assign_id' value=''>
                         <div class="form-group row">
                             <label for="company_id" class="col-md-4 col-form-label text-md-right">{{ __('Company') }}<span style="color:red"> *</span></label>
 
@@ -249,11 +251,26 @@ $(document).ready(function(){
                                 <input name="assign" value="1" type="checkbox" id="assign" >
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <label for="assign_count" class="col-md-4 col-form-label text-md-right">{{ __('Assign Count') }}<span style="color:red"> *</span></label>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" name="assign_count" id="assign_count" min="1">
+                            </div>
+                        </div>
+
                         @if (Auth::user()->company_id ==1)
                             <div class="form-group row">
                                 <label for="forward" class="col-md-4 col-form-label text-md-right">{{ __('Forward Form') }}<span style="color:red"> *</span></label>
                                 <div class="col-md-6 hr-al">
                                     <input name="forward" value="1" type="checkbox" id="forward" >
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="forward_count" class="col-md-4 col-form-label text-md-right">{{ __('Forward Count') }}<span style="color:red"> *</span></label>
+                                <div class="col-md-6">
+                                    <input type="number" class="form-control" name="forward_count" id="forward_count" min="1">
                                 </div>
                             </div>
                         @endif
@@ -287,3 +304,18 @@ $(document).ready(function(){
     </div>
 </div>
 @stop
+
+<script>
+    
+    // $(document).ready(function(){
+    //     $('input[name=assign_id]').val('A'+Date.now());
+
+    //     $('#myForm').on('submit', function(e){
+    //     e.preventDefault();
+    //     var len = $('#username').val().length;
+    //     if (len < 6 && len > 1) {
+    //         this.submit();
+    //     }
+    // });
+    // });
+</script>

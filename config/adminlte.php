@@ -295,7 +295,7 @@ return [
             'icon' => 'nav-icon far fa-fw fa-share-square',
         ],
         [
-            'text' => 'Report',
+            'text' => 'My Report',
             'url'  => 'get-report-info',
             'active' => ['get-report-info', 'results*'],
             'icon' => 'nav-icon far fa-newspaper',

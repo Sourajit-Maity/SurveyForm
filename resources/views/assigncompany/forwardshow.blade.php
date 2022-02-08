@@ -77,7 +77,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-7">
-            <div class="card mt-3 card-primary card-outline">
+            <div class="card mt-3 card-primary card-outline" style="display:none;">
                 <div class="card-header"><i class="far fa-question-circle" style='color:#007bff;'></i>&nbsp; Questions</div>
                 <div class="card-body" style="overflow-y: scroll; max-height:500px;">
                     @csrf
@@ -106,7 +106,7 @@
 
 
 
-            <div class="card card-primary card-outline direct-chat direct-chat-primary">
+            <div class="card card-primary mt-3 card-outline direct-chat direct-chat-primary">
                 <div class="card-header">
                     <i class="fas fa-comments" style='color:#007bff;'></i>&nbsp;Comments
                 </div>
@@ -368,7 +368,7 @@
 
         var questiondata = @json($allquestion ?? '');
         var form_id = $("#form_id option:selected").val();
-        console.log(questiondata);
+        //console.log(questiondata);
 
         var tform_id = questiondata[0].form_id;
         var forms = @json($forms ?? '');
@@ -380,42 +380,42 @@
             }
         }
 
-        for(var i = 0; i < questiondata.length; i++){
-            var QusId = questiondata[i].question_id;
-            var Qus_type = questiondata[i].question_type;
-            var Qus = questiondata[i].question;
+        // for(var i = 0; i < questiondata.length; i++){
+        //     var QusId = questiondata[i].question_id;
+        //     var Qus_type = questiondata[i].question_type;
+        //     var Qus = questiondata[i].question;
 
-            var rowspan = 1;
+        //     var rowspan = 1;
             
-            var opt_result = "";
-            var raw_option = questiondata[i].options;
+        //     var opt_result = "";
+        //     var raw_option = questiondata[i].options;
 
-            var option_text, option_value;
-            var option_lastnode = false;
-            var option_number = "";
-            var option_message = "";
+        //     var option_text, option_value;
+        //     var option_lastnode = false;
+        //     var option_number = "";
+        //     var option_message = "";
 
-            for(var j = 0; j < raw_option.length; j++){
+        //     for(var j = 0; j < raw_option.length; j++){
 
-                option_id = raw_option[j]['id'];
-                option_text = raw_option[j]['option'];
-                option_value = raw_option[j]['child_id'];
+        //         option_id = raw_option[j]['id'];
+        //         option_text = raw_option[j]['option'];
+        //         option_value = raw_option[j]['child_id'];
            
-                opt_result +="<label class='options' ><i class='fas fa-angle-right' style='color:#007bff;'></i>&nbsp;&nbsp;&nbsp;<span style='color: #6c757d!important; style='font-size:14px;''>"+option_text+"</span></label> </br>";
+        //         opt_result +="<label class='options' ><i class='fas fa-angle-right' style='color:#007bff;'></i>&nbsp;&nbsp;&nbsp;<span style='color: #6c757d!important; style='font-size:14px;''>"+option_text+"</span></label> </br>";
 
-                rowspan++;
-            }
+        //         rowspan++;
+        //     }
 
-            var no = i+1;
-            var result = "<div class=''><div class='py-2'><b style='font-size:18px;'>Q"+no+". "+Qus+"</b></div>";
-            result += "<div class='ml-md-3 ml-sm-3 pl-md-3 pt-sm-0 pt-3' id='options'>";
-            result += opt_result;
-            result += "</div>";
+        //     var no = i+1;
+        //     var result = "<div class=''><div class='py-2'><b style='font-size:18px;'>Q"+no+". "+Qus+"</b></div>";
+        //     result += "<div class='ml-md-3 ml-sm-3 pl-md-3 pt-sm-0 pt-3' id='options'>";
+        //     result += opt_result;
+        //     result += "</div>";
 
-            $("#qt_content").append(result);
+        //     $("#qt_content").append(result);
 
-            ct++;
-        }
+        //     ct++;
+        // }
 
 
     });

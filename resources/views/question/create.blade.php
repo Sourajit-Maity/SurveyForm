@@ -183,7 +183,7 @@
         );
         console.log(obj_num);
 
-        var num_string = '<input type="number" name="number['+obj_questionid+']['+obj_num+']" value="" class="form-control"/>';
+        var num_string = '<input type="text" name="number['+obj_questionid+']['+obj_num+']" value="" class="form-control"/>';
         var message_string = '<input type="text" name="message['+obj_questionid+']['+obj_num+']" value="" class="form-control"/>';
 
         $(obj).parents('td').closest('td').next().html(num_string);
