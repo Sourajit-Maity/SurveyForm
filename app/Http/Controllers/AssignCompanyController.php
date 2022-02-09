@@ -56,8 +56,8 @@ class AssignCompanyController extends Controller
         //     $forms = Form::where('id',$formdata)->with('assignform')->get();
         // }
         $form= AssignCompany::where('employee_id',$currentuserid)->where('company_id',$currentusecompanyid)->
-        where('assign',1)->orderBy('id','DESC')->get();
-        
+        where('assign','>',0)->orderBy('id','DESC')->get();
+        // dd($form);
         return view('assigncompany.index',compact('form'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
@@ -85,7 +85,7 @@ class AssignCompanyController extends Controller
         //     $forms = Form::where('id',$formdata)->with('assignform')->get();
         // }
         $form= AssignCompany::where('employee_id',$currentuserid)->where('company_id',$currentusecompanyid)->
-        where('forward',1)->orderBy('id','DESC')->get();
+        where('forward','>',0)->orderBy('id','DESC')->get();
         
         return view('assigncompany.forwardindex',compact('form'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
@@ -119,12 +119,19 @@ class AssignCompanyController extends Controller
             'company_id'  => 'required',
             'form_id' => 'required',       
         ]);
+        
         // dd($request->all());
-        $count = $request->assign_count;
-        for ($x=0; $x<$count; $x++){
+        //$count = $request->assign_count;
+        // for ($x=0; $x<$count; $x++){
             // $arraytostringemp =  implode(',',$request->input('employee_id'));
             // $arraytostringform =  implode(',',$request->input('form_id'));
             // $arraytostringcompany =  implode(',',$request->input('company_id'));
+
+            if($request->get('assign_companies_id')){
+                $forward_count = AssignCompany::where('id', $request->get('assign_companies_id'))->value('forward');
+                $forward = AssignCompany::where('id', $request->get('assign_companies_id'))->update(array("forward" => $forward_count-1));
+            }
+
             $announcement = new AssignCompany;
             $announcement->message = $request->get('message');
             // $announcement['form_id'] = $arraytostringform;
@@ -137,10 +144,23 @@ class AssignCompanyController extends Controller
 
             $announcement['user_id'] = Auth::user()->id;
             $announcement['user_company_id'] = Auth::user()->company_id;
-            $announcement['assign'] = $request->input('assign');
-            $announcement['forward'] = $request->input('forward');
+            if($request->input('assign') == 1){
+                if($request->input('assign_count') == null){
+                    $announcement['assign'] = 0;
+                } else {
+                    $announcement['assign'] = $request->input('assign_count');
+                }
+            }
+            if($request->input('assign') == 1){
+                if($request->input('forward_count') == null){
+                    $announcement['forward'] = 0;
+                } else{
+                    $announcement['forward'] = $request->input('forward_count');
+                }
+            }
+            
             $announcement->save();
-        }
+        // }
         
 
        // Log::debug("all".print_r($request->all(),true));
