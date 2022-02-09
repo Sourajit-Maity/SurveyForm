@@ -53,8 +53,8 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        
-        return view('companys.create');
+        $managers = User::where('company_id',1)->get();
+        return view('companys.create',compact('managers'));
     }
 
     /**
@@ -67,6 +67,7 @@ class CompanyController extends Controller
     {
         request()->validate([
             'company_name' => 'required', 
+            'manager_id' => 'required',
             'res_company_name' => 'required',
         ]);
 
@@ -108,6 +109,8 @@ class CompanyController extends Controller
         return view('companys.get-company-user',compact('companyusers'));
     }
 
+    
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -123,10 +126,14 @@ class CompanyController extends Controller
             $company->company_name = $arr[0];
             $company->company_location = $arr1;
         }
-        //dd($arr1);
+        //dd($company->id);
 
-    
-        return view('companys.edit',compact('company'));
+        $managers = User::get();
+        $oldmanager= Company::select('users.name as old_name','users.id as old_id')->
+        join('users', 'companies.manager_id', '=', 'users.id')
+        ->where('companies.id',$company->id)->first();
+        //dd($oldmanager);
+        return view('companys.edit',compact('company','managers','oldmanager'));
     }
 
     /**
@@ -141,6 +148,7 @@ class CompanyController extends Controller
          request()->validate([
             'company_name' => 'required',
             'res_company_name' => 'required',
+            'manager_id' => 'required',
            
         ]);
         $input = $request->all();

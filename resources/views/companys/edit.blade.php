@@ -71,6 +71,29 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="emp_religion_id" class="col-md-4 col-form-label text-md-right">{{ __('RELIGION') }}</label><span style="color:red"> *</span>
+
+                            <div class="col-md-6">
+                              
+                                <select style="width:100% !important" name="manager_id" id="manager_id" class="form-control @error('manager_id') is-invalid @enderror employee"   required autocomplete="manager_id">
+                               
+                                    <option value="{{$oldmanager->old_id}}">{{ $oldmanager->old_name }}</option>
+                                    @foreach ($managers as $user)
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endforeach                                           
+                               
+                                 
+                                                                         
+                                                     
+                             </select>
+                                @error('manager_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="website_name" class="col-md-4 col-form-label text-md-right">{{ __('Website Name') }}</label>
 
                             <div class="col-md-6">

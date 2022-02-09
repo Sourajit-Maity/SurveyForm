@@ -11,9 +11,13 @@ class Company extends Model
     use HasFactory;
     protected $fillable = [
         'company_name', 'res_company_name', 'website_name', 'phone',
-        'address', 'logo', 'gst_no','company_details'
+        'address', 'logo', 'gst_no','company_details','manager_id'
     ];
 
+    public function manager()
+    {
+         return $this->belongsTo(User::class,'manager_id');
+    }
     public function user()
     {
          return $this->hasMany(User::class);
