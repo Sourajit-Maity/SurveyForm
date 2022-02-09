@@ -293,17 +293,23 @@ $role = Auth::user()->getRoleNames();
 
 
     public function updatePassword(Request $request)
-    {
-        
-        $request->validate([
-            'current_password' => ['required', new MatchOldPassword],
-            'new_password' => ['required'],
-            'new_confirm_password' => ['same:new_password'],
-        ]);
-   
-        User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
-   
-        return Redirect::back()->with('success','Successfully Updated!');
-    }
+        {
+            
+            $request->validate([
+                'current_password' => ['required', new MatchOldPassword],
+                'new_password' => ['required'],
+                'new_confirm_password' => ['same:new_password'],
+            ]);
+    
+            User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
+    
+            return Redirect::back()->with('success','Successfully Updated!');
+        }
+
+        public function getCompanyManager( $id)
+        {
+            $companies = Company::where('manager_id',$id)->paginate(15);
+            return view('users.get-company-manager',compact('companies'));
+        }
 
 }

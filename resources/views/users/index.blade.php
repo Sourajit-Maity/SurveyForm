@@ -102,7 +102,8 @@
                     <td><img src="assets/images/dummy.png" width="100" class="img-circle img-left"></td>
                   @endif  
                 @endif
-                <td>{{ $user->name }}</td>
+                <td> <a href="{{ route('get-company-manager',$user->id) }}">{{ $user->name }}</a> </td>
+
                 <td>
                   @if(!empty($user->getRoleNames()))
                     @foreach($user->getRoleNames() as $v)

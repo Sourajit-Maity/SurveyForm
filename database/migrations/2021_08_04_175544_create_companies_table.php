@@ -23,6 +23,7 @@ class CreateCompaniesTable extends Migration
             $table->longtext('address')->nullable();
             $table->longtext('company_details')->nullable();
             $table->string('logo')->nullable();
+            $table->foreignId('manager_id')->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
