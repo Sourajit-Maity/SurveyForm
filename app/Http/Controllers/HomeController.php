@@ -74,8 +74,8 @@ class HomeController extends Controller
        // $currentuserroleid = Auth::roles()->name;
         //dd($currentuserroleid);
         $companyuser= Company::where('id',$currentusercompid)->value('company_name');
-        $companydetails = Company::where('id',$currentusercompid)->first();
-       // dd($companydetails);
+        $companydetails = Company::where('id',$currentusercompid)->with('manager')->first();
+        //dd($companydetails);
        $rolenameid =  RoleParent::where('designation_id',$currentuserid)->value('id');
        $rolename = Role::where('id',$rolenameid)->value('name');
         return view('home',compact('newemployee','reportshare','assignformArr','forwardform','assignform','rolename','user','form','company','question','role','companyuser','companydetails'));
