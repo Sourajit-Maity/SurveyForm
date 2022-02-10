@@ -64,9 +64,20 @@ class HomeController extends Controller
         $company =  Company::count();
         $question =  Question::count();
         $role =  Role::count();
-        $assignform = AssignCompany::where('employee_id',$currentuserid)->where('assign',1)->count();
+        // $assignform = AssignCompany::where('employee_id',$currentuserid)->where('assign',1)->count();
+        $assignarr = AssignCompany::where('employee_id',$currentuserid)->where('assign', '>', 0)->get('assign')->toArray();
+        $assignform = 0;
+        foreach($assignarr as $value) {
+            $assignform += $value['assign'];
+        }
+        // dd($assignform);
         
-        $forwardform = AssignCompany::where('employee_id',$currentuserid)->where('forward',1)->count();
+        // $forwardform = AssignCompany::where('employee_id',$currentuserid)->where('forward',1)->count();
+        $forwardarr = AssignCompany::where('employee_id',$currentuserid)->where('forward','>',0)->get('forward')->toArray();
+        $forwardform = 0;
+        foreach($forwardarr as $value) {
+            $forwardform += $value['forward'];
+        }
 
         $reportshare = AssignCompany::where('user_company_id',Auth::user()->company_id)->where('share',1)->count();
         $currentuserid = Auth::user()->name;

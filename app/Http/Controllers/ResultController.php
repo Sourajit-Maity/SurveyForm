@@ -165,8 +165,8 @@ class ResultController extends Controller
         // $assignmessage->message= 1;  
 
         //$assignmessage->save();        
-
-        $assign = AssignCompany::where('id', $inputs['assign_company_id'])->update(array("assign" => 0));
+        $assign_count = AssignCompany::where('id', $inputs['assign_company_id'])->value('assign');
+        $assign = AssignCompany::where('id', $inputs['assign_company_id'])->update(array("assign" => $assign_count-1));
 
         return redirect()->route('assign.index')
                         ->with('success','result saved successfully.');

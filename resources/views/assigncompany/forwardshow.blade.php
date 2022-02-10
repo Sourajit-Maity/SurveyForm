@@ -194,6 +194,7 @@
                                     </span>
                                 @enderror
                             </div>
+                            <input type='hidden' value='' name='assign_companies_id'>
                         </div>
                        
                         <div class="form-group row">
@@ -230,11 +231,24 @@
                                 <input name="assign" value="1" type="checkbox" id="assign" >
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="assign_count" class="col-md-4 col-form-label text-md-right">{{ __('Assign Count') }}<span style="color:red"> *</span></label>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" name="assign_count" id="assign_count" min="1">
+                            </div>
+                        </div>
+
                         {{--@if (Auth::user()->company_id ==1)--}}
                             <div class="form-group row">
                                 <label for="forward" class="col-md-4 col-form-label text-md-right">{{ __('Forward Form') }}</label>
                                 <div class="col-md-8 hr-al" style="padding-top:10px;">
                                     <input name="forward" value="1" type="checkbox" id="forward" >
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="forward_count" class="col-md-4 col-form-label text-md-right">{{ __('Forward Count') }}<span style="color:red"> *</span></label>
+                                <div class="col-md-6">
+                                    <input type="number" class="form-control" name="forward_count" id="forward_count" min="1">
                                 </div>
                             </div>
                             {{--@endif--}}
@@ -347,6 +361,10 @@
             var assign = $('#assign').is(":checked");
             var forward = $('#forward').is(":checked");
             console.log('assign: '+assign+' forward: '+forward);
+
+            var url = window.location.href;
+            var id = url.substring(url.lastIndexOf('/') + 1);
+            $('input[name=assign_companies_id]').val(id);
 
             if((assign == false) && (forward == false)){
                 Swal.fire({
