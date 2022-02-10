@@ -44,6 +44,7 @@ class ResultController extends Controller
         where('assign',0)
         ->where('employee_id',Auth::user()->id)
          ->with('assignuser','form','company','assignresult')
+         ->orderby('created_at', 'desc')
         ->get();
 
         //dd($reports);
@@ -211,6 +212,8 @@ class ResultController extends Controller
             ->where('child_id', '!=', 'undefined')
             ->where('number', '!=', 'undefined')
             ->where('message', '!=', 'undefined')
+            ->
+            orderby('created_at', 'desc')
             ->get();
             $allquestion[$y]['options'] = $alloption; 
         }
@@ -306,7 +309,8 @@ class ResultController extends Controller
         $reports = AssignCompany::where('share',1)
          ->Where('user_company_id',Auth::user()->company_id)
         
-        ->with('company','assigncompany','form','employee','assignuser','assignresult','forwardmessage')->get();
+        ->with('company','assigncompany','form','employee','assignuser','assignresult','forwardmessage')
+        ->orderby('created_at', 'desc')->get();
 
         // dd($reports);
         return view('sharereport.sharereport',compact('reports'))

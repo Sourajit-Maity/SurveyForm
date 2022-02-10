@@ -66,6 +66,7 @@
                         <th>Forward</th>
                         <th>Message</th>
                         <th>Assign Date</th>
+                        <th>Assign Time</th>
                         <!-- <th width="100px">Action</th> -->
                         
                     </tr>
@@ -103,6 +104,7 @@
                                 
                                 <td>{{ $assigndetail->message }}</td>
                                 <td>{!! \Carbon\Carbon::parse($assigndetail->created_at)->format('d M Y') !!}</td>
+                                <td>{!! \Carbon\Carbon::parse($assigndetail->created_at)->format('H : i') !!}</td>
                                 <!-- <td>
                                     <a class="btn btn-success" href="{{ route('assign-form-details',[$assigndetail->id]) }}" class="btn btn-xs btn-success">
                                 Details</a>

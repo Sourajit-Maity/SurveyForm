@@ -152,7 +152,7 @@
                         <span class="fa-li">
                           <i class="fas fa-lg fa-phone"></i>
                         </span> 
-                        Phone: {{ $companydetails->manager->phone }}
+                        Phone: {{ $companydetails->manager->phone_number }}
                       </li>
                     </ul>
                   </div>
