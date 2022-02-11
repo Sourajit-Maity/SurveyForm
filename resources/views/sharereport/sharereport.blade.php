@@ -50,8 +50,8 @@
                                 <td>{{ $report->form->form_name }}</td>
                                 <td>{{ $report->assignuser->name }}</td>
                                 <td>{{ $report->employee->name }}</td>
-                                <td>{!! \Carbon\Carbon::parse($report->created_at)->format('d M Y') !!}</td>
-                                <td>{!! \Carbon\Carbon::parse($report->updated_at)->format('d M Y') !!}</td>
+                                <td>{!! \Carbon\Carbon::parse($report->created_at)->format('d M Y, H : i') !!}</td>
+                                <td>{!! \Carbon\Carbon::parse($report->updated_at)->format('d M Y, H : i') !!}</td>
                                 <td>
                                     
                                         <a class="btn btn-primary" href="{{ route('get-share-report-details',$report->id) }}">Show</a>

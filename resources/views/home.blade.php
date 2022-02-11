@@ -123,7 +123,7 @@
                     <h2 class="lead"><b>{{ $companydetails->company_name }}</b></h2>
                     <p class="text-muted text-sm" style="text-align: justify;">
                       <b>About: </b>  
-                      {{ $companydetails->company_details }}                    </p>
+                      {{ $companydetails->company_details }} </p>
                     <ul class="ml-4 mb-0 fa-ul text-muted">
                       <li class="small">
                         <span class="fa-li">
@@ -136,6 +136,23 @@
                           <i class="fas fa-lg fa-phone"></i>
                         </span> 
                         Phone: {{ $companydetails->phone }}
+                      </li>
+                    </ul>
+                    <br>
+                    <b>Reporting Manager: </b>  
+                      {{ $companydetails->manager->name }} </p>
+                    <ul class="ml-4 mb-0 fa-ul text-muted">
+                      <li class="small">
+                        <span class="fa-li">
+                          <i class="fas fa-lg fa-building"></i>
+                        </span> 
+                        {{ $companydetails->manager->email }}
+                      </li>
+                      <li class="small" style="margin-top: 10px;">
+                        <span class="fa-li">
+                          <i class="fas fa-lg fa-phone"></i>
+                        </span> 
+                        Phone: {{ $companydetails->manager->phone_number }}
                       </li>
                     </ul>
                   </div>

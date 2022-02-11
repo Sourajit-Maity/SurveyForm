@@ -320,14 +320,13 @@ class AssignCompanyController extends Controller
 
         if(Auth::user()->id==1)
         {
-            $assigndetails = AssignCompany::with('company','assigncompany','form','employee','assignuser','assignresult','forwardmessage')->get();
+            $assigndetails = AssignCompany::with('company','assigncompany','form','employee','assignuser','assignresult','forwardmessage')->orderby('created_at', 'desc')->get();
 
         }
         else{
-            $assigndetails = AssignCompany::where('user_id',Auth::user()->id)->orWhere('employee_id',Auth::user()->id)->with('company','assigncompany','form','employee','assignuser','assignresult','forwardmessage')->get();
-
+            $assigndetails = AssignCompany::where('user_id',Auth::user()->id)->orWhere('employee_id',Auth::user()->id)->with('company','assigncompany','form','employee','assignuser','assignresult','forwardmessage')->orderby('created_at', 'desc')->get();
+            
         }
-        //dd($assigndetails);
         return view('assigncompany.myinfodetails',compact('assigndetails'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
