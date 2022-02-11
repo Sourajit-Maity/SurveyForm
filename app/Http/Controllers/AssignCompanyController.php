@@ -128,38 +128,72 @@ class AssignCompanyController extends Controller
             // $arraytostringcompany =  implode(',',$request->input('company_id'));
 
             if($request->get('assign_companies_id')){
-                $forward_count = AssignCompany::where('id', $request->get('assign_companies_id'))->value('forward');
-                $forward = AssignCompany::where('id', $request->get('assign_companies_id'))->update(array("forward" => $forward_count-1));
+                // $forward_count = AssignCompany::where('id', $request->get('assign_companies_id'))->value('forward');
+                // $forward = AssignCompany::where('id', $request->get('assign_companies_id'))->update(array("forward" => $forward_count-1));
+                $forward = AssignCompany::where('id', $request->get('assign_companies_id'))->update(array("forward" => 0));
             }
 
-            $announcement = new AssignCompany;
-            $announcement->message = $request->get('message');
-            // $announcement['form_id'] = $arraytostringform;
-            // $announcement['company_id'] = $arraytostringcompany;
-            // $announcement['employee_id'] = $arraytostringemp;
-            $announcement['assign_id'] = $request->get('assign_id');
-            $announcement['form_id'] = $request->get('form_id');
-            $announcement['company_id'] = $request->get('company_id');
-            $announcement['employee_id'] = $request->get('employee_id');
 
-            $announcement['user_id'] = Auth::user()->id;
-            $announcement['user_company_id'] = Auth::user()->company_id;
-            if($request->input('assign') == 1){
-                if($request->input('assign_count') == null){
-                    $announcement['assign'] = 0;
-                } else {
-                    $announcement['assign'] = $request->input('assign_count');
-                }
-            }
-            if($request->input('assign') == 1){
-                if($request->input('forward_count') == null){
-                    $announcement['forward'] = 0;
-                } else{
-                    $announcement['forward'] = $request->input('forward_count');
-                }
-            }
             
-            $announcement->save();
+            if($request->input('assign') == 1){
+                for ($x=0; $x < $request->input('assign_count'); $x++){
+                    $announcement = new AssignCompany;
+                    $announcement->message = $request->get('message');
+                    $announcement['assign_id'] = $request->get('assign_id');
+                    $announcement['form_id'] = $request->get('form_id');
+                    $announcement['company_id'] = $request->get('company_id');
+                    $announcement['employee_id'] = $request->get('employee_id');
+
+                    $announcement['user_id'] = Auth::user()->id;
+                    $announcement['user_company_id'] = Auth::user()->company_id;
+
+                    $announcement['assign'] = 1;
+                    $announcement['forward'] = null;
+
+                    $announcement->save();
+                }
+            }
+
+            if($request->input('forward') == 1){
+                for ($x=0; $x < $request->input('forward_count'); $x++){
+                    $announcement = new AssignCompany;
+                    $announcement->message = $request->get('message');
+                    $announcement['assign_id'] = $request->get('assign_id');
+                    $announcement['form_id'] = $request->get('form_id');
+                    $announcement['company_id'] = $request->get('company_id');
+                    $announcement['employee_id'] = $request->get('employee_id');
+
+                    $announcement['user_id'] = Auth::user()->id;
+                    $announcement['user_company_id'] = Auth::user()->company_id;
+
+                    $announcement['assign'] = null;
+                    $announcement['forward'] = 1;
+
+                    $announcement->save();
+                }
+            }
+
+            
+
+
+
+
+            // if($request->input('assign') == 1){
+            //     if($request->input('assign_count') == null){
+            //         $announcement['assign'] = 0;
+            //     } else {
+            //         $announcement['assign'] = $request->input('assign_count');
+            //     }
+            // }
+            // if($request->input('assign') == 1){
+            //     if($request->input('forward_count') == null){
+            //         $announcement['forward'] = 0;
+            //     } else{
+            //         $announcement['forward'] = $request->input('forward_count');
+            //     }
+            // }
+            
+            // $announcement->save();
         // }
         
 
