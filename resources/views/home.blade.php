@@ -139,7 +139,8 @@
                       </li>
                     </ul>
                     <br>
-                    <b>Reporting Manager: </b>  
+                    @if(isset($companydetails->manager_id))
+                      <b>Reporting Manager: </b>  
                       {{ $companydetails->manager->name }} </p>
                     <ul class="ml-4 mb-0 fa-ul text-muted">
                       <li class="small">
@@ -155,6 +156,9 @@
                         Phone: {{ $companydetails->manager->phone_number }}
                       </li>
                     </ul>
+                    @endif
+                    
+                    
                   </div>
                   <div class="col-5 text-center"> 
                   @if (isset($companydetails->logo))

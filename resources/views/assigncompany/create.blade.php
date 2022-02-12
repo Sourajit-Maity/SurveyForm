@@ -21,7 +21,7 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-<script type="text/javascript">
+<script type="text/javascript"> 
 
 $(document).ready(function(){
     var Toast = Swal.mixin({
@@ -155,7 +155,12 @@ $(document).ready(function(){
             </div>
         </div>
     </div>
-
+                <!-- @if (Session::has('success'))
+                    <div class="alert alert-success text-center">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                        <p>{{ Session::get('success') }}</p>
+                    </div>
+                @endif -->
 
     @if ($errors->any())
         <div class="alert alert-danger">
