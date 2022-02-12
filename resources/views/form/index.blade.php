@@ -88,13 +88,13 @@
                                     <td>{{ ++$i }}</td>
                                     <td>{{ $forms->form_name }}</td>
                                     <td>{{ $forms->createdby->name }}</td>
-                                    <td>{!! \Carbon\Carbon::parse($forms->created_at)->format('d M Y') !!}</td>
+                                    <td>{!! \Carbon\Carbon::parse($forms->created_at)->format('d M Y,H:i') !!}</td>
                                     @if (isset($forms->updated_id))
                                     <td>{{ $forms->updatedby->name }}</td>
                                     @else <td></td>
                                     @endif
                                     
-                                    <td>{!! \Carbon\Carbon::parse($forms->updated_at)->format('d M Y') !!}</td>
+                                    <td>{!! \Carbon\Carbon::parse($forms->updated_at)->format('d M Y,H:i') !!}</td>
 
 
                                     

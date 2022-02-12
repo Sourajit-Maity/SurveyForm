@@ -89,13 +89,13 @@
                                     @endif
                                     
                                     <td>{{ $question->createdby->name }}</td>
-                                    <td>{!! \Carbon\Carbon::parse($question->created_at)->format('d M Y') !!}</td>
+                                    <td>{!! \Carbon\Carbon::parse($question->created_at)->format('d M Y,H:i') !!}</td>
                                     @if (isset($question->updated_id))
                                     <td>{{ $question->updatedby->name }}</td>
                                     @else <td></td>
                                     @endif
                                     
-                                    <td>{!! \Carbon\Carbon::parse($question->updated_at)->format('d M Y') !!}</td>
+                                    <td>{!! \Carbon\Carbon::parse($question->updated_at)->format('d M Y,H:i') !!}</td>
                                     <td>
                                         <form action="{{ route('question.destroy',$question->id) }}" method="POST">
                                             <!-- <a class="btn btn-info" href="{{ route('question.show',$question->id) }}">Show</a> -->
