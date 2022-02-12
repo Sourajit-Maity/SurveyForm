@@ -199,7 +199,7 @@ class AssignCompanyController extends Controller
 
        // Log::debug("all".print_r($request->all(),true));
     
-        return redirect()->back()->with('status', 'Form Asigned Successfully');
+        return redirect()->back()->with('success','Form assigned successfully');
      }
 
     /**

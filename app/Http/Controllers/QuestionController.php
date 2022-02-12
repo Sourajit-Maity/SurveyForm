@@ -393,7 +393,7 @@ class QuestionController extends Controller
        // Log::debug("update_question: ".print_r($update_question,true));
 
         
-        for($k = 0; $k < count($update_question); $k++){
+        for($k = 0; $k < count($update_question); $k++){ 
             $oldqusid = Question::where('question_id',$update_question[$k]['question_id'])->value('id');
             $updatequs = Question::findOrFail($oldqusid);
             $updatequs->question = $update_question[$k]['question'];
