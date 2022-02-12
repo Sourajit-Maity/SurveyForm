@@ -58,9 +58,9 @@
                     <tr>
                         <th>No</th>
                         <!-- <th>Company Name</th> -->
+                        <th>Assigny User</th>
                         <th>Assigned Company Name</th>
                         <th>Assigned User</th>
-                        <th>Assigny User</th>
                         <th>Form Name</th>
                         <th>Assign</th>
                         <th>Forward</th>
@@ -78,9 +78,9 @@
                             <tr data-entry-id="h">
                                 <td>{{ ++$i }}</td>
                                 <!-- <td>{{ $assigndetail->company->company_name }}</td> -->
+                                <td>{{ $assigndetail->assignuser->name }}</td>
                                 <td>{{ $assigndetail->assigncompany->company_name }}</td>
                                 <td>{{ $assigndetail->employee->name }}</td>
-                                <td>{{ $assigndetail->assignuser->name }}</td>
                                 <td>{{ $assigndetail->form->form_name }}</td>
                                 @if (isset($assigndetail->assign))
                                     @if ($assigndetail->assign == 0)

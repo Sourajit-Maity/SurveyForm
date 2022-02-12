@@ -289,7 +289,13 @@ class AssignCompanyController extends Controller
 
     public function forwardshow(Request $request,$id)
     {
-        $company = Company::get();
+        
+        if (Auth::user()->company_id == 1){
+            $company = Company::get();
+        } else{
+            $company = Company::where('id',Auth::user()->company_id)->get();
+        }
+       
         //$forms = Form::get();
 
         $formid = AssignCompany::where('id',$id)->value('form_id');

@@ -231,10 +231,11 @@
                                 <input name="assign" value="1" type="checkbox" id="assign" >
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group row" style='display:none;'>
                             <label for="assign_count" class="col-md-4 col-form-label text-md-right">{{ __('Assign Count') }}<span style="color:red"> *</span></label>
                             <div class="col-md-6">
-                                <input type="number" class="form-control" name="assign_count" id="assign_count" min="1">
+                                <!-- <input type="number" class="form-control" name="assign_count" id="assign_count" min="1"> -->
+                                <input type="number" class="form-control" name="assign_count" id="assign_count" value='1'>
                             </div>
                         </div>
 
@@ -245,10 +246,11 @@
                                     <input name="forward" value="1" type="checkbox" id="forward" >
                                 </div>
                             </div>
-                            <div class="form-group row">
+                            <div class="form-group row" style='display:none;'>
                                 <label for="forward_count" class="col-md-4 col-form-label text-md-right">{{ __('Forward Count') }}<span style="color:red"> *</span></label>
                                 <div class="col-md-6">
-                                    <input type="number" class="form-control" name="forward_count" id="forward_count" min="1">
+                                    <!-- <input type="number" class="form-control" name="forward_count" id="forward_count" min="1"> -->
+                                    <input type="number" class="form-control" name="forward_count" id="forward_count" value="1">
                                 </div>
                             </div>
                             {{--@endif--}}
