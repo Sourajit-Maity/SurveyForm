@@ -198,8 +198,12 @@ class AssignCompanyController extends Controller
         
 
        // Log::debug("all".print_r($request->all(),true));
-    
-        return redirect()->back()->with('success','Form assigned successfully');
+        if(Auth::user()->company_id == 1){
+            return redirect()->back()->with('success','Form assigned successfully');
+        } else {
+            return redirect()->route('forward-assign')->with('success','Form assigned successfully');
+        }
+        
      }
 
     /**
@@ -260,7 +264,7 @@ class AssignCompanyController extends Controller
         foreach($companyArray as $companyarray) {
             foreach($complocation as $complocations) {
                 if($complocations->id == $companyarray){
-                    $companylocation = User::where("company_id",$complocations->id)->get();
+                    $companylocation = User::where("company_id",$complocations->id)->where('id', '!=', auth()->id())->get();
                     
                     array_push($company_id_array,$companylocation);
                 }
@@ -295,6 +299,8 @@ class AssignCompanyController extends Controller
         } else{
             $company = Company::where('id',Auth::user()->company_id)->get();
         }
+
+
        
         //$forms = Form::get();
 
