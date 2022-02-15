@@ -119,7 +119,8 @@ class ResultController extends Controller
        
        if ($request->hasFile('attachment')) {
             $fileName = time().'.'.$request->attachment->extension();  
-            $request->attachment->move(public_path('/assets/images/'), $fileName);
+            // $request->attachment->move(public_path('/assets/images/'), $fileName);
+            $request->attachment->move(public_path('/assets/attachments/'), $fileName);
             $materialresult->attachment= $fileName;
         }
 
