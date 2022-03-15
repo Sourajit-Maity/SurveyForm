@@ -185,7 +185,7 @@ $(document).ready(function(){
                         </div>
                     @endif -->
                 <div class="card-body">
-                    <form method="POST" action="{{ route('assign.store') }}">
+                    <form method="POST" action="{{ route('assign.store') }}" enctype="multipart/form-data">
                         @csrf
                         <input type='hidden' name='assign_id' value=''>
                         <div class="form-group row">
@@ -258,11 +258,18 @@ $(document).ready(function(){
                         </div>
 
                         <div class="form-group row">
+                            <label for="material_file" class="col-md-4 col-form-label text-md-right">{{ __('Material File') }}</label>
+                            <div class="col-md-6 hr-al">
+                                <input name="material_file" value="1" type="file" id="material_file" >
+                            </div>
+                        </div>
+
+                        <!-- <div class="form-group row">
                             <label for="assign_count" class="col-md-4 col-form-label text-md-right">{{ __('Assign Count') }}<span style="color:red"> *</span></label>
                             <div class="col-md-6">
                                 <input type="number" class="form-control" name="assign_count" id="assign_count" min="1">
                             </div>
-                        </div>
+                        </div> -->
 
                         @if (Auth::user()->company_id ==1)
                             <div class="form-group row">

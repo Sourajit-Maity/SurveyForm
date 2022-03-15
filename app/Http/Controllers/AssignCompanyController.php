@@ -13,11 +13,18 @@ use App\Models\AssignResult;
 use App\Models\Result;
 use App\Models\MaterialResult;
 use App\Models\ReportMessages;
-
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Log;
 use DB;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\MaterialExcel;
+use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\ToCollection;
+use Carbon\Carbon;
+use App\Imports\MaterialImport;
+use Rap2hpoutre\FastExcel\FastExcel;
 class AssignCompanyController extends Controller
 {
     // function __construct()
@@ -112,6 +119,30 @@ class AssignCompanyController extends Controller
      */
     public function store(Request $request)
     {
+
+        
+
+        $users = (new FastExcel)->import(request()->file('material_file'), function ($row) {
+
+            return MaterialExcel::create([
+                'material_code'     => $row['material_code'],
+                    'product_name'    => $row['product_name'],
+                    'assign_company_id'    => 1,
+                    'user_id'    => Auth::user()->id,
+                    'package'     => $row['package'],
+                    'market'    => $row['market'],
+                    'location'     => $row['location'],
+                    'product_code'    => $row['product_code'],
+                    'project_name'     => $row['project_name'],
+                    'project_date'    => $row['project_date'], 
+            ]);
+        });
+    
+        //dd($users[0]->id);
+
+        $material_excel_id = $users[0]->id;
+       
+        //dd(111);
         $this->validate($request, [
  
             'message'  => 'required',
@@ -136,14 +167,15 @@ class AssignCompanyController extends Controller
 
             
             if($request->input('assign') == 1){
-                for ($x=0; $x < $request->input('assign_count'); $x++){
+
+               // for ($x=0; $x < $request->input('assign_count'); $x++){
                     $announcement = new AssignCompany;
                     $announcement->message = $request->get('message');
                     $announcement['assign_id'] = $request->get('assign_id');
                     $announcement['form_id'] = $request->get('form_id');
                     $announcement['company_id'] = $request->get('company_id');
                     $announcement['employee_id'] = $request->get('employee_id');
-
+                    $announcement['material_excel_id'] = $material_excel_id;
                     $announcement['user_id'] = Auth::user()->id;
                     $announcement['user_company_id'] = Auth::user()->company_id;
 
@@ -151,7 +183,9 @@ class AssignCompanyController extends Controller
                     $announcement['forward'] = null;
 
                     $announcement->save();
-                }
+               // }
+
+
             }
 
             if($request->input('forward') == 1){
