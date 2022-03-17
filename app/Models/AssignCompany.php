@@ -10,9 +10,13 @@ class AssignCompany extends Model
     use HasFactory;
     protected $table = 'assign_companies';
     protected $fillable = [
-        'message', 'assign_id','material_excel_id', 'company_id','employee_id', 'form_id', 'assign', 'forward', 'user_id', 'user_company_id','share'
+        'message', 'assign_id', 'company_id','employee_id', 'form_id', 'assign', 'forward', 'user_id', 'user_company_id','share'
     ];
-
+    public function materialdata()
+    {
+         return $this->hasOne(MaterialExcel::class);
+    }
+    
     public function company()
     {
         

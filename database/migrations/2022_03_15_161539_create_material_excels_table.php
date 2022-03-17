@@ -17,14 +17,8 @@ class CreateMaterialExcelsTable extends Migration
             $table->id();
             $table->integer('user_id')->unsigned();
             $table->integer('assign_company_id')->unsigned();
-            $table->string('material_code');
-            $table->string('product_name');
-            $table->string('package');
-            $table->string('market');
-            $table->string('location');
-            $table->string('product_code');
-            $table->string('project_name');
-            $table->string('project_date');
+            $table->string('key_name');
+            $table->string('value');
             $table->timestamps();
         });
     }

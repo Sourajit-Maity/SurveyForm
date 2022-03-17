@@ -27,6 +27,7 @@ use App\Imports\MaterialImport;
 use Rap2hpoutre\FastExcel\FastExcel;
 class AssignCompanyController extends Controller
 {
+    public $var = [];
     // function __construct()
     // {
     //      $this->middleware('permission:assign-list|assign-create|assign-edit|assign-delete', ['only' => ['index','show']]);
@@ -120,36 +121,70 @@ class AssignCompanyController extends Controller
     public function store(Request $request)
     {
 
+        // $this->validate($request, [
+ 
+        //     'message'  => 'required',
+        //     'employee_id'  => 'required',
+        //     'company_id'  => 'required',
+        //     'form_id' => 'required',       
+        // ]);
+
+        if($request->get('assign_companies_id')){
+            $forward = AssignCompany::where('id', $request->get('assign_companies_id'))->update(array("forward" => 0));
+        }
+
+
+        if($request->input('assign') == 1){
+            
+            $this->var['message'] = $request->get('message');
+            $this->var['assign_id'] = $request->get('assign_id');
+            $this->var['form_id'] = $request->get('form_id');
+            $this->var['company_id'] = $request->get('company_id');
+            $this->var['employee_id'] = $request->get('employee_id');
+            
+
+            (new FastExcel)->import(request()->file('material_file'), function ($row) {
+
+                // dd($row);
+                // dd($this->var['message']);
+                $announcement = new AssignCompany;
+                $announcement['message'] = $this->var['message'];
+                $announcement['assign_id'] = $this->var['assign_id'];
+                $announcement['form_id'] = $this->var['form_id'];
+                $announcement['company_id'] = $this->var['company_id'];
+                $announcement['employee_id'] = $this->var['employee_id'];
+                $announcement['user_id'] = Auth::user()->id;
+                $announcement['user_company_id'] = Auth::user()->company_id;
+    
+                $announcement['assign'] = 1;
+                $announcement['forward'] = null;
+    
+                $announcement->save();
+                $assign_id = $announcement->id;
+
+                foreach ($row as $key => $value) {
+                    MaterialExcel::create([
+                        'assign_company_id' => $assign_id,
+                        'user_id' => Auth::user()->id,
+                        'key_name' => $key,
+                        'value' => $value,
+                    ]);
+                }
+            });   
+
+
+         }
+
         
-
-        $users = (new FastExcel)->import(request()->file('material_file'), function ($row) {
-
-            return MaterialExcel::create([
-                'material_code'     => $row['material_code'],
-                    'product_name'    => $row['product_name'],
-                    'assign_company_id'    => 1,
-                    'user_id'    => Auth::user()->id,
-                    'package'     => $row['package'],
-                    'market'    => $row['market'],
-                    'location'     => $row['location'],
-                    'product_code'    => $row['product_code'],
-                    'project_name'     => $row['project_name'],
-                    'project_date'    => $row['project_date'], 
-            ]);
-        });
     
         //dd($users[0]->id);
 
-        $material_excel_id = $users[0]->id;
+        // dd(count($users));
+
+        // $material_excel_id = $users[0]->id;
        
         //dd(111);
-        $this->validate($request, [
- 
-            'message'  => 'required',
-            'employee_id'  => 'required',
-            'company_id'  => 'required',
-            'form_id' => 'required',       
-        ]);
+        
         
         // dd($request->all());
         //$count = $request->assign_count;
@@ -158,35 +193,36 @@ class AssignCompanyController extends Controller
             // $arraytostringform =  implode(',',$request->input('form_id'));
             // $arraytostringcompany =  implode(',',$request->input('company_id'));
 
-            if($request->get('assign_companies_id')){
-                // $forward_count = AssignCompany::where('id', $request->get('assign_companies_id'))->value('forward');
-                // $forward = AssignCompany::where('id', $request->get('assign_companies_id'))->update(array("forward" => $forward_count-1));
-                $forward = AssignCompany::where('id', $request->get('assign_companies_id'))->update(array("forward" => 0));
-            }
+            // if($request->get('assign_companies_id')){
+            //     // $forward_count = AssignCompany::where('id', $request->get('assign_companies_id'))->value('forward');
+            //     // $forward = AssignCompany::where('id', $request->get('assign_companies_id'))->update(array("forward" => $forward_count-1));
+            //     $forward = AssignCompany::where('id', $request->get('assign_companies_id'))->update(array("forward" => 0));
+            // }
 
 
             
-            if($request->input('assign') == 1){
+            // if($request->input('assign') == 1){
 
-               // for ($x=0; $x < $request->input('assign_count'); $x++){
-                    $announcement = new AssignCompany;
-                    $announcement->message = $request->get('message');
-                    $announcement['assign_id'] = $request->get('assign_id');
-                    $announcement['form_id'] = $request->get('form_id');
-                    $announcement['company_id'] = $request->get('company_id');
-                    $announcement['employee_id'] = $request->get('employee_id');
-                    $announcement['material_excel_id'] = $material_excel_id;
-                    $announcement['user_id'] = Auth::user()->id;
-                    $announcement['user_company_id'] = Auth::user()->company_id;
+            //    // for ($x=0; $x < $request->input('assign_count'); $x++){
+            //     for ($x=0; $x < count($users); $x++){
+            //         $announcement = new AssignCompany;
+            //         $announcement->message = $request->get('message');
+            //         $announcement['assign_id'] = $request->get('assign_id');
+            //         $announcement['form_id'] = $request->get('form_id');
+            //         $announcement['company_id'] = $request->get('company_id');
+            //         $announcement['employee_id'] = $request->get('employee_id');
+            //         $announcement['material_excel_id'] = $users[$x]->id;
+            //         $announcement['user_id'] = Auth::user()->id;
+            //         $announcement['user_company_id'] = Auth::user()->company_id;
 
-                    $announcement['assign'] = 1;
-                    $announcement['forward'] = null;
+            //         $announcement['assign'] = 1;
+            //         $announcement['forward'] = null;
 
-                    $announcement->save();
-               // }
+            //         $announcement->save();
+            //    }
 
 
-            }
+            // }
 
             if($request->input('forward') == 1){
                 for ($x=0; $x < $request->input('forward_count'); $x++){
@@ -312,6 +348,9 @@ class AssignCompanyController extends Controller
     public function assignFormShow(Request $request,$id)
     {
         $assign_form_id = $id;
+        // dd($id);
+        $materialData = MaterialExcel::where('assign_company_id',$id)->with('assign_material')->get();
+        // dd($materialData);
         $company_id = Auth::user()->company_id;
         $user_name = Auth::user()->name;
         $user_email = Auth::user()->email;
@@ -320,9 +359,11 @@ class AssignCompanyController extends Controller
 
         $formid = AssignCompany::where('id',$id)->value('form_id');
 
+        // dd($materialData);
+
 
      
-        return view('question.show',compact('assign_form_id','company_logo','formid','company_name','company_id','user_name','user_email'));
+        return view('question.show',compact('assign_form_id','company_logo','formid','materialData','company_name','company_id','user_name','user_email'));
     }
 
     public function forwardshow(Request $request,$id)

@@ -308,7 +308,7 @@
 												<input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask>
 											</div> -->
 
-											<input type="date" name="project_date" value="" class="form-control" required/>
+											<input type="text" name="project_date" value="" class="form-control" required/>
 										</div>
 									</div>
 								</form>

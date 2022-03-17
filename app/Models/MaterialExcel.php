@@ -10,7 +10,12 @@ class MaterialExcel extends Model
     use HasFactory;
     protected $fillable = 
     ['assign_company_id','user_id',
-        'material_code','product_name','package','market','location','product_code','project_name','project_date'
+        'key_name','value'
 
         ];
+        public function assign_material()
+        {
+            
+             return $this->belongsTo(AssignCompany::class, 'assign_company_id');
+        }
 }
