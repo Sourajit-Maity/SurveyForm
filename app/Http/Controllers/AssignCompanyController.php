@@ -421,7 +421,7 @@ class AssignCompanyController extends Controller
 
         $assigndetails = AssignCompany::where('user_id',Auth::user()->id)->orWhere('employee_id',Auth::user()->id)->where('assign','!=', NULL)->with('company','assigncompany','form','employee','assignuser','assignresult','forwardmessage')->get();
         
-       // dd($assigndetails);
+        // dd($assigndetails);
 
         $result_id = AssignResult::where('assign_company_id',$id)->value('result_id');
         $message= AssignResult::where('assign_company_id',$id)->value('message');
@@ -457,6 +457,8 @@ class AssignCompanyController extends Controller
 
         $reportdetails = Result::where('result_id',$result_id)->get();
         $materialdetails = MaterialResult::where('id',$material_result_id)->get();
+        $materialData = MaterialExcel::where('assign_company_id',$assign_company_id)->with('assign_material')->get();
+        // dd($materialData);
         $companylogo = Company::where('id',Auth::user()->company_id)->value('logo');
 
         $companyname = Company::where('id',Auth::user()->company_id)->value('company_name');
@@ -465,7 +467,7 @@ class AssignCompanyController extends Controller
 
         //dd($resultmessage);
 
-       return view('assigncompany.assignformdetails',compact('reportdetails','message', 'assigndetails','allquestion', 'materialdetails', 'formid', 'companylogo', 'companyname', 'assigner_name', 'assigner_company_name', 'form_name', 'assign_date', 'submission_date','resultmessage'))
+       return view('assigncompany.assignformdetails',compact('reportdetails','message','assign_company_id', 'assigndetails','allquestion', 'materialData', 'materialdetails', 'formid', 'companylogo', 'companyname', 'assigner_name', 'assigner_company_name', 'form_name', 'assign_date', 'submission_date','resultmessage'))
            ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     }
 

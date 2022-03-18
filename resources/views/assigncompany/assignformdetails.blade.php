@@ -244,7 +244,7 @@
 							Basic Info </div>
 							<div class="card-body">
 								<div id="user_content">
-									<form id="form2">
+								<form id="form2">
 										
 										<div class="row m-top-bottom">
 											<div class="col-md-6 col-sm-12 col-xs-12">
@@ -373,7 +373,7 @@
 							User Comments </div>
 							<div class="card-body">
 								<div class="direct-chat-messages print-area" style="height:100%;">
-									@foreach ($resultmessage as $message)
+								@foreach ($resultmessage as $message)
 										<div class="direct-chat-msg">
 											<div class="direct-chat-infos clearfix">
 												<span class="direct-chat-name float-left">{{$message->messageuser->name}}</span>
@@ -486,7 +486,7 @@
 										<button id="admin_download" class="btn btn-block bg-gradient-primary"><i class="fas fa-download"></i> Admin Download</button> 
 									</div>
 									<div class="mt-3 mb-3"  style="width: 90%;margin-left: auto;margin-right: auto;">
-										<a class="btn btn-success" href="{{ route('file-export') }}"><i class="fa fa-table" aria-hidden="true"></i> Export data</a>
+										<a class="btn btn-block bg-gradient-success" href="{{ route('file-export',$assign_company_id) }}"><i class="fa fa-table" aria-hidden="true"></i> Export data</a>
 									</div>
 									@endif
 									<div class="mt-3 mb-3"  style="width: 90%;margin-left: auto;margin-right: auto;">
@@ -504,7 +504,7 @@
 								</div>
 								
 								<div class="card-body" style="overflow-y: scroll; max-height:400px;">
-									<div class="direct-chat-messages">
+								<div class="direct-chat-messages">
 										@foreach ($resultmessage as $message)
 											@if (isset($message->message))
 												@if ($message->messageuser->id != Auth::user()->id)
@@ -630,17 +630,17 @@
 		function showreport() {
 			$("#Close").css("display", "block");
 
-			var material_info = @json($materialdetails ?? '');
-			console.log(material_info);
+			// var material_info = @json($materialdetails ?? '');
+			// console.log(material_info);
 
-			$("input[name='meterial_code']").val(material_info[0]['material_code']);
-			$("input[name='product_name']").val(material_info[0]['product_name']);
-			$("input[name='package']").val(material_info[0]['package']);
-			$("input[name='market']").val(material_info[0]['market']);
-			$("input[name='location']").val(material_info[0]['location']);
-			$("input[name='percentage']").val(material_info[0]['percentage']);
-			$("input[name='project_name']").val(material_info[0]['project_name']);
-			$("input[name='project_date']").val(material_info[0]['project_date']);
+			// $("input[name='meterial_code']").val(material_info[0]['material_code']);
+			// $("input[name='product_name']").val(material_info[0]['product_name']);
+			// $("input[name='package']").val(material_info[0]['package']);
+			// $("input[name='market']").val(material_info[0]['market']);
+			// $("input[name='location']").val(material_info[0]['location']);
+			// $("input[name='percentage']").val(material_info[0]['percentage']);
+			// $("input[name='project_name']").val(material_info[0]['project_name']);
+			// $("input[name='project_date']").val(material_info[0]['project_date']);
 
 
 			//$("#header-hero").html("User Response");

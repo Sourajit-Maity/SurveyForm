@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\UsersExport;
 use Rap2hpoutre\FastExcel\FastExcel;
+use Carbon;
 
 class ResultController extends Controller
 {
@@ -238,7 +239,13 @@ class ResultController extends Controller
            ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     } 
 
-
+    function set_collection($list, $key, $value){
+        $firstKey = $list->keys()->first();
+        $firstElement = $list->first();
+        $modifiedElement = array_merge($firstElement, [$key => $value]);
+        $list->put($firstKey, $modifiedElement);
+        return $list;
+    }
 
 
     public function fileExport($assign_company_id) 
@@ -258,7 +265,10 @@ class ResultController extends Controller
         $assigner_company_name = Company::where('id',$assigner_company_id)->value('company_name');
 
         $assign_date = AssignCompany::where('id',$assign_company_id)->value('created_at');
-        $submission_date = AssignResult::where('id',$assign_company_id)->value('created_at');
+        $assign_date_format = \Carbon\Carbon::parse($assign_date)->format('Y-m-d');
+
+        $submission_date = AssignResult::where('assign_company_id',$assign_company_id)->value('created_at');
+        $submission_date_format = \Carbon\Carbon::parse($submission_date)->format('Y-m-d');
 
         $formid = AssignCompany::where('id',$assign_company_id)->value('form_id');
         $form_name = Form::where('id',$formid)->value('form_name');
@@ -292,40 +302,36 @@ class ResultController extends Controller
 
         $list = collect([
             [ 
-                'Assign Company Id' => $assigner_company_id,               
-            ],
-            [
-                'Assigner Name' => $assigner_name, 
-            ],
-            [
-                'Assigner Company Name' => $assigner_company_name, 
-            ],
-            [
-                'Assign Date' => $assign_date, 
-            ],
-            [
-                'Submission Date' => $submission_date, 
-            ],
-            [
-                'Form Name' => $form_name, 
-            ],
-            [
-                'Company SL No' => Auth::user()->company_id, 
-            ],
-            [
+                'Assign Company Id' => $assigner_company_id,    
+                'Assigner Name' => $assigner_name,   
+                'Assigner Company Name' => $assigner_company_name,  
+                'Assign Date' => $assign_date_format,  
+                'Submission Date' => $submission_date_format,     
+                'Form Name' => $form_name,
+                'Company SL No' => Auth::user()->company_id,
                 'User Name' => Auth::user()->name, 
-            ],
-            [
-                'User Email' => Auth::user()->email, 
-            ],
+                'User Email' => Auth::user()->email,
+
+            ]
         ]);
-        $merged1 = $list->merge($materialData);
-        $merged2 = $merged1->merge($alloption);
-        $merged3 = $merged1->merge($message);
+
+        foreach ($materialData as $index=>$data){
+            $list = $this->set_collection($list, $data->key_name, $data->value);
+        }
+
+        foreach ($reportdetails as $index=>$data){
+            $list = $this->set_collection($list, "questionID-".$index, $data->question_id);
+            $list = $this->set_collection($list, "answer-".$index, $data->answer);
+        }
+
+        // dd($list);
+        // $merged1 = $list->merge($materialData);
+        // $merged2 = $merged1->merge($alloption);
+        // $merged3 = $merged1->merge($message);
 
          //dd($merged3);
         
-        return (new FastExcel($merged3))->download('file.xlsx');
+        return (new FastExcel($list))->download('file.xlsx');
     }   
 
 
@@ -469,6 +475,7 @@ class ResultController extends Controller
 
         $reportdetails = Result::where('result_id',$result_id)->get();
         $materialdetails = MaterialResult::where('id',$material_result_id)->get();
+        $materialData = MaterialExcel::select('key_name','value')->where('assign_company_id',$assign_company_id)->with('assign_material')->get();
         $companylogo = Company::where('id',Auth::user()->company_id)->value('logo');
 
         $companyname = Company::where('id',Auth::user()->company_id)->value('company_name');
@@ -476,7 +483,7 @@ class ResultController extends Controller
         $resultmessage = ReportMessages::where('result_id',$result_id)->with('resultmessage','companyname', 'messageuser')->get();
 
 
-       return view('sharereport.sharereportdetails',compact('reportdetails','message', 'assigndetails','allquestion', 'materialdetails', 'formid', 'companylogo', 'companyname', 'assigner_name', 'assigner_company_name', 'form_name', 'assign_date', 'submission_date','resultmessage'))
+       return view('sharereport.sharereportdetails',compact('reportdetails','message', 'assign_company_id', 'materialData', 'assigndetails','allquestion', 'materialdetails', 'formid', 'companylogo', 'companyname', 'assigner_name', 'assigner_company_name', 'form_name', 'assign_date', 'submission_date','resultmessage'))
            ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     }
 

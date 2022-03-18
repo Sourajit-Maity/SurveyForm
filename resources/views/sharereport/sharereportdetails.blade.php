@@ -482,7 +482,7 @@
 											<button id="admin_download" class="btn btn-block bg-gradient-primary"><i class="fas fa-download"></i> Admin Download</button> 
 										</div>
 										<div class="mt-3 mb-3"  style="width: 90%;margin-left: auto;margin-right: auto;">
-											<a class="btn btn-success" href="{{ route('file-export') }}"><i class="fa fa-table" aria-hidden="true"></i> Export data</a>
+											<a class="btn btn-success" href="{{ route('file-export',$assign_company_id) }}"><i class="fa fa-table" aria-hidden="true"></i> Export data</a>
 										</div>
 									@else
 										<div class="mt-3 mb-3"  style="width: 90%;margin-left: auto;margin-right: auto;">
