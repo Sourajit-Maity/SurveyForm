@@ -253,7 +253,7 @@
 
 								<form id="form1">
 									
-									<div class="row m-top-bottom">
+									<!-- <div class="row m-top-bottom">
 										<div class="col-md-6 col-sm-12 col-xs-12">
 											<strong>Material code:</strong>
 											<input type="text" name="meterial_code" value="" class="form-control" required/>
@@ -279,8 +279,7 @@
 											<input type="text" name="location" value="" class="form-control" required/>
 										</div>
 										<div class="col-md-6 col-sm-12 col-xs-12">
-											<!-- <strong>Percentage:</strong>
-											<input type=number max="100" accuracy="2" min="0" step=0.01 name="percentage" value="" class="form-control" required/> -->
+											
 											
 											<strong>Product Code:</strong>
 											<input type=number maxlength="12" name="percentage" value="" class="form-control" required/>
@@ -294,23 +293,27 @@
 										</div>
 										<div class="col-md-6 col-sm-12 col-xs-12">
 											<strong>Project Date:</strong>
-											<!-- <div class="input-group date" id="reservationdate" data-target-input="nearest">
-												<input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"/>
-												<div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-													<div class="input-group-text"><i class="fa fa-calendar"></i></div>
-												</div>
-											</div> -->
-
-											<!-- <div class="input-group">
-												<div class="input-group-prepend">
-													<span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-												</div>
-												<input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask>
-											</div> -->
+											
 
 											<input type="text" name="project_date" value="" class="form-control" required/>
 										</div>
+									</div> -->
+
+									@foreach ($materialData as $index=>$data)
+									@if($index%2 ==0)
+									<div class="row m-top-bottom">
+									@endif
+									<div class="col-md-6 col-sm-12 col-xs-12">
+										<strong>{{$data->key_name}}:</strong>
+										<input type="text" name="" value="{{$data->value}}" class="form-control" readonly/>
 									</div>
+									@if($index%2 !=0)
+									</div>
+									@endif
+									
+									@endforeach
+
+
 								</form>
 								
 							</div>
@@ -326,6 +329,7 @@
 									<div class="ml-sm-5 noprint-area"> 
 									@if (Auth::user()->id ==1)
 										<button id="download" class="btn btn-block bg-gradient-primary"><i class="fas fa-download"></i>  Download</button> 
+										<a class="btn btn-success" href="{{ route('file-export') }}">Export data</a>
 									@endif
 									</div>
 									<div class="ml-auto mr-sm-5  noprint-area">

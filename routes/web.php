@@ -82,6 +82,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('report-share/{id}', [ResultController::class,'reportShare'])->name('report-share');
     Route::get('/getemployee/{id}', [AssignCompanyController::class, 'getEmployee']);
 
+    Route::get('file-export', [ResultController::class, 'fileExport'])->name('file-export');
 
 
 });

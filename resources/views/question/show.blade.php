@@ -186,23 +186,23 @@
 								<form id="form1">
 									<!-- <div class="row m-top-bottom">
 										<div class="col-md-6 col-sm-12 col-xs-12">
-											<strong>Company Serial No.:</strong>
-											<input type="text" name="company_id" value="{{$company_id}}" class="form-control" readonly/>
-										</div>
+											<strong>Company Serial No.:</strong>-->
+											<input type="hidden" name="company_id" value="{{$company_id}}" class="form-control" readonly/>
+										<!--</div>
 										<div class="col-md-6 col-sm-12 col-xs-12">
-											<strong>Company Name:</strong>
-											<input type="text" name="company_name" value="{{$company_name}}" class="form-control" readonly/>
-										</div>
+											<strong>Company Name:</strong>-->
+											<input type="hidden" name="company_name" value="{{$company_name}}" class="form-control" readonly/>
+										<!--</div>
 									</div>
 									<div class="row m-top-bottom">
 										<div class="col-md-6 col-sm-12 col-xs-12">
-											<strong>User Name:</strong>
-											<input type="text" name="user_name" value="{{$user_name}}" class="form-control" readonly/>
-										</div>
+											<strong>User Name:</strong>-->
+											<input type="hidden" name="user_name" value="{{$user_name}}" class="form-control" readonly/>
+										<!--</div>
 										<div class="col-md-6 col-sm-12 col-xs-12">
-											<strong>User Email:</strong>
-											<input type="text" name="user_email" value="{{$user_email}}" class="form-control" readonly/>
-										</div>
+											<strong>User Email:</strong>-->
+											<input type="hidden" name="user_email" value="{{$user_email}}" class="form-control" readonly/>
+										<!--</div>
 									</div> -->
 									<!-- <div class="row m-top-bottom">
 										<div class="col-md-6 col-sm-12 col-xs-12">
@@ -257,7 +257,7 @@
 									@endif
 									<div class="col-md-6 col-sm-12 col-xs-12">
 										<strong>{{$data->key_name}}:</strong>
-										<input type="text" name="company_id" value="{{$data->value}}" class="form-control" readonly/>
+										<input type="text" name="" value="{{$data->value}}" class="form-control" readonly/>
 									</div>
 									@if($index%2 !=0)
 									</div>
@@ -885,25 +885,26 @@
 				bsCustomFileInput.init();
 				
 				var company_id = {{$company_id}};
-				//var company_id = $("input[name='company_id']").val();
-				var meterial_code = $("input[name='meterial_code']").val();
-				var product_name = $("input[name='product_name']").val();
-				var package = $("input[name='package']").val();
-				var market = $("input[name='market']").val();
-				var location = $("input[name='location']").val();
-				var percentage = $("input[name='percentage']").val();
-				var project_name = $("input[name='project_name']").val();
-				var project_date = $("input[name='project_date']").val();
+				var company_id = $("input[name='company_id']").val();
+				// var meterial_code = $("input[name='meterial_code']").val();
+				// var product_name = $("input[name='product_name']").val();
+				// var package = $("input[name='package']").val();
+				// var market = $("input[name='market']").val();
+				// var location = $("input[name='location']").val();
+				// var percentage = $("input[name='percentage']").val();
+				// var project_name = $("input[name='project_name']").val();
+				// var project_date = $("input[name='project_date']").val();
+
 				var st_form = {
 					"company_id" : company_id,
-					"material_code" : meterial_code,
-					"product_name" : product_name,
-					"package" : package,
-					"market" : market,
-					"location" : location,
-					"percentage" : percentage,
-					"project_name" : project_name,
-					"project_date" : project_date
+					// "material_code" : meterial_code,
+					// "product_name" : product_name,
+					// "package" : package,
+					// "market" : market,
+					// "location" : location,
+					// "percentage" : percentage,
+					// "project_name" : project_name,
+					// "project_date" : project_date
 				};
 				//console.log(st_form);
 

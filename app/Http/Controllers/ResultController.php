@@ -15,11 +15,15 @@ use App\Models\ForwardMessage;
 use App\Models\Option;
 use App\Models\User;
 use App\Models\ReportMessages;
+use App\Models\MaterialExcel;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\UsersExport;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class ResultController extends Controller
 {
@@ -102,15 +106,15 @@ class ResultController extends Controller
 
        $materialresult = new MaterialResult();
        $materialresult->company_id= $inputs['start_form']['company_id'];
-       $materialresult->material_code= $inputs['start_form']['material_code'];
-       $materialresult->product_name= $inputs['start_form']['product_name'];
+    //    $materialresult->material_code= $inputs['start_form']['material_code'];
+    //    $materialresult->product_name= $inputs['start_form']['product_name'];
        $materialresult->form_id= $question_result[0]['formid'];
-       $materialresult->package= $inputs['start_form']['package'];
-       $materialresult->market= $inputs['start_form']['market'];
-       $materialresult->location= $inputs['start_form']['location'];
-       $materialresult->percentage= $inputs['start_form']['percentage'];
-       $materialresult->project_name= $inputs['start_form']['project_name'];
-       $materialresult->project_date= $inputs['start_form']['project_date'];
+    //    $materialresult->package= $inputs['start_form']['package'];
+    //    $materialresult->market= $inputs['start_form']['market'];
+    //    $materialresult->location= $inputs['start_form']['location'];
+    //    $materialresult->percentage= $inputs['start_form']['percentage'];
+    //    $materialresult->project_name= $inputs['start_form']['project_name'];
+    //    $materialresult->project_date= $inputs['start_form']['project_date'];
        $materialresult->result_id= $question_result[0]['ResultId'];
        $materialresult->company_name= $inputs['start_form']['company_id'];
        $materialresult->user_name= Auth::user()->name;
@@ -220,7 +224,8 @@ class ResultController extends Controller
             ->get();
             $allquestion[$y]['options'] = $alloption; 
         }
-
+        $materialData = MaterialExcel::where('assign_company_id',$assign_company_id)->with('assign_material')->get();
+        // dd($materialData);
         $reportdetails = Result::where('result_id',$result_id)->get();
         $materialdetails = MaterialResult::where('id',$material_result_id)->get();
         $companylogo = Company::where('id',Auth::user()->company_id)->value('logo');
@@ -229,9 +234,26 @@ class ResultController extends Controller
         $message= AssignResult::where('assign_company_id',$id)->value('message');
         //dd($allquestion);
 
-       return view('report.myreport',compact('reportdetails','message', 'allquestion', 'materialdetails', 'formid', 'companylogo', 'companyname', 'assigner_name', 'assigner_company_name', 'form_name', 'assign_date', 'submission_date'))
+       return view('report.myreport',compact('reportdetails','message','materialData', 'allquestion', 'materialdetails', 'formid', 'companylogo', 'companyname', 'assigner_name', 'assigner_company_name', 'form_name', 'assign_date', 'submission_date'))
            ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     } 
+
+
+
+
+    public function fileExport() 
+    {
+        $list = collect([
+            [ 'id' => 1, 'name' => 'Jane' ],
+            [ 'id' => 2, 'name' => 'John' ],
+        ]);
+
+        // dd($list);
+        
+        return (new FastExcel($list))->download('file.xlsx');
+    }   
+
+
 
     /**
      * Show the form for editing the specified resource.
