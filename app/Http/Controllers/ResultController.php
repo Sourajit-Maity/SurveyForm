@@ -232,25 +232,100 @@ class ResultController extends Controller
 
         $companyname = Company::where('id',Auth::user()->company_id)->value('company_name');
         $message= AssignResult::where('assign_company_id',$id)->value('message');
-        //dd($allquestion);
+        //dd($message);
 
-       return view('report.myreport',compact('reportdetails','message','materialData', 'allquestion', 'materialdetails', 'formid', 'companylogo', 'companyname', 'assigner_name', 'assigner_company_name', 'form_name', 'assign_date', 'submission_date'))
+       return view('report.myreport',compact('reportdetails','assign_company_id','message','materialData', 'allquestion', 'materialdetails', 'formid', 'companylogo', 'companyname', 'assigner_name', 'assigner_company_name', 'form_name', 'assign_date', 'submission_date'))
            ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     } 
 
 
 
 
-    public function fileExport() 
+    public function fileExport($assign_company_id) 
     {
-        $list = collect([
-            [ 'id' => 1, 'name' => 'Jane' ],
-            [ 'id' => 2, 'name' => 'John' ],
-        ]);
-
-        // dd($list);
+        $result_id = AssignResult::where('assign_company_id',$assign_company_id)->value('result_id');
+        $material_result_id = AssignResult::where('assign_company_id',$assign_company_id)->value('material_result_id');
+        $assign_company_id = AssignResult::where('assign_company_id',$assign_company_id)->value('assign_company_id');
+        $formid = AssignCompany::where('id',$assign_company_id)->value('form_id');
+        //$result_id = AssignResult::where('id',$id)->value('result_id');
+        //$material_result_id = AssignResult::where('id',$id)->value('material_result_id');
+        //$assign_company_id = AssignResult::where('id',$id)->value('assign_company_id');
+        $assigner_company_id = AssignCompany::where('id',$assign_company_id)->value('user_company_id');
+        $assigner_id = AssignCompany::where('id',$assign_company_id)->value('user_id');
+        $assigner_name = User::where('id',$assigner_id)->value('name');
         
-        return (new FastExcel($list))->download('file.xlsx');
+        
+        $assigner_company_name = Company::where('id',$assigner_company_id)->value('company_name');
+
+        $assign_date = AssignCompany::where('id',$assign_company_id)->value('created_at');
+        $submission_date = AssignResult::where('id',$assign_company_id)->value('created_at');
+
+        $formid = AssignCompany::where('id',$assign_company_id)->value('form_id');
+        $form_name = Form::where('id',$formid)->value('form_name');
+        
+        $forms = DB::table('forms')->get();
+        $allquestion = Question::where('form_id', $formid)->get();
+
+        for ($y = 0; $y < count($allquestion); $y++) {
+            $alloption = Option::select('option','number','message','question_id')->where('question_id', $allquestion[$y]->question_id)
+            ->where('option', '!=', 'undefined')
+            ->where('child_id', '!=', 'undefined')
+            ->where('number', '!=', 'undefined')
+            ->where('message', '!=', 'undefined')
+            ->
+            orderby('created_at', 'desc')
+            ->get();
+            $allquestion[$y]['options'] = $alloption; 
+        }
+        $materialData = MaterialExcel::select('key_name','value')->where('assign_company_id',$assign_company_id)->with('assign_material')->get();
+         //dd($alloption);
+        $reportdetails = Result::where('result_id',$result_id)->get();
+        $materialdetails = MaterialResult::where('id',$material_result_id)->get();
+        $companylogo = Company::where('id',Auth::user()->company_id)->value('logo');
+
+        $companyname = Company::where('id',Auth::user()->company_id)->value('company_name');
+        $message= AssignResult::where('assign_company_id',$assign_company_id)->value('message');
+
+
+
+      
+
+        $list = collect([
+            [ 
+                'Assign Company Id' => $assigner_company_id,               
+            ],
+            [
+                'Assigner Name' => $assigner_name, 
+            ],
+            [
+                'Assigner Company Name' => $assigner_company_name, 
+            ],
+            [
+                'Assign Date' => $assign_date, 
+            ],
+            [
+                'Submission Date' => $submission_date, 
+            ],
+            [
+                'Form Name' => $form_name, 
+            ],
+            [
+                'Company SL No' => Auth::user()->company_id, 
+            ],
+            [
+                'User Name' => Auth::user()->name, 
+            ],
+            [
+                'User Email' => Auth::user()->email, 
+            ],
+        ]);
+        $merged1 = $list->merge($materialData);
+        $merged2 = $merged1->merge($alloption);
+        $merged3 = $merged1->merge($message);
+
+         //dd($merged3);
+        
+        return (new FastExcel($merged3))->download('file.xlsx');
     }   
 
 

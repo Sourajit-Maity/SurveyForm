@@ -329,8 +329,9 @@
 									<div class="ml-sm-5 noprint-area"> 
 									@if (Auth::user()->id ==1)
 										<button id="download" class="btn btn-block bg-gradient-primary"><i class="fas fa-download"></i>  Download</button> 
-										<a class="btn btn-success" href="{{ route('file-export') }}">Export data</a>
 									@endif
+									<a class="btn btn-success" href="{{ route('file-export',$assign_company_id) }}">Export data</a>
+									
 									</div>
 									<div class="ml-auto mr-sm-5  noprint-area">
 										<a id="Close" class="btn btn-success" href="/get-report-info">Close</a> 
