@@ -8,6 +8,9 @@
 @else
 <link href="{{ asset('/css/app2.css') }}" rel="stylesheet">
 @endif
+<script type="text/javascript" src="{{url('vendor/jquery/jquery.min.js')}}"></script>
+<script type="text/javascript" src="{{url('vendor/moment/moment.min.js')}}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
@@ -156,6 +159,12 @@
 <script>
 	$(document).ready(function(){
 		$("aside .sidebar-dark-primary").removeClass("elevation-4");
+
+		Swal.fire({
+			type: 'info',
+			title: 'Info',
+			text: 'This form fillup is for demo purpose only. Submitted data will not be saved.'
+		});
 	});
 </script>
 
@@ -256,10 +265,10 @@
 									<div class="row m-top-bottom">
 									@endif
 									<div class="col-md-6 col-sm-12 col-xs-12">
-										<strong>{{$data->key_name}}:</strong>
+										<strong>{{ucwords(str_replace("_", " ", $data->key_name))}}:</strong>
 										<input type="text" name="" value="{{$data->value}}" class="form-control" readonly/>
 									</div>
-									@if($index%2 !=0)
+									@if(($index%2 !=0) || ((count($materialData)-1) == $index))
 									</div>
 									@endif
 									
@@ -346,7 +355,7 @@
 							
 							<div class="card-body">
 								<ul class="list-group list-group-unbordered mb-3">
-									<li class="list-group-item" style="border-top-width: 0px;">
+									<!-- <li class="list-group-item" style="border-top-width: 0px;">
 										<b>Material code</b> <a class="float-right mc-card"></a>
 									</li>
 									<li class="list-group-item">
@@ -369,7 +378,19 @@
 									</li>
 									<li class="list-group-item" style="border-bottom-width: 0px;">
 										<b>Project Date</b> <a class="float-right pda-card"></a>
-									</li>
+									</li> -->
+									
+									@foreach ($materialData as $index=>$data)
+										@if ($index == 0)
+											<li class="list-group-item" style="border-top-width: 0px;">
+										@elseif ((count($materialData)-1) == $index)
+											<li class="list-group-item" style="border-bottom-width: 0px;">
+										@else 
+											<li class="list-group-item">
+										@endif
+												<b>{{ucwords(str_replace("_", " ", $data->key_name))}}</b> <a class="float-right">{{$data->value}}</a>
+											</li>
+									@endforeach
 								</ul>
 							</div>
 							
@@ -819,6 +840,8 @@
 
 							result += "<div class='ml-md-3 ml-sm-3 pl-md-3 pt-sm-0 pt-3' id='options'>";
 
+							var t_msg = '';
+
 							var tarray = raw_option.split("|");
 							var option_text, option_value;
 							for(var y = 0; y < tarray.length; y++){
@@ -838,13 +861,14 @@
 										option_number = varray[2];
 										option_message = varray[3];
 
-										result += "<div class='alert alert-primary opt-msg' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:block;'>Message: &nbsp;"+option_message+"</br>Number: &nbsp;"+option_number+"</div>";
+										t_msg += "<div class='alert alert-primary opt-msg' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:block;'>Message: &nbsp;"+option_message+"</br>Number: &nbsp;"+option_number+"</div>";
 									}
 								} else {
 									result += "<label class='options'>"+option_text+" <input type='radio'disabled><span class='checkmark'></span> </label>";
 								}
 							}
 							result +="<label class='ans' ><i class='fas fa-angle-right' style='color:#007bff;'></i>&nbsp;&nbsp;&nbsp;<span style='color: #6c757d!important; style='font-size:14px;''>"+q_answer+"</span></label> </br>";
+							result += t_msg;
 							result += "</div> </div></br>";
 
 						}

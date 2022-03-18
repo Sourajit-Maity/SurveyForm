@@ -306,9 +306,6 @@ ui-lightness/jquery-ui.css'
 											<input type="text" name="location" value="" class="form-control" required/>
 										</div>
 										<div class="col-md-6 col-sm-12 col-xs-12">
-										<!-- <strong>Percentage:</strong>
-											<input type=number max="100" accuracy="2" min="0" step=0.01 name="percentage" value="" class="form-control" required/> -->
-											
 											<strong>Product Code:</strong>
 											<input type=number maxlength="12" name="percentage" value="" class="form-control" required/>
 										
@@ -321,20 +318,6 @@ ui-lightness/jquery-ui.css'
 										</div>
 										<div class="col-md-6 col-sm-12 col-xs-12">
 											<strong>Project Date:</strong>
-											<!-- <div class="input-group date" id="reservationdate" data-target-input="nearest">
-												<input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"/>
-												<div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-													<div class="input-group-text"><i class="fa fa-calendar"></i></div>
-												</div>
-											</div> -->
-
-											<!-- <div class="input-group">
-												<div class="input-group-prepend">
-													<span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-												</div>
-												<input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask>
-											</div> -->
-
 											<input type="date" name="project_date" value="" class="form-control" required/>
 										</div>
 									</div>
@@ -900,6 +883,8 @@ ui-lightness/jquery-ui.css'
 
 							result += "<div class='ml-md-3 ml-sm-3 pl-md-3 pt-sm-0 pt-3' id='options'>";
 
+							var t_msg = '';
+
 							var tarray = raw_option.split("|");
 							var option_text, option_value;
 							for(var y = 0; y < tarray.length; y++){
@@ -919,12 +904,13 @@ ui-lightness/jquery-ui.css'
 										option_number = varray[2];
 										option_message = varray[3];
 
-										result += "<div class='alert alert-primary' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:block;'>Message: &nbsp;"+option_message+"</br>Number: &nbsp;"+option_number+"</div>";
+										t_msg += "<div class='alert alert-primary' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:block;'>Message: &nbsp;"+option_message+"</br>Number: &nbsp;"+option_number+"</div>";
 									}
 								} else {
 									result += "<label class='options'>"+option_text+" <input type='radio'disabled><span class='checkmark'></span> </label>";
 								}
 							}
+							result += t_msg;
 							result += "</div> </div></br>";
 
 						}

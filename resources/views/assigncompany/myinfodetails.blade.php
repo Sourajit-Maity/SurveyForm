@@ -58,13 +58,14 @@
                     <tr>
                         <th>No</th>
                         <!-- <th>Company Name</th> -->
-                        <th>Assigny User</th>
-                        <th>Assigned Company Name</th>
                         <th>Assigned User</th>
+                        <th>Assigned Company Name</th>
+                        <th>Assignee User</th>
                         <th>Form Name</th>
                         <th>Assign</th>
                         <th>Forward</th>
                         <th>Message</th>
+                        <th>Attachment</th>
                         <th>Assign Date</th>
                         <th>Assign Time</th>
                         <!-- <th width="100px">Action</th> -->
@@ -103,6 +104,7 @@
                                 @endif
                                 
                                 <td>{{ $assigndetail->message }}</td>
+                                <td></td>
                                 <td>{!! \Carbon\Carbon::parse($assigndetail->created_at)->format('d M Y') !!}</td>
                                 <td>{!! \Carbon\Carbon::parse($assigndetail->created_at)->format('H : i') !!}</td>
                                 <!-- <td>

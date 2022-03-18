@@ -183,6 +183,9 @@
 	.print-area {
 		display : none;
 	}
+	#company-header {
+		display : none;
+	}
 	@media print {
 		.noprint-area {
 			display : none;
@@ -193,8 +196,21 @@
 			/* -webkit-print-color-adjust: exact !important; */
 		}
 
+		.quote-secondary {
+			border-top: 0px !important;
+			border-bottom: 0px !important;
+			border-right: 0px !important;
+		}
+
 		input[type="radio"]:checked+span { 
 			box-shadow: 0 0 0 1000px #21bf73 inset !important; 
+		}
+
+		.profile-username{
+			padding-left:40px;
+		}
+		#company-header {
+			display:flex;
 		}
 	}
 
@@ -220,6 +236,13 @@
 			<div class="row">
 				<div class="col-md-9">
 					<div class="container card" style="max-width:90% !important;">
+
+						<section id='company-header' class='row mb-4 mt-4'>
+							<div class="text-center col-lg-3 col-md-3 col-sm-3">
+								<img class="profile-user-img img-fluid" src="{{url('assets/logos')}}/{{$companylogo}}" alt="Company picture"> 
+							</div>
+							<h3 class="profile-username col-lg-9 col-md-9 col-sm-9" style='margin-top:32px; font-size:32px; text-align: left;'>{{$companyname}}</h3>
+						</section>
 
 						<section id="user-info" class='print-area'>
 							<div id="header-hero" class="card-header"> 
@@ -280,7 +303,7 @@
 
 								<form id="form1">
 									
-									<div class="row m-top-bottom">
+									<!-- <div class="row m-top-bottom">
 										<div class="col-md-6 col-sm-12 col-xs-12">
 											<strong>Material code:</strong>
 											<input type="text" name="meterial_code" value="" class="form-control" required/>
@@ -306,8 +329,6 @@
 											<input type="text" name="location" value="" class="form-control" required/>
 										</div>
 										<div class="col-md-6 col-sm-12 col-xs-12">
-											<!-- <strong>Percentage:</strong>
-											<input type=number max="100" accuracy="2" min="0" step=0.01 name="percentage" value="" class="form-control" required/> -->
 											
 											<strong>Product Code:</strong>
 											<input type=number maxlength="12" name="percentage" value="" class="form-control" required/>
@@ -321,23 +342,22 @@
 										</div>
 										<div class="col-md-6 col-sm-12 col-xs-12">
 											<strong>Project Date:</strong>
-											<!-- <div class="input-group date" id="reservationdate" data-target-input="nearest">
-												<input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"/>
-												<div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-													<div class="input-group-text"><i class="fa fa-calendar"></i></div>
-												</div>
-											</div> -->
-
-											<!-- <div class="input-group">
-												<div class="input-group-prepend">
-													<span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-												</div>
-												<input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask>
-											</div> -->
-
 											<input type="date" name="project_date" value="" class="form-control" required/>
 										</div>
-									</div>
+									</div> -->
+
+									@foreach ($materialData as $index=>$data)
+										@if($index%2 ==0)
+											<div class="row m-top-bottom">
+										@endif
+												<div class="col-md-6 col-sm-12 col-xs-12">
+													<strong>{{ucwords(str_replace("_", " ", $data->key_name))}}:</strong>
+													<input type="text" name="" value="{{$data->value}}" class="form-control" readonly/>
+												</div>
+										@if(($index%2 !=0) || ((count($materialData)-1) == $index))
+											</div>
+										@endif
+									@endforeach
 								</form>
 								
 							</div>
@@ -402,6 +422,15 @@
 							</div>
 						</section>
 
+						<section id='disclaimer-view' class='print-area'>
+							<div id="header-hero" class="card-header"> Disclaimer </div>
+							<div class="card-body">
+								<blockquote class="quote-secondary mt-0">
+									<small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</small>
+								</blockquote>
+							</div>
+						</section>
+
 
 					</div>
 				</div>
@@ -451,6 +480,9 @@
 									@if (Auth::user()->company_id ==1)
 										<div class="mt-3 mb-3" style="width: 90%;margin-left: auto;margin-right: auto;"> 
 											<button id="admin_download" class="btn btn-block bg-gradient-primary"><i class="fas fa-download"></i> Admin Download</button> 
+										</div>
+										<div class="mt-3 mb-3"  style="width: 90%;margin-left: auto;margin-right: auto;">
+											<a class="btn btn-success" href="{{ route('file-export') }}"><i class="fa fa-table" aria-hidden="true"></i> Export data</a>
 										</div>
 									@else
 										<div class="mt-3 mb-3"  style="width: 90%;margin-left: auto;margin-right: auto;">
@@ -587,14 +619,14 @@
 			var material_info = @json($materialdetails ?? '');
 			console.log(material_info);
 
-			$("input[name='meterial_code']").val(material_info[0]['material_code']);
-			$("input[name='product_name']").val(material_info[0]['product_name']);
-			$("input[name='package']").val(material_info[0]['package']);
-			$("input[name='market']").val(material_info[0]['market']);
-			$("input[name='location']").val(material_info[0]['location']);
-			$("input[name='percentage']").val(material_info[0]['percentage']);
-			$("input[name='project_name']").val(material_info[0]['project_name']);
-			$("input[name='project_date']").val(material_info[0]['project_date']);
+			// $("input[name='meterial_code']").val(material_info[0]['material_code']);
+			// $("input[name='product_name']").val(material_info[0]['product_name']);
+			// $("input[name='package']").val(material_info[0]['package']);
+			// $("input[name='market']").val(material_info[0]['market']);
+			// $("input[name='location']").val(material_info[0]['location']);
+			// $("input[name='percentage']").val(material_info[0]['percentage']);
+			// $("input[name='project_name']").val(material_info[0]['project_name']);
+			// $("input[name='project_date']").val(material_info[0]['project_date']);
 
 
 			//$("#header-hero").html("User Response");
@@ -628,6 +660,8 @@
 
 						result += "<div class='ml-md-3 ml-sm-3 pl-md-3 pt-sm-0 pt-3' id='options'>";
 
+						var t_msg = '';
+
 						var option_text, option_value;
 
 						for(var y = 0; y < raw_option.length; y++){
@@ -647,7 +681,7 @@
 									option_number = raw_option[y].number;
 									option_message = raw_option[y].message;
 
-									result += "<div class='alert alert-primary opt-msg' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:block;'>Message: &nbsp;"+option_message+"</br>Number: &nbsp;"+option_number+"</div>";
+									t_msg += "<div class='alert alert-primary opt-msg' role='alert' style='margin-left: 40px;color: #004085;background-color: #cce5ff;border-color: #b8daff;display:block;'>Message: &nbsp;"+option_message+"</br>Number: &nbsp;"+option_number+"</div>";
 								}
 							} else {
 								result += "<label class='options'>"+option_text+" <input type='radio'disabled><span class='checkmark'></span> </label>";
@@ -655,6 +689,7 @@
 						}
 
 						result +="<label class='ans' ><i class='fas fa-angle-right' style='color:#007bff;'></i>&nbsp;&nbsp;&nbsp;<span style='color: #6c757d!important; style='font-size:14px;''>"+q_answer+"</span></label> </br>";
+						result += t_msg;
 						result += "</div> </div></br>";
 
 					}

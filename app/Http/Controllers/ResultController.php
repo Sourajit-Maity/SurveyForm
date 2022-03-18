@@ -205,7 +205,7 @@ class ResultController extends Controller
         $assigner_company_name = Company::where('id',$assigner_company_id)->value('company_name');
 
         $assign_date = AssignCompany::where('id',$assign_company_id)->value('created_at');
-        $submission_date = AssignResult::where('id',$id)->value('created_at');
+        $submission_date = AssignResult::where('assign_company_id',$id)->value('created_at');
 
         $formid = AssignCompany::where('id',$assign_company_id)->value('form_id');
         $form_name = Form::where('id',$formid)->value('form_name');
