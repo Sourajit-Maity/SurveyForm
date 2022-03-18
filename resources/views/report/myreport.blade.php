@@ -359,6 +359,8 @@
 									@if (Auth::user()->id ==1)
 										<a class="btn btn-success" href="{{ route('file-export') }}"><i class="fa fa-table" aria-hidden="true"></i> Export data</a>
 									@endif
+									<a class="btn btn-success" href="{{ route('file-export',$assign_company_id) }}">Export data</a>
+									
 									</div>
 									<div class="ml-auto mr-sm-5  noprint-area">
 										<a id="Close" class="btn btn-danger" href="/get-report-info">Close</a> 
