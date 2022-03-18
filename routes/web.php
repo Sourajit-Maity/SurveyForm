@@ -71,7 +71,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/comment/store', [CommentController::class,'store'])->name('comment.add');
     Route::post('/reply/store', [CommentController::class,'replyStore'])->name('reply.add');
     Route::post('forward-messgae-store', [ResultController::class,'forwardmessagestore'])->name('forward-messgae-store');
-    Route::get('my-info-details', [AssignCompanyController::class,'myinfodetails'])->name('my-info-details');
+    Route::get('my-info-details/{id}', [AssignCompanyController::class,'myinfodetails'])->name('my-info-details');
+    Route::get('job-details', [AssignCompanyController::class,'jobDetails'])->name('job-details');
     Route::get('assign-form-details/{id}', [AssignCompanyController::class,'assignformdetails'])->name('assign-form-details');
 
     Route::post('result-message-store', [ResultController::class,'resultMessageStore'])->name('result-message-store');

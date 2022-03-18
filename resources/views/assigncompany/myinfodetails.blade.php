@@ -104,7 +104,11 @@
                                 @endif
                                 
                                 <td>{{ $assigndetail->message }}</td>
-                                <td></td>
+                                @if (isset($assigndetail->materialresult->attachment))
+                                <td> <i class="fa fa-eye" style="color:green"></i></td>
+                                @else
+                                <td><i class="fa fa-eye-slash" style="color:red"></i></td>
+                                @endif
                                 <td>{!! \Carbon\Carbon::parse($assigndetail->created_at)->format('d M Y') !!}</td>
                                 <td>{!! \Carbon\Carbon::parse($assigndetail->created_at)->format('H : i') !!}</td>
                                 <!-- <td>

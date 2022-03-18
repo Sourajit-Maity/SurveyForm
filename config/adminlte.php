@@ -302,8 +302,8 @@ return [
         ],
         [
             'text' => 'Job Info',
-            'url'  => 'my-info-details',
-            'active' => ['my-info-details', 'assign-form-details*'],
+            'url'  => 'job-details',
+            'active' => ['job-details','my-info-details', 'assign-form-details*'],
             'icon' => 'nav-icon fas fa-fw fa-retweet',
         ],
         [
