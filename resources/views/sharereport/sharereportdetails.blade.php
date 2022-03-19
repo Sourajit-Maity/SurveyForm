@@ -212,6 +212,10 @@
 		#company-header {
 			display:flex;
 		}
+		.content-wrapper, body {
+			background-color: #FFF;
+			margin-top: 0px !important;
+		}
 	}
 
 
@@ -227,7 +231,7 @@
         <div class="panel-body">
         	<div class="row">
     			<div class="form-group col-md-6">
-                	<h2>Question</h2>
+                	<!-- <h2>Question</h2> -->
             	</div>
             	<div class="form-group col-md-6"></div>
             
@@ -472,17 +476,19 @@
 									<i class="fas fa-tools" style='color:#007bff;'></i>&nbsp;Tools
 								</div>
 								<div class="card-body">
+									@if ($materialdetails[0]->attachment != '')
 									<div class="mt-3 mb-3" style="width: 90%;margin-left: auto;margin-right: auto;"> 
 										
 										<a id="share" href="{{url('assets/attachments')}}/{{$materialdetails[0]->attachment}}" target="_blank" class="btn btn-block bg-gradient-secondary" ><i class="fas fa-paperclip"></i> View Attachment</a> 
 									
 									</div>
+									@endif
 									@if (Auth::user()->company_id ==1)
 										<div class="mt-3 mb-3" style="width: 90%;margin-left: auto;margin-right: auto;"> 
 											<button id="admin_download" class="btn btn-block bg-gradient-primary"><i class="fas fa-download"></i> Admin Download</button> 
 										</div>
 										<div class="mt-3 mb-3"  style="width: 90%;margin-left: auto;margin-right: auto;">
-											<a class="btn btn-success" href="{{ route('file-export',$assign_company_id) }}"><i class="fa fa-table" aria-hidden="true"></i> Export data</a>
+											<a class="btn btn-block bg-gradient-success" href="{{ route('file-export',$assign_company_id) }}"><i class="fa fa-table" aria-hidden="true"></i> Export data</a>
 										</div>
 									@else
 										<div class="mt-3 mb-3"  style="width: 90%;margin-left: auto;margin-right: auto;">

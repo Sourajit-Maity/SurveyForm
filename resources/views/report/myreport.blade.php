@@ -187,6 +187,11 @@
 		#company-header {
 			display:flex;
 		}
+
+		.content-wrapper, body {
+			background-color: #FFF;
+			margin-top: 0px !important;
+		}
 	}
 
 
@@ -201,7 +206,7 @@
         <div class="panel-body">
         	<div class="row">
     			<div class="form-group col-md-6">
-                	<h2>Question</h2>
+                	<!-- <h2>Question</h2> -->
             	</div>
             	<div class="form-group col-md-6"></div>
             
@@ -350,19 +355,9 @@
 								<div id="qt_content"></div>
 
 								<div class="d-flex align-items-center pt-3">
-									<div class="ml-sm-5 noprint-area"> 
-									@if (Auth::user()->id ==1)
-										<button id="download" class="btn btn-block bg-gradient-primary"><i class="fas fa-download"></i>  Download</button>
-									@endif
-									</div>
-									<div class="ml-sm-5 noprint-area"> 
-									@if (Auth::user()->id ==1)
-										<a class="btn btn-success" href="{{ route('file-export',$assign_company_id) }}"><i class="fa fa-table" aria-hidden="true"></i> Export data</a>
-									@endif
 									
-									</div>
 									<div class="ml-auto mr-sm-5  noprint-area">
-										<a id="Close" class="btn btn-danger" href="/get-report-info">Close</a> 
+										<a id="Close" class="btn btn-block bg-gradient-danger" href="/get-report-info">Close</a> 
 									</div>
 								</div>
 							</div>
@@ -409,6 +404,37 @@
 								</div>
 							</div>
 						</section>
+						
+						@if (Auth::user()->company_id ==1)
+						<section class='pdf noprint-area'>
+							<div class="card card-primary card-outline direct-chat direct-chat-primary">
+								<div class="card-header">
+									<i class="fas fa-tools" style='color:#007bff;'></i>&nbsp;Tools
+								</div>
+								<div class="card-body">
+									@if ($materialdetails[0]->attachment != '')
+									<div class="mt-3 mb-3" style="width: 90%;margin-left: auto;margin-right: auto;"> 
+										
+										<a id="share" href="{{url('assets/attachments')}}/{{$materialdetails[0]->attachment}}" target="_blank" class="btn btn-block bg-gradient-secondary" ><i class="fas fa-paperclip"></i> View Attachment</a> 
+									
+									</div>
+									@endif
+									
+										<div class="mt-3 mb-3" style="width: 90%;margin-left: auto;margin-right: auto;"> 
+											<button id="download" class="btn btn-block bg-gradient-primary"><i class="fas fa-download"></i> Admin Download</button> 
+										</div>
+										<div class="mt-3 mb-3"  style="width: 90%;margin-left: auto;margin-right: auto;">
+											<a class="btn btn-block bg-gradient-success" href="{{ route('file-export',$assign_company_id) }}"><i class="fa fa-table" aria-hidden="true"></i> Export data</a>
+										</div>
+									
+										<!-- <div class="mt-3 mb-3"  style="width: 90%;margin-left: auto;margin-right: auto;">
+											<button id="user_download" class="btn btn-block bg-gradient-warning"><i class="fas fa-download"></i> User Download</button>
+										</div> -->
+									
+								</div>
+							</div>
+						</section>
+						@endif
 
 						<!-- <section class='comments'>
 							<div class="card card-primary card-outline direct-chat direct-chat-primary">

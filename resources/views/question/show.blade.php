@@ -172,7 +172,7 @@
         <div class="panel-body">
         	<div class="row">
     			<div class="form-group col-md-6">
-                	<h2>Question</h2>
+                	<!-- <h2>Question</h2> -->
             	</div>
             	<div class="form-group col-md-6"></div>
             

@@ -207,6 +207,10 @@
 		#company-header {
 			display:flex;
 		}
+		.content-wrapper, body {
+			background-color: #FFF;
+			margin-top: 0px !important;
+		}
 	}
 
 
@@ -222,7 +226,7 @@
         <div class="panel-body">
         	<div class="row">
     			<div class="form-group col-md-6">
-                	<h2>Question</h2>
+                	<!-- <h2>Question</h2> -->
             	</div>
             	<div class="form-group col-md-6"></div>
             
@@ -471,7 +475,7 @@
 								<div class="card-body">
 									<div class="mt-3 mb-3" style="width: 90%;margin-left: auto;margin-right: auto;"> 
 										
-										<a id="share" href="{{ route('report-share',[$resultmessage[0]->result_id]) }}" class="btn btn-block bg-gradient-success" ><i class="fas fa-share-alt"></i> Share Report</a> 
+										<a id="share" href="{{ route('report-share',[$resultmessage[0]->result_id]) }}" class="btn btn-block bg-gradient-info" ><i class="fas fa-share-alt"></i> Share Report</a> 
 									
 									</div>
 									@if ($materialdetails[0]->attachment != '')
