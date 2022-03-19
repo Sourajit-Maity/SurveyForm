@@ -401,14 +401,20 @@ class AssignCompanyController extends Controller
 
         return view('assigncompany.forwardshow',compact('forms','allquestion', 'company','assigncompany')); 
     }
-
-    public function myinfodetails(){
-
+        public function jobDetails(){
+            $companies = Company::paginate(15);
+            return view ('assigncompany.compnaydetails',compact('companies'));
+        }
+    public function myinfodetails($id){
+ 
 
         if(Auth::user()->id==1)
         {
-            $assigndetails = AssignCompany::with('company','assigncompany','form','employee','assignuser','assignresult','forwardmessage')->orderby('created_at', 'desc')->get();
-
+            
+            $assigndetails = AssignCompany::with('company','assigncompany','materialresult','form','employee','assignuser','assignresult','forwardmessage')
+            ->where('company_id',$id)
+            ->orderby('created_at', 'desc')->get();
+     // dd($assigndetails);
         }
         else{
             $assigndetails = AssignCompany::where('user_id',Auth::user()->id)->orWhere('employee_id',Auth::user()->id)->with('company','assigncompany','form','employee','assignuser','assignresult','forwardmessage')->orderby('created_at', 'desc')->get();

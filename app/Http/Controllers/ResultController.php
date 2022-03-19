@@ -116,7 +116,8 @@ class ResultController extends Controller
     //    $materialresult->percentage= $inputs['start_form']['percentage'];
     //    $materialresult->project_name= $inputs['start_form']['project_name'];
     //    $materialresult->project_date= $inputs['start_form']['project_date'];
-       $materialresult->result_id= $question_result[0]['ResultId'];
+    $materialresult->assign_company_id= $inputs['assign_company_id'];
+    $materialresult->result_id= $question_result[0]['ResultId'];
        $materialresult->company_name= $inputs['start_form']['company_id'];
        $materialresult->user_name= Auth::user()->name;
        $materialresult->user_email= Auth::user()->email;

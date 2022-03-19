@@ -16,6 +16,7 @@ class CreateMaterialResultsTable extends Migration
         Schema::create('material_results', function (Blueprint $table) {
             $table->id();
             $table->integer('company_id');
+            $table->integer('assign_company_id');
             $table->string('user_name');
             $table->string('user_email');
             $table->string('company_name');
