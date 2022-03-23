@@ -83,7 +83,7 @@
                                     @endif
                                     <td>{{ $company->company_name }}</td>
                                     <td>
-                                            <a class="btn btn-app bg-gradient-success" href="{{ route('my-info-details',$company->id) }}">
+                                            <a class="btn btn-app bg-gradient-success" href="{{ route('job-id-list', $company->id) }}">
                                             <i class="fas fa-eye"></i>Show</a>
                                      </td>
                                 </tr>

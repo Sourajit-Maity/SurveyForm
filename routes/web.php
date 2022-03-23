@@ -74,6 +74,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('my-info-details/{id}', [AssignCompanyController::class,'myinfodetails'])->name('my-info-details');
     Route::get('job-details', [AssignCompanyController::class,'jobDetails'])->name('job-details');
     Route::get('assign-form-details/{id}', [AssignCompanyController::class,'assignformdetails'])->name('assign-form-details');
+    
+    Route::get('job-id-list/{id}', [AssignCompanyController::class,'jobIdList'])->name('job-id-list');
+    Route::get('job-id-details/{id}', [AssignCompanyController::class,'jobIdDetails'])->name('job-id-details');
 
     Route::post('result-message-store', [ResultController::class,'resultMessageStore'])->name('result-message-store');
 
