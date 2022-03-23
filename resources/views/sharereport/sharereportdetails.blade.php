@@ -243,9 +243,9 @@
 
 						<section id='company-header' class='row mb-4 mt-4'>
 							<div class="text-center col-lg-3 col-md-3 col-sm-3">
-								<img class="profile-user-img img-fluid" src="{{url('assets/logos')}}/{{$companylogo}}" alt="Company picture"> 
+								<img class="profile-user-img img-fluid" src="{{url('assets/logos')}}/{{$assignee_company->logo}}" alt="Company picture"> 
 							</div>
-							<h3 class="profile-username col-lg-9 col-md-9 col-sm-9" style='margin-top:32px; font-size:32px; text-align: left;'>{{$companyname}}</h3>
+							<h3 class="profile-username col-lg-9 col-md-9 col-sm-9" style='margin-top:32px; font-size:32px; text-align: left;'>{{$assignee_company->company_name}}</h3>
 						</section>
 
 						<section id="user-info" class='print-area'>
@@ -258,11 +258,11 @@
 										<div class="row m-top-bottom">
 											<div class="col-md-6 col-sm-12 col-xs-12">
 												<strong>User Name:</strong>
-												<input type="text" name="" value="{{Auth::user()->name}}" class="form-control" readonly/>
+												<input type="text" name="" value="{{$assignee_name}}" class="form-control" readonly/>
 											</div>
 											<div class="col-md-6 col-sm-12 col-xs-12">
 												<strong>Company Name:</strong>
-												<input type="text" name="" value="{{$companyname}}" class="form-control" readonly/>
+												<input type="text" name="" value="{{$assignee_company->company_name}}" class="form-control" readonly/>
 											</div>
 										</div>
 										<div class="row m-top-bottom">

@@ -45,6 +45,12 @@ class AssignCompany extends Model
          return $this->belongsTo(User::class,'user_id');
     }
 
+    public function generatejob()
+    {
+        
+         return $this->belongsTo(GenerateJob::class,'assign_id');
+    }
+
     public function assignresult()
     {
          return $this->hasOne(AssignResult::class);

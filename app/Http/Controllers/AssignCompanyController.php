@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\User;
 use App\Models\Question;
 use App\Models\AssignCompany;
+use App\Models\GenerateJob;
 use App\Models\Form;
 use App\Models\Option;
 use App\Models\AssignResult;
@@ -133,11 +134,16 @@ class AssignCompanyController extends Controller
             $forward = AssignCompany::where('id', $request->get('assign_companies_id'))->update(array("forward" => 0));
         }
 
+        $job = new GenerateJob;
+        $job['generate_id'] = $request->get('assign_id');
+        $job['company_id'] = $request->get('company_id');
+        $job->save();
+
 
         if($request->input('assign') == 1){
             
             $this->var['message'] = $request->get('message');
-            $this->var['assign_id'] = $request->get('assign_id');
+            $this->var['assign_id'] = $job->id;
             $this->var['form_id'] = $request->get('form_id');
             $this->var['company_id'] = $request->get('company_id');
             $this->var['employee_id'] = $request->get('employee_id');
@@ -147,6 +153,7 @@ class AssignCompanyController extends Controller
 
                 // dd($row);
                 // dd($this->var['message']);
+
                 $announcement = new AssignCompany;
                 $announcement['message'] = $this->var['message'];
                 $announcement['assign_id'] = $this->var['assign_id'];
@@ -228,7 +235,7 @@ class AssignCompanyController extends Controller
                 for ($x=0; $x < $request->input('forward_count'); $x++){
                     $announcement = new AssignCompany;
                     $announcement->message = $request->get('message');
-                    $announcement['assign_id'] = $request->get('assign_id');
+                    $announcement['assign_id'] = $job->id;
                     $announcement['form_id'] = $request->get('form_id');
                     $announcement['company_id'] = $request->get('company_id');
                     $announcement['employee_id'] = $request->get('employee_id');
@@ -438,12 +445,19 @@ class AssignCompanyController extends Controller
         $assigner_company_id = AssignCompany::where('id',$assign_company_id)->value('user_company_id');
         $assigner_id = AssignCompany::where('id',$id)->value('user_id');
         $assigner_name = User::where('id',$assigner_id)->value('name');
-        
-        
         $assigner_company_name = Company::where('id',$assigner_company_id)->value('company_name');
 
+
+        $assignee_id = AssignCompany::where('id',$assign_company_id)->value('employee_id');
+        $assignee_name = User::where('id',$assignee_id)->value('name');
+        $assignee_company_id = User::where('id',$assignee_id)->value('company_id');
+        $assignee_company = Company::where('id',$assignee_company_id)->first();
+
+        // dd($assignee_company);
+
         $assign_date = AssignCompany::where('id',$assign_company_id)->value('created_at');
-        $submission_date = AssignResult::where('id',$id)->value('created_at');
+        $submission_date = AssignResult::where('assign_company_id',$assign_company_id)->value('created_at');
+        // dd($submission_date);
 
         $formid = AssignCompany::where('id',$assign_company_id)->value('form_id');
         $form_name = Form::where('id',$formid)->value('form_name');
@@ -473,7 +487,7 @@ class AssignCompanyController extends Controller
 
         //dd($resultmessage);
 
-       return view('assigncompany.assignformdetails',compact('reportdetails','message','assign_company_id', 'assigndetails','allquestion', 'materialData', 'materialdetails', 'formid', 'companylogo', 'companyname', 'assigner_name', 'assigner_company_name', 'form_name', 'assign_date', 'submission_date','resultmessage'))
+       return view('assigncompany.assignformdetails',compact('reportdetails', 'assignee_name', 'assignee_company', 'message','assign_company_id', 'assigndetails','allquestion', 'materialData', 'materialdetails', 'formid', 'companylogo', 'companyname', 'assigner_name', 'assigner_company_name', 'form_name', 'assign_date', 'submission_date','resultmessage'))
            ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     }
 

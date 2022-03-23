@@ -44,4 +44,9 @@ class Company extends Model
         
          return $this->hasMany(ReportMessages::class);
     }
+
+    public function generate_assign_job()
+    {
+         return $this->hasMany(GenerateJob::class);
+    }
 }

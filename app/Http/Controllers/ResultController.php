@@ -200,11 +200,11 @@ class ResultController extends Controller
         //$material_result_id = AssignResult::where('id',$id)->value('material_result_id');
         //$assign_company_id = AssignResult::where('id',$id)->value('assign_company_id');
         $assigner_company_id = AssignCompany::where('id',$assign_company_id)->value('user_company_id');
+
         $assigner_id = AssignCompany::where('id',$assign_company_id)->value('user_id');
         $assigner_name = User::where('id',$assigner_id)->value('name');
-        
-        
         $assigner_company_name = Company::where('id',$assigner_company_id)->value('company_name');
+        
 
         $assign_date = AssignCompany::where('id',$assign_company_id)->value('created_at');
         $submission_date = AssignResult::where('assign_company_id',$id)->value('created_at');
@@ -236,13 +236,21 @@ class ResultController extends Controller
         $message= AssignResult::where('assign_company_id',$id)->value('message');
         //dd($message);
 
-       return view('report.myreport',compact('reportdetails','assign_company_id','message','materialData', 'allquestion', 'materialdetails', 'formid', 'companylogo', 'companyname', 'assigner_name', 'assigner_company_name', 'form_name', 'assign_date', 'submission_date'))
+       return view('report.myreport',compact('reportdetails','assign_company_id', 'message','materialData', 'allquestion', 'materialdetails', 'formid', 'companylogo', 'companyname', 'assigner_name', 'assigner_company_name', 'form_name', 'assign_date', 'submission_date'))
            ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     } 
 
-    function set_collection($list, $key, $value){
-        $firstKey = $list->keys()->first();
-        $firstElement = $list->first();
+    // function set_collection($list, $key, $value){
+    //     $firstKey = $list->keys()->first();
+    //     $firstElement = $list->first();
+    //     $modifiedElement = array_merge($firstElement, [$key => $value]);
+    //     $list->put($firstKey, $modifiedElement);
+    //     return $list;
+    // }
+
+    function set_collection($list, $key, $value, $index){
+        $firstKey = $list->keys()->get($index);
+        $firstElement = $list->get($index);
         $modifiedElement = array_merge($firstElement, [$key => $value]);
         $list->put($firstKey, $modifiedElement);
         return $list;
@@ -317,13 +325,15 @@ class ResultController extends Controller
         ]);
 
         foreach ($materialData as $index=>$data){
-            $list = $this->set_collection($list, $data->key_name, $data->value);
+            $list = $this->set_collection($list, $data->key_name, $data->value, 0);
         }
 
-        foreach ($reportdetails as $index=>$data){
-            $list = $this->set_collection($list, "questionID-".$index, $data->question_id);
-            $list = $this->set_collection($list, "answer-".$index, $data->answer);
-        }
+        // foreach ($reportdetails as $index=>$data){
+        //     $list = $this->set_collection($list, "questionID-".$index, $data->question_id);
+        //     $list = $this->set_collection($list, "answer-".$index, $data->answer);
+        // }
+
+        $list = $this->set_collection($list, 'result_id', $result_id, 0);
 
         // dd($list);
         // $merged1 = $list->merge($materialData);
@@ -451,12 +461,15 @@ class ResultController extends Controller
         $assigner_company_id = AssignCompany::where('id',$assign_company_id)->value('user_company_id');
         $assigner_id = AssignCompany::where('id',$id)->value('user_id');
         $assigner_name = User::where('id',$assigner_id)->value('name');
-        
-        //dd($assigner_name);
         $assigner_company_name = Company::where('id',$assigner_company_id)->value('company_name');
 
+        $assignee_id = AssignCompany::where('id',$assign_company_id)->value('employee_id');
+        $assignee_name = User::where('id',$assignee_id)->value('name');
+        $assignee_company_id = User::where('id',$assignee_id)->value('company_id');
+        $assignee_company = Company::where('id',$assignee_company_id)->first();
+
         $assign_date = AssignCompany::where('id',$assign_company_id)->value('created_at');
-        $submission_date = AssignResult::where('id',$id)->value('created_at');
+        $submission_date = AssignResult::where('assign_company_id',$assign_company_id)->value('created_at');
 
         $formid = AssignCompany::where('id',$assign_company_id)->value('form_id');
         $form_name = Form::where('id',$formid)->value('form_name');
@@ -484,7 +497,7 @@ class ResultController extends Controller
         $resultmessage = ReportMessages::where('result_id',$result_id)->with('resultmessage','companyname', 'messageuser')->get();
 
 
-       return view('sharereport.sharereportdetails',compact('reportdetails','message', 'assign_company_id', 'materialData', 'assigndetails','allquestion', 'materialdetails', 'formid', 'companylogo', 'companyname', 'assigner_name', 'assigner_company_name', 'form_name', 'assign_date', 'submission_date','resultmessage'))
+       return view('sharereport.sharereportdetails',compact('reportdetails','message', 'assignee_name', 'assignee_company', 'assign_company_id', 'materialData', 'assigndetails','allquestion', 'materialdetails', 'formid', 'companylogo', 'companyname', 'assigner_name', 'assigner_company_name', 'form_name', 'assign_date', 'submission_date','resultmessage'))
            ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
     }
 
