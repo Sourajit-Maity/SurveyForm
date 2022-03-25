@@ -72,6 +72,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/reply/store', [CommentController::class,'replyStore'])->name('reply.add');
     Route::post('forward-messgae-store', [ResultController::class,'forwardmessagestore'])->name('forward-messgae-store');
     Route::get('my-info-details/{id}', [AssignCompanyController::class,'myinfodetails'])->name('my-info-details');
+    Route::get('excel-download/{id}', [AssignCompanyController::class,'excelDownload'])->name('excel-download');
     Route::get('job-details', [AssignCompanyController::class,'jobDetails'])->name('job-details');
     Route::get('assign-form-details/{id}', [AssignCompanyController::class,'assignformdetails'])->name('assign-form-details');
     

@@ -61,6 +61,7 @@
                         <th>Assigned Company</th>
                         <th>Assign Generate Id</th>
                         <th width="100px">Action</th>
+                        <th width="100px">Download</th>
                         
                     </tr>
                 </thead>
@@ -74,7 +75,12 @@
                                 <td>{{ $assigndetail->generate_id }}</td>                                                                            
                                 <td>
                                     <a class="btn btn-success" href="{{ route('my-info-details',[$assigndetail->id]) }}" class="btn btn-xs btn-success">
-                                Details</a>
+                                    Details</a>
+                                 
+                                </td>
+                                <td>
+                                    <a class="btn btn-success" href="{{ route('excel-download',[$assigndetail->id]) }}" class="btn btn-xs btn-success">
+                                    Download</a>
                                  
                                 </td>
                                 

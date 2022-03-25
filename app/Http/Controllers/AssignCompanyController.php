@@ -516,4 +516,22 @@ class AssignCompanyController extends Controller
         return view('assigncompany.jobiddetails',compact('assigndetails'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
+    public function excelDownload($id){
+ 
+        
+        $assigndetails = GenerateJob::where('id',$id)->with('assign_generate_company')->orderby('created_at', 'desc')->get();
+            
+            
+        $details = AssignCompany::with('materialdata')
+            ->where('assign_id',$id)->get();
+        
+            foreach($details as $assign_id){
+               
+                $datas = MaterialExcel::where('assign_company_id', $assign_id->id)->get();
+            }
+       //dd($details);
+    
+        return (new FastExcel($datas))->download('file.xlsx');
+        }
+
 }
