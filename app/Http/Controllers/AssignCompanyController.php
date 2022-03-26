@@ -516,22 +516,40 @@ class AssignCompanyController extends Controller
         return view('assigncompany.jobiddetails',compact('assigndetails'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
+    function set_collection($list, $key, $value, $index){
+        $firstKey = $list->keys()->get($index);
+        $firstElement = $list->get($index);
+        $modifiedElement = array_merge($firstElement, [$key => $value]);
+        $list->put($firstKey, $modifiedElement);
+        return $list;
+    }
+
     public function excelDownload($id){
  
         
         $assigndetails = GenerateJob::where('id',$id)->with('assign_generate_company')->orderby('created_at', 'desc')->get();
-            
+          
             
         $details = AssignCompany::with('materialdata')
             ->where('assign_id',$id)->get();
-        
-            foreach($details as $assign_id){
-               
-                $datas = MaterialExcel::where('assign_company_id', $assign_id->id)->get();
+
+        // dd($details);
+        $list = collect();
+        foreach($details as $index=>$assign_id){
+            $materialData = MaterialExcel::select('key_name','value')->where('assign_company_id', $assign_id->id)->get();
+            
+            $list->push([]);
+            foreach ($materialData as $data){
+                $list = $this->set_collection($list, $data->key_name, $data->value, $index);
             }
-       //dd($details);
+
+            $result_id = AssignResult::where('assign_company_id',$assign_id->id)->value('result_id');
+            $list = $this->set_collection($list, 'unique_id', $result_id, $index);
+        }
+        // dd($list);
+       
     
-        return (new FastExcel($datas))->download('file.xlsx');
+        return (new FastExcel($list))->download('file.xlsx');
         }
 
 }
