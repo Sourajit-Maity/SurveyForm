@@ -60,6 +60,7 @@
                         <!-- <th>Company Name</th> -->
                         <th>Assigned Company</th>
                         <th>Assign Generate Id</th>
+                        <th>Created At</th>
                         <th width="100px">Action</th>
                         <th width="100px">Download</th>
                         
@@ -72,7 +73,8 @@
                             <tr data-entry-id="h">
                                 <td>{{ ++$i }}</td>                               
                                 <td>{{ $assigndetail->assign_generate_company->company_name }}</td> 
-                                <td>{{ $assigndetail->generate_id }}</td>                                                                            
+                                <td>{{ $assigndetail->generate_id }}</td> 
+                                <td>{!! \Carbon\Carbon::parse($assigndetail->created_at)->format('d M Y, H : i') !!}</td>                                                                            
                                 <td>
                                     <a class="btn btn-success" href="{{ route('my-info-details',[$assigndetail->id]) }}" class="btn btn-xs btn-success">
                                     Details</a>

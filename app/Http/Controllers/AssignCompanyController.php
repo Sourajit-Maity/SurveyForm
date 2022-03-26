@@ -544,7 +544,25 @@ class AssignCompanyController extends Controller
             }
 
             $result_id = AssignResult::where('assign_company_id',$assign_id->id)->value('result_id');
-            $list = $this->set_collection($list, 'unique_id', $result_id, $index);
+            // dd($result_id);
+            $question = Result::select('question_id', 'answer')->where('result_id',$result_id)->orderBy('id','desc')->first();
+            // dd($question);
+
+            $unique_id = '';
+            if($question != null){
+                $option = Option::where('question_id',$question->question_id)->get();
+                // dd($option);
+                
+                foreach($option as $obj){
+                    if($obj->option == $question->answer){
+                        $unique_id = $obj->number;
+                    }
+                }
+                // dd($unique_id);
+            }
+            
+
+            $list = $this->set_collection($list, 'unique_id', $unique_id, $index);
         }
         // dd($list);
        
