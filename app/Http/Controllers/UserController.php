@@ -84,7 +84,7 @@ $role = Auth::user()->getRoleNames();
      */
     public function create()
     {
-        $roles = Role::pluck('name','name')->all();
+        $roles = Role::where('name','!=','Director')->pluck('name','name')->all();
         $company = Company::pluck('company_name','id')->all();
         $reporting = User::pluck('name','name')->all();
         return view('users.create',compact('roles','company','reporting'));
