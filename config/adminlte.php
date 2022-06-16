@@ -302,6 +302,7 @@ return [
         ],
         [
             'text' => 'Job Info',
+            'can' => ['isDirector'],
             'url'  => 'job-details',
             'active' => ['job-details','my-info-details*', 'assign-form-details*', 'job-id-list*'],
             'icon' => 'nav-icon fas fa-fw fa-retweet',

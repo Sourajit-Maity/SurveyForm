@@ -249,8 +249,11 @@ class ResultController extends Controller
     // }
 
     function set_collection($list, $key, $value, $index){
+        
         $firstKey = $list->keys()->get($index);
+        
         $firstElement = $list->get($index);
+       // dd($firstElement);
         $modifiedElement = array_merge($firstElement, [$key => $value]);
         $list->put($firstKey, $modifiedElement);
         return $list;
@@ -309,29 +312,30 @@ class ResultController extends Controller
 
       
 
-        // $list = collect([
-        //     [ 
-        //         'Assign Company Id' => $assigner_company_id,    
-        //         'Assigner Name' => $assigner_name,   
-        //         'Assigner Company Name' => $assigner_company_name,  
-        //         'Assign Date' => $assign_date_format,  
-        //         'Submission Date' => $submission_date_format,     
-        //         'Form Name' => $form_name,
-        //         'Company SL No' => Auth::user()->company_id,
-        //         'User Name' => Auth::user()->name, 
-        //         'User Email' => Auth::user()->email,
+        $list = collect([
+            [ 
+                'Assign Company Id' => $assigner_company_id,    
+                'Assigner Name' => $assigner_name,   
+                'Assigner Company Name' => $assigner_company_name,  
+                'Assign Date' => $assign_date_format,  
+                'Submission Date' => $submission_date_format,     
+                'Form Name' => $form_name,
+                'Company SL No' => Auth::user()->company_id,
+                'User Name' => Auth::user()->name, 
+                'User Email' => Auth::user()->email,
 
-        //     ]
-        // ]);
-        $list = collect();
-
+            ]
+        ]);
+       // $list = collect();
         foreach ($materialData as $index=>$data){
+            
             $list = $this->set_collection($list, $data->key_name, $data->value, 0);
+            
         }
 
         // foreach ($reportdetails as $index=>$data){
-        //     $list = $this->set_collection($list, "questionID-".$index, $data->question_id);
-        //     $list = $this->set_collection($list, "answer-".$index, $data->answer);
+        //     $list = $this->set_collection($list, "questionID-".$index, $data->question_id, 0);
+        //     $list = $this->set_collection($list, "answer-".$index, $data->answer, 0);
         // }
 
         $list = $this->set_collection($list, 'unique_id', $result_id, 0);
