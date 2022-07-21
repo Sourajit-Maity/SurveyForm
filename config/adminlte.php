@@ -267,6 +267,7 @@ return [
             'active' => ['roles', 'roles*'],
             'icon' => 'nav-icon far fa-fw fa-id-badge',
         ],
+        
         [
             'text' => 'Users',
             'url'  => 'users',
@@ -293,6 +294,13 @@ return [
             'url'  => 'assign/create',
             'active' => ['assign/create', 'assign', 'forward-assign', 'forward-show*'],
             'icon' => 'nav-icon far fa-fw fa-share-square',
+        ],
+        [
+            'text' => 'User Logs',
+            'can' => ['isDirector'],
+            'url'  => 'user-logs',
+            'active' => ['user-logs', 'user-logs*'],
+            'icon' => 'nav-icon far fa-fw fa-id-badge',
         ],
         [
             'text' => 'My Report',

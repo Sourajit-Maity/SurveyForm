@@ -91,4 +91,12 @@ class HomeController extends Controller
        $rolename = Role::where('id',$rolenameid)->value('name');
         return view('home',compact('newemployee','reportshare','assignformArr','forwardform','assignform','rolename','user','form','company','question','role','companyuser','companydetails'));
     }
+
+    public function userLogs(Request $request)
+    {
+        $datas = Form::orderBy('id','DESC')->with('createdby','updatedby')->paginate(5);  
+        //dd($datas);
+        return view('user-logs',compact('datas'))->with('i', ($request->input('page', 1) - 1) * 5); 
+
+    }
 }
