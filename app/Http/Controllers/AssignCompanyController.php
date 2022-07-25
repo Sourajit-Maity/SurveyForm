@@ -230,9 +230,13 @@ class AssignCompanyController extends Controller
 
 
             // }
-
+            $itemtotal =  $request->input('forward_count');
+                //dd($itemtotal);
+                if ($itemtotal == null){
+                    $itemtotal = 1;
+                }
             if($request->input('forward') == 1){
-                for ($x=0; $x < $request->input('forward_count'); $x++){
+                for ($x=0; $x < $itemtotal; $x++){
                     $announcement = new AssignCompany;
                     $announcement->message = $request->get('message');
                     $announcement['assign_id'] = $job->id;

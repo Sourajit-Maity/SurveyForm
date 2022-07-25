@@ -41,6 +41,24 @@
                 title: '{{ Session::get("success") }}'
             });
         @endif
+        $("form").submit(function(e){
+        $('input[name=assign_id]').val('A'+Date.now());
+        
+        var assign = $('#assign').is(":checked");
+        var forward = $('#forward').is(":checked");
+        console.log('assign: '+assign+' forward: '+forward);
+
+        if((assign == false) && (forward == false)){
+            Swal.fire({
+                title: 'Please select any options between Assign or Forward Form',
+                type: 'question',
+                showCancelButton: true,
+                cancelButtonColor: '#d33',
+            });
+            e.preventDefault();
+        }
+        
+    });
     
     });
 </script>
@@ -174,8 +192,9 @@
             <div class="card card-primary card-outline sticky-top">
                 <div class="card-header"><i class="fas fa-share-alt" style='color:#007bff;'></i>&nbsp; Share Form</div>
                 <div class="card-body" style="font-size:14px;">
-                    <form method="POST" action="{{ route('assign.store') }}">
+                    <form method="POST" action="{{ route('assign.store') }}" enctype="multipart/form-data">
                         @csrf
+                        <input type='hidden' name='assign_id' value=''>
                         <div class="form-group row">
                             <label for="company_id" class="col-md-4 col-form-label text-md-right">{{ __('Company') }}</label>
 
@@ -230,6 +249,18 @@
                             <div class="col-md-8 hr-al" style="padding-top:10px;">
                                 <input name="assign" value="1" type="checkbox" id="assign" >
                             </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="material_file" class="col-md-4 col-form-label text-md-right">{{ __('Material File') }}</label>
+                            <div class="col-md-6 hr-al">
+                                <input name="material_file" value="1" type="file" id="material_file" >
+                            </div>
+                            @error('material_file')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
                         </div>
                         <div class="form-group row" style='display:none;'>
                             <label for="assign_count" class="col-md-4 col-form-label text-md-right">{{ __('Assign Count') }}<span style="color:red"> *</span></label>

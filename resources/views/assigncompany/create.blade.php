@@ -258,10 +258,15 @@ $(document).ready(function(){
                         </div>
 
                         <div class="form-group row">
-                            <label for="material_file" class="col-md-4 col-form-label text-md-right">{{ __('Material File') }}</label>
+                            <label for="material_file" class="col-md-4 col-form-label text-md-right">{{ __('Material File') }}<span style="color:red"> *</span></label>
                             <div class="col-md-6 hr-al">
                                 <input name="material_file" value="1" type="file" id="material_file" >
                             </div>
+                            @error('material_file')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                            @enderror
                         </div>
 
                         <!-- <div class="form-group row">
@@ -279,12 +284,12 @@ $(document).ready(function(){
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <!-- <div class="form-group row">
                                 <label for="forward_count" class="col-md-4 col-form-label text-md-right">{{ __('Forward Count') }}<span style="color:red"> *</span></label>
                                 <div class="col-md-6">
                                     <input type="number" class="form-control" name="forward_count" id="forward_count" min="1">
                                 </div>
-                            </div>
+                            </div> -->
                         @endif
                         <div class="form-group row">
                             <label for="text" class="col-md-4 col-form-label text-md-right">{{ __('Enter Your Message') }}<span style="color:red"> *</span></label>
