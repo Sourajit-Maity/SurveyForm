@@ -504,7 +504,7 @@ class ResultController extends Controller
 
 
        return view('sharereport.sharereportdetails',compact('reportdetails','message', 'assignee_name', 'assignee_company', 'assign_company_id', 'materialData', 'assigndetails','allquestion', 'materialdetails', 'formid', 'companylogo', 'companyname', 'assigner_name', 'assigner_company_name', 'form_name', 'assign_date', 'submission_date','resultmessage'))
-           ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
+           ->with('i', (request()->input('page', 1) - 1) * 5, 'form'); 
     }
 
 }
