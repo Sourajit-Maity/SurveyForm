@@ -505,18 +505,19 @@ class AssignCompanyController extends Controller
     public function jobIdList($id){
  
 
-        if(Auth::user()->id==1)
-        {
+       // if(Auth::user()->id==1)
+       // {
             
             $assigndetails = GenerateJob::with('assign_generate_company')
             ->where('company_id',$id)
             ->orderby('created_at', 'desc')->get();
-     //dd($assigndetails);
-        }
-        else{
-            $assigndetails = GenerateJob::where('company_id',Auth::user()->company_id)->with('assign_generate','assign_generate_company')->orderby('created_at', 'desc')->get();
+     
+           // dd($assigndetails);
+       // }
+        // else{
+        //     $assigndetails = GenerateJob::where('company_id',Auth::user()->company_id)->with('assign_generate','assign_generate_company')->orderby('created_at', 'desc')->get();
             
-        }
+        // }
         return view('assigncompany.jobiddetails',compact('assigndetails'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 

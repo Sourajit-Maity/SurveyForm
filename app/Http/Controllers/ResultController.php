@@ -300,7 +300,7 @@ class ResultController extends Controller
             $allquestion[$y]['options'] = $alloption; 
         }
         $materialData = MaterialExcel::select('key_name','value')->where('assign_company_id',$assign_company_id)->with('assign_material')->get();
-         //dd($alloption);
+         //dd($alloption[0]['number']);
         $reportdetails = Result::where('result_id',$result_id)->get();
         $materialdetails = MaterialResult::where('id',$material_result_id)->get();
         $companylogo = Company::where('id',Auth::user()->company_id)->value('logo');
@@ -321,6 +321,7 @@ class ResultController extends Controller
                 'Submission Date' => $submission_date_format,     
                 'Form Name' => $form_name,
                 'Company SL No' => Auth::user()->company_id,
+                'Option Node' => $alloption[0]['number'],
                 'User Name' => Auth::user()->name, 
                 'User Email' => Auth::user()->email,
 
@@ -503,7 +504,7 @@ class ResultController extends Controller
 
 
        return view('sharereport.sharereportdetails',compact('reportdetails','message', 'assignee_name', 'assignee_company', 'assign_company_id', 'materialData', 'assigndetails','allquestion', 'materialdetails', 'formid', 'companylogo', 'companyname', 'assigner_name', 'assigner_company_name', 'form_name', 'assign_date', 'submission_date','resultmessage'))
-           ->with('i', (request()->input('page', 1) - 1) * 5, 'form');
+           ->with('i', (request()->input('page', 1) - 1) * 5, 'form'); 
     }
 
 }

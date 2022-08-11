@@ -88,6 +88,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/getemployee/{id}', [AssignCompanyController::class, 'getEmployee']);
 
     Route::get('file-export/{assign_company_id}', [ResultController::class, 'fileExport'])->name('file-export');
+    
+    Route::get('user-logs', [HomeController::class, 'userLogs'])->name('user-logs');
 
 
 });
