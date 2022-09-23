@@ -65,8 +65,8 @@ class AssignCompanyController extends Controller
         //     $forms = Form::where('id',$formdata)->with('assignform')->get();
         // }
         $form= AssignCompany::where('employee_id',$currentuserid)->where('company_id',$currentusecompanyid)->
-        where('assign','>',0)->orderBy('id','DESC')->get();
-        // dd($form);
+        where('assign','>',0)->with('materialdata')->orderBy('id','DESC')->get();
+        //  dd($form);
         return view('assigncompany.index',compact('form'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
@@ -371,8 +371,6 @@ class AssignCompanyController extends Controller
         $formid = AssignCompany::where('id',$id)->value('form_id');
 
         // dd($materialData);
-
-
      
         return view('question.show',compact('assign_form_id','company_logo','formid','materialData','company_name','company_id','user_name','user_email'));
     }
