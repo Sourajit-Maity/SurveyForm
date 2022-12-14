@@ -335,6 +335,29 @@ return [
             'icon' => 'nav-icon fas fa-fw fa-sliders-h',
         ],
         
+        [
+            'text'    => 'Projects',
+            'icon'    => 'fas fa-fw fa-share',
+            'submenu' => [
+                [
+                    'text' => 'Sims Automation',
+                    'url'  => 'http://194.195.113.248:8000/',
+                ],
+                [
+                        'text' => 'PDF Extraction',
+                        'url'  => 'http://45.79.123.7:8000/',
+                ],
+                [
+                        'text' => 'Stimulator',
+                        'url'  => 'http://45.79.121.54/admin/login',
+                ],
+                [
+                        'text' => 'Survey',
+                        'url'  => 'http://172.105.43.132/login',
+                ],
+                ],
+        ],
+        
         
         // [
         //     'text'    => 'multilevel',
